@@ -57,7 +57,7 @@ export function TradeFilters({ initial }: { initial: TradeFilterValues }) {
           <option value="followed">{t("trades.rulesFollowed")}</option>
           <option value="violated">{t("trades.rulesViolated")}</option>
         </Select>
-        <div className="flex items-end gap-2">
+        <div className="col-span-2 flex items-end gap-2 lg:col-span-1">
           <Button type="submit" className="flex-1">{t("trades.filters.apply")}</Button>
           <Button variant="secondary" onClick={reset}>{t("trades.filters.reset")}</Button>
         </div>

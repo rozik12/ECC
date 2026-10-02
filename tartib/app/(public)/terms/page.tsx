@@ -7,14 +7,23 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("legal.termsTitle") };
 }
 
-/** Черновик. Полный текст будет добавлен на этапе 5. */
+const SECTIONS = Array.from({ length: 7 }, (_, i) => `s${i + 1}`);
+
 export default async function Page() {
   const { t } = await getTranslator();
   return (
-    <section className="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+    <article className="mx-auto max-w-2xl px-4 py-14 sm:px-6">
       <h1 className="text-3xl font-bold">{t("legal.termsTitle")}</h1>
-      <p className="mt-4 text-muted">{t("legal.draft")}</p>
-      <Disclaimer className="mt-8" />
-    </section>
+      <p className="mt-2 text-sm text-muted">{t("legal.updated")}</p>
+      <div className="mt-8 space-y-6">
+        {SECTIONS.map((s, i) => (
+          <section key={s}>
+            <h2 className="text-lg font-semibold">{i + 1}. {t("legal.terms." + s + ".title")}</h2>
+            <p className="mt-2 leading-relaxed text-muted">{t("legal.terms." + s + ".text")}</p>
+          </section>
+        ))}
+      </div>
+      <Disclaimer className="mt-10 border-t border-border pt-6" />
+    </article>
   );
 }

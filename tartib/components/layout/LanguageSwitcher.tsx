@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { setLocaleAction } from "@/app/actions/locale";
-import { localeLabels, locales } from "@/lib/i18n/config";
+import { locales } from "@/lib/i18n/config";
 import { useI18n } from "@/lib/i18n/provider";
 
 export function LanguageSwitcher() {
@@ -14,6 +14,7 @@ export function LanguageSwitcher() {
   return (
     <select
       aria-label={t("common.language")}
+      title={t("common.language")}
       value={locale}
       disabled={pending}
       onChange={(e) => {
@@ -27,7 +28,7 @@ export function LanguageSwitcher() {
     >
       {locales.map((code) => (
         <option key={code} value={code}>
-          {code === "uz" ? "UZ" : code.toUpperCase()} · {localeLabels[code]}
+          {code.toUpperCase()}
         </option>
       ))}
     </select>

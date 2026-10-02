@@ -167,7 +167,63 @@
   "legal": {
     "termsTitle": "Foydalanish shartlari",
     "privacyTitle": "Maxfiylik siyosati",
-    "draft": "To'liq matn ishga tushirishdan oldin qo'shiladi."
+    "updated": "2026-yil 2-oktabrdagi tahrir",
+    "terms": {
+      "s1": {
+        "title": "Xizmat haqida",
+        "text": "Tartib — treyderlar uchun hisob-kitob va intizom vositasi: xavf kalkulyatori, bitimlar jurnali, shaxsiy savdo qoidalari va statistika."
+      },
+      "s2": {
+        "title": "Maslahat emas",
+        "text": "Tartib investitsiya bo'yicha tavsiyalar, savdo signallari yoki foyda kafolatini bermaydi. U broker, savdo boti yoki maslahatchi emas. Kalkulyatordagi bitim bahosi faqat bitimning o'z qoidalaringga mosligini ko'rsatadi va bozor yo'nalishi haqida hech narsa demaydi. Bitimlar bo'yicha qarorlarni o'zing qabul qilasan va ularga o'zing javobgarsan. Moliyaviy bozorlarda savdo qilish mablag'ni yo'qotish xavfi bilan bog'liq."
+      },
+      "s3": {
+        "title": "Akkaunt",
+        "text": "Parolingning xavfsizligi va kiritgan ma'lumotlaringning to'g'riligi uchun o'zing javobgarsan. Bir odam — bitta akkaunt."
+      },
+      "s4": {
+        "title": "Tariflar",
+        "text": "FREE tarif bepul va cheklovlarga ega: 30 tagacha bitim va 5 tagacha qoida. PRO tarif hozircha mavjud emas, to'lov ulanmagan. Pullik o'zgarishlar haqida oldindan xabar beramiz."
+      },
+      "s5": {
+        "title": "Ruxsat etilgan foydalanish",
+        "text": "Boshqalarning ma'lumotlariga kirishga urinish, xizmat ishini buzish yoki uni noqonuniy maqsadlarda ishlatish mumkin emas."
+      },
+      "s6": {
+        "title": "Javobgarlikni cheklash",
+        "text": "Xizmat «xuddi borligicha» taqdim etiladi. Hisob-kitoblar ma'lumot uchun: bitimdan oldin ularni tekshir. Savdo yoki xizmatdan foydalanish bilan bog'liq zararlar uchun javobgar emasmiz."
+      },
+      "s7": {
+        "title": "Shartlar o'zgarishi",
+        "text": "Shartlar yangilanishi mumkin. Joriy versiya doim shu sahifada mavjud."
+      }
+    },
+    "privacy": {
+      "s1": {
+        "title": "Qanday ma'lumotlarni saqlaymiz",
+        "text": "Pochta, ism, sozlamalar (til, valyuta, vaqt mintaqasi), savdo hisoblari, qoidalar, bitimlar va ularga yozgan izohlaring. Parolni biz saqlamaymiz: u bilan Supabase avtorizatsiya xizmati shug'ullanadi va faqat himoyalangan xeshni saqlaydi."
+      },
+      "s2": {
+        "title": "Nima uchun kerak",
+        "text": "Faqat kalkulyator, jurnal va statistika ishlashi uchun. Ma'lumotlarni sotmaymiz va reklama uchun ishlatmaymiz."
+      },
+      "s3": {
+        "title": "Ma'lumotlar qayerda saqlanadi",
+        "text": "Supabase ma'lumotlar bazasida (PostgreSQL). Qator darajasidagi himoya yoqilgan: har bir foydalanuvchi faqat o'z ma'lumotlarini ko'radi va o'zgartiradi."
+      },
+      "s4": {
+        "title": "Ma'lumotlarni kimga beramiz",
+        "text": "Faqat Tartib ularsiz ishlamaydigan xizmatlarga: hosting va ma'lumotlar bazasi. Kelajakda AI-hisobotlar paydo bo'lsa, ma'lumotlarni tashqi AI-provayder qayta ishlashi faqat sening roziligingdan keyin yoqiladi va oldindan xabar beramiz."
+      },
+      "s5": {
+        "title": "Cookie va brauzer xotirasi",
+        "text": "Akkauntga kirish va tanlangan til uchun cookie, tanlangan mavzu uchun brauzer xotirasidan foydalanamiz. Reklama yoki uchinchi tomon kuzatuv cookie-lari yo'q."
+      },
+      "s6": {
+        "title": "Sening huquqlaring",
+        "text": "Ismingni va sozlamalarni profilda o'zgartirishing mumkin. Akkauntni barcha ma'lumotlar bilan o'chirish uchun bizga yoz; aloqa manzili ommaviy ishga tushirishdan oldin saytda ko'rsatiladi."
+      }
+    }
   },
   "errors": {
     "generic": "Nimadir noto'g'ri ketdi. Qayta urinib ko'r.",
@@ -536,5 +592,29 @@
       "period": "Oxirgi 30 kun",
       "more": "Statistikada batafsil"
     }
+  },
+  "settings": {
+    "general": "Umumiy",
+    "timezone": "Vaqt mintaqasi",
+    "timezoneHint": "“Bugun” sening vaqtingiz bo'yicha hisoblanishi uchun kerak. Masalan, Asia/Tashkent.",
+    "badTimezone": "Bunday vaqt mintaqasi yo'q. Takliflardan tanla.",
+    "saved": "Saqlandi.",
+    "saveFailed": "Saqlab bo'lmadi. Qayta urinib ko'r.",
+    "accounts": "Savdo hisoblari",
+    "addAccount": "Hisob qo'shish",
+    "renameAccount": "Hisob nomini o'zgartirish",
+    "accountsLimit": "Hisoblar soni chegarasiga yetildi (10)."
+  },
+  "profile": {
+    "name": "Ism",
+    "plan": "Tarif"
+  },
+  "states": {
+    "errorTitle": "Nimadir noto'g'ri ketdi",
+    "errorText": "Sahifani yuklab bo'lmadi. Qayta urinib ko'r.",
+    "retry": "Qayta urinish",
+    "notFoundTitle": "Sahifa topilmadi",
+    "notFoundText": "Havola eskirgan yoki unda xato bo'lishi mumkin.",
+    "home": "Bosh sahifaga"
   }
 }

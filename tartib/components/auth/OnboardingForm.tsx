@@ -29,7 +29,7 @@ export function OnboardingForm({ defaultName }: { defaultName: string }) {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const result = await completeOnboardingAction({ ...values, timezone });
     if (!result.ok) return setFormError(result.error);
-    router.replace("/dashboard");
+    router.replace("/rules");
     router.refresh();
   }
 

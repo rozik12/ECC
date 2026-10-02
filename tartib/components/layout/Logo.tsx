@@ -7,7 +7,7 @@ export function Logo({ className, href = "/" }: { className?: string; href?: str
     <Link
       href={href}
       aria-label="Tartib"
-      className={cn("text-lg font-bold tracking-[0.2em] text-foreground", className)}
+      className={cn("text-base font-bold tracking-[0.15em] text-foreground sm:text-lg sm:tracking-[0.2em]", className)}
     >
       TARTIB
     </Link>

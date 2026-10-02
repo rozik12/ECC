@@ -167,7 +167,63 @@
   "legal": {
     "termsTitle": "Terms of use",
     "privacyTitle": "Privacy policy",
-    "draft": "The full text will be added before launch."
+    "updated": "Version of October 2, 2026",
+    "terms": {
+      "s1": {
+        "title": "About the service",
+        "text": "Tartib is a tracking and discipline tool for traders: a risk calculator, a trade journal, personal trading rules and statistics."
+      },
+      "s2": {
+        "title": "Not advice",
+        "text": "Tartib does not provide investment advice, trading signals or profit guarantees. It is not a broker, a trading bot or an advisor. The trade score in the calculator only shows how well a trade fits your own rules and says nothing about where the market goes. You make your own trading decisions and are responsible for them. Trading on financial markets involves a risk of losing money."
+      },
+      "s3": {
+        "title": "Account",
+        "text": "You are responsible for keeping your password safe and for the accuracy of the data you enter. One person, one account."
+      },
+      "s4": {
+        "title": "Plans",
+        "text": "The FREE plan is free and has limits: up to 30 trades and 5 rules. The PRO plan is not available yet and payments are not connected. We will announce any paid changes in advance."
+      },
+      "s5": {
+        "title": "Acceptable use",
+        "text": "You must not try to access other people's data, disrupt the service or use it for unlawful purposes."
+      },
+      "s6": {
+        "title": "Limitation of liability",
+        "text": "The service is provided “as is”. Calculations are for reference: check them before you trade. We are not liable for losses related to trading or to using the service."
+      },
+      "s7": {
+        "title": "Changes to the terms",
+        "text": "The terms may be updated. The current version is always available on this page."
+      }
+    },
+    "privacy": {
+      "s1": {
+        "title": "What data we store",
+        "text": "Email, name, settings (language, currency, time zone), trading accounts, rules, trades and your notes on them. We do not store your password: the Supabase authentication service handles it and keeps only a secure hash."
+      },
+      "s2": {
+        "title": "Why we need it",
+        "text": "Only to make the calculator, the journal and the statistics work. We do not sell data or use it for advertising."
+      },
+      "s3": {
+        "title": "Where data is stored",
+        "text": "In a Supabase database (PostgreSQL). Row-level security is on: each user can see and change only their own data."
+      },
+      "s4": {
+        "title": "Who we share data with",
+        "text": "Only with services Tartib cannot work without: hosting and the database. If AI reports appear in the future, processing by an external AI provider will be switched on only with your consent, and we will tell you in advance."
+      },
+      "s5": {
+        "title": "Cookies and browser storage",
+        "text": "We use cookies for signing in and your chosen language, and browser storage for your chosen theme. There are no advertising or third-party tracking cookies."
+      },
+      "s6": {
+        "title": "Your rights",
+        "text": "You can change your name and settings in your profile. To delete your account with all data, contact us; the contact address will be published on the site before the public launch."
+      }
+    }
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -536,5 +592,29 @@
       "period": "Last 30 days",
       "more": "More in statistics"
     }
+  },
+  "settings": {
+    "general": "General",
+    "timezone": "Time zone",
+    "timezoneHint": "Used so that “today” follows your local time. For example, Asia/Tashkent.",
+    "badTimezone": "No such time zone. Pick one from the suggestions.",
+    "saved": "Saved.",
+    "saveFailed": "Couldn't save. Please try again.",
+    "accounts": "Trading accounts",
+    "addAccount": "Add account",
+    "renameAccount": "Rename account",
+    "accountsLimit": "Maximum number of accounts reached (10)."
+  },
+  "profile": {
+    "name": "Name",
+    "plan": "Plan"
+  },
+  "states": {
+    "errorTitle": "Something went wrong",
+    "errorText": "We couldn't load this page. Please try again.",
+    "retry": "Try again",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "The link may be outdated or contain a typo.",
+    "home": "Go home"
   }
 }

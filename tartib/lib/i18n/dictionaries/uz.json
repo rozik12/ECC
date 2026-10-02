@@ -10,7 +10,15 @@
     "loading": "Yuklanmoqda…",
     "close": "Yopish",
     "cancel": "Bekor qilish",
-    "save": "Saqlash"
+    "save": "Saqlash",
+    "add": "Qo'shish",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "back": "Orqaga",
+    "all": "Hammasi",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "optional": "majburiy emas"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -172,7 +180,13 @@
     "balanceMin": "Balans noldan kam bo'lishi mumkin emas",
     "balanceMax": "Son juda katta",
     "invalidCredentials": "Pochta yoki parol noto'g'ri.",
-    "emailTaken": "Bu pochta allaqachon ro'yxatdan o'tgan. Kirib ko'r."
+    "emailTaken": "Bu pochta allaqachon ro'yxatdan o'tgan. Kirib ko'r.",
+    "positive": "Noldan katta son kiriting",
+    "tooLarge": "Qiymat juda katta",
+    "textMax": "Matn juda uzun",
+    "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas",
+    "limitRules": "FREE tarif chegarasiga yetildi: 5 tagacha qoida. PRO tarif cheklovlarni olib tashlaydi.",
+    "limitTrades": "FREE tarif chegarasiga yetildi: 30 tagacha bitim. PRO tarif cheklovlarni olib tashlaydi."
   },
   "onboarding": {
     "title": "Tanishib olaylik",
@@ -185,5 +199,264 @@
     "startingBalance": "Boshlang'ich balans",
     "startingBalanceHint": "Hisobda hozir qancha pul bor. Depozit egri chizig'i shundan hisoblanadi.",
     "submit": "Boshlash"
+  },
+  "directions": {
+    "long": "LONG",
+    "short": "SHORT"
+  },
+  "markets": {
+    "crypto": "Kripto",
+    "forex": "Forex",
+    "stocks": "Aksiyalar",
+    "futures": "Fyucherslar"
+  },
+  "emotions": {
+    "calm": "Xotirjamlik",
+    "fear": "Qo'rquv",
+    "greed": "Ochko'zlik",
+    "fomo": "FOMO",
+    "revenge": "Qasos",
+    "confident": "Ishonch",
+    "uncertain": "Ishonchsizlik",
+    "other": "Boshqa"
+  },
+  "rules": {
+    "title": "Mening savdo qoidalarim",
+    "subtitle": "Tartib sen amal qilishingga yordam beradigan qoidalar.",
+    "add": "Qoida qo'shish",
+    "empty": {
+      "title": "O'z qoidalaringni yarat",
+      "text": "Tartib amal qilishingga yordam beradigan qoidalarni belgila."
+    },
+    "presets": {
+      "title": "Tayyor namunalar",
+      "text": "Bir bosishda qo'sh, keyin o'zingga moslab o'zgartir.",
+      "add": "Qo'shish",
+      "risk1": {
+        "name": "Bitimga 1% dan ko'p xavf yo'q",
+        "description": "Bitta bitimda balansning 1% dan ko'pini xavfga qo'ymayman."
+      },
+      "rr2": {
+        "name": "R:R kamida 2",
+        "description": "Mumkin bo'lgan foyda xavfdan kamida ikki baravar katta bitimlarni olaman."
+      },
+      "lev10": {
+        "name": "Yelka 10 gacha",
+        "description": "Haddan tashqari katta yelka ishlatmayman."
+      },
+      "sl": {
+        "name": "Stop-loss majburiy",
+        "description": "Stop-losssiz bitimga kirmayman."
+      },
+      "trades3": {
+        "name": "Kuniga 3 tadan ko'p bitim yo'q",
+        "description": "Hissiyotda savdo qilmaslik uchun bitimlar sonini cheklayman."
+      }
+    },
+    "form": {
+      "createTitle": "Yangi qoida",
+      "editTitle": "Qoidani tahrirlash",
+      "name": "Nomi",
+      "description": "Tavsif",
+      "type": "Qoida turi",
+      "value": "Qiymat",
+      "active": "Qoida yoqilgan",
+      "save": "Saqlash"
+    },
+    "types": {
+      "max_risk_percent": "Bitimdagi maksimal xavf",
+      "min_risk_reward": "Minimal R:R",
+      "max_leverage": "Maksimal yelka",
+      "require_stop_loss": "Majburiy stop-loss",
+      "max_trades_per_day": "Kuniga maksimal bitimlar",
+      "custom": "O'z qoidam"
+    },
+    "valueLabels": {
+      "max_risk_percent": "Maksimal xavf, %",
+      "min_risk_reward": "Minimal R:R",
+      "max_leverage": "Maksimal yelka",
+      "max_trades_per_day": "Kuniga maksimal bitimlar"
+    },
+    "describe": {
+      "max_risk_percent": "Bitimga {value}% dan ko'p xavf yo'q",
+      "min_risk_reward": "R:R kamida {value}",
+      "max_leverage": "Yelka {value} gacha",
+      "require_stop_loss": "Stop-loss majburiy",
+      "max_trades_per_day": "Kuniga {value} tadan ko'p bitim yo'q",
+      "custom": "Qo'lda belgilanadi"
+    },
+    "auto": "Avtomatik tekshiriladi",
+    "manual": "Qo'lda belgilanadi",
+    "on": "Yoqilgan",
+    "off": "O'chirilgan",
+    "deleteTitle": "Qoida o'chirilsinmi?",
+    "deleteText": "Qoida ro'yxatdan yo'qoladi. Eski bitimlarda bu qoidani buzish belgisi ham o'chadi.",
+    "saveFailed": "Qoidani saqlab bo'lmadi. Qayta urinib ko'r.",
+    "deleteFailed": "Qoidani o'chirib bo'lmadi. Qayta urinib ko'r."
+  },
+  "calc": {
+    "title": "Xavf kalkulyatori",
+    "subtitle": "Bitimga kirishdan oldin pozitsiya hajmini hisobla.",
+    "account": "Savdo hisobi",
+    "noAccount": "Hisob yo'q — sozlamalarda yarat",
+    "balance": "Balans",
+    "riskPercent": "Bitimdagi xavf, %",
+    "instrument": "Instrument",
+    "market": "Bozor",
+    "direction": "Yo'nalish",
+    "entry": "Kirish narxi",
+    "stop": "Stop-loss",
+    "takeProfit": "Take-profit (majburiy emas)",
+    "leverage": "Yelka",
+    "results": {
+      "title": "Natija",
+      "empty": "Maydonlarni to'ldir, hisob-kitob shu yerda paydo bo'ladi.",
+      "riskAmount": "Xavf summasi",
+      "positionSize": "Pozitsiya hajmi",
+      "shares": "Aksiyalar",
+      "lots": "Lotlar",
+      "potentialLoss": "Mumkin bo'lgan zarar",
+      "potentialProfit": "Mumkin bo'lgan foyda",
+      "riskReward": "R:R",
+      "positionValue": "Pozitsiya qiymati",
+      "margin": "Kerakli marja"
+    },
+    "errors": {
+      "invalidNumbers": "Balans, xavf, kirish narxi va stop-lossni noldan katta sonlar bilan to'ldir.",
+      "riskRange": "Xavf 0% dan katta va 100% dan oshmasligi kerak.",
+      "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas.",
+      "stopSame": "Stop-loss kirish narxiga teng bo'lishi mumkin emas.",
+      "longStop": "LONG uchun stop-loss kirish narxidan past bo'lishi kerak.",
+      "shortStop": "SHORT uchun stop-loss kirish narxidan yuqori bo'lishi kerak.",
+      "longTp": "LONG uchun take-profit kirish narxidan yuqori bo'lishi kerak.",
+      "shortTp": "SHORT uchun take-profit kirish narxidan past bo'lishi kerak.",
+      "sizeZero": "Bunday xavfda bitta aksiyadan kam chiqadi. Xavfni oshir yoki stop-lossni yaqinlashtir."
+    },
+    "score": {
+      "title": "Bitim bahosi",
+      "of": "10 dan",
+      "note": "Baho faqat bitimning sening qoidalaringga mosligini ko'rsatadi. U bozor yo'nalishi haqida hech narsa demaydi.",
+      "noRules": "Hozircha faol qoidalaring yo'q. Baho olish uchun ularni yarat.",
+      "createRules": "Qoidalar yaratish"
+    },
+    "reasons": {
+      "max_risk_percent": {
+        "ok": "Xavf {actual}% — qoida doirasida ({limit}% gacha)",
+        "violated": "Sening maksimal xavfing: {limit}%. Bitim xavfi: {actual}%."
+      },
+      "min_risk_reward": {
+        "ok": "R:R {actual} — {limit} dan kam emas",
+        "violated": "Qoida bo'yicha minimal R:R: {limit}. Bitim R:R: {actual}."
+      },
+      "max_leverage": {
+        "ok": "Yelka {actual} — qoida doirasida ({limit} gacha)",
+        "violated": "Qoida bo'yicha maksimal yelka: {limit}. Bitim yelkasi: {actual}."
+      },
+      "require_stop_loss": {
+        "ok": "Stop-loss belgilangan",
+        "violated": "Qoidangga ko'ra stop-loss majburiy."
+      },
+      "max_trades_per_day": {
+        "ok": "Bugungi bitimlar: {actual} / {limit}",
+        "violated": "Qoida bo'yicha kuniga maksimal bitimlar: {limit}. Shu bitim bilan {actual} ta bo'ladi."
+      },
+      "custom": {
+        "manual": "{name} — bitimni yozganda qo'lda belgila"
+      }
+    },
+    "warning": {
+      "title": "Bu bitim bir yoki bir nechta qoidangni buzadi",
+      "text": "Qaror o'zingda. Tartib faqat qoidalaringga nima zid ekanini ko'rsatadi.",
+      "cancel": "Bekor qilish",
+      "proceed": "Baribir davom etish"
+    },
+    "saveAsTrade": "Bitim sifatida saqlash"
+  },
+  "trades": {
+    "title": "Bitimlarim",
+    "add": "Bitim qo'shish",
+    "empty": {
+      "title": "Bu yerda hali bitimlar yo'q. Tartib savdo intizomingni tahlil qila boshlashi uchun birinchi bitimni qo'sh.",
+      "cta": "Birinchi bitimni qo'shish"
+    },
+    "noResults": "Bu filtrlar bo'yicha bitimlar yo'q.",
+    "cols": {
+      "date": "Sana",
+      "instrument": "Instrument",
+      "direction": "Yo'nalish",
+      "entry": "Kirish",
+      "exit": "Chiqish",
+      "size": "Hajm",
+      "pnl": "P&L",
+      "emotion": "Hissiyot",
+      "rules": "Qoidalar"
+    },
+    "rulesFollowed": "Bajarilgan",
+    "rulesViolated": "Buzilgan",
+    "filters": {
+      "from": "Sanadan",
+      "to": "Sanagacha",
+      "instrument": "Instrument",
+      "direction": "Yo'nalish",
+      "result": "Natija",
+      "profit": "Foyda",
+      "loss": "Zarar",
+      "emotion": "Hissiyot",
+      "rules": "Qoidalar",
+      "all": "Hammasi",
+      "apply": "Qo'llash",
+      "reset": "Tozalash"
+    },
+    "pagination": {
+      "prev": "Orqaga",
+      "next": "Oldinga",
+      "page": "{page}-sahifa / {total}"
+    },
+    "form": {
+      "newTitle": "Yangi bitim",
+      "editTitle": "Bitimni tahrirlash",
+      "account": "Savdo hisobi",
+      "instrument": "Instrument",
+      "market": "Bozor",
+      "direction": "Yo'nalish",
+      "entry": "Kirish narxi",
+      "exit": "Chiqish narxi",
+      "stop": "Stop-loss",
+      "takeProfit": "Take-profit",
+      "size": "Hajm (aktiv birliklari)",
+      "leverage": "Yelka",
+      "riskPercent": "Xavf, %",
+      "pnl": "P&L",
+      "pnlHint": "Kirish, chiqish va hajmdan hisoblanadi. Qo'lda o'zgartirish mumkin, masalan komissiyani hisobga olib.",
+      "emotion": "Hissiyot",
+      "violated": "Buzilgan qoidalar",
+      "violatedHint": "Buzgan qoidalaringni belgila. Raqamlar bo'yicha buzilganlari avtomatik belgilanadi.",
+      "auto": "avto",
+      "noActiveRules": "Faol qoidalaring yo'q.",
+      "reason": "Kirish sababi",
+      "plan": "Savdo rejasi",
+      "comment": "Bitimdan keyingi izoh",
+      "tradedAt": "Sana va vaqt",
+      "save": "Bitimni saqlash",
+      "fromCalculator": "Ma'lumotlar kalkulyatordan ko'chirildi."
+    },
+    "detail": {
+      "risk": "Xavf",
+      "riskReward": "R:R",
+      "potentialLoss": "Mumkin bo'lgan zarar",
+      "potentialProfit": "Mumkin bo'lgan foyda",
+      "discipline": "Intizom",
+      "followed": "Qoidalar bajarilgan",
+      "violated": "Qoidalar buzilgan",
+      "back": "Bitimlar ro'yxatiga",
+      "deleteTitle": "Bitim o'chirilsinmi?",
+      "deleteText": "Bitim qaytarib bo'lmaydigan tarzda o'chiriladi.",
+      "none": "—"
+    },
+    "account": "Hisob",
+    "noAccount": "Savdo hisobi topilmadi.",
+    "notFound": "Bitim topilmadi.",
+    "saveFailed": "Bitimni saqlab bo'lmadi. Qayta urinib ko'r.",
+    "deleteFailed": "Bitimni o'chirib bo'lmadi. Qayta urinib ko'r."
   }
 }

@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { loginSchema, registerSchema } from "@/lib/validations/auth";
 
 /** Результат действия. error — ключ словаря, чтобы показать текст на языке пользователя. */
-export type ActionResult = { ok: true; needsEmailConfirmation?: boolean } | { ok: false; error: string };
+export type ActionResult = { ok: true; needsEmailConfirmation?: boolean; id?: string } | { ok: false; error: string };
 
 export async function loginAction(input: unknown): Promise<ActionResult> {
   const parsed = loginSchema.safeParse(input);

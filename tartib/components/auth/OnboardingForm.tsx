@@ -26,7 +26,8 @@ export function OnboardingForm({ defaultName }: { defaultName: string }) {
 
   async function onSubmit(values: OnboardingValues) {
     setFormError(null);
-    const result = await completeOnboardingAction(values);
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const result = await completeOnboardingAction({ ...values, timezone });
     if (!result.ok) return setFormError(result.error);
     router.replace("/dashboard");
     router.refresh();

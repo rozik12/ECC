@@ -6,6 +6,7 @@ export type Profile = {
   name: string;
   language: "ru" | "uz" | "en";
   currency: string;
+  timezone: string;
   onboarded: boolean;
 };
 
@@ -17,7 +18,7 @@ export async function requireUser() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, name, language, currency, onboarded")
+    .select("id, name, language, currency, timezone, onboarded")
     .eq("id", data.user.id)
     .single<Profile>();
 

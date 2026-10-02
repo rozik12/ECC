@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { isLocale, LOCALE_COOKIE } from "@/lib/i18n/config";
+import { safeTimeZone } from "@/lib/time";
 import { requireUser } from "@/lib/auth";
 import { onboardingSchema } from "@/lib/validations/onboarding";
 import type { ActionResult } from "./auth";
@@ -9,7 +10,7 @@ import type { ActionResult } from "./auth";
 export async function completeOnboardingAction(input: unknown): Promise<ActionResult> {
   const parsed = onboardingSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "errors.generic" };
-  const { name, language, currency, accountName, startingBalance } = parsed.data;
+  const { name, language, currency, accountName, startingBalance, timezone } = parsed.data;
 
   try {
     const { supabase, user } = await requireUser();
@@ -32,7 +33,7 @@ export async function completeOnboardingAction(input: unknown): Promise<ActionRe
 
     const { error: profileError } = await supabase
       .from("profiles")
-      .update({ name, language, currency, onboarded: true })
+      .update({ name, language, currency, onboarded: true, timezone: safeTimeZone(timezone) })
       .eq("id", user.id);
     if (profileError) return { ok: false, error: "errors.generic" };
 

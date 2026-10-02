@@ -10,7 +10,15 @@
     "loading": "Loading…",
     "close": "Close",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "all": "All",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "optional"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -172,7 +180,13 @@
     "balanceMin": "Balance cannot be below zero",
     "balanceMax": "Number is too large",
     "invalidCredentials": "Wrong email or password.",
-    "emailTaken": "This email is already registered. Try logging in."
+    "emailTaken": "This email is already registered. Try logging in.",
+    "positive": "Enter a number above zero",
+    "tooLarge": "Value is too large",
+    "textMax": "Text is too long",
+    "leverageMin": "Leverage cannot be below 1",
+    "limitRules": "FREE plan limit reached: up to 5 rules. The PRO plan removes limits.",
+    "limitTrades": "FREE plan limit reached: up to 30 trades. The PRO plan removes limits."
   },
   "onboarding": {
     "title": "Let's get acquainted",
@@ -185,5 +199,264 @@
     "startingBalance": "Starting balance",
     "startingBalanceHint": "How much money is on the account now. The equity curve is built from it.",
     "submit": "Start"
+  },
+  "directions": {
+    "long": "LONG",
+    "short": "SHORT"
+  },
+  "markets": {
+    "crypto": "Crypto",
+    "forex": "Forex",
+    "stocks": "Stocks",
+    "futures": "Futures"
+  },
+  "emotions": {
+    "calm": "Calm",
+    "fear": "Fear",
+    "greed": "Greed",
+    "fomo": "FOMO",
+    "revenge": "Revenge",
+    "confident": "Confident",
+    "uncertain": "Uncertain",
+    "other": "Other"
+  },
+  "rules": {
+    "title": "My trading rules",
+    "subtitle": "Rules that Tartib will help you follow.",
+    "add": "Add rule",
+    "empty": {
+      "title": "Create your rules",
+      "text": "Define the rules that Tartib will help you follow."
+    },
+    "presets": {
+      "title": "Ready-made examples",
+      "text": "Add with one tap, then adjust to your style.",
+      "add": "Add",
+      "risk1": {
+        "name": "Risk no more than 1% per trade",
+        "description": "I never risk more than 1% of my balance in one trade."
+      },
+      "rr2": {
+        "name": "R:R at least 2",
+        "description": "I take trades where potential profit is at least twice the risk."
+      },
+      "lev10": {
+        "name": "Leverage up to 10",
+        "description": "I don't use excessive leverage."
+      },
+      "sl": {
+        "name": "Stop-loss is mandatory",
+        "description": "I don't enter a trade without a stop-loss."
+      },
+      "trades3": {
+        "name": "No more than 3 trades a day",
+        "description": "I limit the number of trades to avoid emotional trading."
+      }
+    },
+    "form": {
+      "createTitle": "New rule",
+      "editTitle": "Edit rule",
+      "name": "Name",
+      "description": "Description",
+      "type": "Rule type",
+      "value": "Value",
+      "active": "Rule is on",
+      "save": "Save"
+    },
+    "types": {
+      "max_risk_percent": "Maximum risk per trade",
+      "min_risk_reward": "Minimum R:R",
+      "max_leverage": "Maximum leverage",
+      "require_stop_loss": "Stop-loss required",
+      "max_trades_per_day": "Maximum trades per day",
+      "custom": "Custom rule"
+    },
+    "valueLabels": {
+      "max_risk_percent": "Maximum risk, %",
+      "min_risk_reward": "Minimum R:R",
+      "max_leverage": "Maximum leverage",
+      "max_trades_per_day": "Maximum trades per day"
+    },
+    "describe": {
+      "max_risk_percent": "Risk no more than {value}% per trade",
+      "min_risk_reward": "R:R at least {value}",
+      "max_leverage": "Leverage up to {value}",
+      "require_stop_loss": "Stop-loss is required",
+      "max_trades_per_day": "No more than {value} trades a day",
+      "custom": "Marked manually"
+    },
+    "auto": "Checked automatically",
+    "manual": "Marked manually",
+    "on": "On",
+    "off": "Off",
+    "deleteTitle": "Delete this rule?",
+    "deleteText": "The rule will disappear from the list. Violation marks for this rule in past trades will be removed too.",
+    "saveFailed": "Couldn't save the rule. Please try again.",
+    "deleteFailed": "Couldn't delete the rule. Please try again."
+  },
+  "calc": {
+    "title": "Risk calculator",
+    "subtitle": "Work out the position size before you enter a trade.",
+    "account": "Trading account",
+    "noAccount": "No account — create one in settings",
+    "balance": "Balance",
+    "riskPercent": "Risk per trade, %",
+    "instrument": "Instrument",
+    "market": "Market",
+    "direction": "Direction",
+    "entry": "Entry price",
+    "stop": "Stop-loss",
+    "takeProfit": "Take-profit (optional)",
+    "leverage": "Leverage",
+    "results": {
+      "title": "Result",
+      "empty": "Fill in the fields and the calculation will appear here.",
+      "riskAmount": "Risk amount",
+      "positionSize": "Position size",
+      "shares": "Shares",
+      "lots": "Lots",
+      "potentialLoss": "Potential loss",
+      "potentialProfit": "Potential profit",
+      "riskReward": "R:R",
+      "positionValue": "Position value",
+      "margin": "Required margin"
+    },
+    "errors": {
+      "invalidNumbers": "Fill in balance, risk, entry price and stop-loss with numbers above zero.",
+      "riskRange": "Risk must be above 0% and no more than 100%.",
+      "leverageMin": "Leverage cannot be below 1.",
+      "stopSame": "Stop-loss cannot equal the entry price.",
+      "longStop": "For LONG the stop-loss must be below the entry price.",
+      "shortStop": "For SHORT the stop-loss must be above the entry price.",
+      "longTp": "For LONG the take-profit must be above the entry price.",
+      "shortTp": "For SHORT the take-profit must be below the entry price.",
+      "sizeZero": "At this risk you get less than one share. Increase the risk or move the stop-loss closer."
+    },
+    "score": {
+      "title": "Trade score",
+      "of": "out of 10",
+      "note": "The score only shows how well the trade fits your rules. It says nothing about where the market goes.",
+      "noRules": "You have no active rules yet. Create some to get a score.",
+      "createRules": "Create rules"
+    },
+    "reasons": {
+      "max_risk_percent": {
+        "ok": "Risk {actual}% is within the rule (up to {limit}%)",
+        "violated": "Your maximum risk: {limit}%. Trade risk: {actual}%."
+      },
+      "min_risk_reward": {
+        "ok": "R:R {actual} is at least {limit}",
+        "violated": "Minimum R:R by your rule: {limit}. Trade R:R: {actual}."
+      },
+      "max_leverage": {
+        "ok": "Leverage {actual} is within the rule (up to {limit})",
+        "violated": "Maximum leverage by your rule: {limit}. Trade leverage: {actual}."
+      },
+      "require_stop_loss": {
+        "ok": "Stop-loss is set",
+        "violated": "Your rule requires a stop-loss."
+      },
+      "max_trades_per_day": {
+        "ok": "Trades today: {actual} of {limit}",
+        "violated": "Maximum trades per day by your rule: {limit}. With this one it will be {actual}."
+      },
+      "custom": {
+        "manual": "{name} — mark it manually when recording the trade"
+      }
+    },
+    "warning": {
+      "title": "This trade breaks one or more of your rules",
+      "text": "The decision is yours. Tartib only shows what goes against your own rules.",
+      "cancel": "Cancel",
+      "proceed": "Continue anyway"
+    },
+    "saveAsTrade": "Save as trade"
+  },
+  "trades": {
+    "title": "My trades",
+    "add": "Add trade",
+    "empty": {
+      "title": "No trades here yet. Add your first trade so Tartib can start analyzing your trading discipline.",
+      "cta": "Add first trade"
+    },
+    "noResults": "No trades match these filters.",
+    "cols": {
+      "date": "Date",
+      "instrument": "Instrument",
+      "direction": "Direction",
+      "entry": "Entry",
+      "exit": "Exit",
+      "size": "Size",
+      "pnl": "P&L",
+      "emotion": "Emotion",
+      "rules": "Rules"
+    },
+    "rulesFollowed": "Followed",
+    "rulesViolated": "Broken",
+    "filters": {
+      "from": "From date",
+      "to": "To date",
+      "instrument": "Instrument",
+      "direction": "Direction",
+      "result": "Result",
+      "profit": "Profit",
+      "loss": "Loss",
+      "emotion": "Emotion",
+      "rules": "Rules",
+      "all": "All",
+      "apply": "Apply",
+      "reset": "Reset"
+    },
+    "pagination": {
+      "prev": "Back",
+      "next": "Next",
+      "page": "Page {page} of {total}"
+    },
+    "form": {
+      "newTitle": "New trade",
+      "editTitle": "Edit trade",
+      "account": "Trading account",
+      "instrument": "Instrument",
+      "market": "Market",
+      "direction": "Direction",
+      "entry": "Entry price",
+      "exit": "Exit price",
+      "stop": "Stop-loss",
+      "takeProfit": "Take-profit",
+      "size": "Size (asset units)",
+      "leverage": "Leverage",
+      "riskPercent": "Risk, %",
+      "pnl": "P&L",
+      "pnlHint": "Calculated from entry, exit and size. You can change it manually, for example to include fees.",
+      "emotion": "Emotion",
+      "violated": "Rules broken",
+      "violatedHint": "Mark the rules you broke. Rules broken by the numbers are marked automatically.",
+      "auto": "auto",
+      "noActiveRules": "You have no active rules.",
+      "reason": "Reason for entry",
+      "plan": "Trading plan",
+      "comment": "Comment after the trade",
+      "tradedAt": "Date and time",
+      "save": "Save trade",
+      "fromCalculator": "Data carried over from the calculator."
+    },
+    "detail": {
+      "risk": "Risk",
+      "riskReward": "R:R",
+      "potentialLoss": "Potential loss",
+      "potentialProfit": "Potential profit",
+      "discipline": "Discipline",
+      "followed": "Rules followed",
+      "violated": "Rules broken",
+      "back": "Back to trades",
+      "deleteTitle": "Delete this trade?",
+      "deleteText": "The trade will be deleted permanently.",
+      "none": "—"
+    },
+    "account": "Account",
+    "noAccount": "Couldn't find the trading account.",
+    "notFound": "Trade not found.",
+    "saveFailed": "Couldn't save the trade. Please try again.",
+    "deleteFailed": "Couldn't delete the trade. Please try again."
   }
 }

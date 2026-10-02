@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LogOut } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
+import { DeleteAccount } from "@/components/profile/DeleteAccount";
 import { ProfileForm } from "@/components/profile/ProfileForm";
 import { Badge, Button, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
@@ -50,6 +51,8 @@ export default async function ProfilePage() {
       <form action={logoutAction}>
         <Button type="submit" variant="secondary"><LogOut className="h-4 w-4" aria-hidden /> {t("auth.logout")}</Button>
       </form>
+
+      <DeleteAccount email={user.email ?? ""} />
     </div>
   );
 }

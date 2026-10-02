@@ -221,6 +221,10 @@ export function Calculator({ accounts, rules, tradesToday }: Props) {
             )}
           </Card>
 
+          {result && parsed.balance !== null && result.margin > parsed.balance && (
+            <Alert tone="warning">{t("calc.marginWarning", { margin: money(result.margin), balance: money(parsed.balance) })}</Alert>
+          )}
+
           {result && (
             <Card>
               <div className="flex items-baseline justify-between gap-3">

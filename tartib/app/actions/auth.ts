@@ -1,10 +1,11 @@
 "use server";
 
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
+import { isLocale, LOCALE_COOKIE } from "@/lib/i18n/config";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
-import { loginSchema, registerSchema } from "@/lib/validations/auth";
+import { forgotSchema, loginSchema, registerSchema, resetSchema } from "@/lib/validations/auth";
 
 /** Результат действия. error — ключ словаря, чтобы показать текст на языке пользователя. */
 export type ActionResult = { ok: true; needsEmailConfirmation?: boolean; id?: string } | { ok: false; error: string };
@@ -19,6 +20,14 @@ export async function loginAction(input: unknown): Promise<ActionResult> {
     const { error } = await supabase.auth.signInWithPassword(parsed.data);
     if (error) {
       return { ok: false, error: error.status === 400 ? "errors.invalidCredentials" : "errors.generic" };
+    }
+    // Язык из профиля действует на любом устройстве, где пользователь вошёл
+    const { data: auth } = await supabase.auth.getUser();
+    if (auth.user) {
+      const { data: profile } = await supabase.from("profiles").select("language").eq("id", auth.user.id).maybeSingle();
+      if (profile && isLocale(profile.language)) {
+        (await cookies()).set(LOCALE_COOKIE, profile.language, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+      }
     }
     return { ok: true };
   } catch {
@@ -63,4 +72,66 @@ export async function logoutAction(): Promise<void> {
     await supabase.auth.signOut();
   }
   redirect("/");
+}
+
+/** Отправляет письмо со ссылкой для нового пароля. Всегда отвечает «ок», чтобы нельзя было выяснить, есть ли такая почта. */
+export async function requestPasswordResetAction(input: unknown): Promise<ActionResult> {
+  const parsed = forgotSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "errors.generic" };
+  if (!isSupabaseConfigured()) return { ok: false, error: "auth.notConfigured" };
+
+  try {
+    const h = await headers();
+    const host = h.get("x-forwarded-host") ?? h.get("host");
+    const proto = h.get("x-forwarded-proto") ?? "http";
+    const supabase = await createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(parsed.data.email, {
+      redirectTo: `${proto}://${host}/auth/callback?next=/reset-password`,
+    });
+    // Лимит писем — это проблема сервиса, а не пользователя; о ней нужно сказать
+    if (error && (error.status === 429 || /rate limit/i.test(error.message))) return { ok: false, error: "auth.forgot.rateLimit" };
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "errors.generic" };
+  }
+}
+
+/** Меняет пароль вошедшего пользователя (после перехода по ссылке из письма). */
+export async function updatePasswordAction(input: unknown): Promise<ActionResult> {
+  const parsed = resetSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "errors.generic" };
+  if (!isSupabaseConfigured()) return { ok: false, error: "auth.notConfigured" };
+
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) return { ok: false, error: "auth.reset.expired" };
+    const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
+    if (error) {
+      return { ok: false, error: /different|same/i.test(error.message) ? "auth.reset.same" : "errors.generic" };
+    }
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "errors.generic" };
+  }
+}
+
+/** Полностью удаляет аккаунт пользователя и все его данные (функция в базе delete_my_account). */
+export async function deleteAccountAction(confirmEmail: string): Promise<ActionResult> {
+  if (!isSupabaseConfigured()) return { ok: false, error: "auth.notConfigured" };
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) return { ok: false, error: "errors.generic" };
+    // Страховка: адрес для подтверждения должен совпасть с адресом аккаунта
+    if ((data.user.email ?? "").toLowerCase() !== String(confirmEmail).trim().toLowerCase()) {
+      return { ok: false, error: "profile.deleteMismatch" };
+    }
+    const { error } = await supabase.rpc("delete_my_account");
+    if (error) return { ok: false, error: "profile.deleteFailed" };
+    await supabase.auth.signOut();
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "profile.deleteFailed" };
+  }
 }

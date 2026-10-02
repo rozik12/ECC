@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
 const PRIVATE_PREFIXES = [
-  "/dashboard", "/calculator", "/trades", "/rules", "/statistics", "/profile", "/settings", "/onboarding",
+  "/dashboard", "/calculator", "/trades", "/rules", "/statistics", "/profile", "/settings", "/onboarding", "/reset-password",
 ];
 const AUTH_PAGES = ["/login", "/register"];
 

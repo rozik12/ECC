@@ -41,6 +41,7 @@ export async function saveRuleAction(id: string | null, input: unknown): Promise
       const plan = await getPlan(supabase, user.id);
       if ((await ruleCount(supabase)) >= PLAN_LIMITS[plan].rules) return { ok: false, error: "errors.limitRules" };
       const { error } = await supabase.from("rules").insert({ ...row, user_id: user.id });
+      if (error?.message?.includes("plan_limit_rules")) return { ok: false, error: "errors.limitRules" };
       if (error) return FAIL;
     }
     revalidatePath("/rules");

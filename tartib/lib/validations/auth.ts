@@ -14,3 +14,14 @@ export const registerSchema = z.object({
 
 export type LoginValues = z.infer<typeof loginSchema>;
 export type RegisterValues = z.infer<typeof registerSchema>;
+
+export const forgotSchema = z.object({
+  email: z.string().trim().min(1, "errors.required").pipe(z.email("errors.email")),
+});
+
+export const resetSchema = z.object({
+  password: z.string().min(8, "errors.passwordMin").max(72, "errors.passwordMax"),
+});
+
+export type ForgotValues = z.infer<typeof forgotSchema>;
+export type ResetValues = z.infer<typeof resetSchema>;

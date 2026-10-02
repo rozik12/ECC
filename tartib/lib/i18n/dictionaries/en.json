@@ -151,7 +151,26 @@
     "checkEmailTitle": "Check your email",
     "checkEmailText": "We sent you a message with a link. Click it to confirm your email and log in.",
     "notConfigured": "Sign-in is not configured yet. Supabase keys must be added to the .env.local file.",
-    "logout": "Log out"
+    "logout": "Log out",
+    "linkExpired": "The link from the email has expired or was opened in a different browser. Request a new one.",
+    "forgot": {
+      "link": "Forgot password?",
+      "title": "Password recovery",
+      "subtitle": "Enter your account email and we'll send a link to set a new password.",
+      "submit": "Send link",
+      "back": "Back to log in",
+      "sentTitle": "Check your email",
+      "sentText": "If an account with this email exists, we sent a message with a link. Open it in this same browser.",
+      "rateLimit": "Emails are being sent too often right now. Please try again a bit later."
+    },
+    "reset": {
+      "title": "New password",
+      "subtitle": "Choose a new password for signing in.",
+      "newPassword": "New password",
+      "submit": "Save password",
+      "expired": "The link has expired. Request password recovery again.",
+      "same": "The new password must be different from the old one."
+    }
   },
   "pages": {
     "comingTitle": "This section is in development",
@@ -426,7 +445,8 @@
       "cancel": "Cancel",
       "proceed": "Continue anyway"
     },
-    "saveAsTrade": "Save as trade"
+    "saveAsTrade": "Save as trade",
+    "marginWarning": "Required margin ({margin}) is higher than the account balance ({balance}). Lower the risk or raise the leverage."
   },
   "trades": {
     "title": "My trades",
@@ -607,7 +627,16 @@
   },
   "profile": {
     "name": "Name",
-    "plan": "Plan"
+    "plan": "Plan",
+    "dangerTitle": "Delete account",
+    "dangerText": "Your account and all data (accounts, rules, trades, reports) will be deleted permanently. This cannot be undone.",
+    "deleteAccount": "Delete account",
+    "deleteTitle": "Delete account permanently?",
+    "deleteText": "All your data will disappear and cannot be recovered.",
+    "deleteType": "To confirm, type your email: {email}",
+    "deleteConfirm": "Delete permanently",
+    "deleteMismatch": "The email does not match the account email.",
+    "deleteFailed": "Couldn't delete the account. Please try again."
   },
   "states": {
     "errorTitle": "Something went wrong",

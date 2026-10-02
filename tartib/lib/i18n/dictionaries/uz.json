@@ -151,7 +151,26 @@
     "checkEmailTitle": "Pochtani tekshir",
     "checkEmailText": "Biz havola bilan xat yubordik. Pochtani tasdiqlash va kirish uchun unga bos.",
     "notConfigured": "Kirish xizmati hali sozlanmagan. .env.local fayliga Supabase kalitlarini qo'shish kerak.",
-    "logout": "Chiqish"
+    "logout": "Chiqish",
+    "linkExpired": "Xatdagi havola eskirgan yoki boshqa brauzerda ochilgan. Yangisini so'ra.",
+    "forgot": {
+      "link": "Parolni unutdingmi?",
+      "title": "Parolni tiklash",
+      "subtitle": "Akkaunt pochtasini kiriting, yangi parol uchun havola yuboramiz.",
+      "submit": "Havola yuborish",
+      "back": "Kirishga qaytish",
+      "sentTitle": "Pochtani tekshir",
+      "sentText": "Bunday pochtali akkaunt mavjud bo'lsa, havola bilan xat yubordik. Uni shu brauzerning o'zida och.",
+      "rateLimit": "Hozir xatlar juda tez-tez yuborilmoqda. Birozdan keyin qayta urinib ko'r."
+    },
+    "reset": {
+      "title": "Yangi parol",
+      "subtitle": "Kirish uchun yangi parol o'ylab top.",
+      "newPassword": "Yangi parol",
+      "submit": "Parolni saqlash",
+      "expired": "Havola eskirgan. Parolni tiklashni qaytadan so'ra.",
+      "same": "Yangi parol eskisidan farq qilishi kerak."
+    }
   },
   "pages": {
     "comingTitle": "Bu bo'lim ishlab chiqilmoqda",
@@ -426,7 +445,8 @@
       "cancel": "Bekor qilish",
       "proceed": "Baribir davom etish"
     },
-    "saveAsTrade": "Bitim sifatida saqlash"
+    "saveAsTrade": "Bitim sifatida saqlash",
+    "marginWarning": "Kerakli marja ({margin}) hisob balansidan ({balance}) katta. Xavfni kamaytir yoki yelkani oshir."
   },
   "trades": {
     "title": "Bitimlarim",
@@ -607,7 +627,16 @@
   },
   "profile": {
     "name": "Ism",
-    "plan": "Tarif"
+    "plan": "Tarif",
+    "dangerTitle": "Akkauntni o'chirish",
+    "dangerText": "Akkaunt va barcha ma'lumotlar (hisoblar, qoidalar, bitimlar, hisobotlar) butunlay o'chiriladi. Buni bekor qilib bo'lmaydi.",
+    "deleteAccount": "Akkauntni o'chirish",
+    "deleteTitle": "Akkaunt butunlay o'chirilsinmi?",
+    "deleteText": "Barcha ma'lumotlaring qaytarib bo'lmaydigan tarzda yo'qoladi.",
+    "deleteType": "Tasdiqlash uchun pochtangni kiriting: {email}",
+    "deleteConfirm": "Butunlay o'chirish",
+    "deleteMismatch": "Pochta akkaunt pochtasiga mos kelmaydi.",
+    "deleteFailed": "Akkauntni o'chirib bo'lmadi. Qayta urinib ko'r."
   },
   "states": {
     "errorTitle": "Nimadir noto'g'ri ketdi",

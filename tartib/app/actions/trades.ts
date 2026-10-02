@@ -108,6 +108,7 @@ export async function saveTradeAction(tradeId: string | null, input: unknown): P
       if (delError) return SAVE_FAILED;
     } else {
       const { data, error } = await supabase.from("trades").insert({ ...row, user_id: user.id }).select("id").single();
+      if (error?.message?.includes("plan_limit_trades")) return { ok: false, error: "errors.limitTrades" };
       if (error || !data) return SAVE_FAILED;
       id = data.id as string;
     }

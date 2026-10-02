@@ -458,5 +458,83 @@
     "notFound": "Trade not found.",
     "saveFailed": "Couldn't save the trade. Please try again.",
     "deleteFailed": "Couldn't delete the trade. Please try again."
+  },
+  "stats": {
+    "title": "Statistics",
+    "subtitle": "All numbers are calculated from your trade journal.",
+    "period": {
+      "7d": "7 days",
+      "30d": "30 days",
+      "all": "All time"
+    },
+    "none": "—",
+    "kpi": {
+      "totalPnl": "Total P&L",
+      "winRate": "Win rate",
+      "profitFactor": "Profit factor",
+      "avgWin": "Average win",
+      "avgLoss": "Average loss",
+      "maxDrawdown": "Max drawdown",
+      "totalTrades": "Total trades",
+      "avgR": "Average R"
+    },
+    "discipline": {
+      "title": "Price of discipline",
+      "followed": "Following rules",
+      "violated": "With violations",
+      "difference": "Difference",
+      "trades": "Trades: {n}",
+      "cost": "Cost of violations",
+      "costText": "Without the trades that broke your rules, your result would have been {amount} higher.",
+      "noLoss": "Trades with violations did not lose money in this period.",
+      "noViolations": "No violations in this period. Keep it up!",
+      "empty": "The calculation will appear after your first trades."
+    },
+    "charts": {
+      "equity": "Equity curve",
+      "byDay": "P&L by day",
+      "byInstrument": "P&L by instrument",
+      "byEmotion": "P&L by emotion",
+      "byRules": "P&L by rule compliance",
+      "balance": "Balance",
+      "pnl": "P&L",
+      "tradesCount": "Trades: {n}",
+      "noData": "No data for this period."
+    },
+    "emotions": {
+      "title": "Emotion analysis",
+      "subtitle": "Conclusions are based only on your own journal.",
+      "count": "Trades",
+      "total": "Total",
+      "average": "Average",
+      "insight": "In your journal, trades with the emotion {emotion} give {avg} on average.",
+      "tooFew": "Not enough data for {emotion} yet: {n} trades, at least 3 needed.",
+      "note": "This is an observation from your data, not a general rule."
+    },
+    "emptyPeriod": "No trades in this period."
+  },
+  "dashboard": {
+    "greeting": "Hi, {name}!",
+    "today": {
+      "title": "Today",
+      "balance": "Current balance",
+      "pnl": "P&L today",
+      "trades": "Trades today",
+      "winRate": "Win rate today"
+    },
+    "recent": {
+      "title": "Recent trades",
+      "all": "All trades"
+    },
+    "violations": {
+      "title": "Your frequent violations",
+      "period": "Last 30 days",
+      "none": "No violations in the last 30 days.",
+      "times": "{n} times"
+    },
+    "discipline": {
+      "period": "Last 30 days",
+      "more": "More in statistics"
+    }
   }
 }

@@ -458,5 +458,83 @@
     "notFound": "Bitim topilmadi.",
     "saveFailed": "Bitimni saqlab bo'lmadi. Qayta urinib ko'r.",
     "deleteFailed": "Bitimni o'chirib bo'lmadi. Qayta urinib ko'r."
+  },
+  "stats": {
+    "title": "Statistika",
+    "subtitle": "Barcha raqamlar bitimlar jurnaliga qarab hisoblanadi.",
+    "period": {
+      "7d": "7 kun",
+      "30d": "30 kun",
+      "all": "Butun davr"
+    },
+    "none": "—",
+    "kpi": {
+      "totalPnl": "Umumiy P&L",
+      "winRate": "Win rate",
+      "profitFactor": "Profit factor",
+      "avgWin": "O'rtacha foyda",
+      "avgLoss": "O'rtacha zarar",
+      "maxDrawdown": "Maks. cho'kish",
+      "totalTrades": "Jami bitimlar",
+      "avgR": "O'rtacha R"
+    },
+    "discipline": {
+      "title": "Intizom narxi",
+      "followed": "Qoidalar bo'yicha",
+      "violated": "Buzilishlar bilan",
+      "difference": "Farq",
+      "trades": "Bitimlar: {n}",
+      "cost": "Buzilishlar narxi",
+      "costText": "Qoidalar buzilgan bitimlarsiz natijang {amount} yuqori bo'lardi.",
+      "noLoss": "Bu davrda qoidalar buzilgan bitimlar zarar keltirmadi.",
+      "noViolations": "Bu davrda buzilishlar yo'q. Shunday davom et!",
+      "empty": "Hisob-kitob birinchi bitimlardan keyin paydo bo'ladi."
+    },
+    "charts": {
+      "equity": "Depozit egri chizig'i",
+      "byDay": "Kunlar bo'yicha P&L",
+      "byInstrument": "Instrumentlar bo'yicha P&L",
+      "byEmotion": "Hissiyotlar bo'yicha P&L",
+      "byRules": "Qoidalarga amal qilish bo'yicha P&L",
+      "balance": "Balans",
+      "pnl": "P&L",
+      "tradesCount": "Bitimlar: {n}",
+      "noData": "Bu davr uchun ma'lumot yo'q."
+    },
+    "emotions": {
+      "title": "Hissiyotlar tahlili",
+      "subtitle": "Xulosalar faqat o'z jurnaling ma'lumotlariga asoslanadi.",
+      "count": "Bitimlar",
+      "total": "Jami",
+      "average": "O'rtacha",
+      "insight": "Jurnalingda {emotion} hissiyotli bitimlar o'rtacha {avg} beradi.",
+      "tooFew": "{emotion} bo'yicha ma'lumot hozircha kam: {n} ta bitim, kamida 3 ta kerak.",
+      "note": "Bu umumiy qoida emas, sening ma'lumotlaringga ko'ra kuzatuv."
+    },
+    "emptyPeriod": "Bu davrda bitimlar yo'q."
+  },
+  "dashboard": {
+    "greeting": "Salom, {name}!",
+    "today": {
+      "title": "Bugun",
+      "balance": "Joriy balans",
+      "pnl": "Bugungi P&L",
+      "trades": "Bugungi bitimlar",
+      "winRate": "Bugungi win rate"
+    },
+    "recent": {
+      "title": "So'nggi bitimlar",
+      "all": "Barcha bitimlar"
+    },
+    "violations": {
+      "title": "Tez-tez buzadigan qoidalaring",
+      "period": "Oxirgi 30 kun",
+      "none": "Oxirgi 30 kunda buzilishlar yo'q.",
+      "times": "{n} marta"
+    },
+    "discipline": {
+      "period": "Oxirgi 30 kun",
+      "more": "Statistikada batafsil"
+    }
   }
 }

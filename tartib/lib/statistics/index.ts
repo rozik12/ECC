@@ -1,0 +1,175 @@
+// Расчёт статистики. Чистые функции без зависимостей, чтобы их можно было тестировать.
+
+export type Violation = { id: string; name: string };
+
+export type StatTrade = {
+  id: string;
+  tradedAt: string; // ISO
+  instrument: string;
+  direction: "long" | "short";
+  entryPrice: number;
+  exitPrice: number | null;
+  pnl: number;
+  emotion: string;
+  rulesFollowed: boolean;
+  riskAmount: number | null;
+  violations: Violation[];
+};
+
+export type Period = "7d" | "30d" | "all";
+export const periods: Period[] = ["7d", "30d", "all"];
+const DAY_MS = 24 * 3600 * 1000;
+
+export function periodStart(period: Period, now: Date = new Date()): Date | null {
+  if (period === "all") return null;
+  return new Date(now.getTime() - (period === "7d" ? 7 : 30) * DAY_MS);
+}
+
+export function filterByPeriod(trades: StatTrade[], period: Period, now: Date = new Date()): StatTrade[] {
+  const start = periodStart(period, now);
+  if (!start) return trades;
+  return trades.filter((t) => new Date(t.tradedAt) >= start);
+}
+
+const byTime = (a: StatTrade, b: StatTrade) => new Date(a.tradedAt).getTime() - new Date(b.tradedAt).getTime();
+const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+
+export type Summary = {
+  totalTrades: number;
+  totalPnl: number;
+  wins: number;
+  losses: number;
+  winRate: number | null;
+  /** null — если убытков нет (деление на ноль) */
+  profitFactor: number | null;
+  grossProfit: number;
+  grossLoss: number;
+  avgWin: number | null;
+  /** положительное число — модуль среднего убытка */
+  avgLoss: number | null;
+  avgR: number | null;
+};
+
+export function summarize(trades: StatTrade[]): Summary {
+  const wins = trades.filter((t) => t.pnl > 0);
+  const losses = trades.filter((t) => t.pnl < 0);
+  const grossProfit = sum(wins.map((t) => t.pnl));
+  const grossLoss = Math.abs(sum(losses.map((t) => t.pnl)));
+  const withRisk = trades.filter((t) => t.riskAmount !== null && t.riskAmount > 0);
+  return {
+    totalTrades: trades.length,
+    totalPnl: sum(trades.map((t) => t.pnl)),
+    wins: wins.length,
+    losses: losses.length,
+    winRate: trades.length ? (wins.length / trades.length) * 100 : null,
+    profitFactor: grossLoss > 0 ? grossProfit / grossLoss : null,
+    grossProfit,
+    grossLoss,
+    avgWin: wins.length ? grossProfit / wins.length : null,
+    avgLoss: losses.length ? grossLoss / losses.length : null,
+    avgR: withRisk.length ? sum(withRisk.map((t) => t.pnl / (t.riskAmount as number))) / withRisk.length : null,
+  };
+}
+
+export type EquityPoint = { ts: number; balance: number };
+
+/** Кривая депозита: баланс после каждой сделки. startBalance — баланс перед первой сделкой периода. */
+export function equityCurve(trades: StatTrade[], startBalance: number): EquityPoint[] {
+  const sorted = [...trades].sort(byTime);
+  if (sorted.length === 0) return [];
+  const first = new Date(sorted[0].tradedAt).getTime();
+  const points: EquityPoint[] = [{ ts: first - 3600 * 1000, balance: startBalance }];
+  let balance = startBalance;
+  for (const t of sorted) {
+    balance += t.pnl;
+    points.push({ ts: new Date(t.tradedAt).getTime(), balance });
+  }
+  return points;
+}
+
+export function maxDrawdown(points: EquityPoint[]): { amount: number; percent: number } {
+  let peak = -Infinity;
+  let amount = 0;
+  let percent = 0;
+  for (const p of points) {
+    if (p.balance > peak) peak = p.balance;
+    const dd = peak - p.balance;
+    if (dd > amount) {
+      amount = dd;
+      percent = peak > 0 ? (dd / peak) * 100 : 0;
+    }
+  }
+  return { amount, percent };
+}
+
+export type Bucket = { key: string; pnl: number; count: number };
+
+export function localDay(iso: string, timeZone: string): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
+}
+
+export function groupBy(trades: StatTrade[], keyOf: (t: StatTrade) => string): Bucket[] {
+  const map = new Map<string, Bucket>();
+  for (const t of trades) {
+    const key = keyOf(t);
+    const b = map.get(key) ?? { key, pnl: 0, count: 0 };
+    b.pnl += t.pnl;
+    b.count += 1;
+    map.set(key, b);
+  }
+  return [...map.values()];
+}
+
+export function pnlByDay(trades: StatTrade[], timeZone: string): Bucket[] {
+  return groupBy(trades, (t) => localDay(t.tradedAt, timeZone)).sort((a, b) => a.key.localeCompare(b.key));
+}
+
+export function pnlByInstrument(trades: StatTrade[]): Bucket[] {
+  return groupBy(trades, (t) => t.instrument).sort((a, b) => b.pnl - a.pnl);
+}
+
+export type EmotionStat = { emotion: string; count: number; total: number; average: number };
+
+export function byEmotion(trades: StatTrade[]): EmotionStat[] {
+  return groupBy(trades, (t) => t.emotion)
+    .map((b) => ({ emotion: b.key, count: b.count, total: b.pnl, average: b.pnl / b.count }))
+    .sort((a, b) => a.average - b.average);
+}
+
+export type DisciplineCost = {
+  followedPnl: number;
+  violatedPnl: number;
+  followedCount: number;
+  violatedCount: number;
+  /** |violatedPnl|, если сделки с нарушениями в минусе, иначе 0 */
+  cost: number;
+  difference: number;
+};
+
+export function disciplineCost(trades: StatTrade[]): DisciplineCost {
+  const followed = trades.filter((t) => t.rulesFollowed);
+  const violated = trades.filter((t) => !t.rulesFollowed);
+  const followedPnl = sum(followed.map((t) => t.pnl));
+  const violatedPnl = sum(violated.map((t) => t.pnl));
+  return {
+    followedPnl,
+    violatedPnl,
+    followedCount: followed.length,
+    violatedCount: violated.length,
+    cost: violatedPnl < 0 ? Math.abs(violatedPnl) : 0,
+    difference: followedPnl - violatedPnl,
+  };
+}
+
+/** Самые частые нарушения правил. */
+export function topViolations(trades: StatTrade[], limit = 5): { id: string; name: string; count: number }[] {
+  const map = new Map<string, { id: string; name: string; count: number }>();
+  for (const t of trades) {
+    for (const v of t.violations) {
+      const item = map.get(v.id) ?? { id: v.id, name: v.name, count: 0 };
+      item.count += 1;
+      map.set(v.id, item);
+    }
+  }
+  return [...map.values()].sort((a, b) => b.count - a.count).slice(0, limit);
+}

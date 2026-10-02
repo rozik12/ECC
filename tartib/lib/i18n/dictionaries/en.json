@@ -66,10 +66,22 @@
     },
     "how": {
       "title": "How it works",
-      "step1": { "title": "Create rules", "text": "Maximum risk, leverage, minimum R:R — whatever matters to you." },
-      "step2": { "title": "Calculate the trade", "text": "The calculator shows risk, loss and profit, and warns about rule violations." },
-      "step3": { "title": "Record the result", "text": "Add the trade to your journal with the emotion and the reason for entry." },
-      "step4": { "title": "Analyze discipline", "text": "Review statistics and the cost of violations to understand your mistakes." }
+      "step1": {
+        "title": "Create rules",
+        "text": "Maximum risk, leverage, minimum R:R — whatever matters to you."
+      },
+      "step2": {
+        "title": "Calculate the trade",
+        "text": "The calculator shows risk, loss and profit, and warns about rule violations."
+      },
+      "step3": {
+        "title": "Record the result",
+        "text": "Add the trade to your journal with the emotion and the reason for entry."
+      },
+      "step4": {
+        "title": "Analyze discipline",
+        "text": "Review statistics and the cost of violations to understand your mistakes."
+      }
     },
     "pricing": {
       "title": "Start for free",
@@ -110,8 +122,28 @@
     }
   },
   "auth": {
-    "soonTitle": "Sign-in is coming soon",
-    "soonText": "Registration and login will be connected at the next stage."
+    "login": {
+      "title": "Log in",
+      "subtitle": "Welcome back! Log in to continue.",
+      "submit": "Log in",
+      "noAccount": "No account yet?",
+      "toRegister": "Sign up"
+    },
+    "register": {
+      "title": "Create an account",
+      "subtitle": "Free. Takes a minute.",
+      "name": "Name",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "toLogin": "Log in"
+    },
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters",
+    "checkEmailTitle": "Check your email",
+    "checkEmailText": "We sent you a message with a link. Click it to confirm your email and log in.",
+    "notConfigured": "Sign-in is not configured yet. Supabase keys must be added to the .env.local file.",
+    "logout": "Log out"
   },
   "pages": {
     "comingTitle": "This section is in development",
@@ -128,5 +160,30 @@
     "termsTitle": "Terms of use",
     "privacyTitle": "Privacy policy",
     "draft": "The full text will be added before launch."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "required": "Fill in this field",
+    "email": "Enter a valid email",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordMax": "Password is too long",
+    "nameMax": "Value is too long",
+    "number": "Enter a number",
+    "balanceMin": "Balance cannot be below zero",
+    "balanceMax": "Number is too large",
+    "invalidCredentials": "Wrong email or password.",
+    "emailTaken": "This email is already registered. Try logging in."
+  },
+  "onboarding": {
+    "title": "Let's get acquainted",
+    "subtitle": "It takes half a minute. You can change everything later in settings.",
+    "name": "What's your name?",
+    "language": "Interface language",
+    "currency": "Currency",
+    "accountName": "Trading account name",
+    "accountNamePlaceholder": "Main account",
+    "startingBalance": "Starting balance",
+    "startingBalanceHint": "How much money is on the account now. The equity curve is built from it.",
+    "submit": "Start"
   }
 }

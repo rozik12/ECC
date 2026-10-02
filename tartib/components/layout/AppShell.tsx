@@ -1,3 +1,6 @@
+import { LogOut } from "lucide-react";
+import { logoutAction } from "@/app/actions/auth";
+import { getTranslator } from "@/lib/i18n/server";
 import { Disclaimer } from "./Disclaimer";
 import { BottomNav, Sidebar, TopIcons } from "./AppNav";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -5,7 +8,8 @@ import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
 /** Каркас приватных страниц: сайдбар на компьютере, нижнее меню на телефоне. */
-export function AppShell({ children }: { children: React.ReactNode }) {
+export async function AppShell({ children }: { children: React.ReactNode }) {
+  const { t } = await getTranslator();
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
       <aside className="hidden border-r border-border bg-surface p-4 lg:block">
@@ -24,6 +28,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <LanguageSwitcher />
             <ThemeToggle />
             <TopIcons />
+            <form action={logoutAction}>
+              <button
+                type="submit"
+                aria-label={t("auth.logout")}
+                title={t("auth.logout")}
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:bg-surface-muted hover:text-foreground"
+              >
+                <LogOut className="h-5 w-5" />
+              </button>
+            </form>
           </div>
         </header>
 

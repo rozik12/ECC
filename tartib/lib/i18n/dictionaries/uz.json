@@ -66,10 +66,22 @@
     },
     "how": {
       "title": "Bu qanday ishlaydi",
-      "step1": { "title": "Qoidalar yarat", "text": "Maksimal xavf, yelka, minimal R:R — aynan senga muhim bo'lgan narsalar." },
-      "step2": { "title": "Bitimni hisobla", "text": "Kalkulyator xavf, zarar va foydani ko'rsatadi hamda buzilishlar haqida ogohlantiradi." },
-      "step3": { "title": "Natijani yoz", "text": "Bitimni hissiyot va kirish sababi bilan jurnalga qo'sh." },
-      "step4": { "title": "Intizomni tahlil qil", "text": "Xatolaringni tushunish uchun statistika va buzilishlar narxini ko'r." }
+      "step1": {
+        "title": "Qoidalar yarat",
+        "text": "Maksimal xavf, yelka, minimal R:R — aynan senga muhim bo'lgan narsalar."
+      },
+      "step2": {
+        "title": "Bitimni hisobla",
+        "text": "Kalkulyator xavf, zarar va foydani ko'rsatadi hamda buzilishlar haqida ogohlantiradi."
+      },
+      "step3": {
+        "title": "Natijani yoz",
+        "text": "Bitimni hissiyot va kirish sababi bilan jurnalga qo'sh."
+      },
+      "step4": {
+        "title": "Intizomni tahlil qil",
+        "text": "Xatolaringni tushunish uchun statistika va buzilishlar narxini ko'r."
+      }
     },
     "pricing": {
       "title": "Bepul boshla",
@@ -110,8 +122,28 @@
     }
   },
   "auth": {
-    "soonTitle": "Kirish tez orada paydo bo'ladi",
-    "soonText": "Ro'yxatdan o'tish va kirish keyingi bosqichda ulanadi."
+    "login": {
+      "title": "Kirish",
+      "subtitle": "Xush kelibsan! Davom etish uchun kir.",
+      "submit": "Kirish",
+      "noAccount": "Akkaunting yo'qmi?",
+      "toRegister": "Ro'yxatdan o'tish"
+    },
+    "register": {
+      "title": "Akkaunt yaratish",
+      "subtitle": "Bepul. Bir daqiqa vaqt oladi.",
+      "name": "Ism",
+      "submit": "Akkaunt yaratish",
+      "haveAccount": "Akkaunting bormi?",
+      "toLogin": "Kirish"
+    },
+    "email": "Pochta",
+    "password": "Parol",
+    "passwordHint": "Kamida 8 ta belgi",
+    "checkEmailTitle": "Pochtani tekshir",
+    "checkEmailText": "Biz havola bilan xat yubordik. Pochtani tasdiqlash va kirish uchun unga bos.",
+    "notConfigured": "Kirish xizmati hali sozlanmagan. .env.local fayliga Supabase kalitlarini qo'shish kerak.",
+    "logout": "Chiqish"
   },
   "pages": {
     "comingTitle": "Bu bo'lim ishlab chiqilmoqda",
@@ -128,5 +160,30 @@
     "termsTitle": "Foydalanish shartlari",
     "privacyTitle": "Maxfiylik siyosati",
     "draft": "To'liq matn ishga tushirishdan oldin qo'shiladi."
+  },
+  "errors": {
+    "generic": "Nimadir noto'g'ri ketdi. Qayta urinib ko'r.",
+    "required": "Bu maydonni to'ldir",
+    "email": "To'g'ri pochta kiriting",
+    "passwordMin": "Parol kamida 8 ta belgidan iborat bo'lishi kerak",
+    "passwordMax": "Parol juda uzun",
+    "nameMax": "Qiymat juda uzun",
+    "number": "Son kiriting",
+    "balanceMin": "Balans noldan kam bo'lishi mumkin emas",
+    "balanceMax": "Son juda katta",
+    "invalidCredentials": "Pochta yoki parol noto'g'ri.",
+    "emailTaken": "Bu pochta allaqachon ro'yxatdan o'tgan. Kirib ko'r."
+  },
+  "onboarding": {
+    "title": "Tanishib olaylik",
+    "subtitle": "Yarim daqiqa oladi. Hammasini keyin sozlamalarda o'zgartirish mumkin.",
+    "name": "Isming nima?",
+    "language": "Interfeys tili",
+    "currency": "Valyuta",
+    "accountName": "Savdo hisobi nomi",
+    "accountNamePlaceholder": "Asosiy hisob",
+    "startingBalance": "Boshlang'ich balans",
+    "startingBalanceHint": "Hisobda hozir qancha pul bor. Depozit egri chizig'i shundan hisoblanadi.",
+    "submit": "Boshlash"
   }
 }

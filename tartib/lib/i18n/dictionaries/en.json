@@ -586,7 +586,7 @@
       "title": "Your frequent violations",
       "period": "Last 30 days",
       "none": "No violations in the last 30 days.",
-      "times": "{n} times"
+      "times": "Violations: {n}"
     },
     "discipline": {
       "period": "Last 30 days",
@@ -616,5 +616,31 @@
     "notFoundTitle": "Page not found",
     "notFoundText": "The link may be outdated or contain a typo.",
     "home": "Go home"
+  },
+  "reports": {
+    "title": "Weekly report",
+    "generate": "Generate report",
+    "regenerate": "Refresh report",
+    "none": "No report yet. Press the button to summarize the last 7 days.",
+    "period": "Period: {from} — {to}",
+    "noTrades": "No trades this week.",
+    "trades": "Trades: {n}.",
+    "result": "Result for the week: {pnl}.",
+    "violationTrades": "Trades that broke your rules: {n}.",
+    "topViolation": "The rule broken most often was “{name}” (violations: {count}). Result of those trades: {pnl}.",
+    "noViolations": "No rule violations this week.",
+    "best": "Best category by result — {kind} {key}: {pnl} (trades: {n}).",
+    "kinds": {
+      "instrument": "instrument",
+      "emotion": "emotion"
+    },
+    "by": {
+      "rules": "Built from rules, no AI",
+      "ai": "Built with AI"
+    },
+    "note": "The report describes your behaviour based on your journal. It is not a forecast or a trading recommendation.",
+    "proOnly": "Weekly reports are available on the PRO plan.",
+    "proSoon": "PRO is coming soon.",
+    "failed": "Couldn't build the report. Please try again."
   }
 }

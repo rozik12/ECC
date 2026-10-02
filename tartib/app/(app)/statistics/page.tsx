@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { WeeklyReportCard } from "@/components/reports/WeeklyReportCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
@@ -7,7 +8,8 @@ import { EquityChart, PnlBars } from "@/components/statistics/charts";
 import { buttonStyles, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getPlan } from "@/lib/data";
+import { getLatestWeeklyReport } from "@/services/reports";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
@@ -25,10 +27,15 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
   const sp = await searchParams;
   const period: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
   const { t, locale } = await getTranslator();
-  const { supabase, profile } = await requireUser();
+  const { supabase, user, profile } = await requireUser();
   const tz = safeTimeZone(profile?.timezone);
 
-  const [accounts, all] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase)]);
+  const [accounts, all, plan, latest] = await Promise.all([
+    getAccounts(supabase),
+    fetchStatTrades(supabase),
+    getPlan(supabase, user.id),
+    getLatestWeeklyReport(supabase),
+  ]);
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
 
@@ -127,6 +134,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           </div>
 
           <EmotionAnalysis stats={emotions} currency={currency} />
+          <WeeklyReportCard plan={plan} report={latest?.content ?? null} currency={currency} />
         </>
       )}
     </div>

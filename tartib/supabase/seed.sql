@@ -35,6 +35,9 @@ begin
   -- Профиль и подписку FREE уже создал триггер handle_new_user
   update public.profiles set name = 'Demo', onboarded = true, timezone = 'Asia/Tashkent' where id = uid;
 
+  -- Демо-пользователю открыт PRO, чтобы были видны недельные отчёты
+  update public.subscriptions set plan = 'pro' where user_id = uid;
+
   insert into public.trading_accounts (user_id, name, starting_balance, currency)
   values (uid, 'Основной счёт', 5000, 'USD') returning id into acc;
 

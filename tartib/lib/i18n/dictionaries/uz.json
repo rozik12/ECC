@@ -586,7 +586,7 @@
       "title": "Tez-tez buzadigan qoidalaring",
       "period": "Oxirgi 30 kun",
       "none": "Oxirgi 30 kunda buzilishlar yo'q.",
-      "times": "{n} marta"
+      "times": "Buzilishlar: {n}"
     },
     "discipline": {
       "period": "Oxirgi 30 kun",
@@ -616,5 +616,31 @@
     "notFoundTitle": "Sahifa topilmadi",
     "notFoundText": "Havola eskirgan yoki unda xato bo'lishi mumkin.",
     "home": "Bosh sahifaga"
+  },
+  "reports": {
+    "title": "Haftalik hisobot",
+    "generate": "Hisobot tuzish",
+    "regenerate": "Hisobotni yangilash",
+    "none": "Hisobot hali tuzilmagan. Oxirgi 7 kun natijalarini yig'ish uchun tugmani bos.",
+    "period": "Davr: {from} — {to}",
+    "noTrades": "Bu hafta bitimlar yo'q.",
+    "trades": "Bitimlar: {n}.",
+    "result": "Hafta natijasi: {pnl}.",
+    "violationTrades": "Qoidalar buzilgan bitimlar: {n}.",
+    "topViolation": "Eng ko'p buzilgan qoida «{name}» (buzilishlar: {count}). Bu bitimlar natijasi: {pnl}.",
+    "noViolations": "Bu hafta qoidalar buzilmagan.",
+    "best": "Natija bo'yicha eng yaxshi toifa — {kind} {key}: {pnl} (bitimlar: {n}).",
+    "kinds": {
+      "instrument": "instrument",
+      "emotion": "hissiyot"
+    },
+    "by": {
+      "rules": "Qoidalar bo'yicha tuzilgan, AI siz",
+      "ai": "AI yordamida tuzilgan"
+    },
+    "note": "Hisobot jurnaling ma'lumotlari asosida xatti-harakatlaringni tasvirlaydi. Bu prognoz yoki savdo tavsiyasi emas.",
+    "proOnly": "Haftalik hisobotlar PRO tarifida mavjud.",
+    "proSoon": "PRO tez orada paydo bo'ladi.",
+    "failed": "Hisobotni tuzib bo'lmadi. Qayta urinib ko'r."
   }
 }

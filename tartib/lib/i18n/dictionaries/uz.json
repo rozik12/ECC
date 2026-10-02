@@ -1,0 +1,132 @@
+{
+  "common": {
+    "appName": "TARTIB",
+    "disclaimer": "Tartib — hisob-kitob va intizom vositasi. U investitsiya bo'yicha tavsiyalar, savdo signallari yoki foyda kafolatini bermaydi.",
+    "soon": "Tez orada",
+    "language": "Til",
+    "theme": "Mavzu",
+    "themeLight": "Yorug' mavzu",
+    "themeDark": "Qorong'i mavzu",
+    "loading": "Yuklanmoqda…",
+    "close": "Yopish",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "calculator": "Kalkulyator",
+    "trades": "Bitimlarim",
+    "rules": "Qoidalar",
+    "statistics": "Statistika",
+    "settings": "Sozlamalar",
+    "profile": "Profil",
+    "pricing": "Tariflar",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "main": "Asosiy navigatsiya"
+  },
+  "footer": {
+    "terms": "Foydalanish shartlari",
+    "privacy": "Maxfiylik siyosati",
+    "rights": "Barcha huquqlar himoyalangan."
+  },
+  "seo": {
+    "title": "Tartib — savdo intizomi va treyder jurnali",
+    "description": "Tartib treyderlarga xavfni boshqarish, bitimlar jurnalini yuritish va savdo qoidalarini buzish narxini o'lchashga yordam beradi."
+  },
+  "landing": {
+    "hero": {
+      "title": "Hissiyotga emas, qoidalarga amal qilib savdo qil.",
+      "subtitle": "Tartib treyderlarga xavfni nazorat qilish, bitimlar jurnalini yuritish va xatolarining haqiqiy narxini ko'rishga yordam beradi.",
+      "start": "Bepul boshlash",
+      "demo": "Demoni ko'rish"
+    },
+    "pillars": {
+      "title": "Bozorni topishga urinma. O'zingni nazorat qil.",
+      "risk": {
+        "title": "Xavfni nazorat qilish",
+        "text": "Bitimga kirishdan oldin pozitsiya hajmini, mumkin bo'lgan zararni va xavf/foyda nisbatini hisoblab ol."
+      },
+      "discipline": {
+        "title": "Intizom",
+        "text": "O'z qoidalaringni belgila va ularga qanchalik amal qilayotganingni ko'r. Bitim qoidalarni buzsa, Tartib ogohlantiradi."
+      },
+      "cost": {
+        "title": "Xatolar narxi",
+        "text": "O'z qoidalaringni buzish senga qancha turganini pulda ko'r — o'z ma'lumotlaring asosida."
+      }
+    },
+    "demo": {
+      "title": "Intizom narxi",
+      "followed": "Qoidalar bo'yicha",
+      "violated": "Buzilishlar",
+      "cost": "Buzilishlar narxi",
+      "text": "Tartib faqat bitimlaring natijasini emas, qarorlaring natijasini ham ko'rsatadi.",
+      "note": "Ko'rgazmali misol. Raqamlar haqiqiy natijalarni aks ettirmaydi."
+    },
+    "how": {
+      "title": "Bu qanday ishlaydi",
+      "step1": { "title": "Qoidalar yarat", "text": "Maksimal xavf, yelka, minimal R:R — aynan senga muhim bo'lgan narsalar." },
+      "step2": { "title": "Bitimni hisobla", "text": "Kalkulyator xavf, zarar va foydani ko'rsatadi hamda buzilishlar haqida ogohlantiradi." },
+      "step3": { "title": "Natijani yoz", "text": "Bitimni hissiyot va kirish sababi bilan jurnalga qo'sh." },
+      "step4": { "title": "Intizomni tahlil qil", "text": "Xatolaringni tushunish uchun statistika va buzilishlar narxini ko'r." }
+    },
+    "pricing": {
+      "title": "Bepul boshla",
+      "subtitle": "Farqni sezish uchun bepul tarif yetarli."
+    },
+    "cta": {
+      "title": "Ongli savdoga tayyormisan?",
+      "text": "Bir daqiqada akkaunt yarat va birinchi qoidalaringni qo'sh."
+    }
+  },
+  "pricing": {
+    "title": "Tariflar",
+    "subtitle": "O'zingga mosini tanla. To'lov hozircha ulanmagan.",
+    "free": {
+      "name": "FREE",
+      "price": "$0",
+      "period": "doimiy",
+      "features": [
+        "Xavf kalkulyatori",
+        "Jurnalda 30 tagacha bitim",
+        "5 tagacha savdo qoidasi",
+        "Asosiy statistika"
+      ],
+      "cta": "Bepul boshlash"
+    },
+    "pro": {
+      "name": "PRO",
+      "price": "Tez orada",
+      "period": "",
+      "features": [
+        "Bitim va qoidalar soniga cheklov yo'q",
+        "Kengaytirilgan statistika",
+        "Xatti-harakatlaringning AI tahlili",
+        "Haftalik hisobotlar",
+        "Kelajakdagi integratsiyalar"
+      ],
+      "cta": "Tez orada"
+    }
+  },
+  "auth": {
+    "soonTitle": "Kirish tez orada paydo bo'ladi",
+    "soonText": "Ro'yxatdan o'tish va kirish keyingi bosqichda ulanadi."
+  },
+  "pages": {
+    "comingTitle": "Bu bo'lim ishlab chiqilmoqda",
+    "comingText": "Uni keyingi bosqichlardan birida tugallaymiz.",
+    "dashboard": "Dashboard",
+    "calculator": "Kalkulyator",
+    "trades": "Bitimlarim",
+    "rules": "Mening savdo qoidalarim",
+    "statistics": "Statistika",
+    "settings": "Sozlamalar",
+    "profile": "Profil"
+  },
+  "legal": {
+    "termsTitle": "Foydalanish shartlari",
+    "privacyTitle": "Maxfiylik siyosati",
+    "draft": "To'liq matn ishga tushirishdan oldin qo'shiladi."
+  }
+}

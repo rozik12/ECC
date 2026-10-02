@@ -1,0 +1,132 @@
+{
+  "common": {
+    "appName": "TARTIB",
+    "disclaimer": "Tartib is a tracking and discipline tool. It does not provide investment advice, trading signals or profit guarantees.",
+    "soon": "Soon",
+    "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light theme",
+    "themeDark": "Dark theme",
+    "loading": "Loading…",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "calculator": "Calculator",
+    "trades": "My trades",
+    "rules": "Rules",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "profile": "Profile",
+    "pricing": "Pricing",
+    "login": "Log in",
+    "register": "Sign up",
+    "main": "Main navigation"
+  },
+  "footer": {
+    "terms": "Terms of use",
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  },
+  "seo": {
+    "title": "Tartib — trading discipline and trader's journal",
+    "description": "Tartib helps traders manage risk, keep a trade journal and measure the cost of breaking their own trading rules."
+  },
+  "landing": {
+    "hero": {
+      "title": "Trade by your rules, not by emotions.",
+      "subtitle": "Tartib helps traders control risk, keep a trade journal and see the real price of their mistakes.",
+      "start": "Start for free",
+      "demo": "See the demo"
+    },
+    "pillars": {
+      "title": "Don't guess the market. Control yourself.",
+      "risk": {
+        "title": "Risk control",
+        "text": "Calculate position size, potential loss and the risk-to-reward ratio before you enter a trade."
+      },
+      "discipline": {
+        "title": "Discipline",
+        "text": "Set your own rules and see how honestly you follow them. Tartib warns you when a trade breaks them."
+      },
+      "cost": {
+        "title": "Cost of mistakes",
+        "text": "See in money how much breaking your own rules has cost you — based on your own data."
+      }
+    },
+    "demo": {
+      "title": "Price of discipline",
+      "followed": "Following rules",
+      "violated": "Violations",
+      "cost": "Cost of violations",
+      "text": "Tartib shows not only the result of your trades, but the result of your decisions.",
+      "note": "An illustrative example. The numbers do not reflect real results."
+    },
+    "how": {
+      "title": "How it works",
+      "step1": { "title": "Create rules", "text": "Maximum risk, leverage, minimum R:R — whatever matters to you." },
+      "step2": { "title": "Calculate the trade", "text": "The calculator shows risk, loss and profit, and warns about rule violations." },
+      "step3": { "title": "Record the result", "text": "Add the trade to your journal with the emotion and the reason for entry." },
+      "step4": { "title": "Analyze discipline", "text": "Review statistics and the cost of violations to understand your mistakes." }
+    },
+    "pricing": {
+      "title": "Start for free",
+      "subtitle": "The free plan is enough to feel the difference."
+    },
+    "cta": {
+      "title": "Ready to trade with awareness?",
+      "text": "Create an account in a minute and add your first rules."
+    }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Pick what suits you. Payments are not connected yet.",
+    "free": {
+      "name": "FREE",
+      "price": "$0",
+      "period": "forever",
+      "features": [
+        "Risk calculator",
+        "Up to 30 trades in the journal",
+        "Up to 5 trading rules",
+        "Basic statistics"
+      ],
+      "cta": "Start for free"
+    },
+    "pro": {
+      "name": "PRO",
+      "price": "Soon",
+      "period": "",
+      "features": [
+        "No limits on trades and rules",
+        "Advanced statistics",
+        "AI analysis of your behavior",
+        "Weekly reports",
+        "Future integrations"
+      ],
+      "cta": "Soon"
+    }
+  },
+  "auth": {
+    "soonTitle": "Sign-in is coming soon",
+    "soonText": "Registration and login will be connected at the next stage."
+  },
+  "pages": {
+    "comingTitle": "This section is in development",
+    "comingText": "We will finish it at one of the next stages.",
+    "dashboard": "Dashboard",
+    "calculator": "Calculator",
+    "trades": "My trades",
+    "rules": "My trading rules",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "legal": {
+    "termsTitle": "Terms of use",
+    "privacyTitle": "Privacy policy",
+    "draft": "The full text will be added before launch."
+  }
+}

@@ -1,0 +1,6 @@
+# Настройки выкладки на Netlify. Папка проекта (Base directory) в панели Netlify: tartib
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"

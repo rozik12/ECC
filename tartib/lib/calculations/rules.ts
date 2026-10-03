@@ -6,6 +6,7 @@ export type RuleType =
   | "max_leverage"
   | "require_stop_loss"
   | "max_trades_per_day"
+  | "max_daily_loss_percent"
   | "custom";
 
 export type RuleLike = {
@@ -23,6 +24,8 @@ export type TradeFacts = {
   hasStopLoss: boolean;
   /** Сколько сделок за день, считая эту */
   tradesToday: number;
+  /** Какой убыток за день (в % от баланса на начало дня) уже накоплен ДО этой сделки. null — неизвестно. */
+  dayLossPercent?: number | null;
 };
 
 export type RuleStatus = "ok" | "violated" | "manual" | "unknown";
@@ -58,6 +61,10 @@ export function evaluateRules(rules: RuleLike[], facts: TradeFacts): RuleCheck[]
         case "max_trades_per_day":
           if (limit === null) return make("unknown", null);
           return make(facts.tradesToday > limit ? "violated" : "ok", facts.tradesToday);
+        case "max_daily_loss_percent":
+          if (facts.dayLossPercent == null || limit === null) return make("unknown", null);
+          // Нарушение — войти в сделку, когда дневной лимит убытка уже исчерпан
+          return make(facts.dayLossPercent >= limit - EPS ? "violated" : "ok", facts.dayLossPercent);
         case "custom":
           return make("manual", null);
       }

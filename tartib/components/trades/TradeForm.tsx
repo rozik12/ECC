@@ -27,6 +27,7 @@ export type TradeFormValues = {
   risk: string;
   pnl: string;
   emotion: EmotionKey;
+  strategy: string;
   reason: string;
   plan: string;
   comment: string;
@@ -39,6 +40,10 @@ type Props = {
   rules: (RuleLike & { description?: string })[];
   /** Сколько других сделок уже есть в день этой сделки */
   tradesOthersToday: number;
+  /** Убыток за день до этой сделки, % от баланса на начало дня */
+  dayLossPercent?: number | null;
+  /** Ранее использованные стратегии — подсказки в поле */
+  strategies?: string[];
   initial: TradeFormValues;
   /** pnl уже сохранён вручную (при редактировании) */
   pnlIsManual?: boolean;
@@ -53,6 +58,8 @@ export function TradeForm({
   accounts,
   rules,
   tradesOthersToday,
+  dayLossPercent = null,
+  strategies = [],
   initial,
   pnlIsManual = false,
   initialViolationIds = [],
@@ -115,10 +122,11 @@ export function TradeForm({
       leverage: n.leverage ?? 1,
       hasStopLoss: n.stop !== null,
       tradesToday: tradesOthersToday + 1,
+      dayLossPercent,
     });
     return new Set(checks.filter((c) => c.status === "violated").map((c) => c.rule.id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [v.entry, v.stop, v.takeProfit, v.size, v.leverage, v.risk, v.accountId, rules, tradesOthersToday]);
+  }, [v.entry, v.stop, v.takeProfit, v.size, v.leverage, v.risk, v.accountId, rules, tradesOthersToday, dayLossPercent]);
 
   const listedRules = rules.filter((r) => r.is_active || initialViolationIds.includes(r.id));
 
@@ -149,6 +157,7 @@ export function TradeForm({
       riskPercent: n.risk,
       pnl: parseNumber(pnlShown),
       emotion: v.emotion,
+      strategy: v.strategy,
       violatedRuleIds: [...new Set([...manualIds, ...autoViolated])],
       reason: v.reason,
       plan: v.plan,
@@ -240,9 +249,13 @@ export function TradeForm({
       </Card>
 
       <Card className="space-y-4">
-        <Select id="t-emotion" label={t("trades.form.emotion")} {...bind("emotion")}>
-          {emotions.map((em) => <option key={em} value={em}>{t(`emotions.${em}`)}</option>)}
-        </Select>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Select id="t-emotion" label={t("trades.form.emotion")} {...bind("emotion")}>
+            {emotions.map((em) => <option key={em} value={em}>{t(`emotions.${em}`)}</option>)}
+          </Select>
+          <Input id="t-strategy" list="strategies" label={t("trades.form.strategy")} hint={t("trades.form.strategyHint")} error={err("strategy")} {...bind("strategy")} />
+          <datalist id="strategies">{strategies.map((x) => <option key={x} value={x} />)}</datalist>
+        </div>
 
         <fieldset>
           <legend className="text-sm font-medium">{t("trades.form.violated")}</legend>

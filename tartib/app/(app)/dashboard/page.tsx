@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
 import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
@@ -9,7 +10,7 @@ import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts } from "@/lib/data";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
-import { disciplineCost, filterByPeriod, summarize, topViolations } from "@/lib/statistics";
+import { disciplineCost, disciplineStreak, filterByPeriod, summarize, topViolations } from "@/lib/statistics";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import type { EmotionKey } from "@/lib/trading";
 
@@ -38,6 +39,7 @@ export default async function DashboardPage() {
   const discipline = disciplineCost(last30);
   const violations = topViolations(last30);
   const recent = all.slice(0, 5);
+  const streak = disciplineStreak(all);
 
   const stat = (label: string, value: string, tone = "") => (
     <Card className="p-4 sm:p-4">
@@ -68,6 +70,8 @@ export default async function DashboardPage() {
       </section>
 
       <DisciplineCostCard data={discipline} currency={currency} subtitle={t("dashboard.discipline.period")} moreHref="/statistics" />
+
+      {all.length > 0 && <StreakCard streak={streak} />}
 
       <section>
         <div className="mb-3 flex items-center justify-between">

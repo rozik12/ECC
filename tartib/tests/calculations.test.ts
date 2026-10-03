@@ -84,3 +84,21 @@ test("границы дня в часовом поясе", () => {
   assert.equal(start.toISOString(), "2026-10-02T19:00:00.000Z");
   assert.equal(end.toISOString(), "2026-10-03T19:00:00.000Z");
 });
+
+import { parseCsv, safeText, toCsv, unsafeText } from "../lib/csv.ts";
+
+test("CSV: кавычки, запятые, переносы и разные разделители", () => {
+  const rows = [["a", 'b,"c"', "line1\nline2"], ["1", "2", "3"]];
+  assert.deepEqual(parseCsv(toCsv(rows, ",")), rows);
+  assert.deepEqual(parseCsv(toCsv(rows, ";")), rows);
+  assert.deepEqual(parseCsv("﻿a;b\r\n1,5;2\r\n"), [["a", "b"], ["1,5", "2"]]);
+  assert.deepEqual(parseCsv("a\tb\n1\t2"), [["a", "b"], ["1", "2"]]);
+  assert.deepEqual(parseCsv("a,b\n\n1,2\n"), [["a", "b"], ["1", "2"]]);
+});
+
+test("CSV: защита от формул", () => {
+  assert.equal(safeText("=SUM(A1)"), "'=SUM(A1)");
+  assert.equal(safeText("BTC/USDT"), "BTC/USDT");
+  assert.equal(unsafeText(safeText("@cmd")), "@cmd");
+  assert.equal(unsafeText("'quoted"), "'quoted");
+});

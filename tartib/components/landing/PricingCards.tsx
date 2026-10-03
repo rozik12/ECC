@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { Badge, Button, buttonStyles, Card } from "@/components/ui";
+import { getBillingProvider } from "@/lib/billing";
 import { getTranslator } from "@/lib/i18n/server";
 
 /** Два тарифа. Кнопка PRO пока неактивна: оплата будет подключена позже (Stripe или другой сервис). */
 export async function PricingCards() {
   const { t, list } = await getTranslator();
+  // Пока провайдера оплаты нет, кнопка PRO неактивна
+  const canBuy = getBillingProvider() !== null;
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
@@ -42,7 +45,7 @@ export async function PricingCards() {
             </li>
           ))}
         </ul>
-        <Button variant="secondary" disabled className="mt-8">
+        <Button variant="secondary" disabled={!canBuy} className="mt-8">
           {t("pricing.pro.cta")}
         </Button>
       </Card>

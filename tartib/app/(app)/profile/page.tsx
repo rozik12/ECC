@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { LogOut } from "lucide-react";
+import Link from "next/link";
+import { LogOut, Shield } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import { DeleteAccount } from "@/components/profile/DeleteAccount";
 import { ProfileForm } from "@/components/profile/ProfileForm";
-import { Badge, Button, Card } from "@/components/ui";
+import { Badge, Button, buttonStyles, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getPlan } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
@@ -47,6 +48,12 @@ export default async function ProfilePage() {
           <div className="flex justify-between py-2"><dt className="text-muted">{t("nav.rules")}</dt><dd className="font-medium tabular-nums">{usage(rules, limits.rules)}</dd></div>
         </dl>
       </Card>
+
+      {profile?.is_admin && (
+        <Link href="/admin" className={buttonStyles({ variant: "secondary" })}>
+          <Shield className="h-4 w-4" aria-hidden /> {t("admin.title")}
+        </Link>
+      )}
 
       <form action={logoutAction}>
         <Button type="submit" variant="secondary"><LogOut className="h-4 w-4" aria-hidden /> {t("auth.logout")}</Button>

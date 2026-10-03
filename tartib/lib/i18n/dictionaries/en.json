@@ -121,9 +121,8 @@
       "period": "",
       "features": [
         "No limits on trades and rules",
-        "Advanced statistics",
-        "AI analysis of your behavior",
-        "Weekly reports",
+        "All-time statistics and by strategy",
+        "Weekly reports and AI review of your behaviour",
         "Future integrations"
       ],
       "cta": "Soon"
@@ -170,7 +169,10 @@
       "submit": "Save password",
       "expired": "The link has expired. Request password recovery again.",
       "same": "The new password must be different from the old one."
-    }
+    },
+    "google": "Continue with Google",
+    "or": "or with email",
+    "oauthFailed": "Couldn't sign in with Google. Try again or use email."
   },
   "pages": {
     "comingTitle": "This section is in development",
@@ -326,6 +328,10 @@
       "trades3": {
         "name": "No more than 3 trades a day",
         "description": "I limit the number of trades to avoid emotional trading."
+      },
+      "dayloss3": {
+        "name": "Stop for the day at a 3% loss",
+        "description": "If I lose 3% of my balance in a day, I stop trading until tomorrow."
       }
     },
     "form": {
@@ -344,13 +350,15 @@
       "max_leverage": "Maximum leverage",
       "require_stop_loss": "Stop-loss required",
       "max_trades_per_day": "Maximum trades per day",
-      "custom": "Custom rule"
+      "custom": "Custom rule",
+      "max_daily_loss_percent": "Daily loss limit"
     },
     "valueLabels": {
       "max_risk_percent": "Maximum risk, %",
       "min_risk_reward": "Minimum R:R",
       "max_leverage": "Maximum leverage",
-      "max_trades_per_day": "Maximum trades per day"
+      "max_trades_per_day": "Maximum trades per day",
+      "max_daily_loss_percent": "Maximum loss per day, % of balance"
     },
     "describe": {
       "max_risk_percent": "Risk no more than {value}% per trade",
@@ -358,7 +366,8 @@
       "max_leverage": "Leverage up to {value}",
       "require_stop_loss": "Stop-loss is required",
       "max_trades_per_day": "No more than {value} trades a day",
-      "custom": "Marked manually"
+      "custom": "Marked manually",
+      "max_daily_loss_percent": "Stop for the day once the loss reaches {value}% of the balance"
     },
     "auto": "Checked automatically",
     "manual": "Marked manually",
@@ -437,6 +446,10 @@
       },
       "custom": {
         "manual": "{name} — mark it manually when recording the trade"
+      },
+      "max_daily_loss_percent": {
+        "ok": "Daily loss {actual}% — the limit ({limit}%) is not reached",
+        "violated": "Your daily loss limit: {limit}%. You have already lost {actual}% of the balance today."
       }
     },
     "warning": {
@@ -514,7 +527,9 @@
       "comment": "Comment after the trade",
       "tradedAt": "Date and time",
       "save": "Save trade",
-      "fromCalculator": "Data carried over from the calculator."
+      "fromCalculator": "Data carried over from the calculator.",
+      "strategy": "Strategy",
+      "strategyHint": "For example “Breakout” or “Pullback”. Statistics are built from it."
     },
     "detail": {
       "risk": "Risk",
@@ -533,7 +548,9 @@
     "noAccount": "Couldn't find the trading account.",
     "notFound": "Trade not found.",
     "saveFailed": "Couldn't save the trade. Please try again.",
-    "deleteFailed": "Couldn't delete the trade. Please try again."
+    "deleteFailed": "Couldn't delete the trade. Please try again.",
+    "export": "Download CSV",
+    "import": "Import"
   },
   "stats": {
     "title": "Statistics",
@@ -575,7 +592,9 @@
       "balance": "Balance",
       "pnl": "P&L",
       "tradesCount": "Trades: {n}",
-      "noData": "No data for this period."
+      "noData": "No data for this period.",
+      "byStrategy": "P&L by strategy",
+      "noStrategy": "Set a strategy on your trades and the comparison will appear here."
     },
     "emotions": {
       "title": "Emotion analysis",
@@ -587,7 +606,8 @@
       "tooFew": "Not enough data for {emotion} yet: {n} trades, at least 3 needed.",
       "note": "This is an observation from your data, not a general rule."
     },
-    "emptyPeriod": "No trades in this period."
+    "emptyPeriod": "No trades in this period.",
+    "proOnly": "This feature is available on the PRO plan."
   },
   "dashboard": {
     "greeting": "Hi, {name}!",
@@ -623,7 +643,8 @@
     "accounts": "Trading accounts",
     "addAccount": "Add account",
     "renameAccount": "Rename account",
-    "accountsLimit": "Maximum number of accounts reached (10)."
+    "accountsLimit": "Maximum number of accounts reached (10).",
+    "checklistMax": "No more than 10 questions."
   },
   "profile": {
     "name": "Name",
@@ -671,5 +692,85 @@
     "proOnly": "Weekly reports are available on the PRO plan.",
     "proSoon": "PRO is coming soon.",
     "failed": "Couldn't build the report. Please try again."
+  },
+  "screenshot": {
+    "title": "Chart screenshot",
+    "add": "Add screenshot",
+    "replace": "Replace",
+    "choose": "Choose file",
+    "hint": "Attach a chart image (PNG, JPG or WebP up to 5 MB) to review the trade later.",
+    "invalid": "A PNG, JPG or WebP image is required.",
+    "tooBig": "The file is larger than 5 MB.",
+    "failed": "Couldn't save the screenshot. Please try again."
+  },
+  "streak": {
+    "title": "Discipline streak",
+    "current": "trades in a row without violations",
+    "best": "Best streak: {n}",
+    "neverViolated": "No violations yet",
+    "daysSince": "Days without violations: {n}",
+    "next": "{left} more trades to reach {m}",
+    "top": "You have passed every milestone. Keep it up!",
+    "milestone": "Milestone reached: {m} trades in a row"
+  },
+  "calendar": {
+    "title": "Trade calendar",
+    "prev": "Previous month",
+    "next": "Next month",
+    "trades": "Trades: {n}",
+    "total": "This month: {pnl}, trades: {n}"
+  },
+  "checklist": {
+    "title": "Pre-trade checklist",
+    "text": "Tick what is done. It is only a reminder: the decision stays with you.",
+    "continue": "Continue",
+    "unchecked": "Unticked items: {n}. You can continue, but it is worth a second look.",
+    "defaults": {
+      "plan": "The trade is from my trading plan",
+      "stop": "Stop-loss is set",
+      "risk": "Risk is within my rules",
+      "calm": "I am calm, not excited",
+      "revenge": "I am not trying to win back a previous loss"
+    },
+    "settingsTitle": "Pre-trade checklist",
+    "settingsText": "A short list of questions shown in the calculator before you record a trade.",
+    "enable": "Show the checklist",
+    "itemsLabel": "Questions",
+    "itemsHint": "One question per line, up to 10. An empty list restores the defaults."
+  },
+  "admin": {
+    "title": "Owner panel",
+    "users": "Users",
+    "users7d": "New in 7 days",
+    "onboarded": "Finished onboarding",
+    "active7d": "Active in 7 days",
+    "pro": "On PRO",
+    "trades": "Total trades",
+    "trades7d": "Trades in 7 days",
+    "rules": "Total rules",
+    "recent": "Recent sign-ups",
+    "registered": "Registered",
+    "setPlan": "Grant or remove PRO",
+    "notFound": "No user with this email."
+  },
+  "import": {
+    "title": "Import trades",
+    "intro": "Upload a CSV file with trades (from Excel or Google Sheets). Each trade is checked against your rules just like a manually entered one.",
+    "columns": "Columns",
+    "required": "Required: instrument, direction (long or short), entry, size. Separate several broken rules in violated_rules with the | sign.",
+    "template": "Download a sample file",
+    "file": "CSV file",
+    "missing": "Required columns are missing: {cols}.",
+    "limitRows": "The first {n} rows will be processed.",
+    "summary": "Valid rows: {valid}. With errors: {invalid}.",
+    "lineError": "Line {line}: {reason}",
+    "more": "…and {n} more",
+    "progress": "Importing… {done} of {total}",
+    "run": "Import trades: {n}",
+    "done": "Trades imported: {n}",
+    "errDirection": "direction must be long or short",
+    "errMarket": "market: crypto, forex, stocks or futures",
+    "errValues": "invalid values in the row",
+    "tooBig": "The file is larger than 2 MB."
   }
 }

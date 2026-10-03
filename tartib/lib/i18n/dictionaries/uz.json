@@ -121,9 +121,8 @@
       "period": "",
       "features": [
         "Bitim va qoidalar soniga cheklov yo'q",
-        "Kengaytirilgan statistika",
-        "Xatti-harakatlaringning AI tahlili",
-        "Haftalik hisobotlar",
+        "Butun davr va strategiyalar bo'yicha statistika",
+        "Haftalik hisobotlar va xatti-harakatlaringning AI tahlili",
         "Kelajakdagi integratsiyalar"
       ],
       "cta": "Tez orada"
@@ -170,7 +169,10 @@
       "submit": "Parolni saqlash",
       "expired": "Havola eskirgan. Parolni tiklashni qaytadan so'ra.",
       "same": "Yangi parol eskisidan farq qilishi kerak."
-    }
+    },
+    "google": "Google bilan davom etish",
+    "or": "yoki pochta orqali",
+    "oauthFailed": "Google orqali kirib bo'lmadi. Qayta urinib ko'r yoki pochta orqali kir."
   },
   "pages": {
     "comingTitle": "Bu bo'lim ishlab chiqilmoqda",
@@ -326,6 +328,10 @@
       "trades3": {
         "name": "Kuniga 3 tadan ko'p bitim yo'q",
         "description": "Hissiyotda savdo qilmaslik uchun bitimlar sonini cheklayman."
+      },
+      "dayloss3": {
+        "name": "3% zararda kun uchun to'xtash",
+        "description": "Kunda balansning 3% ini yo'qotsam, ertagacha savdo qilmayman."
       }
     },
     "form": {
@@ -344,13 +350,15 @@
       "max_leverage": "Maksimal yelka",
       "require_stop_loss": "Majburiy stop-loss",
       "max_trades_per_day": "Kuniga maksimal bitimlar",
-      "custom": "O'z qoidam"
+      "custom": "O'z qoidam",
+      "max_daily_loss_percent": "Kunlik zarar limiti"
     },
     "valueLabels": {
       "max_risk_percent": "Maksimal xavf, %",
       "min_risk_reward": "Minimal R:R",
       "max_leverage": "Maksimal yelka",
-      "max_trades_per_day": "Kuniga maksimal bitimlar"
+      "max_trades_per_day": "Kuniga maksimal bitimlar",
+      "max_daily_loss_percent": "Kunlik maksimal zarar, balansning %"
     },
     "describe": {
       "max_risk_percent": "Bitimga {value}% dan ko'p xavf yo'q",
@@ -358,7 +366,8 @@
       "max_leverage": "Yelka {value} gacha",
       "require_stop_loss": "Stop-loss majburiy",
       "max_trades_per_day": "Kuniga {value} tadan ko'p bitim yo'q",
-      "custom": "Qo'lda belgilanadi"
+      "custom": "Qo'lda belgilanadi",
+      "max_daily_loss_percent": "Zarar balansning {value}% iga yetganda kun uchun to'xta"
     },
     "auto": "Avtomatik tekshiriladi",
     "manual": "Qo'lda belgilanadi",
@@ -437,6 +446,10 @@
       },
       "custom": {
         "manual": "{name} — bitimni yozganda qo'lda belgila"
+      },
+      "max_daily_loss_percent": {
+        "ok": "Kunlik zarar {actual}% — limit ({limit}%) ga yetmagan",
+        "violated": "Sening kunlik zarar limiting: {limit}%. Bugun balansning {actual}% yo'qotilgan."
       }
     },
     "warning": {
@@ -514,7 +527,9 @@
       "comment": "Bitimdan keyingi izoh",
       "tradedAt": "Sana va vaqt",
       "save": "Bitimni saqlash",
-      "fromCalculator": "Ma'lumotlar kalkulyatordan ko'chirildi."
+      "fromCalculator": "Ma'lumotlar kalkulyatordan ko'chirildi.",
+      "strategy": "Strategiya",
+      "strategyHint": "Masalan: «Breakout» yoki «Pullback». Statistika shu bo'yicha hisoblanadi."
     },
     "detail": {
       "risk": "Xavf",
@@ -533,7 +548,9 @@
     "noAccount": "Savdo hisobi topilmadi.",
     "notFound": "Bitim topilmadi.",
     "saveFailed": "Bitimni saqlab bo'lmadi. Qayta urinib ko'r.",
-    "deleteFailed": "Bitimni o'chirib bo'lmadi. Qayta urinib ko'r."
+    "deleteFailed": "Bitimni o'chirib bo'lmadi. Qayta urinib ko'r.",
+    "export": "CSV yuklab olish",
+    "import": "Import"
   },
   "stats": {
     "title": "Statistika",
@@ -575,7 +592,9 @@
       "balance": "Balans",
       "pnl": "P&L",
       "tradesCount": "Bitimlar: {n}",
-      "noData": "Bu davr uchun ma'lumot yo'q."
+      "noData": "Bu davr uchun ma'lumot yo'q.",
+      "byStrategy": "Strategiyalar bo'yicha P&L",
+      "noStrategy": "Bitimlarda strategiyani ko'rsat, taqqoslash shu yerda paydo bo'ladi."
     },
     "emotions": {
       "title": "Hissiyotlar tahlili",
@@ -587,7 +606,8 @@
       "tooFew": "{emotion} bo'yicha ma'lumot hozircha kam: {n} ta bitim, kamida 3 ta kerak.",
       "note": "Bu umumiy qoida emas, sening ma'lumotlaringga ko'ra kuzatuv."
     },
-    "emptyPeriod": "Bu davrda bitimlar yo'q."
+    "emptyPeriod": "Bu davrda bitimlar yo'q.",
+    "proOnly": "Bu funksiya PRO tarifida mavjud."
   },
   "dashboard": {
     "greeting": "Salom, {name}!",
@@ -623,7 +643,8 @@
     "accounts": "Savdo hisoblari",
     "addAccount": "Hisob qo'shish",
     "renameAccount": "Hisob nomini o'zgartirish",
-    "accountsLimit": "Hisoblar soni chegarasiga yetildi (10)."
+    "accountsLimit": "Hisoblar soni chegarasiga yetildi (10).",
+    "checklistMax": "10 tadan ko'p savol mumkin emas."
   },
   "profile": {
     "name": "Ism",
@@ -671,5 +692,85 @@
     "proOnly": "Haftalik hisobotlar PRO tarifida mavjud.",
     "proSoon": "PRO tez orada paydo bo'ladi.",
     "failed": "Hisobotni tuzib bo'lmadi. Qayta urinib ko'r."
+  },
+  "screenshot": {
+    "title": "Grafik skrinshoti",
+    "add": "Skrinshot qo'shish",
+    "replace": "Almashtirish",
+    "choose": "Fayl tanlash",
+    "hint": "Bitimni keyin tahlil qilish uchun grafik rasmini (PNG, JPG yoki WebP, 5 MB gacha) biriktir.",
+    "invalid": "PNG, JPG yoki WebP rasm kerak.",
+    "tooBig": "Fayl 5 MB dan katta.",
+    "failed": "Skrinshotni saqlab bo'lmadi. Qayta urinib ko'r."
+  },
+  "streak": {
+    "title": "Intizom seriyasi",
+    "current": "ta bitim qoidabuzarliksiz ketma-ket",
+    "best": "Eng yaxshi seriya: {n}",
+    "neverViolated": "Hali buzilishlar bo'lmagan",
+    "daysSince": "Buzilishsiz kunlar: {n}",
+    "next": "{m} ga yetish uchun yana {left} ta bitim",
+    "top": "Barcha bosqichlardan o'tding. Shunday davom et!",
+    "milestone": "Bosqichga erishildi: ketma-ket {m} ta bitim"
+  },
+  "calendar": {
+    "title": "Bitimlar kalendari",
+    "prev": "Oldingi oy",
+    "next": "Keyingi oy",
+    "trades": "Bitimlar: {n}",
+    "total": "Oy bo'yicha: {pnl}, bitimlar: {n}"
+  },
+  "checklist": {
+    "title": "Bitimdan oldingi cheklist",
+    "text": "Bajarilganini belgila. Bu faqat eslatma: qaror o'zingda.",
+    "continue": "Davom etish",
+    "unchecked": "Belgilanmagan bandlar: {n}. Davom etishing mumkin, lekin yana bir ko'rib chiqish arziydi.",
+    "defaults": {
+      "plan": "Bitim savdo rejamdan",
+      "stop": "Stop-loss belgilangan",
+      "risk": "Xavf qoidalarim doirasida",
+      "calm": "Men xotirjamman, ehtirosda emasman",
+      "revenge": "Oldingi zararni qaytarishga urinmayapman"
+    },
+    "settingsTitle": "Bitimdan oldingi cheklist",
+    "settingsText": "Bitimni yozishdan oldin kalkulyatorda ko'rsatiladigan qisqa savollar ro'yxati.",
+    "enable": "Cheklistni ko'rsatish",
+    "itemsLabel": "Savollar",
+    "itemsHint": "Har qatorda bitta savol, 10 tagacha. Bo'sh ro'yxat standart savollarni qaytaradi."
+  },
+  "admin": {
+    "title": "Egasi paneli",
+    "users": "Foydalanuvchilar",
+    "users7d": "7 kunda yangi",
+    "onboarded": "Onboardingdan o'tgan",
+    "active7d": "7 kunda faol",
+    "pro": "PRO da",
+    "trades": "Jami bitimlar",
+    "trades7d": "7 kunda bitimlar",
+    "rules": "Jami qoidalar",
+    "recent": "So'nggi ro'yxatdan o'tganlar",
+    "registered": "Ro'yxatdan o'tgan",
+    "setPlan": "PRO berish yoki olib tashlash",
+    "notFound": "Bunday pochtali foydalanuvchi topilmadi."
+  },
+  "import": {
+    "title": "Bitimlarni import qilish",
+    "intro": "Bitimlar bilan CSV faylni yukla (Excel yoki Google Jadvallardan). Har bir bitim qo'lda kiritilgandek sening qoidalaringga qarab tekshiriladi.",
+    "columns": "Ustunlar",
+    "required": "Majburiy: instrument, direction (long yoki short), entry, size. violated_rules da bir nechta qoidani | belgisi bilan ajrat.",
+    "template": "Namuna faylni yuklab olish",
+    "file": "CSV fayl",
+    "missing": "Faylda majburiy ustunlar yo'q: {cols}.",
+    "limitRows": "Dastlabki {n} qator qayta ishlanadi.",
+    "summary": "Mos qatorlar: {valid}. Xatolari bor: {invalid}.",
+    "lineError": "{line}-qator: {reason}",
+    "more": "…va yana {n} ta",
+    "progress": "Import… {done} / {total}",
+    "run": "Bitimlarni import qilish: {n}",
+    "done": "Import qilingan bitimlar: {n}",
+    "errDirection": "direction long yoki short bo'lishi kerak",
+    "errMarket": "market: crypto, forex, stocks yoki futures",
+    "errValues": "qatordagi qiymatlar noto'g'ri",
+    "tooBig": "Fayl 2 MB dan katta."
   }
 }

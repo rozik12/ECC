@@ -127,6 +127,8 @@ export async function deleteAccountAction(confirmEmail: string): Promise<ActionR
     if ((data.user.email ?? "").toLowerCase() !== String(confirmEmail).trim().toLowerCase()) {
       return { ok: false, error: "profile.deleteMismatch" };
     }
+    // Сначала удаляем файлы скриншотов: после удаления аккаунта доступа к ним уже не будет
+    await removeAllScreenshots(supabase, data.user.id);
     const { error } = await supabase.rpc("delete_my_account");
     if (error) return { ok: false, error: "profile.deleteFailed" };
     await supabase.auth.signOut();
@@ -134,4 +136,29 @@ export async function deleteAccountAction(confirmEmail: string): Promise<ActionR
   } catch {
     return { ok: false, error: "profile.deleteFailed" };
   }
+}
+
+async function removeAllScreenshots(supabase: Awaited<ReturnType<typeof createClient>>, userId: string) {
+  const bucket = supabase.storage.from("trade-screenshots");
+  const { data: tradeDirs } = await bucket.list(userId, { limit: 1000 });
+  for (const dir of tradeDirs ?? []) {
+    const { data: files } = await bucket.list(`${userId}/${dir.name}`, { limit: 100 });
+    const paths = (files ?? []).map((f) => `${userId}/${dir.name}/${f.name}`);
+    if (paths.length > 0) await bucket.remove(paths);
+  }
+}
+
+/** Вход через Google. Работает, только если провайдер Google включён в Supabase и в .env задано NEXT_PUBLIC_GOOGLE_AUTH=true. */
+export async function googleSignInAction(): Promise<void> {
+  if (!isSupabaseConfigured() || process.env.NEXT_PUBLIC_GOOGLE_AUTH !== "true") redirect("/login?error=oauth");
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  const proto = h.get("x-forwarded-proto") ?? "http";
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: `${proto}://${host}/auth/callback` },
+  });
+  if (error || !data.url) redirect("/login?error=oauth");
+  redirect(data.url);
 }

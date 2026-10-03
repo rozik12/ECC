@@ -18,6 +18,7 @@ export const tradeSchema = z.object({
   /** null — посчитать из цен автоматически */
   pnl: z.number({ error: "errors.number" }).finite().nullable(),
   emotion: z.enum(emotions),
+  strategy: z.string().trim().max(40, "errors.nameMax").default(""),
   violatedRuleIds: z.array(z.uuid("errors.generic")).max(50),
   reason: z.string().trim().max(2000, "errors.textMax").default(""),
   plan: z.string().trim().max(2000, "errors.textMax").default(""),

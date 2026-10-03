@@ -25,3 +25,8 @@ export const accountSchema = z.object({
 });
 
 export const renameAccountSchema = accountSchema.pick({ name: true });
+
+export const checklistSchema = z.object({
+  enabled: z.boolean(),
+  items: z.array(z.string().trim().min(1).max(120, "errors.nameMax")).max(10, "settings.checklistMax"),
+});

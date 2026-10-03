@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Alert } from "@/components/ui";
 import { TradeForm, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
-import { countTradesBetween, getAccounts, getRules } from "@/lib/data";
+import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import { directions, markets, type DirectionKey, type MarketKey } from "@/lib/trading";
@@ -20,10 +20,12 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
   const { t } = await getTranslator();
   const { supabase, profile } = await requireUser();
   const { start, end } = dayBounds(safeTimeZone(profile?.timezone));
-  const [accounts, rules, tradesToday] = await Promise.all([
+  const [accounts, rules, tradesToday, day, strategies] = await Promise.all([
     getAccounts(supabase),
     getRules(supabase),
     countTradesBetween(supabase, start, end),
+    getDayContext(supabase, start, end),
+    getStrategies(supabase),
   ]);
 
   if (accounts.length === 0) return <Alert tone="warning">{t("trades.noAccount")}</Alert>;
@@ -46,6 +48,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     risk: one(sp.risk),
     pnl: "",
     emotion: "calm",
+    strategy: "",
     reason: "",
     plan: "",
     comment: "",
@@ -57,6 +60,8 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
       accounts={accounts}
       rules={rules}
       tradesOthersToday={tradesToday}
+      dayLossPercent={dayLossBefore(day, new Date())}
+      strategies={strategies}
       initial={initial}
       fromCalculator={!!one(sp.entry)}
     />

@@ -17,7 +17,7 @@ export function weekPeriod(timeZone: string, now: Date = new Date()) {
   };
 }
 
-export async function buildAndSaveWeeklyReport(supabase: SupabaseClient, userId: string, timeZone: string): Promise<WeeklyReportContent> {
+export async function buildAndSaveWeeklyReport(supabase: SupabaseClient, userId: string, timeZone: string, locale: "ru" | "uz" | "en" = "ru"): Promise<WeeklyReportContent> {
   const { periodStart, periodEnd, from, to } = weekPeriod(timeZone);
   const all = await fetchStatTrades(supabase);
   const trades = all.filter((t) => {
@@ -25,7 +25,7 @@ export async function buildAndSaveWeeklyReport(supabase: SupabaseClient, userId:
     return at >= from && at < to;
   });
 
-  const content = await getReportGenerator().generate({ periodStart, periodEnd, trades });
+  const content = await getReportGenerator().generate({ periodStart, periodEnd, trades, locale });
   const { error } = await supabase
     .from("weekly_reports")
     .upsert(

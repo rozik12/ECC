@@ -66,6 +66,7 @@ type StatRow = {
   emotion: string;
   rules_followed: boolean;
   risk_amount: number | null;
+  strategy: string;
   trade_rule_violations: { rule: { id: string; name: string } | null }[];
 };
 
@@ -78,7 +79,7 @@ export async function fetchStatTrades(supabase: SupabaseClient): Promise<StatTra
     const { data, error } = await supabase
       .from("trades")
       .select(
-        "id, traded_at, instrument, direction, entry_price, exit_price, pnl, emotion, rules_followed, risk_amount, trade_rule_violations(rule:rules(id, name))",
+        "id, traded_at, instrument, direction, entry_price, exit_price, pnl, emotion, rules_followed, risk_amount, strategy, trade_rule_violations(rule:rules(id, name))",
       )
       .order("traded_at", { ascending: false })
       .order("id")
@@ -97,10 +98,41 @@ export async function fetchStatTrades(supabase: SupabaseClient): Promise<StatTra
         emotion: r.emotion,
         rulesFollowed: r.rules_followed,
         riskAmount: r.risk_amount === null ? null : Number(r.risk_amount),
+        strategy: r.strategy ?? "",
         violations: r.trade_rule_violations.flatMap((v) => (v.rule ? [v.rule] : [])),
       });
     }
     if (rows.length < PAGE) break;
   }
   return all;
+}
+
+export type DayContext = {
+  rows: { id: string; tradedAt: Date; pnl: number }[];
+  /** Баланс по всем счетам на начало дня */
+  dayStartBalance: number;
+};
+
+/** Сделки с начала дня и баланс на начало дня: нужны для правила дневного лимита убытка. */
+export async function getDayContext(supabase: SupabaseClient, dayStart: Date, dayEnd: Date): Promise<DayContext> {
+  const [accounts, { data }] = await Promise.all([
+    getAccounts(supabase),
+    supabase.from("trades").select("id, traded_at, pnl").gte("traded_at", dayStart.toISOString()),
+  ]);
+  const all = (data ?? []).map((r) => ({ id: r.id as string, tradedAt: new Date(r.traded_at as string), pnl: Number(r.pnl) }));
+  const dayStartBalance = accounts.reduce((s, a) => s + a.balance, 0) - all.reduce((s, r) => s + r.pnl, 0);
+  return { rows: all.filter((r) => r.tradedAt < dayEnd), dayStartBalance };
+}
+
+/** Убыток за день в % от баланса на начало дня, накопленный до момента before (кроме сделки excludeId). */
+export function dayLossBefore(ctx: DayContext, before: Date, excludeId?: string): number | null {
+  if (!(ctx.dayStartBalance > 0)) return null;
+  const sum = ctx.rows.filter((r) => r.tradedAt < before && r.id !== excludeId).reduce((s, r) => s + r.pnl, 0);
+  return (Math.max(0, -sum) / ctx.dayStartBalance) * 100;
+}
+
+/** Стратегии, которые пользователь уже использовал, — для подсказок в форме. */
+export async function getStrategies(supabase: SupabaseClient): Promise<string[]> {
+  const { data } = await supabase.from("trades").select("strategy").neq("strategy", "").order("traded_at", { ascending: false }).limit(300);
+  return [...new Set((data ?? []).map((r) => r.strategy as string))].slice(0, 30);
 }

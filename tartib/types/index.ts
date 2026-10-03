@@ -38,6 +38,8 @@ export type Trade = {
   pnl: number;
   emotion: EmotionKey;
   rules_followed: boolean;
+  strategy: string;
+  screenshot_path: string | null;
   reason: string;
   plan: string;
   comment: string;

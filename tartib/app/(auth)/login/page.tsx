@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Alert } from "@/components/ui";
+import { GoogleButton } from "@/components/auth/GoogleButton";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { getTranslator } from "@/lib/i18n/server";
 
@@ -16,7 +17,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     <>
       <h1 className="text-2xl font-bold">{t("auth.login.title")}</h1>
       <p className="mb-6 mt-2 text-muted">{t("auth.login.subtitle")}</p>
+      {error === "oauth" && <Alert tone="danger" className="mb-4">{t("auth.oauthFailed")}</Alert>}
       {error === "link" && <Alert tone="warning" className="mb-4">{t("auth.linkExpired")}</Alert>}
+      <GoogleButton />
       <LoginForm />
       <p className="mt-4 text-center text-sm">
         <Link href="/forgot-password" className="text-muted hover:text-foreground hover:underline">{t("auth.forgot.link")}</Link>

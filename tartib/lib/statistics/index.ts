@@ -13,6 +13,7 @@ export type StatTrade = {
   emotion: string;
   rulesFollowed: boolean;
   riskAmount: number | null;
+  strategy: string;
   violations: Violation[];
 };
 
@@ -172,4 +173,30 @@ export function topViolations(trades: StatTrade[], limit = 5): { id: string; nam
     }
   }
   return [...map.values()].sort((a, b) => b.count - a.count).slice(0, limit);
+}
+
+/** Результат по стратегиям. Сделки без стратегии не учитываются. */
+export function pnlByStrategy(trades: StatTrade[]): Bucket[] {
+  return groupBy(trades.filter((t) => t.strategy !== ""), (t) => t.strategy).sort((a, b) => b.pnl - a.pnl);
+}
+
+export type Streak = { current: number; best: number; daysSinceViolation: number | null };
+
+/** Серия дисциплины: сколько сделок подряд (с конца) без нарушений, лучшая серия и дней без нарушений. */
+export function disciplineStreak(trades: StatTrade[], now: Date = new Date()): Streak {
+  const sorted = [...trades].sort(byTime);
+  let current = 0;
+  let best = 0;
+  let run = 0;
+  for (const t of sorted) {
+    run = t.rulesFollowed ? run + 1 : 0;
+    best = Math.max(best, run);
+  }
+  current = run;
+  const lastViolation = [...sorted].reverse().find((t) => !t.rulesFollowed);
+  return {
+    current,
+    best,
+    daysSinceViolation: lastViolation ? Math.max(0, Math.floor((now.getTime() - new Date(lastViolation.tradedAt).getTime()) / DAY_MS)) : null,
+  };
 }

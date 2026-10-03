@@ -18,9 +18,13 @@ type Props = {
   rules: RuleLike[];
   /** Сколько сделок уже есть за сегодня */
   tradesToday: number;
+  /** Убыток за сегодня в % от баланса на начало дня */
+  dayLossPercent: number | null;
+  /** Вопросы чек-листа перед сделкой; пустой список — чек-лист выключен */
+  checklist: string[];
 };
 
-export function Calculator({ accounts, rules, tradesToday }: Props) {
+export function Calculator({ accounts, rules, tradesToday, dayLossPercent, checklist }: Props) {
   const { t, locale } = useI18n();
   const router = useRouter();
   const first = accounts[0];
@@ -36,6 +40,8 @@ export function Calculator({ accounts, rules, tradesToday }: Props) {
   const [takeProfit, setTakeProfit] = useState("");
   const [leverage, setLeverage] = useState("1");
   const [warningOpen, setWarningOpen] = useState(false);
+  const [checklistOpen, setChecklistOpen] = useState(false);
+  const [checked, setChecked] = useState<Set<number>>(new Set());
 
   const account = accounts.find((a) => a.id === accountId);
   const currency = account?.currency ?? "USD";
@@ -78,9 +84,10 @@ export function Calculator({ accounts, rules, tradesToday }: Props) {
       leverage: parsed.leverage ?? 1,
       hasStopLoss: true,
       tradesToday: tradesToday + 1,
+      dayLossPercent,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result, rules, tradesToday, leverage, balance]);
+  }, [result, rules, tradesToday, dayLossPercent, leverage, balance]);
 
   const activeRules = rules.filter((r) => r.is_active);
   const { score } = scoreChecks(checks);
@@ -114,9 +121,19 @@ export function Calculator({ accounts, rules, tradesToday }: Props) {
     router.push(`/trades/new?${p.toString()}`);
   }
 
+  // Порядок: предупреждение о нарушении правил → чек-лист → переход к сделке. Никогда не запрещаем.
+  function afterWarning() {
+    if (checklist.length > 0) {
+      setChecked(new Set());
+      setChecklistOpen(true);
+    } else {
+      goToTrade();
+    }
+  }
+
   function onSave() {
     if (violated.length > 0) setWarningOpen(true);
-    else goToTrade();
+    else afterWarning();
   }
 
   const row = (label: string, value: string, strong = false) => (
@@ -278,7 +295,7 @@ export function Calculator({ accounts, rules, tradesToday }: Props) {
             <Button
               onClick={() => {
                 setWarningOpen(false);
-                goToTrade();
+                afterWarning();
               }}
             >
               {t("calc.warning.proceed")}
@@ -295,6 +312,52 @@ export function Calculator({ accounts, rules, tradesToday }: Props) {
           ))}
         </ul>
         <p className="mt-4 text-muted">{t("calc.warning.text")}</p>
+      </Modal>
+
+      <Modal
+        open={checklistOpen}
+        onClose={() => setChecklistOpen(false)}
+        title={t("checklist.title")}
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setChecklistOpen(false)}>{t("calc.warning.cancel")}</Button>
+            <Button
+              onClick={() => {
+                setChecklistOpen(false);
+                goToTrade();
+              }}
+            >
+              {t("checklist.continue")}
+            </Button>
+          </>
+        }
+      >
+        <p className="mb-3 text-muted">{t("checklist.text")}</p>
+        <ul className="space-y-2">
+          {checklist.map((q, i) => (
+            <li key={i}>
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-border p-3 has-[:checked]:border-success has-[:checked]:bg-success-soft">
+                <input
+                  type="checkbox"
+                  className="h-5 w-5 accent-[var(--primary)]"
+                  checked={checked.has(i)}
+                  onChange={() =>
+                    setChecked((prev) => {
+                      const next = new Set(prev);
+                      if (next.has(i)) next.delete(i);
+                      else next.add(i);
+                      return next;
+                    })
+                  }
+                />
+                <span>{q}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+        {checked.size < checklist.length && (
+          <p className="mt-3 text-sm text-warning">{t("checklist.unchecked", { n: checklist.length - checked.size })}</p>
+        )}
       </Modal>
     </div>
   );

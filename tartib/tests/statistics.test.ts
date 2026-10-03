@@ -8,7 +8,7 @@ import {
 let n = 0;
 const trade = (pnl: number, extra: Partial<StatTrade> = {}): StatTrade => ({
   id: String(++n), tradedAt: `2026-09-${String(10 + n).padStart(2, "0")}T10:00:00Z`, instrument: "BTC/USDT",
-  direction: "long", entryPrice: 1, exitPrice: 1, pnl, emotion: "calm", rulesFollowed: true, riskAmount: 10, violations: [], ...extra,
+  direction: "long", entryPrice: 1, exitPrice: 1, pnl, emotion: "calm", rulesFollowed: true, riskAmount: 10, strategy: "", violations: [], ...extra,
 });
 
 test("сводка: win rate, profit factor, средние, средний R", () => {
@@ -72,4 +72,29 @@ test("фильтр периода", () => {
   assert.equal(filterByPeriod([old, recent], "7d", now).length, 1);
   assert.equal(filterByPeriod([old, recent], "30d", now).length, 1);
   assert.equal(filterByPeriod([old, recent], "all", now).length, 2);
+});
+
+import { disciplineStreak, pnlByStrategy } from "../lib/statistics/index.ts";
+import { evaluateRules as evalRules } from "../lib/calculations/rules.ts";
+
+test("серия дисциплины", () => {
+  const seq = [true, true, false, true, true, true].map((ok, i) => trade(1, { rulesFollowed: ok, tradedAt: `2026-09-${10 + i}T10:00:00Z` }));
+  const s = disciplineStreak(seq, new Date("2026-09-20T10:00:00Z"));
+  assert.equal(s.current, 3);
+  assert.equal(s.best, 3);
+  assert.equal(s.daysSinceViolation, 8); // нарушение было 12 сентября
+  assert.equal(disciplineStreak([trade(1)]).daysSinceViolation, null);
+});
+
+test("результат по стратегиям без пустых", () => {
+  const b = pnlByStrategy([trade(10, { strategy: "Пробой" }), trade(-4, { strategy: "Пробой" }), trade(5), trade(7, { strategy: "Откат" })]);
+  assert.deepEqual(b, [{ key: "Откат", pnl: 7, count: 1 }, { key: "Пробой", pnl: 6, count: 2 }]);
+});
+
+test("правило дневного лимита убытка", () => {
+  const rule = { id: "d", name: "d", rule_type: "max_daily_loss_percent" as const, value: 3, is_active: true };
+  const facts = (p: number | null) => ({ riskPercent: 1, riskReward: 2, leverage: 1, hasStopLoss: true, tradesToday: 1, dayLossPercent: p });
+  assert.equal(evalRules([rule], facts(2.9))[0].status, "ok");
+  assert.equal(evalRules([rule], facts(3))[0].status, "violated");
+  assert.equal(evalRules([rule], facts(null))[0].status, "unknown");
 });

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ArrowLeft, CheckCircle2, Pencil } from "lucide-react";
+import { ScreenshotCard } from "@/components/trades/ScreenshotCard";
 import { DeleteTradeButton } from "@/components/trades/DeleteTradeButton";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
 import { Badge, buttonStyles, Card } from "@/components/ui";
@@ -35,6 +36,10 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
     .maybeSingle();
   if (!data) notFound();
   const trade = data as unknown as Detail;
+  const signed = trade.screenshot_path
+    ? await supabase.storage.from("trade-screenshots").createSignedUrl(trade.screenshot_path, 3600)
+    : null;
+  const screenshotUrl = signed?.data?.signedUrl ?? null;
 
   const cur = trade.account?.currency ?? profile?.currency ?? "USD";
   const money = (v: number | null, signed = false) => (v === null ? t("trades.detail.none") : formatMoney(Number(v), cur, locale, signed));
@@ -74,7 +79,7 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
             <EmotionBadge emotion={trade.emotion} label={t(`emotions.${trade.emotion}`)} />
           </div>
           <p className="mt-1 text-sm text-muted">
-            {formatDateTime(trade.traded_at, locale, safeTimeZone(profile?.timezone))} · {t(`markets.${trade.market}`)}
+            {formatDateTime(trade.traded_at, locale, safeTimeZone(profile?.timezone))} · {t(`markets.${trade.market}`)}{trade.strategy ? ` · ${trade.strategy}` : ""}
             {trade.account ? ` · ${trade.account.name}` : ""}
           </p>
         </div>
@@ -115,6 +120,8 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
           {fact(t("trades.detail.riskReward"), rr === null ? t("trades.detail.none") : `1 : ${formatNumber(rr, locale, 2)}`)}
         </dl>
       </Card>
+
+      <ScreenshotCard tradeId={id} url={screenshotUrl} />
 
       {(trade.reason || trade.plan || trade.comment) && (
         <Card className="space-y-4">

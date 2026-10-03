@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { TradeForm, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
 import { calculatePnl } from "@/lib/calculations/trade";
-import { countTradesBetween, getAccounts, getRules } from "@/lib/data";
+import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import type { Trade } from "@/types";
@@ -29,10 +29,12 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
   const trade = data as unknown as Trade & { trade_rule_violations: { rule_id: string }[] };
 
   const { start, end } = dayBounds(safeTimeZone(profile?.timezone), new Date(trade.traded_at));
-  const [accounts, rules, others] = await Promise.all([
+  const [accounts, rules, others, day, strategies] = await Promise.all([
     getAccounts(supabase),
     getRules(supabase),
     countTradesBetween(supabase, start, end, id),
+    getDayContext(supabase, start, end),
+    getStrategies(supabase),
   ]);
 
   // Если сохранённый P&L отличается от расчётного, значит он правился вручную
@@ -56,6 +58,7 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
     risk: str(trade.risk_percent),
     pnl: String(pnl),
     emotion: trade.emotion,
+    strategy: trade.strategy ?? "",
     reason: trade.reason,
     plan: trade.plan,
     comment: trade.comment,
@@ -68,6 +71,8 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
       accounts={accounts}
       rules={rules}
       tradesOthersToday={others}
+      dayLossPercent={dayLossBefore(day, new Date(trade.traded_at), id)}
+      strategies={strategies}
       initial={initial}
       pnlIsManual={Math.abs(autoPnl - pnl) > 0.005}
       initialViolationIds={trade.trade_rule_violations.map((x) => x.rule_id)}

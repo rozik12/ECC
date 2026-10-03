@@ -8,6 +8,9 @@ export type Profile = {
   currency: string;
   timezone: string;
   onboarded: boolean;
+  is_admin: boolean;
+  checklist_enabled: boolean;
+  checklist: string[] | null;
 };
 
 /** Возвращает пользователя и его профиль или отправляет на страницу входа. */
@@ -18,7 +21,7 @@ export async function requireUser() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, name, language, currency, timezone, onboarded")
+    .select("id, name, language, currency, timezone, onboarded, is_admin, checklist_enabled, checklist")
     .eq("id", data.user.id)
     .single<Profile>();
 

@@ -15,6 +15,8 @@ export type WeeklyReportContent = {
   topViolation: { ruleId: string; name: string; count: number; pnl: number } | null;
   /** Лучшая по результату категория сделок (инструмент или эмоция) */
   bestCategory: { kind: "instrument" | "emotion"; key: string; pnl: number; count: number } | null;
+  /** Текстовый разбор от AI. Есть только если generatedBy = "ai". */
+  summary?: string;
 };
 
 export type ReportInput = {
@@ -22,6 +24,8 @@ export type ReportInput = {
   periodEnd: string;
   /** Сделки только за период отчёта */
   trades: StatTrade[];
+  /** Язык, на котором AI пишет разбор */
+  locale?: "ru" | "uz" | "en";
 };
 
 /** Любой способ собрать недельный отчёт: сейчас по правилам, позже через AI. */

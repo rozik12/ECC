@@ -7,6 +7,7 @@ export const ruleTypes: Record<RuleType, { hasValue: boolean; auto: boolean; max
   max_leverage: { hasValue: true, auto: true },
   require_stop_loss: { hasValue: false, auto: true },
   max_trades_per_day: { hasValue: true, auto: true },
+  max_daily_loss_percent: { hasValue: true, auto: true, max: 100 },
   custom: { hasValue: false, auto: false },
 };
 
@@ -19,4 +20,5 @@ export const rulePresets: { key: string; type: RuleType; value: number | null }[
   { key: "lev10", type: "max_leverage", value: 10 },
   { key: "sl", type: "require_stop_loss", value: null },
   { key: "trades3", type: "max_trades_per_day", value: 3 },
+  { key: "dayloss3", type: "max_daily_loss_percent", value: 3 },
 ];

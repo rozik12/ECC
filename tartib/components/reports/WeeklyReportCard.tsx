@@ -46,6 +46,7 @@ export async function WeeklyReportCard({
       ) : (
         <div className="mt-4 space-y-3 text-sm">
           <p className="text-muted">{t("reports.period", { from: report.periodStart, to: report.periodEnd })}</p>
+          {report.summary && <p className="whitespace-pre-wrap rounded-xl bg-primary-soft p-4 leading-relaxed">{report.summary}</p>}
           {report.tradesCount === 0 ? (
             <p>{t("reports.noTrades")}</p>
           ) : (

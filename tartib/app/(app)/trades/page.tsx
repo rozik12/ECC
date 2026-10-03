@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Download, Plus, Upload } from "lucide-react";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
 import { TradeFilters, type TradeFilterValues } from "@/components/trades/TradeFilters";
 import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
@@ -80,9 +80,17 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold sm:text-3xl">{t("trades.title")}</h1>
-        <Link href="/trades/new" className={buttonStyles()}>
-          <Plus className="h-4 w-4" aria-hidden /> {t("trades.add")}
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <a href="/api/trades/export" className={buttonStyles({ variant: "secondary" })}>
+            <Download className="h-4 w-4" aria-hidden /> {t("trades.export")}
+          </a>
+          <Link href="/trades/import" className={buttonStyles({ variant: "secondary" })}>
+            <Upload className="h-4 w-4" aria-hidden /> {t("trades.import")}
+          </Link>
+          <Link href="/trades/new" className={buttonStyles()}>
+            <Plus className="h-4 w-4" aria-hidden /> {t("trades.add")}
+          </Link>
+        </div>
       </div>
 
       {total === 0 && !hasFilters ? (

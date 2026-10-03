@@ -3,9 +3,11 @@ import Link from "next/link";
 import { WeeklyReportCard } from "@/components/reports/WeeklyReportCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
+import { PnlCalendar } from "@/components/statistics/PnlCalendar";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { EquityChart, PnlBars } from "@/components/statistics/charts";
-import { buttonStyles, Card } from "@/components/ui";
+import { Badge, buttonStyles, Card } from "@/components/ui";
+import { Lock } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts, getPlan } from "@/lib/data";
@@ -14,7 +16,7 @@ import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
   byEmotion, disciplineCost, equityCurve, filterByPeriod, maxDrawdown, periods, pnlByDay, pnlByInstrument,
-  summarize, type Period,
+  pnlByStrategy, summarize, type Period,
 } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
 
@@ -23,9 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("pages.statistics") };
 }
 
-export default async function StatisticsPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
+export default async function StatisticsPage({ searchParams }: { searchParams: Promise<{ period?: string; month?: string }> }) {
   const sp = await searchParams;
-  const period: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
   const { t, locale } = await getTranslator();
   const { supabase, user, profile } = await requireUser();
   const tz = safeTimeZone(profile?.timezone);
@@ -36,6 +37,9 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
     getPlan(supabase, user.id),
     getLatestWeeklyReport(supabase),
   ]);
+  // «Всё время» — функция PRO
+  const requested: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
+  const period: Period = requested === "all" && plan !== "pro" ? "30d" : requested;
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
 
@@ -62,6 +66,27 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
     { label: t("stats.kpi.avgR"), value: summary.avgR === null ? none : `${formatNumber(summary.avgR, locale, 2)} R` },
   ];
 
+  const nowParts = new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit" }).format(new Date()).split("-");
+  const curYear = Number(nowParts[0]);
+  const curMonth = Number(nowParts[1]);
+  const m = /^(\d{4})-(\d{2})$/.exec(sp.month ?? "");
+  let year = m ? Number(m[1]) : curYear;
+  let month = m ? Number(m[2]) : curMonth;
+  if (month < 1 || month > 12 || year * 12 + month > curYear * 12 + curMonth || year < 2000) {
+    year = curYear;
+    month = curMonth;
+  }
+  const monthHref = (y: number, mo: number) => {
+    const qs = new URLSearchParams();
+    if (requested !== "30d") qs.set("period", requested);
+    qs.set("month", `${y}-${String(mo).padStart(2, "0")}`);
+    return `/statistics?${qs.toString()}`;
+  };
+  const prev = month === 1 ? { y: year - 1, m: 12 } : { y: year, m: month - 1 };
+  const nxt = month === 12 ? { y: year + 1, m: 1 } : { y: year, m: month + 1 };
+  const hasNext = nxt.y * 12 + nxt.m <= curYear * 12 + curMonth;
+  const strategies = pnlByStrategy(trades);
+
   const rulesData = [
     { name: t("trades.rulesFollowed"), value: discipline.followedPnl, count: discipline.followedCount },
     { name: t("trades.rulesViolated"), value: discipline.violatedPnl, count: discipline.violatedCount },
@@ -74,7 +99,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           <h1 className="text-2xl font-bold sm:text-3xl">{t("stats.title")}</h1>
           <p className="mt-1 text-muted">{t("stats.subtitle")}</p>
         </div>
-        <PeriodTabs current={period} />
+        <PeriodTabs current={period} plan={plan} />
       </div>
 
       {all.length === 0 ? (
@@ -99,6 +124,9 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
             <h2 className="mb-3 font-semibold">{t("stats.charts.equity")}</h2>
             <EquityChart data={curve} currency={currency} />
           </Card>
+
+          <PnlCalendar days={pnlByDay(all, tz)} year={year} month={month} currency={currency}
+            prevHref={monthHref(prev.y, prev.m)} nextHref={hasNext ? monthHref(nxt.y, nxt.m) : null} />
 
           <div className="grid gap-6 lg:grid-cols-2">
             <Card>
@@ -132,6 +160,21 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
               />
             </Card>
           </div>
+
+          <Card>
+            <div className="mb-3 flex items-center gap-2">
+              <h2 className="font-semibold">{t("stats.charts.byStrategy")}</h2>
+              {plan !== "pro" && <Badge tone="primary">PRO</Badge>}
+            </div>
+            {plan !== "pro" ? (
+              <p className="flex items-start gap-2 text-sm text-muted"><Lock className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />{t("stats.proOnly")}</p>
+            ) : strategies.length === 0 ? (
+              <p className="text-sm text-muted">{t("stats.charts.noStrategy")}</p>
+            ) : (
+              <PnlBars label={t("stats.charts.byStrategy")} currency={currency} layout="rows"
+                data={strategies.map((b) => ({ name: b.key, value: Math.round(b.pnl * 100) / 100, count: b.count }))} />
+            )}
+          </Card>
 
           <EmotionAnalysis stats={emotions} currency={currency} />
           <WeeklyReportCard plan={plan} report={latest?.content ?? null} currency={currency} />

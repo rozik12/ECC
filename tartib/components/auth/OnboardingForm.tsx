@@ -36,7 +36,7 @@ export function OnboardingForm({ defaultName }: { defaultName: string }) {
   const err = (e?: { message?: string }) => (e ? t(e.message ?? "errors.generic") : undefined);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
+    <form method="post" onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
       {formError && <Alert tone="danger">{t(formError)}</Alert>}
       <Input id="name" autoComplete="name" label={t("onboarding.name")} error={err(errors.name)} {...register("name")} />
       <div className="grid gap-4 sm:grid-cols-2">

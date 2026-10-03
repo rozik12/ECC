@@ -28,7 +28,7 @@ export function ForgotForm() {
   if (sent) return <Alert tone="success" title={t("auth.forgot.sentTitle")}>{t("auth.forgot.sentText")}</Alert>;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
+    <form method="post" onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
       {formError && <Alert tone="danger">{t(formError)}</Alert>}
       <Input id="email" type="email" autoComplete="email" label={t("auth.email")}
         error={errors.email && t(errors.email.message ?? "errors.generic")} {...register("email")} />

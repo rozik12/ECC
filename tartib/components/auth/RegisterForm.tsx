@@ -34,7 +34,7 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
+    <form method="post" onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
       {formError && <Alert tone="danger">{t(formError)}</Alert>}
       <Input id="name" autoComplete="name" label={t("auth.register.name")}
         error={errors.name && t(errors.name.message ?? "errors.generic")} {...register("name")} />

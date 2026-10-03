@@ -28,7 +28,7 @@ export function ResetForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
+    <form method="post" onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
       {formError && <Alert tone="danger">{t(formError)}</Alert>}
       <Input id="password" type="password" autoComplete="new-password" label={t("auth.reset.newPassword")} hint={t("auth.passwordHint")}
         error={errors.password && t(errors.password.message ?? "errors.generic")} {...register("password")} />

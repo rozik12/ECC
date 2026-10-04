@@ -1,14 +1,14 @@
 "use server";
 
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { isLocale, LOCALE_COOKIE } from "@/lib/i18n/config";
+import { applyProfileLanguage } from "@/lib/profile-language";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { forgotSchema, loginSchema, registerSchema, resetSchema } from "@/lib/validations/auth";
 
 /** Результат действия. error — ключ словаря, чтобы показать текст на языке пользователя. */
-export type ActionResult = { ok: true; needsEmailConfirmation?: boolean; id?: string } | { ok: false; error: string };
+export type ActionResult = { ok: true; needsEmailConfirmation?: boolean; needsMfa?: boolean; id?: string } | { ok: false; error: string };
 
 export async function loginAction(input: unknown): Promise<ActionResult> {
   const parsed = loginSchema.safeParse(input);
@@ -21,14 +21,12 @@ export async function loginAction(input: unknown): Promise<ActionResult> {
     if (error) {
       return { ok: false, error: error.status === 400 ? "errors.invalidCredentials" : "errors.generic" };
     }
-    // Язык из профиля действует на любом устройстве, где пользователь вошёл
+    // Двухфакторная защита: пароль верный, но нужен ещё код из приложения
+    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2") return { ok: true, needsMfa: true };
+
     const { data: auth } = await supabase.auth.getUser();
-    if (auth.user) {
-      const { data: profile } = await supabase.from("profiles").select("language").eq("id", auth.user.id).maybeSingle();
-      if (profile && isLocale(profile.language)) {
-        (await cookies()).set(LOCALE_COOKIE, profile.language, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
-      }
-    }
+    if (auth.user) await applyProfileLanguage(supabase, auth.user.id);
     return { ok: true };
   } catch {
     return { ok: false, error: "errors.generic" };

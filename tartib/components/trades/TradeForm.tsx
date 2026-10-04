@@ -25,6 +25,7 @@ export type TradeFormValues = {
   size: string;
   leverage: string;
   risk: string;
+  fees: string;
   pnl: string;
   emotion: EmotionKey;
   strategy: string;
@@ -105,7 +106,9 @@ export function TradeForm({
   };
 
   // P&L считается сам, пока пользователь не изменил его вручную
-  const autoPnl = n.entry !== null && n.exit !== null && n.size !== null ? round2(calculatePnl(v.direction, n.entry, n.exit, n.size)) : null;
+  const feesNum = parseNumber(v.fees) ?? 0;
+  const autoPnl =
+    n.entry !== null && n.exit !== null && n.size !== null ? round2(calculatePnl(v.direction, n.entry, n.exit, n.size) - feesNum) : null;
   const pnlShown = pnlTouched ? v.pnl : autoPnl === null ? "" : String(autoPnl);
 
   // Правила, нарушенные по цифрам
@@ -155,6 +158,7 @@ export function TradeForm({
       positionSize: n.size,
       leverage: n.leverage ?? 1,
       riskPercent: n.risk,
+      fees: feesNum,
       pnl: parseNumber(pnlShown),
       emotion: v.emotion,
       strategy: v.strategy,
@@ -234,6 +238,7 @@ export function TradeForm({
           <Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} />
           <Input id="t-risk" inputMode="decimal" label={t("trades.form.riskPercent")} error={err("riskPercent")} {...bind("risk")} />
         </div>
+        <Input id="t-fees" inputMode="decimal" label={t("trades.form.fees")} hint={t("trades.form.feesHint")} error={err("fees")} {...bind("fees")} />
         <Input
           id="t-pnl"
           inputMode="decimal"

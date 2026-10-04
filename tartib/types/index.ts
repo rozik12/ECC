@@ -36,6 +36,7 @@ export type Trade = {
   potential_profit: number | null;
   potential_loss: number | null;
   pnl: number;
+  fees: number;
   emotion: EmotionKey;
   rules_followed: boolean;
   strategy: string;

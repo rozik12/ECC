@@ -46,6 +46,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     size: one(sp.size),
     leverage: one(sp.leverage) || "1",
     risk: one(sp.risk),
+    fees: "",
     pnl: "",
     emotion: "calm",
     strategy: "",

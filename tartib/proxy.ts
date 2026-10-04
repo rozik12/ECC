@@ -35,7 +35,7 @@ export async function proxy(request: NextRequest) {
     url.search = "";
     return NextResponse.redirect(url);
   }
-  if (data.user && AUTH_PAGES.includes(path)) {
+  if (data.user && AUTH_PAGES.includes(path) && !request.nextUrl.searchParams.has("mfa")) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     url.search = "";

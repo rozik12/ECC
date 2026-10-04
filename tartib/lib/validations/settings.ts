@@ -30,3 +30,11 @@ export const checklistSchema = z.object({
   enabled: z.boolean(),
   items: z.array(z.string().trim().min(1).max(120, "errors.nameMax")).max(10, "settings.checklistMax"),
 });
+
+export const transactionSchema = z.object({
+  accountId: z.uuid("errors.generic"),
+  kind: z.enum(["deposit", "withdrawal"]),
+  amount: z.number({ error: "errors.number" }).positive("errors.positive").max(1_000_000_000, "errors.tooLarge"),
+  occurredAt: z.iso.datetime({ offset: true, error: "errors.required" }),
+  note: z.string().trim().max(200, "errors.nameMax").default(""),
+});

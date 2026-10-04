@@ -19,6 +19,10 @@ export async function requireUser() {
   const { data } = await supabase.auth.getUser();
   if (!data.user) redirect("/login");
 
+  // Если включена двухфакторная защита, а код в этой сессии не вводили, пускаем только на ввод кода
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2") redirect("/login?mfa=1");
+
   const { data: profile } = await supabase
     .from("profiles")
     .select("id, name, language, currency, timezone, onboarded, is_admin, checklist_enabled, checklist")

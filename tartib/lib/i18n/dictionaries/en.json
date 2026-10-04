@@ -172,7 +172,16 @@
     },
     "google": "Continue with Google",
     "or": "or with email",
-    "oauthFailed": "Couldn't sign in with Google. Try again or use email."
+    "oauthFailed": "Couldn't sign in with Google. Try again or use email.",
+    "mfa": {
+      "title": "Verification code",
+      "text": "Enter the 6-digit code from your authenticator app.",
+      "code": "Code",
+      "verify": "Log in",
+      "cancel": "Cancel and log out",
+      "invalid": "Wrong code. Please try again.",
+      "sessionExpired": "The sign-in session has expired. Please log in again."
+    }
   },
   "pages": {
     "comingTitle": "This section is in development",
@@ -263,7 +272,8 @@
     "textMax": "Text is too long",
     "leverageMin": "Leverage cannot be below 1",
     "limitRules": "FREE plan limit reached: up to 5 rules. The PRO plan removes limits.",
-    "limitTrades": "FREE plan limit reached: up to 30 trades. The PRO plan removes limits."
+    "limitTrades": "FREE plan limit reached: up to 30 trades. The PRO plan removes limits.",
+    "nonNegative": "The number cannot be below zero"
   },
   "onboarding": {
     "title": "Let's get acquainted",
@@ -529,7 +539,9 @@
       "save": "Save trade",
       "fromCalculator": "Data carried over from the calculator.",
       "strategy": "Strategy",
-      "strategyHint": "For example “Breakout” or “Pullback”. Statistics are built from it."
+      "strategyHint": "For example “Breakout” or “Pullback”. Statistics are built from it.",
+      "fees": "Commission and swap",
+      "feesHint": "What you paid the broker or exchange. P&L is calculated after fees."
     },
     "detail": {
       "risk": "Risk",
@@ -607,7 +619,17 @@
       "note": "This is an observation from your data, not a general rule."
     },
     "emptyPeriod": "No trades in this period.",
-    "proOnly": "This feature is available on the PRO plan."
+    "proOnly": "This feature is available on the PRO plan.",
+    "time": {
+      "title": "When you trade",
+      "subtitle": "Time is counted in your time zone ({tz}).",
+      "byWeekday": "P&L by weekday",
+      "byHour": "P&L by time of day",
+      "worstDay": "Violations happen most on this weekday: {day} ({v} violations in {n} trades).",
+      "worstHour": "Violations happen most at this time of day: {hours} ({v} violations in {n} trades).",
+      "noPattern": "No clear pattern yet: it takes at least 3 trades and 2 violations on the same day or time.",
+      "note": "This is an observation from your journal, not a recommendation to trade at a certain time."
+    }
   },
   "dashboard": {
     "greeting": "Hi, {name}!",
@@ -644,7 +666,19 @@
     "addAccount": "Add account",
     "renameAccount": "Rename account",
     "accountsLimit": "Maximum number of accounts reached (10).",
-    "checklistMax": "No more than 10 questions."
+    "checklistMax": "No more than 10 questions.",
+    "transactions": {
+      "title": "Deposits and withdrawals",
+      "text": "Record money you add or take out. It changes the account balance but is not counted as profit, loss or drawdown.",
+      "kind": "Operation",
+      "deposit": "Deposit",
+      "withdrawal": "Withdrawal",
+      "amount": "Amount",
+      "date": "Date",
+      "dateHint": "Leave empty for today.",
+      "note": "Note (optional)",
+      "add": "Record"
+    }
   },
   "profile": {
     "name": "Name",
@@ -657,7 +691,26 @@
     "deleteType": "To confirm, type your email: {email}",
     "deleteConfirm": "Delete permanently",
     "deleteMismatch": "The email does not match the account email.",
-    "deleteFailed": "Couldn't delete the account. Please try again."
+    "deleteFailed": "Couldn't delete the account. Please try again.",
+    "dataTitle": "My data",
+    "dataText": "Download everything stored in your account: accounts, rules, trades, deposits and withdrawals, reports.",
+    "dataDownload": "Download my data (JSON)",
+    "mfa": {
+      "title": "Two-factor authentication",
+      "text": "Besides the password, signing in needs a code from an authenticator app (Google Authenticator, Microsoft Authenticator, Authy and similar).",
+      "on": "On",
+      "off": "Off",
+      "enable": "Turn on protection",
+      "disable": "Turn off protection",
+      "disableTitle": "Turn off two-factor authentication?",
+      "disableText": "Signing in will again need only a password. The account becomes less protected.",
+      "scan": "Scan the QR code in your authenticator app or enter the secret key manually.",
+      "secret": "Secret key",
+      "codeLabel": "6-digit code from the app",
+      "confirm": "Confirm and turn on",
+      "failed": "Couldn't complete the action. Please try again.",
+      "lostHint": "If you lose your phone, signing in is impossible without help from the service owner. Keep the secret key in a safe place."
+    }
   },
   "states": {
     "errorTitle": "Something went wrong",
@@ -751,16 +804,19 @@
     "recent": "Recent sign-ups",
     "registered": "Registered",
     "setPlan": "Grant or remove PRO",
-    "notFound": "No user with this email."
+    "notFound": "No user with this email.",
+    "resetMfa": "Reset two-factor authentication",
+    "resetMfaText": "For a user who lost their phone. They can sign in with a password and turn protection on again.",
+    "resetMfaButton": "Reset"
   },
   "import": {
     "title": "Import trades",
-    "intro": "Upload a CSV file with trades (from Excel or Google Sheets). Each trade is checked against your rules just like a manually entered one.",
+    "intro": "Upload a CSV table of trades from Excel, Google Sheets, an exchange or a broker. Tartib detects the columns itself; fix them manually if it guesses wrong. Each trade is checked against your rules like a manually entered one.",
     "columns": "Columns",
-    "required": "Required: instrument, direction (long or short), entry, size. Separate several broken rules in violated_rules with the | sign.",
+    "required": "Required fields: instrument, direction (long/short or buy/sell), entry price and size. Separate several broken rules in one cell with the | sign.",
     "template": "Download a sample file",
     "file": "CSV file",
-    "missing": "Required columns are missing: {cols}.",
+    "missing": "No columns found for required fields: {cols}. Choose them manually below.",
     "limitRows": "The first {n} rows will be processed.",
     "summary": "Valid rows: {valid}. With errors: {invalid}.",
     "lineError": "Line {line}: {reason}",
@@ -771,6 +827,31 @@
     "errDirection": "direction must be long or short",
     "errMarket": "market: crypto, forex, stocks or futures",
     "errValues": "invalid values in the row",
-    "tooBig": "The file is larger than 2 MB."
+    "tooBig": "The file is larger than 2 MB.",
+    "mappingTitle": "Column mapping",
+    "mappingText": "For each field choose a column from your file. Fields with a star are required.",
+    "notUsed": "— not used —",
+    "errDate": "could not read the date",
+    "fields": {
+      "date_time": "Date and time",
+      "instrument": "Instrument",
+      "market": "Market",
+      "direction": "Direction",
+      "entry": "Entry price",
+      "exit": "Exit price",
+      "stop_loss": "Stop-loss",
+      "take_profit": "Take-profit",
+      "size": "Size",
+      "leverage": "Leverage",
+      "risk_percent": "Risk, %",
+      "fees": "Commission",
+      "pnl": "P&L",
+      "emotion": "Emotion",
+      "strategy": "Strategy",
+      "violated_rules": "Rules broken",
+      "reason": "Reason for entry",
+      "plan": "Trading plan",
+      "comment": "Comment"
+    }
   }
 }

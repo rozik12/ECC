@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ResetMfaForm } from "@/components/admin/ResetMfaForm";
 import { SetPlanForm } from "@/components/admin/SetPlanForm";
 import { Badge, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
@@ -36,6 +37,7 @@ export default async function AdminPage() {
         ))}
       </div>
       <SetPlanForm />
+      <ResetMfaForm />
       <section>
         <h2 className="mb-3 font-semibold">{t("admin.recent")}</h2>
         <Table>

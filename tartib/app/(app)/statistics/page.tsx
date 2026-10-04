@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WeeklyReportCard } from "@/components/reports/WeeklyReportCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
+import { TimeAnalysis } from "@/components/statistics/TimeAnalysis";
 import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
 import { PnlCalendar } from "@/components/statistics/PnlCalendar";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
@@ -10,12 +11,12 @@ import { Badge, buttonStyles, Card } from "@/components/ui";
 import { Lock } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts, getPlan } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getPlan, getTransactions } from "@/lib/data";
 import { getLatestWeeklyReport } from "@/services/reports";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
-  byEmotion, disciplineCost, equityCurve, filterByPeriod, maxDrawdown, periods, pnlByDay, pnlByInstrument,
+  byEmotion, disciplineCost, equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, pnlByDay, pnlByInstrument,
   pnlByStrategy, summarize, type Period,
 } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
@@ -31,11 +32,12 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
   const { supabase, user, profile } = await requireUser();
   const tz = safeTimeZone(profile?.timezone);
 
-  const [accounts, all, plan, latest] = await Promise.all([
+  const [accounts, all, plan, latest, txs] = await Promise.all([
     getAccounts(supabase),
     fetchStatTrades(supabase),
     getPlan(supabase, user.id),
     getLatestWeeklyReport(supabase),
+    getTransactions(supabase),
   ]);
   // «Всё время» — функция PRO
   const requested: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
@@ -47,10 +49,17 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
   const inPeriod = new Set(trades.map((x) => x.id));
   const startingTotal = accounts.reduce((s, a) => s + a.starting_balance, 0);
   const pnlBefore = all.filter((x) => !inPeriod.has(x.id)).reduce((s, x) => s + x.pnl, 0);
-  const curve = equityCurve(trades, startingTotal + pnlBefore);
+  // Пополнения и выводы меняют баланс, но не должны выглядеть как прибыль, убыток или просадка
+  const flows = txs.map((x) => ({ ts: new Date(x.occurredAt).getTime(), amount: x.kind === "deposit" ? x.amount : -x.amount }));
+  const cut = periodStart(period)?.getTime() ?? null;
+  const flowsBefore = cut === null ? 0 : flows.filter((f) => f.ts < cut).reduce((s, f) => s + f.amount, 0);
+  const flowsInPeriod = cut === null ? flows : flows.filter((f) => f.ts >= cut);
+  const startBalance = startingTotal + pnlBefore + flowsBefore;
+  const curve = equityCurve(trades, startBalance, flowsInPeriod);
+  const performanceCurve = equityCurve(trades, startBalance);
 
   const summary = summarize(trades);
-  const drawdown = maxDrawdown(curve);
+  const drawdown = maxDrawdown(performanceCurve);
   const discipline = disciplineCost(trades);
   const emotions = byEmotion(trades);
   const none = t("stats.none");
@@ -177,6 +186,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           </Card>
 
           <EmotionAnalysis stats={emotions} currency={currency} />
+          <TimeAnalysis trades={trades} timeZone={tz} currency={currency} />
           <WeeklyReportCard plan={plan} report={latest?.content ?? null} currency={currency} />
         </>
       )}

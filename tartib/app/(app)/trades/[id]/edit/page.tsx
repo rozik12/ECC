@@ -40,8 +40,9 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
   // Если сохранённый P&L отличается от расчётного, значит он правился вручную
   const entry = Number(trade.entry_price);
   const size = Number(trade.position_size);
+  const fees = Number(trade.fees ?? 0);
   const autoPnl =
-    trade.exit_price === null ? 0 : Math.round(calculatePnl(trade.direction, entry, Number(trade.exit_price), size) * 100) / 100;
+    trade.exit_price === null ? -fees : Math.round((calculatePnl(trade.direction, entry, Number(trade.exit_price), size) - fees) * 100) / 100;
   const pnl = Number(trade.pnl);
 
   const initial: TradeFormValues = {
@@ -56,6 +57,7 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
     size: str(size),
     leverage: str(trade.leverage),
     risk: str(trade.risk_percent),
+    fees: Number(trade.fees) > 0 ? String(Number(trade.fees)) : "",
     pnl: String(pnl),
     emotion: trade.emotion,
     strategy: trade.strategy ?? "",

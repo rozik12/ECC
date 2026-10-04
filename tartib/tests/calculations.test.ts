@@ -102,3 +102,33 @@ test("CSV: защита от формул", () => {
   assert.equal(unsafeText(safeText("@cmd")), "@cmd");
   assert.equal(unsafeText("'quoted"), "'quoted");
 });
+
+import { autoMapColumns, inferMarket, normalizeDirection, parseDateTime, parseLooseNumber } from "../lib/import-map.ts";
+
+test("импорт: автоопределение столбцов из выгрузок бирж и брокеров", () => {
+  const bybit = autoMapColumns(["Contracts", "Qty", "Entry Price", "Exit Price", "Closed P&L", "Trade Type", "Closing Time"]);
+  assert.deepEqual([bybit.instrument, bybit.size, bybit.entry, bybit.exit, bybit.pnl, bybit.direction, bybit.date_time], [0, 1, 2, 3, 4, 5, 6]);
+  const mt = autoMapColumns(["Symbol", "Type", "Volume", "Open Price", "Close Price", "S / L", "T / P", "Commission", "Profit", "Open Time"]);
+  assert.deepEqual([mt.instrument, mt.direction, mt.size, mt.entry, mt.exit, mt.fees, mt.pnl, mt.date_time], [0, 1, 2, 3, 4, 7, 8, 9]);
+  const own = autoMapColumns(["Дата", "Инструмент", "Направление", "Вход", "Выход", "Объём", "Комиссия", "Прибыль"]);
+  assert.deepEqual([own.instrument, own.direction, own.entry, own.exit, own.size, own.fees, own.pnl, own.date_time], [1, 2, 3, 4, 5, 6, 7, 0]);
+  assert.equal(autoMapColumns(["foo", "bar"]).instrument, null);
+});
+
+test("импорт: направление, числа, даты, рынок", () => {
+  assert.equal(normalizeDirection("Buy"), "long");
+  assert.equal(normalizeDirection("SELL "), "short");
+  assert.equal(normalizeDirection("Шорт"), "short");
+  assert.equal(normalizeDirection("hold"), null);
+  assert.equal(parseLooseNumber("1 234,5 USDT"), 1234.5);
+  assert.equal(parseLooseNumber("$12.50"), 12.5);
+  assert.equal(parseLooseNumber("-3.2%"), -3.2);
+  assert.equal(parseLooseNumber("abc"), null);
+  assert.equal(parseDateTime("2026-10-01 10:30")?.getMinutes(), 30);
+  assert.equal(parseDateTime("01.10.2026 09:05")?.getDate(), 1);
+  assert.equal(parseDateTime("not a date"), null);
+  assert.equal(inferMarket("EURUSD"), "forex");
+  assert.equal(inferMarket("BTC/USDT"), "crypto");
+  assert.equal(inferMarket("AAPL"), "stocks");
+  assert.equal(inferMarket("NQ"), "futures");
+});

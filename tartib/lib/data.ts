@@ -136,3 +136,29 @@ export async function getStrategies(supabase: SupabaseClient): Promise<string[]>
   const { data } = await supabase.from("trades").select("strategy").neq("strategy", "").order("traded_at", { ascending: false }).limit(300);
   return [...new Set((data ?? []).map((r) => r.strategy as string))].slice(0, 30);
 }
+
+export type Transaction = {
+  id: string;
+  accountId: string;
+  kind: "deposit" | "withdrawal";
+  amount: number;
+  occurredAt: string;
+  note: string;
+};
+
+/** Пополнения и выводы (новые сверху). */
+export async function getTransactions(supabase: SupabaseClient, limit = 1000): Promise<Transaction[]> {
+  const { data } = await supabase
+    .from("account_transactions")
+    .select("id, account_id, kind, amount, occurred_at, note")
+    .order("occurred_at", { ascending: false })
+    .limit(limit);
+  return (data ?? []).map((r) => ({
+    id: r.id as string,
+    accountId: r.account_id as string,
+    kind: r.kind as "deposit" | "withdrawal",
+    amount: Number(r.amount),
+    occurredAt: r.occurred_at as string,
+    note: (r.note as string) ?? "",
+  }));
+}

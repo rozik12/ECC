@@ -114,6 +114,7 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
           {fact(t("trades.form.takeProfit"), num(trade.take_profit))}
           {fact(t("trades.form.size"), num(trade.position_size, 6))}
           {fact(t("trades.form.leverage"), num(trade.leverage, 2))}
+          {Number(trade.fees) > 0 && fact(t("trades.form.fees"), money(Number(trade.fees)))}
           {fact(t("trades.detail.risk"), trade.risk_amount === null ? t("trades.detail.none") : `${money(trade.risk_amount)}${trade.risk_percent !== null ? ` (${num(trade.risk_percent, 2)}%)` : ""}`)}
           {fact(t("trades.detail.potentialLoss"), money(trade.potential_loss))}
           {fact(t("trades.detail.potentialProfit"), money(trade.potential_profit))}

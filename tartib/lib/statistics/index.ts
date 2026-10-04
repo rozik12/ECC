@@ -74,16 +74,24 @@ export function summarize(trades: StatTrade[]): Summary {
 
 export type EquityPoint = { ts: number; balance: number };
 
-/** Кривая депозита: баланс после каждой сделки. startBalance — баланс перед первой сделкой периода. */
-export function equityCurve(trades: StatTrade[], startBalance: number): EquityPoint[] {
-  const sorted = [...trades].sort(byTime);
-  if (sorted.length === 0) return [];
-  const first = new Date(sorted[0].tradedAt).getTime();
-  const points: EquityPoint[] = [{ ts: first - 3600 * 1000, balance: startBalance }];
+/** Движение средств (пополнение +, вывод −) для кривой баланса. */
+export type Flow = { ts: number; amount: number };
+
+/**
+ * Кривая баланса: значение после каждой сделки и каждого пополнения или вывода.
+ * startBalance — баланс перед первым событием периода.
+ */
+export function equityCurve(trades: StatTrade[], startBalance: number, flows: Flow[] = []): EquityPoint[] {
+  const events = [
+    ...trades.map((t) => ({ ts: new Date(t.tradedAt).getTime(), delta: t.pnl })),
+    ...flows.map((f) => ({ ts: f.ts, delta: f.amount })),
+  ].sort((a, b) => a.ts - b.ts);
+  if (events.length === 0) return [];
+  const points: EquityPoint[] = [{ ts: events[0].ts - 3600 * 1000, balance: startBalance }];
   let balance = startBalance;
-  for (const t of sorted) {
-    balance += t.pnl;
-    points.push({ ts: new Date(t.tradedAt).getTime(), balance });
+  for (const e of events) {
+    balance += e.delta;
+    points.push({ ts: e.ts, balance });
   }
   return points;
 }
@@ -199,4 +207,45 @@ export function disciplineStreak(trades: StatTrade[], now: Date = new Date()): S
     best,
     daysSinceViolation: lastViolation ? Math.max(0, Math.floor((now.getTime() - new Date(lastViolation.tradedAt).getTime()) / DAY_MS)) : null,
   };
+}
+
+export type TimeBucket = { index: number; pnl: number; count: number; violations: number };
+
+const WEEKDAY_INDEX: Record<string, number> = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 5, Sun: 6 };
+
+function localWeekdayAndHour(iso: string, timeZone: string): { weekday: number; hour: number } {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat("en-US", { timeZone, weekday: "short", hour: "2-digit", hourCycle: "h23" })
+      .formatToParts(new Date(iso))
+      .map((p) => [p.type, p.value]),
+  );
+  return { weekday: WEEKDAY_INDEX[parts.weekday] ?? 0, hour: Number(parts.hour) % 24 };
+}
+
+function bucketize(trades: StatTrade[], size: number, indexOf: (t: StatTrade) => number): TimeBucket[] {
+  const buckets: TimeBucket[] = Array.from({ length: size }, (_, index) => ({ index, pnl: 0, count: 0, violations: 0 }));
+  for (const t of trades) {
+    const b = buckets[indexOf(t)];
+    b.pnl += t.pnl;
+    b.count += 1;
+    if (!t.rulesFollowed) b.violations += 1;
+  }
+  return buckets;
+}
+
+/** Результат и нарушения по дням недели (0 — понедельник) в часовом поясе пользователя. */
+export function byWeekday(trades: StatTrade[], timeZone: string): TimeBucket[] {
+  return bucketize(trades, 7, (t) => localWeekdayAndHour(t.tradedAt, timeZone).weekday);
+}
+
+/** Результат и нарушения по блокам часов (по умолчанию по 3 часа: 0–3, 3–6 …). */
+export function byHourBlock(trades: StatTrade[], timeZone: string, blockHours = 3): TimeBucket[] {
+  return bucketize(trades, 24 / blockHours, (t) => Math.floor(localWeekdayAndHour(t.tradedAt, timeZone).hour / blockHours));
+}
+
+/** Где нарушений больше всего: корзина с наибольшей долей нарушений, не меньше minTrades сделок и 2 нарушений. */
+export function worstViolationBucket(buckets: TimeBucket[], minTrades = 3): TimeBucket | null {
+  const candidates = buckets.filter((b) => b.count >= minTrades && b.violations >= 2);
+  if (candidates.length === 0) return null;
+  return candidates.sort((a, b) => b.violations / b.count - a.violations / a.count || b.violations - a.violations)[0];
 }

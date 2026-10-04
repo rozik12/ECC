@@ -98,3 +98,31 @@ test("правило дневного лимита убытка", () => {
   assert.equal(evalRules([rule], facts(3))[0].status, "violated");
   assert.equal(evalRules([rule], facts(null))[0].status, "unknown");
 });
+
+test("кривая баланса учитывает пополнения, а просадка по результату торговли их не видит", () => {
+  const trades = [trade(50, { tradedAt: "2026-09-10T10:00:00Z" }), trade(-30, { tradedAt: "2026-09-12T10:00:00Z" })];
+  const flows = [{ ts: new Date("2026-09-11T10:00:00Z").getTime(), amount: -500 }]; // вывод
+  assert.deepEqual(equityCurve(trades, 1000, flows).map((p) => p.balance), [1000, 1050, 550, 520]);
+  assert.equal(maxDrawdown(equityCurve(trades, 1000)).amount, 30); // вывод просадкой не считается
+});
+
+import { byHourBlock, byWeekday, worstViolationBucket } from "../lib/statistics/index.ts";
+
+test("анализ по времени: дни недели и блоки часов в часовом поясе пользователя", () => {
+  // 2026-09-07 — понедельник. 21:00 UTC = 02:00 вторника в Ташкенте
+  const tz = "Asia/Tashkent";
+  const trades = [
+    trade(10, { tradedAt: "2026-09-07T05:00:00Z" }), // пн 10:00
+    trade(-5, { tradedAt: "2026-09-07T21:00:00Z", rulesFollowed: false }), // вт 02:00
+    trade(-7, { tradedAt: "2026-09-08T21:30:00Z", rulesFollowed: false }), // ср 02:30
+    trade(-3, { tradedAt: "2026-09-09T21:45:00Z", rulesFollowed: false }), // чт 02:45
+  ];
+  const days = byWeekday(trades, tz);
+  assert.deepEqual(days.map((d) => d.count), [1, 1, 1, 1, 0, 0, 0]);
+  const hours = byHourBlock(trades, tz);
+  assert.equal(hours[0].count, 3); // блок 0–3 ночи
+  assert.equal(hours[0].violations, 3);
+  assert.equal(hours[3].count, 1); // блок 9–12
+  assert.equal(worstViolationBucket(hours)?.index, 0);
+  assert.equal(worstViolationBucket(days), null); // в каждом дне меньше 3 сделок
+});

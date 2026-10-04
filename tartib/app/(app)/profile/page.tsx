@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LogOut, Shield } from "lucide-react";
+import { Download, LogOut, Shield } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
+import { MfaCard } from "@/components/profile/MfaCard";
 import { DeleteAccount } from "@/components/profile/DeleteAccount";
 import { ProfileForm } from "@/components/profile/ProfileForm";
 import { Badge, Button, buttonStyles, Card } from "@/components/ui";
@@ -19,6 +20,8 @@ export default async function ProfilePage() {
   const { t } = await getTranslator();
   const { supabase, user, profile } = await requireUser();
   const plan = await getPlan(supabase, user.id);
+  const { data: factors } = await supabase.auth.mfa.listFactors();
+  const mfaEnabled = (factors?.totp ?? []).length > 0;
   const [{ count: trades }, { count: rules }] = await Promise.all([
     supabase.from("trades").select("id", { count: "exact", head: true }),
     supabase.from("rules").select("id", { count: "exact", head: true }),
@@ -47,6 +50,16 @@ export default async function ProfilePage() {
           <div className="flex justify-between py-2"><dt className="text-muted">{t("pages.trades")}</dt><dd className="font-medium tabular-nums">{usage(trades, limits.trades)}</dd></div>
           <div className="flex justify-between py-2"><dt className="text-muted">{t("nav.rules")}</dt><dd className="font-medium tabular-nums">{usage(rules, limits.rules)}</dd></div>
         </dl>
+      </Card>
+
+      <MfaCard enabled={mfaEnabled} />
+
+      <Card>
+        <h2 className="font-semibold">{t("profile.dataTitle")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("profile.dataText")}</p>
+        <a href="/api/account/export" className={buttonStyles({ variant: "secondary", className: "mt-4" })}>
+          <Download className="h-4 w-4" aria-hidden /> {t("profile.dataDownload")}
+        </a>
       </Card>
 
       {profile?.is_admin && (

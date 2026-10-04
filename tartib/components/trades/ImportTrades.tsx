@@ -5,7 +5,8 @@ import Link from "next/link";
 import { importTradesAction, type ImportRowResult } from "@/app/actions/import";
 import { Alert, Button, Card, Select } from "@/components/ui";
 import { parseCsv } from "@/lib/csv";
-import { mapCsvRows, MAX_IMPORT_ROWS, TRADE_COLUMNS } from "@/lib/import";
+import { mapCsvRows, MAX_IMPORT_ROWS } from "@/lib/import";
+import { autoMapColumns, IMPORT_FIELDS, REQUIRED_FIELDS, type ColumnMapping, type ImportField } from "@/lib/import-map";
 import { useI18n } from "@/lib/i18n/provider";
 
 type Account = { id: string; name: string };
@@ -15,11 +16,12 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
   const [accountId, setAccountId] = useState(accounts[0]?.id ?? "");
   const [fileName, setFileName] = useState("");
   const [rows, setRows] = useState<string[][] | null>(null);
+  const [mapping, setMapping] = useState<ColumnMapping | null>(null);
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [results, setResults] = useState<ImportRowResult[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const mapped = useMemo(() => (rows ? mapCsvRows(rows) : null), [rows]);
+  const mapped = useMemo(() => (rows ? mapCsvRows(rows, mapping ?? undefined) : null), [rows, mapping]);
   const valid = mapped?.items.filter((i) => i.payload) ?? [];
   const invalid = mapped?.items.filter((i) => !i.payload) ?? [];
   const tooMany = rows !== null && rows.length - 1 > MAX_IMPORT_ROWS;
@@ -31,7 +33,9 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
     if (!file) return;
     if (file.size > 2 * 1024 * 1024) return setError("import.tooBig");
     setFileName(file.name);
-    setRows(parseCsv(await file.text()));
+    const parsed = parseCsv(await file.text());
+    setRows(parsed);
+    setMapping(parsed.length > 0 ? autoMapColumns(parsed[0]) : null);
   }
 
   async function run() {
@@ -61,10 +65,6 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
     <div className="space-y-6">
       <Card className="space-y-4">
         <p className="text-sm text-muted">{t("import.intro")}</p>
-        <p className="text-sm">
-          <span className="font-medium">{t("import.columns")}:</span>{" "}
-          <code className="text-xs text-muted">{TRADE_COLUMNS.join(", ")}</code>
-        </p>
         <p className="text-sm text-muted">{t("import.required")}</p>
         <a href="/api/trades/export?template=1" className="inline-block text-sm font-medium text-primary hover:underline">{t("import.template")}</a>
 
@@ -80,7 +80,33 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
       </Card>
 
       {error && <Alert tone="danger">{t(error)}</Alert>}
-      {mapped && mapped.missing.length > 0 && <Alert tone="danger">{t("import.missing", { cols: mapped.missing.join(", ") })}</Alert>}
+      {mapped && mapped.missing.length > 0 && (
+        <Alert tone="warning">{t("import.missing", { cols: mapped.missing.map((f) => t(`import.fields.${f}`)).join(", ") })}</Alert>
+      )}
+      {mapped && mapping && (
+        <Card>
+          <details open={mapped.missing.length > 0}>
+            <summary className="cursor-pointer font-semibold">{t("import.mappingTitle")}</summary>
+            <p className="mt-2 text-sm text-muted">{t("import.mappingText")}</p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {IMPORT_FIELDS.map((field: ImportField) => (
+                <Select
+                  key={field}
+                  id={`map-${field}`}
+                  label={`${t(`import.fields.${field}`)}${REQUIRED_FIELDS.includes(field) ? " *" : ""}`}
+                  value={mapping[field] === null ? "" : String(mapping[field])}
+                  onChange={(e) => setMapping({ ...mapping, [field]: e.target.value === "" ? null : Number(e.target.value) })}
+                >
+                  <option value="">{t("import.notUsed")}</option>
+                  {mapped.header.map((h, i) => (
+                    <option key={i} value={i}>{h || `#${i + 1}`}</option>
+                  ))}
+                </Select>
+              ))}
+            </div>
+          </details>
+        </Card>
+      )}
       {tooMany && <Alert tone="warning">{t("import.limitRows", { n: MAX_IMPORT_ROWS })}</Alert>}
 
       {mapped && mapped.missing.length === 0 && !results && (

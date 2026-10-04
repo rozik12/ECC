@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getApiUser } from "@/lib/api-auth";
 import { safeText, toCsv } from "@/lib/csv";
 import { TRADE_COLUMNS } from "@/lib/import";
 import { getLocale } from "@/lib/i18n/server";
@@ -8,7 +9,7 @@ import { createClient } from "@/lib/supabase/server";
 type Row = {
   traded_at: string; instrument: string; market: string; direction: string; entry_price: number; exit_price: number | null;
   stop_loss: number | null; take_profit: number | null; position_size: number; leverage: number; risk_percent: number | null;
-  pnl: number; emotion: string; strategy: string; reason: string; plan: string; comment: string;
+  pnl: number; fees: number; emotion: string; strategy: string; reason: string; plan: string; comment: string;
   account: { name: string } | null; trade_rule_violations: { rule: { name: string } | null }[];
 };
 
@@ -16,8 +17,8 @@ type Row = {
 export async function GET(request: Request) {
   if (!isSupabaseConfigured()) return NextResponse.json({ error: "not_configured" }, { status: 503 });
   const supabase = await createClient();
-  const { data: auth } = await supabase.auth.getUser();
-  if (!auth.user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const user = await getApiUser(supabase);
+  if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const locale = await getLocale();
   // В русской и узбекской настройках Excel разделитель — «;», а дробная часть — запятая
@@ -28,7 +29,7 @@ export async function GET(request: Request) {
   const isTemplate = new URL(request.url).searchParams.get("template") === "1";
 
   if (isTemplate) {
-    rows.push(["2026-10-01 10:30", "BTC/USDT", "crypto", "long", decimal(65000), decimal(65500), decimal(64500), decimal(66000), decimal(0.1), "5", "", "", "calm", "Пробой", "", "Причина входа", "", "", ""]);
+    rows.push(["2026-10-01 10:30", "BTC/USDT", "crypto", "long", decimal(65000), decimal(65500), decimal(64500), decimal(66000), decimal(0.1), "5", "", "", "", "calm", "Пробой", "", "Причина входа", "", "", ""]);
   } else {
     const PAGE = 1000;
     for (let from = 0; from < 50000; from += PAGE) {
@@ -45,7 +46,7 @@ export async function GET(request: Request) {
           r.traded_at, safeText(r.instrument), r.market, r.direction, decimal(Number(r.entry_price)),
           decimal(r.exit_price === null ? null : Number(r.exit_price)), decimal(r.stop_loss === null ? null : Number(r.stop_loss)),
           decimal(r.take_profit === null ? null : Number(r.take_profit)), decimal(Number(r.position_size)), decimal(Number(r.leverage)),
-          decimal(r.risk_percent === null ? null : Number(r.risk_percent)), decimal(Number(r.pnl)), r.emotion, safeText(r.strategy ?? ""),
+          decimal(r.risk_percent === null ? null : Number(r.risk_percent)), decimal(Number(r.fees ?? 0)), decimal(Number(r.pnl)), r.emotion, safeText(r.strategy ?? ""),
           r.trade_rule_violations.flatMap((v) => (v.rule ? [safeText(v.rule.name)] : [])).join("|"),
           safeText(r.reason), safeText(r.plan), safeText(r.comment), safeText(r.account?.name ?? ""),
         ]);

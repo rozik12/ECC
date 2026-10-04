@@ -19,7 +19,8 @@ type Ctx = {
   rules?: Rule[];
 };
 
-type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy"> & {
+type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees"> & {
+  fees?: number;
   reason: string;
   plan: string;
   comment: string;
@@ -75,8 +76,14 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
   const autoIds = checks.filter((c) => c.status === "violated").map((c) => c.rule.id);
   const violationIds = [...new Set([...manualIds, ...autoIds])];
 
+  // P&L хранится чистым (после комиссий). Если пользователь не ввёл его сам, считаем: результат по ценам минус комиссии.
+  const fees = t.fees ?? 0;
   const pnl =
-    t.pnl !== null ? t.pnl : t.exitPrice !== null ? calculatePnl(t.direction, t.entryPrice, t.exitPrice, t.positionSize) : 0;
+    t.pnl !== null
+      ? t.pnl
+      : t.exitPrice !== null
+        ? calculatePnl(t.direction, t.entryPrice, t.exitPrice, t.positionSize) - fees
+        : -fees;
 
   const row = {
     account_id: t.accountId,
@@ -94,6 +101,7 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
     potential_profit: metrics.potentialProfit === null ? null : round(metrics.potentialProfit),
     potential_loss: metrics.potentialLoss === null ? null : round(metrics.potentialLoss),
     pnl: round(pnl),
+    fees: round(fees),
     emotion: t.emotion,
     strategy: t.strategy,
     rules_followed: violationIds.length === 0,

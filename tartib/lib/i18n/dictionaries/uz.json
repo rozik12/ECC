@@ -172,7 +172,16 @@
     },
     "google": "Google bilan davom etish",
     "or": "yoki pochta orqali",
-    "oauthFailed": "Google orqali kirib bo'lmadi. Qayta urinib ko'r yoki pochta orqali kir."
+    "oauthFailed": "Google orqali kirib bo'lmadi. Qayta urinib ko'r yoki pochta orqali kir.",
+    "mfa": {
+      "title": "Tasdiqlash kodi",
+      "text": "Autentifikator ilovasidagi 6 xonali kodni kirit.",
+      "code": "Kod",
+      "verify": "Kirish",
+      "cancel": "Bekor qilish va chiqish",
+      "invalid": "Kod noto'g'ri. Qayta urinib ko'r.",
+      "sessionExpired": "Kirish seansi tugadi. Qaytadan kir."
+    }
   },
   "pages": {
     "comingTitle": "Bu bo'lim ishlab chiqilmoqda",
@@ -263,7 +272,8 @@
     "textMax": "Matn juda uzun",
     "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas",
     "limitRules": "FREE tarif chegarasiga yetildi: 5 tagacha qoida. PRO tarif cheklovlarni olib tashlaydi.",
-    "limitTrades": "FREE tarif chegarasiga yetildi: 30 tagacha bitim. PRO tarif cheklovlarni olib tashlaydi."
+    "limitTrades": "FREE tarif chegarasiga yetildi: 30 tagacha bitim. PRO tarif cheklovlarni olib tashlaydi.",
+    "nonNegative": "Son noldan kam bo'lishi mumkin emas"
   },
   "onboarding": {
     "title": "Tanishib olaylik",
@@ -529,7 +539,9 @@
       "save": "Bitimni saqlash",
       "fromCalculator": "Ma'lumotlar kalkulyatordan ko'chirildi.",
       "strategy": "Strategiya",
-      "strategyHint": "Masalan: «Breakout» yoki «Pullback». Statistika shu bo'yicha hisoblanadi."
+      "strategyHint": "Masalan: «Breakout» yoki «Pullback». Statistika shu bo'yicha hisoblanadi.",
+      "fees": "Komissiya va svop",
+      "feesHint": "Brokerga yoki birjaga to'langan summa. P&L komissiyani ayirib hisoblanadi."
     },
     "detail": {
       "risk": "Xavf",
@@ -607,7 +619,17 @@
       "note": "Bu umumiy qoida emas, sening ma'lumotlaringga ko'ra kuzatuv."
     },
     "emptyPeriod": "Bu davrda bitimlar yo'q.",
-    "proOnly": "Bu funksiya PRO tarifida mavjud."
+    "proOnly": "Bu funksiya PRO tarifida mavjud.",
+    "time": {
+      "title": "Sen qachon savdo qilasan",
+      "subtitle": "Vaqt sening vaqt mintaqang ({tz}) bo'yicha hisoblanadi.",
+      "byWeekday": "Hafta kunlari bo'yicha P&L",
+      "byHour": "Sutka vaqti bo'yicha P&L",
+      "worstDay": "Qoidabuzarliklar ko'proq shu hafta kunida: {day} ({n} ta bitimda {v} ta buzilish).",
+      "worstHour": "Qoidabuzarliklar ko'proq sutkaning shu vaqtida: {hours} ({n} ta bitimda {v} ta buzilish).",
+      "noPattern": "Hozircha aniq qonuniyat yo'q: bir kunda yoki vaqtda kamida 3 ta bitim va 2 ta buzilish kerak.",
+      "note": "Bu sening jurnaling bo'yicha kuzatuv, ma'lum vaqtda savdo qilish tavsiyasi emas."
+    }
   },
   "dashboard": {
     "greeting": "Salom, {name}!",
@@ -644,7 +666,19 @@
     "addAccount": "Hisob qo'shish",
     "renameAccount": "Hisob nomini o'zgartirish",
     "accountsLimit": "Hisoblar soni chegarasiga yetildi (10).",
-    "checklistMax": "10 tadan ko'p savol mumkin emas."
+    "checklistMax": "10 tadan ko'p savol mumkin emas.",
+    "transactions": {
+      "title": "To'ldirish va yechib olish",
+      "text": "Qo'shgan va yechib olgan pulingni yoz. Ular hisob balansini o'zgartiradi, lekin foyda, zarar yoki cho'kish hisoblanmaydi.",
+      "kind": "Amal",
+      "deposit": "To'ldirish",
+      "withdrawal": "Yechib olish",
+      "amount": "Summa",
+      "date": "Sana",
+      "dateHint": "Bo'sh qoldirsang, bugungi sana olinadi.",
+      "note": "Izoh (majburiy emas)",
+      "add": "Yozish"
+    }
   },
   "profile": {
     "name": "Ism",
@@ -657,7 +691,26 @@
     "deleteType": "Tasdiqlash uchun pochtangni kiriting: {email}",
     "deleteConfirm": "Butunlay o'chirish",
     "deleteMismatch": "Pochta akkaunt pochtasiga mos kelmaydi.",
-    "deleteFailed": "Akkauntni o'chirib bo'lmadi. Qayta urinib ko'r."
+    "deleteFailed": "Akkauntni o'chirib bo'lmadi. Qayta urinib ko'r.",
+    "dataTitle": "Mening ma'lumotlarim",
+    "dataText": "Akkauntingda saqlanayotgan hamma narsani yuklab ol: hisoblar, qoidalar, bitimlar, to'ldirish va yechib olish, hisobotlar.",
+    "dataDownload": "Ma'lumotlarimni yuklab olish (JSON)",
+    "mfa": {
+      "title": "Ikki bosqichli himoya",
+      "text": "Kirishda paroldan tashqari autentifikator ilovasidagi kod ham kerak bo'ladi (Google Authenticator, Microsoft Authenticator, Authy va shunga o'xshash).",
+      "on": "Yoqilgan",
+      "off": "O'chirilgan",
+      "enable": "Himoyani yoqish",
+      "disable": "Himoyani o'chirish",
+      "disableTitle": "Ikki bosqichli himoya o'chirilsinmi?",
+      "disableText": "Kirish yana faqat parol bilan bo'ladi. Akkaunt kamroq himoyalangan bo'ladi.",
+      "scan": "QR-kodni autentifikator ilovasida skanerla yoki maxfiy kalitni qo'lda kirit.",
+      "secret": "Maxfiy kalit",
+      "codeLabel": "Ilovadagi 6 xonali kod",
+      "confirm": "Tasdiqlash va yoqish",
+      "failed": "Amalni bajarib bo'lmadi. Qayta urinib ko'r.",
+      "lostHint": "Telefonni yo'qotsang, xizmat egasining yordamisiz kirish mumkin bo'lmaydi. Maxfiy kalitni xavfsiz joyda saqla."
+    }
   },
   "states": {
     "errorTitle": "Nimadir noto'g'ri ketdi",
@@ -751,16 +804,19 @@
     "recent": "So'nggi ro'yxatdan o'tganlar",
     "registered": "Ro'yxatdan o'tgan",
     "setPlan": "PRO berish yoki olib tashlash",
-    "notFound": "Bunday pochtali foydalanuvchi topilmadi."
+    "notFound": "Bunday pochtali foydalanuvchi topilmadi.",
+    "resetMfa": "Ikki bosqichli himoyani bekor qilish",
+    "resetMfaText": "Telefonini yo'qotgan foydalanuvchi uchun. U parol bilan kirib, himoyani qaytadan yoqa oladi.",
+    "resetMfaButton": "Bekor qilish"
   },
   "import": {
     "title": "Bitimlarni import qilish",
-    "intro": "Bitimlar bilan CSV faylni yukla (Excel yoki Google Jadvallardan). Har bir bitim qo'lda kiritilgandek sening qoidalaringga qarab tekshiriladi.",
+    "intro": "Bitimlar jadvalini CSV formatida yukla: Excel, Google Jadvallar, birja yoki brokerdan. Tartib ustunlarni o'zi aniqlaydi, adashsa qo'lda to'g'rila. Har bir bitim qo'lda kiritilgandek qoidalaringga qarab tekshiriladi.",
     "columns": "Ustunlar",
-    "required": "Majburiy: instrument, direction (long yoki short), entry, size. violated_rules da bir nechta qoidani | belgisi bilan ajrat.",
+    "required": "Majburiy maydonlar: instrument, yo'nalish (long/short yoki buy/sell), kirish narxi va hajm. Bir katakdagi bir nechta buzilgan qoidani | belgisi bilan ajrat.",
     "template": "Namuna faylni yuklab olish",
     "file": "CSV fayl",
-    "missing": "Faylda majburiy ustunlar yo'q: {cols}.",
+    "missing": "Majburiy maydonlar uchun ustunlar topilmadi: {cols}. Ularni quyida qo'lda tanla.",
     "limitRows": "Dastlabki {n} qator qayta ishlanadi.",
     "summary": "Mos qatorlar: {valid}. Xatolari bor: {invalid}.",
     "lineError": "{line}-qator: {reason}",
@@ -771,6 +827,31 @@
     "errDirection": "direction long yoki short bo'lishi kerak",
     "errMarket": "market: crypto, forex, stocks yoki futures",
     "errValues": "qatordagi qiymatlar noto'g'ri",
-    "tooBig": "Fayl 2 MB dan katta."
+    "tooBig": "Fayl 2 MB dan katta.",
+    "mappingTitle": "Ustunlarni moslashtirish",
+    "mappingText": "Har bir maydon uchun faylingdan ustun tanla. Yulduzchali maydonlar majburiy.",
+    "notUsed": "— ishlatilmaydi —",
+    "errDate": "sanani o'qib bo'lmadi",
+    "fields": {
+      "date_time": "Sana va vaqt",
+      "instrument": "Instrument",
+      "market": "Bozor",
+      "direction": "Yo'nalish",
+      "entry": "Kirish narxi",
+      "exit": "Chiqish narxi",
+      "stop_loss": "Stop-loss",
+      "take_profit": "Take-profit",
+      "size": "Hajm",
+      "leverage": "Yelka",
+      "risk_percent": "Xavf, %",
+      "fees": "Komissiya",
+      "pnl": "P&L",
+      "emotion": "Hissiyot",
+      "strategy": "Strategiya",
+      "violated_rules": "Buzilgan qoidalar",
+      "reason": "Kirish sababi",
+      "plan": "Savdo rejasi",
+      "comment": "Izoh"
+    }
   }
 }

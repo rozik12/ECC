@@ -14,6 +14,7 @@ export const tradeSchema = z.object({
   takeProfit: optionalPositive,
   positionSize: z.number({ error: "errors.number" }).positive("errors.positive"),
   leverage: z.number({ error: "errors.number" }).min(1, "errors.leverageMin").max(1000, "errors.tooLarge"),
+  fees: z.number({ error: "errors.number" }).min(0, "errors.nonNegative").max(1_000_000_000, "errors.tooLarge").default(0),
   riskPercent: z.number({ error: "errors.number" }).min(0, "errors.positive").max(100, "errors.tooLarge").nullable(),
   /** null — посчитать из цен автоматически */
   pnl: z.number({ error: "errors.number" }).finite().nullable(),

@@ -5,6 +5,7 @@ import { Disclaimer } from "./Disclaimer";
 import { BottomNav, Sidebar, TopIcons } from "./AppNav";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Logo } from "./Logo";
+import { PoweredBy } from "./PoweredBy";
 import { ThemeToggle } from "./ThemeToggle";
 
 /** Каркас приватных страниц: сайдбар на компьютере, нижнее меню на телефоне. */
@@ -44,6 +45,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 pb-28 sm:px-6 lg:pb-10">
           {children}
           <Disclaimer className="mt-10" />
+          <PoweredBy className="mt-3" />
         </main>
       </div>
 

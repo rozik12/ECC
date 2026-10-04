@@ -1,3 +1,4 @@
+import { PoweredBy } from "@/components/layout/PoweredBy";
 import Link from "next/link";
 import { buttonStyles } from "@/components/ui";
 import { Logo } from "@/components/layout/Logo";
@@ -12,6 +13,7 @@ export default async function NotFound() {
       <p className="text-lg font-semibold">{t("states.notFoundTitle")}</p>
       <p className="text-muted">{t("states.notFoundText")}</p>
       <Link href="/" className={buttonStyles({ className: "mt-2" })}>{t("states.home")}</Link>
+      <PoweredBy className="mt-6" />
     </main>
   );
 }

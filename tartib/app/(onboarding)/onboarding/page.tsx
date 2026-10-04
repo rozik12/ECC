@@ -1,3 +1,4 @@
+import { PoweredBy } from "@/components/layout/PoweredBy";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/app/actions/auth";
@@ -30,6 +31,7 @@ export default async function OnboardingPage() {
       <h1 className="text-2xl font-bold">{t("onboarding.title")}</h1>
       <p className="mb-6 mt-2 text-muted">{t("onboarding.subtitle")}</p>
       <OnboardingForm defaultName={profile?.name ?? ""} />
+      <PoweredBy className="mt-8 text-center" />
     </main>
   );
 }

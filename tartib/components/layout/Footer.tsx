@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslator } from "@/lib/i18n/server";
 import { Disclaimer } from "./Disclaimer";
 import { Logo } from "./Logo";
+import { PoweredBy } from "./PoweredBy";
 
 export async function Footer() {
   const { t } = await getTranslator();
@@ -18,7 +19,7 @@ export async function Footer() {
         </div>
         <Disclaimer />
         <p className="text-xs text-muted">© {new Date().getFullYear()} Tartib. {t("footer.rights")}</p>
-        <p className="text-xs text-muted">Powered by Rozikbek</p>
+        <PoweredBy />
       </div>
     </footer>
   );

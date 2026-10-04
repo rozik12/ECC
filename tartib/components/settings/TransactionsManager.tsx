@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
 import { addTransactionAction, deleteTransactionAction } from "@/app/actions/settings";
 import { Alert, Badge, Button, Card, Input, Select } from "@/components/ui";
@@ -15,7 +14,6 @@ type Account = { id: string; name: string; currency: string };
 /** Пополнения и выводы: меняют баланс счёта, но не попадают в результат торговли и просадку. */
 export function TransactionsManager({ accounts, transactions, timeZone }: { accounts: Account[]; transactions: Transaction[]; timeZone: string }) {
   const { t, locale } = useI18n();
-  const router = useRouter();
   const [accountId, setAccountId] = useState(accounts[0]?.id ?? "");
   const [kind, setKind] = useState<"deposit" | "withdrawal">("deposit");
   const [amount, setAmount] = useState("");
@@ -51,7 +49,6 @@ export function TransactionsManager({ accounts, transactions, timeZone }: { acco
       setAmount("");
       setNote("");
       setDate("");
-      router.refresh();
     });
   }
 
@@ -113,7 +110,6 @@ export function TransactionsManager({ accounts, transactions, timeZone }: { acco
                     setError(null);
                     const result = await deleteTransactionAction(x.id);
                     if (!result.ok) return setError(result.error);
-                    router.refresh();
                   })
                 }
               >

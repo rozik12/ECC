@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useOptimistic, useState, useTransition } from "react";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { addPresetRuleAction, deleteRuleAction, saveRuleAction, setRuleActiveAction } from "@/app/actions/rules";
 import { Alert, Badge, Button, Card, Input, Modal, Select, Switch, Textarea } from "@/components/ui";
@@ -25,8 +24,11 @@ const emptyForm: FormState = { id: null, name: "", description: "", ruleType: "m
 
 export function RulesManager({ rules }: { rules: Rule[] }) {
   const { t } = useI18n();
-  const router = useRouter();
   const [pending, startTransition] = useTransition();
+  // Бегунок меняется сразу, не дожидаясь ответа сервера; при ошибке вернётся обратно
+  const [shown, setShown] = useOptimistic(rules, (state, change: { id: string; active: boolean }) =>
+    state.map((r) => (r.id === change.id ? { ...r, is_active: change.active } : r)),
+  );
   const [form, setForm] = useState<FormState | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [toDelete, setToDelete] = useState<Rule | null>(null);
@@ -38,7 +40,15 @@ export function RulesManager({ rules }: { rules: Rule[] }) {
       const result = await fn();
       if (!result.ok) return setError(result.error ?? "errors.generic");
       onOk?.();
-      router.refresh();
+    });
+  };
+
+  const toggle = (id: string, active: boolean) => {
+    setError(null);
+    startTransition(async () => {
+      setShown({ id, active });
+      const result = await setRuleActiveAction(id, active);
+      if (!result.ok) setError(result.error ?? "errors.generic");
     });
   };
 
@@ -99,7 +109,7 @@ export function RulesManager({ rules }: { rules: Rule[] }) {
         </Card>
       ) : (
         <ul className="space-y-3">
-          {rules.map((rule) => (
+          {shown.map((rule) => (
             <li key={rule.id}>
               <Card className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
@@ -115,9 +125,8 @@ export function RulesManager({ rules }: { rules: Rule[] }) {
                 <div className="flex shrink-0 items-center gap-1">
                   <Switch
                     checked={rule.is_active}
-                    disabled={pending}
                     label={rule.is_active ? t("rules.on") : t("rules.off")}
-                    onChange={(v) => run(() => setRuleActiveAction(rule.id, v))}
+                    onChange={(v) => toggle(rule.id, v)}
                   />
                   <Button variant="ghost" size="sm" aria-label={t("common.edit")} onClick={() => openForm(rule)}>
                     <Pencil className="h-4 w-4" />

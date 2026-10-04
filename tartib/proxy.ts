@@ -25,17 +25,18 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  const { data } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
+  const signedIn = !!data?.claims?.sub;
   const path = request.nextUrl.pathname;
   const isPrivate = PRIVATE_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`));
 
-  if (!data.user && isPrivate) {
+  if (!signedIn && isPrivate) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.search = "";
     return NextResponse.redirect(url);
   }
-  if (data.user && AUTH_PAGES.includes(path) && !request.nextUrl.searchParams.has("mfa")) {
+  if (signedIn && AUTH_PAGES.includes(path) && !request.nextUrl.searchParams.has("mfa")) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     url.search = "";

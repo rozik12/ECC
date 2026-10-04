@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Pencil, Plus } from "lucide-react";
 import { createAccountAction, renameAccountAction } from "@/app/actions/settings";
 import { Alert, Button, Card, Input, Modal, Select } from "@/components/ui";
@@ -15,7 +14,6 @@ type Draft = { id: string | null; name: string; balance: string; currency: strin
 
 export function AccountsManager({ accounts }: { accounts: AccountWithBalance[] }) {
   const { t, locale } = useI18n();
-  const router = useRouter();
   const [draft, setDraft] = useState<Draft | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +41,6 @@ export function AccountsManager({ accounts }: { accounts: AccountWithBalance[] }
       const result = draft.id ? await renameAccountAction(draft.id, payload) : await createAccountAction(payload);
       if (!result.ok) return setError(result.error);
       setDraft(null);
-      router.refresh();
     });
   }
 

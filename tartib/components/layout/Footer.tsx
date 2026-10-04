@@ -18,6 +18,7 @@ export async function Footer() {
         </div>
         <Disclaimer />
         <p className="text-xs text-muted">© {new Date().getFullYear()} Tartib. {t("footer.rights")}</p>
+        <p className="text-xs text-muted">Powered by Rozikbek</p>
       </div>
     </footer>
   );

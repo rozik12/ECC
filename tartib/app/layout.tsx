@@ -25,7 +25,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     openGraph: { title, description, type: "website", siteName: "Tartib" },
     twitter: { card: "summary", title, description },
-    icons: { icon: "/pwa/icon-192", apple: "/pwa/icon-192" },
     appleWebApp: { capable: true, title: "Tartib", statusBarStyle: "default" },
   };
 }

@@ -283,7 +283,8 @@
     "leverageMin": "Leverage cannot be below 1",
     "limitRules": "FREE plan limit reached: up to 5 rules. The PRO plan removes limits.",
     "limitTrades": "FREE plan limit reached: up to 30 trades. The PRO plan removes limits.",
-    "nonNegative": "The number cannot be below zero"
+    "nonNegative": "The number cannot be below zero",
+    "passwordWeak": "This password is too easy to guess. Choose something unique, ideally a few words"
   },
   "onboarding": {
     "title": "Let's get acquainted",

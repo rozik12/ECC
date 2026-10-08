@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isWeakPassword } from "@/lib/password";
 
 // Сообщения — ключи словаря. Компонент переводит их через t().
 export const loginSchema = z.object({
@@ -10,6 +11,8 @@ export const registerSchema = z.object({
   name: z.string().trim().min(1, "errors.required").max(60, "errors.nameMax"),
   email: z.string().trim().min(1, "errors.required").pipe(z.email("errors.email")),
   password: z.string().min(8, "errors.passwordMin").max(72, "errors.passwordMax"),
+}).superRefine((v, ctx) => {
+  if (v.password.length >= 8 && isWeakPassword(v.password, v.email)) ctx.addIssue({ code: "custom", path: ["password"], message: "errors.passwordWeak" });
 });
 
 export type LoginValues = z.infer<typeof loginSchema>;
@@ -20,7 +23,7 @@ export const forgotSchema = z.object({
 });
 
 export const resetSchema = z.object({
-  password: z.string().min(8, "errors.passwordMin").max(72, "errors.passwordMax"),
+  password: z.string().min(8, "errors.passwordMin").max(72, "errors.passwordMax").refine((p) => !isWeakPassword(p), "errors.passwordWeak"),
 });
 
 export type ForgotValues = z.infer<typeof forgotSchema>;

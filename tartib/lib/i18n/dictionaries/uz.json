@@ -283,7 +283,8 @@
     "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas",
     "limitRules": "FREE tarif chegarasiga yetildi: 5 tagacha qoida. PRO tarif cheklovlarni olib tashlaydi.",
     "limitTrades": "FREE tarif chegarasiga yetildi: 30 tagacha bitim. PRO tarif cheklovlarni olib tashlaydi.",
-    "nonNegative": "Son noldan kam bo'lishi mumkin emas"
+    "nonNegative": "Son noldan kam bo'lishi mumkin emas",
+    "passwordWeak": "Parol juda oddiy. Takrorlanmas narsa o'ylab top, yaxshisi bir necha so'zdan"
   },
   "onboarding": {
     "title": "Tanishib olaylik",

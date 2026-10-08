@@ -944,5 +944,20 @@
     "copy": "Copy",
     "copied": "Copied",
     "link": "Card link"
+  },
+  "telegram": {
+    "title": "Telegram bot",
+    "on": "Connected",
+    "off": "Not connected",
+    "text": "Log trades by messaging the bot and get reminders. The bot only keeps records: it gives no advice and does not trade for you.",
+    "connect": "Connect Telegram",
+    "step1": "Press the button below: Telegram will open.",
+    "step2": "In the chat with the bot press “Start”.",
+    "open": "Open in Telegram",
+    "manual": "If the button didn't work: find {bot} and send it /start {code}. The code is valid for 15 minutes.",
+    "check": "I connected, refresh",
+    "reminders": "Reminders if no entries for 3 days",
+    "disconnect": "Disconnect",
+    "failed": "Something went wrong. Please try again."
   }
 }

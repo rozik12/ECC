@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     ".netlify/**",
+    "supabase/functions/**",
     "next-env.d.ts",
   ]),
 ]);

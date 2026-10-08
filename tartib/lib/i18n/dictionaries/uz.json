@@ -944,5 +944,20 @@
     "copy": "Nusxalash",
     "copied": "Nusxalandi",
     "link": "Karta havolasi"
+  },
+  "telegram": {
+    "title": "Telegram-bot",
+    "on": "Ulangan",
+    "off": "Ulanmagan",
+    "text": "Botga xabar yuborib bitimlarni yozing va eslatmalar oling. Bot faqat hisob yuritadi: maslahat bermaydi va sizning o'rningizga savdo qilmaydi.",
+    "connect": "Telegramni ulash",
+    "step1": "Quyidagi tugmani bosing: Telegram ochiladi.",
+    "step2": "Bot bilan chatda «Start» tugmasini bosing.",
+    "open": "Telegramda ochish",
+    "manual": "Tugma ishlamasa: {bot} ni toping va unga /start {code} yuboring. Kod 15 daqiqa amal qiladi.",
+    "check": "Ulandim, yangilash",
+    "reminders": "3 kun yozuv bo'lmasa eslatma",
+    "disconnect": "Uzish",
+    "failed": "Bajarilmadi. Qayta urinib ko'ring."
   }
 }

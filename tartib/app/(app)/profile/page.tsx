@@ -4,6 +4,7 @@ import { Download, LogOut, Shield } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import { MfaCard } from "@/components/profile/MfaCard";
 import { ShareCard } from "@/components/profile/ShareCard";
+import { TelegramCard } from "@/components/profile/TelegramCard";
 import { DeleteAccount } from "@/components/profile/DeleteAccount";
 import { ProfileForm } from "@/components/profile/ProfileForm";
 import { Badge, Button, buttonStyles, Card } from "@/components/ui";
@@ -23,6 +24,7 @@ export default async function ProfilePage() {
   const plan = await getPlan(supabase, user.id);
   const { data: factors } = await supabase.auth.mfa.listFactors();
   const mfaEnabled = (factors?.totp ?? []).length > 0;
+  const { data: tg } = await supabase.from("telegram_links").select("reminders").eq("user_id", user.id).maybeSingle();
   const [{ count: trades }, { count: rules }] = await Promise.all([
     supabase.from("trades").select("id", { count: "exact", head: true }),
     supabase.from("rules").select("id", { count: "exact", head: true }),
@@ -52,6 +54,8 @@ export default async function ProfilePage() {
           <div className="flex justify-between py-2"><dt className="text-muted">{t("nav.rules")}</dt><dd className="font-medium tabular-nums">{usage(rules, limits.rules)}</dd></div>
         </dl>
       </Card>
+
+      <TelegramCard linked={!!tg} reminders={tg?.reminders ?? true} />
 
       <ShareCard token={profile?.share_token ?? null} />
 

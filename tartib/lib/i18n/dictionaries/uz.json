@@ -853,5 +853,83 @@
       "plan": "Savdo rejasi",
       "comment": "Izoh"
     }
+  },
+  "quick": {
+    "button": "Tezkor yozuv",
+    "title": "Bitimni tezkor yozish",
+    "full": "To'liq forma",
+    "hint": "Qolganini keyinroq bitimning o'zida to'ldirishing mumkin. Qoidalar avtomatik tekshiriladi.",
+    "invalid": "Instrument, kirish narxi va hajmni to'ldir. Sonlar noldan katta bo'lishi kerak."
+  },
+  "reminder": {
+    "title": "Sen {n} kundan beri bitim yozmading",
+    "text": "Savdo qilgan bo'lsang, tafsilotlar esingda turganda bitimlarni jurnalga kirit."
+  },
+  "goal": {
+    "title": "Oy maqsadi",
+    "target": "maqsad: qoida bo'yicha {n}%",
+    "change": "Maqsad:",
+    "noTrades": "Bu oyda hali bitim yo'q.",
+    "reached": "Maqsadga erishildi: {total} ta bitimdan {followed} tasi qoida bo'yicha.",
+    "left": "{total} tadan {followed} tasi qoida bo'yicha. Maqsadga yetish uchun yana {n} ta bitimni ketma-ket qoida bo'yicha qilish kerak.",
+    "progress": "{total} ta bitimdan {followed} tasi qoida bo'yicha."
+  },
+  "achievements": {
+    "title": "Yutuqlar",
+    "done": "Olingan",
+    "items": {
+      "first_trade": {
+        "name": "Birinchi yozuv",
+        "hint": "Birinchi bitimni yoz"
+      },
+      "trades_10": {
+        "name": "10 ta yozuv",
+        "hint": "10 ta bitim yoz"
+      },
+      "trades_50": {
+        "name": "50 ta yozuv",
+        "hint": "50 ta bitim yoz"
+      },
+      "trades_100": {
+        "name": "100 ta yozuv",
+        "hint": "100 ta bitim yoz"
+      },
+      "streak_5": {
+        "name": "5 ta seriya",
+        "hint": "Ketma-ket 5 ta bitim qoida bo'yicha"
+      },
+      "streak_10": {
+        "name": "10 ta seriya",
+        "hint": "Ketma-ket 10 ta bitim qoida bo'yicha"
+      },
+      "streak_20": {
+        "name": "20 ta seriya",
+        "hint": "Ketma-ket 20 ta bitim qoida bo'yicha"
+      },
+      "clean_week": {
+        "name": "Toza hafta",
+        "hint": "7 kunda 3 ta bitim, buzilishlarsiz"
+      }
+    }
+  },
+  "share": {
+    "title": "Intizom kartasi",
+    "titleNamed": "Intizom: {name}",
+    "subtitle": "Tartib'dagi jurnal natijasi.",
+    "discipline30": "30 kun ichida o'z qoidasi bo'yicha qilingan bitimlar",
+    "noTrades": "Oxirgi 30 kunda yozuvlar yo'q.",
+    "ofTrades": "{total} ta bitimdan {followed} tasi qoidani buzmasdan",
+    "streak": "Qoida bo'yicha seriya",
+    "entries": "Jami yozuvlar",
+    "privacy": "Bu yerda summalar, instrumentlar va bitimlarning o'zi ko'rsatilmaydi. Faqat qoida bo'yicha bitimlar ulushi va seriya.",
+    "cta": "O'z jurnaling yuritish",
+    "cardTitle": "Natijani ulashish",
+    "cardText": "Faqat qoidalaring bo'yicha bitimlar ulushi va seriya ko'rinadigan kartaga havola yarat. Summalar, instrumentlar va bitimlar ko'rsatilmaydi. Havolani istalgan vaqtda o'chirish mumkin.",
+    "on": "Havola yaratish",
+    "off": "Havolani o'chirish",
+    "renew": "Yangi havola",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "link": "Karta havolasi"
   }
 }

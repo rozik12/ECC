@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Zap } from "lucide-react";
 import { Alert } from "@/components/ui";
 import { TradeForm, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
@@ -57,6 +59,12 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
   };
 
   return (
+    <>
+    <div className="mb-4 flex justify-end">
+      <Link href="/trades/quick" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+        <Zap className="h-4 w-4" aria-hidden /> {t("quick.button")}
+      </Link>
+    </div>
     <TradeForm
       accounts={accounts}
       rules={rules}
@@ -66,5 +74,6 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
       initial={initial}
       fromCalculator={!!one(sp.entry)}
     />
+    </>
   );
 }

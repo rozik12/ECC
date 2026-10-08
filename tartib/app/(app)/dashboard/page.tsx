@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Zap } from "lucide-react";
+import { AchievementsCard } from "@/components/statistics/AchievementsCard";
+import { GoalCard } from "@/components/statistics/GoalCard";
 import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
-import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
+import { Alert, Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
+import { computeAchievements, daysSinceLastTrade, monthDiscipline } from "@/lib/achievements";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts } from "@/lib/data";
@@ -40,6 +43,9 @@ export default async function DashboardPage() {
   const violations = topViolations(last30);
   const recent = all.slice(0, 5);
   const streak = disciplineStreak(all);
+  const goal = monthDiscipline(all, profile?.discipline_goal ?? 80, safeTimeZone(profile?.timezone));
+  const achievements = computeAchievements(all);
+  const daysSinceLast = daysSinceLastTrade(all);
 
   const stat = (label: string, value: string, tone = "") => (
     <Card className="p-4 sm:p-4">
@@ -54,10 +60,21 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold sm:text-3xl">
           {profile?.name ? t("dashboard.greeting", { name: profile.name }) : t("pages.dashboard")}
         </h1>
-        <Link href="/trades/new" className={buttonStyles()}>
-          <Plus className="h-4 w-4" aria-hidden /> {t("trades.add")}
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/trades/quick" className={buttonStyles({ variant: "secondary" })}>
+            <Zap className="h-4 w-4" aria-hidden /> {t("quick.button")}
+          </Link>
+          <Link href="/trades/new" className={buttonStyles()}>
+            <Plus className="h-4 w-4" aria-hidden /> {t("trades.add")}
+          </Link>
+        </div>
       </div>
+
+      {daysSinceLast !== null && daysSinceLast >= 3 && (
+        <Alert tone="info" title={t("reminder.title", { n: daysSinceLast })}>
+          {t("reminder.text")} <Link href="/trades/quick" className="font-medium text-primary hover:underline">{t("quick.button")}</Link>
+        </Alert>
+      )}
 
       <section aria-labelledby="today-title">
         <h2 id="today-title" className="mb-3 font-semibold">{t("dashboard.today.title")}</h2>
@@ -71,7 +88,13 @@ export default async function DashboardPage() {
 
       <DisciplineCostCard data={discipline} currency={currency} subtitle={t("dashboard.discipline.period")} moreHref="/statistics" />
 
-      {all.length > 0 && <StreakCard streak={streak} />}
+      {all.length > 0 && (
+        <div className="grid gap-4 lg:grid-cols-2">
+          <StreakCard streak={streak} />
+          <GoalCard data={goal} />
+        </div>
+      )}
+      {all.length > 0 && <AchievementsCard items={achievements} />}
 
       <section>
         <div className="mb-3 flex items-center justify-between">

@@ -853,5 +853,83 @@
       "plan": "Trading plan",
       "comment": "Comment"
     }
+  },
+  "quick": {
+    "button": "Quick entry",
+    "title": "Quick trade entry",
+    "full": "Full form",
+    "hint": "You can add the rest later in the trade itself. Rules are checked automatically.",
+    "invalid": "Fill in the instrument, entry price and size. Numbers must be above zero."
+  },
+  "reminder": {
+    "title": "You haven't logged trades for {n} days",
+    "text": "If you traded, add your trades to the journal while you remember the details."
+  },
+  "goal": {
+    "title": "Monthly goal",
+    "target": "goal: {n}% by the rules",
+    "change": "Goal:",
+    "noTrades": "No trades yet this month.",
+    "reached": "Goal reached: {followed} of {total} trades followed the rules.",
+    "left": "{followed} of {total} followed the rules. To reach the goal you need {n} more trades by the rules in a row.",
+    "progress": "{followed} of {total} trades followed the rules."
+  },
+  "achievements": {
+    "title": "Achievements",
+    "done": "Unlocked",
+    "items": {
+      "first_trade": {
+        "name": "First entry",
+        "hint": "Log your first trade"
+      },
+      "trades_10": {
+        "name": "10 entries",
+        "hint": "Log 10 trades"
+      },
+      "trades_50": {
+        "name": "50 entries",
+        "hint": "Log 50 trades"
+      },
+      "trades_100": {
+        "name": "100 entries",
+        "hint": "Log 100 trades"
+      },
+      "streak_5": {
+        "name": "Streak 5",
+        "hint": "5 trades by the rules in a row"
+      },
+      "streak_10": {
+        "name": "Streak 10",
+        "hint": "10 trades by the rules in a row"
+      },
+      "streak_20": {
+        "name": "Streak 20",
+        "hint": "20 trades by the rules in a row"
+      },
+      "clean_week": {
+        "name": "Clean week",
+        "hint": "3 trades in 7 days with no violations"
+      }
+    }
+  },
+  "share": {
+    "title": "Discipline card",
+    "titleNamed": "Discipline: {name}",
+    "subtitle": "Journal results from Tartib.",
+    "discipline30": "Trades by own rules, last 30 days",
+    "noTrades": "No entries in the last 30 days.",
+    "ofTrades": "{followed} of {total} trades without breaking rules",
+    "streak": "Streak by the rules",
+    "entries": "Total entries",
+    "privacy": "No amounts, instruments or trades are shown here. Only the share of trades by the rules and the streak.",
+    "cta": "Keep your own journal",
+    "cardTitle": "Share your result",
+    "cardText": "Create a link to a card showing only the share of trades by your rules and your streak. Amounts, instruments and trades are not shown. You can turn the link off at any time.",
+    "on": "Create link",
+    "off": "Turn link off",
+    "renew": "New link",
+    "copy": "Copy",
+    "copied": "Copied",
+    "link": "Card link"
   }
 }

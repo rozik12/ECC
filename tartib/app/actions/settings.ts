@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
 import { LOCALE_COOKIE } from "@/lib/i18n/config";
@@ -131,6 +132,41 @@ export async function deleteTransactionAction(id: string): Promise<ActionResult>
     const { error } = await supabase.from("account_transactions").delete().eq("id", id).eq("user_id", user.id);
     if (error) return FAIL;
     revalidatePath("/", "layout");
+    return { ok: true };
+  } catch (e) {
+    if (isNextControlFlow(e)) throw e;
+    return FAIL;
+  }
+}
+
+export async function setDisciplineGoalAction(goal: unknown): Promise<ActionResult> {
+  const parsed = z.number().int().min(10).max(100).safeParse(goal);
+  if (!parsed.success) return { ok: false, error: "errors.generic" };
+  try {
+    const { supabase, user } = await requireUser();
+    const { error } = await supabase.from("profiles").update({ discipline_goal: parsed.data }).eq("id", user.id);
+    if (error) return FAIL;
+    revalidatePath("/dashboard");
+    revalidatePath("/statistics");
+    return { ok: true };
+  } catch (e) {
+    if (isNextControlFlow(e)) throw e;
+    return FAIL;
+  }
+}
+
+/** Публичная ссылка на карточку результата: включить, выключить или выпустить новую (старая перестаёт работать). */
+export async function setShareAction(mode: unknown): Promise<ActionResult> {
+  const parsed = z.enum(["on", "off", "renew"]).safeParse(mode);
+  if (!parsed.success) return { ok: false, error: "errors.generic" };
+  try {
+    const { supabase, user, profile } = await requireUser();
+    let token: string | null = null;
+    if (parsed.data === "renew" || (parsed.data === "on" && !profile?.share_token)) token = crypto.randomUUID();
+    else if (parsed.data === "on") token = profile?.share_token ?? null;
+    const { error } = await supabase.from("profiles").update({ share_token: token }).eq("id", user.id);
+    if (error) return FAIL;
+    revalidatePath("/profile");
     return { ok: true };
   } catch (e) {
     if (isNextControlFlow(e)) throw e;

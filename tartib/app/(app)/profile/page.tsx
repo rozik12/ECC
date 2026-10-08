@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Download, LogOut, Shield } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import { MfaCard } from "@/components/profile/MfaCard";
+import { ShareCard } from "@/components/profile/ShareCard";
 import { DeleteAccount } from "@/components/profile/DeleteAccount";
 import { ProfileForm } from "@/components/profile/ProfileForm";
 import { Badge, Button, buttonStyles, Card } from "@/components/ui";
@@ -51,6 +52,8 @@ export default async function ProfilePage() {
           <div className="flex justify-between py-2"><dt className="text-muted">{t("nav.rules")}</dt><dd className="font-medium tabular-nums">{usage(rules, limits.rules)}</dd></div>
         </dl>
       </Card>
+
+      <ShareCard token={profile?.share_token ?? null} />
 
       <MfaCard enabled={mfaEnabled} />
 

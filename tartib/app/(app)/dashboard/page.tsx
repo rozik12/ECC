@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Plus, Zap } from "lucide-react";
+import { Info, NotebookText, Plus, Zap } from "lucide-react";
 import { AchievementsCard } from "@/components/statistics/AchievementsCard";
 import { GoalCard } from "@/components/statistics/GoalCard";
+import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
-import { Alert, Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
+import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
 import { computeAchievements, daysSinceLastTrade, monthDiscipline } from "@/lib/achievements";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getPlan } from "@/lib/data";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { disciplineCost, disciplineStreak, filterByPeriod, summarize, topViolations } from "@/lib/statistics";
@@ -22,10 +23,12 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("pages.dashboard") };
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
   const { t, locale } = await getTranslator();
-  const { supabase, profile } = await requireUser();
-  const [accounts, all] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase)]);
+  const { supabase, user, profile } = await requireUser();
+  const sp = await searchParams;
+  const period: "7d" | "30d" = sp.period === "7d" ? "7d" : "30d";
+  const [accounts, all, plan] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getPlan(supabase, user.id)]);
 
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
@@ -38,9 +41,9 @@ export default async function DashboardPage() {
   const todaySummary = summarize(today);
   const balance = accounts.reduce((s, a) => s + a.balance, 0);
 
-  const last30 = filterByPeriod(all, "30d");
-  const discipline = disciplineCost(last30);
-  const violations = topViolations(last30);
+  const inPeriod = filterByPeriod(all, period);
+  const discipline = disciplineCost(inPeriod);
+  const violations = topViolations(inPeriod);
   const recent = all.slice(0, 5);
   const streak = disciplineStreak(all);
   const goal = monthDiscipline(all, profile?.discipline_goal ?? 80, safeTimeZone(profile?.timezone));
@@ -71,10 +74,17 @@ export default async function DashboardPage() {
       </div>
 
       {daysSinceLast !== null && daysSinceLast >= 3 && (
-        <Alert tone="info" title={t("reminder.title", { n: daysSinceLast })}>
-          {t("reminder.text")} <Link href="/trades/quick" className="font-medium text-primary hover:underline">{t("quick.button")}</Link>
-        </Alert>
+        <p className="flex flex-wrap items-center gap-x-2 rounded-xl border border-primary/30 bg-primary-soft px-3 py-2 text-sm">
+          <Info className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+          <span>{t("reminder.title", { n: daysSinceLast })}</span>
+          <Link href="/trades/quick" className="font-medium text-primary hover:underline">{t("quick.button")}</Link>
+        </p>
       )}
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <PeriodTabs current={period} plan={plan} basePath="/dashboard" hideAll />
+      </div>
+      <DisciplineCostCard data={discipline} currency={currency} subtitle={t(period === "7d" ? "dashboard.discipline.period7d" : "dashboard.discipline.period")} moreHref="/statistics" />
 
       <section aria-labelledby="today-title">
         <h2 id="today-title" className="mb-3 font-semibold">{t("dashboard.today.title")}</h2>
@@ -85,8 +95,6 @@ export default async function DashboardPage() {
           {stat(t("dashboard.today.winRate"), todaySummary.winRate === null ? t("stats.none") : `${formatNumber(todaySummary.winRate, locale, 0)}%`)}
         </div>
       </section>
-
-      <DisciplineCostCard data={discipline} currency={currency} subtitle={t("dashboard.discipline.period")} moreHref="/statistics" />
 
       {all.length > 0 && (
         <div className="grid gap-4 lg:grid-cols-2">
@@ -104,8 +112,9 @@ export default async function DashboardPage() {
           )}
         </div>
         {recent.length === 0 ? (
-          <Card className="flex flex-col items-center gap-5 py-10 text-center">
-            <p className="max-w-md">{t("trades.empty.title")}</p>
+          <Card className="flex flex-col items-center gap-5 py-12 text-center">
+            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft text-primary"><NotebookText className="h-8 w-8" aria-hidden /></span>
+            <p className="max-w-md text-lg font-medium">{t("trades.empty.title")}</p>
             <Link href="/trades/new" className={buttonStyles({ size: "lg" })}>{t("trades.empty.cta")}</Link>
           </Card>
         ) : (
@@ -140,7 +149,7 @@ export default async function DashboardPage() {
       <Card>
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h2 className="font-semibold">{t("dashboard.violations.title")}</h2>
-          <p className="text-sm text-muted">{t("dashboard.violations.period")}</p>
+          <p className="text-sm text-muted">{t(period === "7d" ? "dashboard.violations.period7d" : "dashboard.violations.period")}</p>
         </div>
         {violations.length === 0 ? (
           <p className="mt-3 text-sm text-muted">{t("dashboard.violations.none")}</p>

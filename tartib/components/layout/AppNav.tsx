@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useI18n } from "@/lib/i18n/provider";
 import { mainNav, secondaryNav } from "./nav-items";
@@ -47,8 +48,22 @@ export function Sidebar() {
 export function BottomNav() {
   const { t } = useI18n();
   const isActive = useIsActive();
+  const pathname = usePathname();
+  // Круглая кнопка «+» для быстрой записи сделки: на страницах, где её чаще всего ждёшь
+  const showFab = ["/dashboard", "/trades", "/statistics"].includes(pathname);
 
   return (
+    <>
+    {showFab && (
+      <Link
+        href="/trades/quick"
+        aria-label={t("quick.button")}
+        title={t("quick.button")}
+        className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform active:scale-95 dark:text-[#0f1419] lg:hidden"
+      >
+        <Plus className="h-7 w-7" aria-hidden />
+      </Link>
+    )}
     <nav
       aria-label={t("nav.main")}
       className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
@@ -68,6 +83,7 @@ export function BottomNav() {
         </Link>
       ))}
     </nav>
+    </>
   );
 }
 

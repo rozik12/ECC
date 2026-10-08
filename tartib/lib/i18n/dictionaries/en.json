@@ -21,7 +21,7 @@
     "optional": "optional"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "dashboard": "Home",
     "calculator": "Calculator",
     "trades": "My trades",
     "rules": "Rules",
@@ -98,6 +98,16 @@
     "cta": {
       "title": "Ready to trade with awareness?",
       "text": "Create an account in a minute and add your first rules."
+    },
+    "shots": {
+      "title": "This is how the app looks",
+      "subtitle": "Screenshots of a demo account. The numbers are not real; they show how everything works.",
+      "s1": "Price of discipline on the home screen",
+      "s2": "Statistics and equity curve",
+      "s3": "Your own rules with auto-check",
+      "alt1": "Tartib home screen",
+      "alt2": "Tartib statistics screen",
+      "alt3": "Tartib rules screen"
     }
   },
   "pricing": {
@@ -648,11 +658,13 @@
       "title": "Your frequent violations",
       "period": "Last 30 days",
       "none": "No violations in the last 30 days.",
-      "times": "Violations: {n}"
+      "times": "Violations: {n}",
+      "period7d": "Last 7 days"
     },
     "discipline": {
       "period": "Last 30 days",
-      "more": "More in statistics"
+      "more": "More in statistics",
+      "period7d": "Last 7 days"
     }
   },
   "settings": {

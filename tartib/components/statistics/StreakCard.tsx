@@ -36,7 +36,7 @@ export async function StreakCard({ streak }: { streak: Streak }) {
       {next ? (
         <div className="mt-4">
           <div className="h-2 rounded-full bg-surface-muted" aria-hidden>
-            <div className="h-2 rounded-full bg-primary" style={{ width: `${Math.max(2, progress)}%` }} />
+            <div className="bar-grow h-2 rounded-full bg-primary" style={{ width: `${Math.max(2, progress)}%` }} />
           </div>
           <p className="mt-2 text-xs text-muted">{t("streak.next", { m: next, left: next - streak.current })}</p>
         </div>

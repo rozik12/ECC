@@ -5,11 +5,11 @@ import { periods, type Period } from "@/lib/statistics";
 import { getTranslator } from "@/lib/i18n/server";
 import type { Plan } from "@/lib/plans";
 
-export async function PeriodTabs({ current, plan }: { current: Period; plan: Plan }) {
+export async function PeriodTabs({ current, plan, basePath = "/statistics", hideAll = false }: { current: Period; plan: Plan; basePath?: string; hideAll?: boolean }) {
   const { t } = await getTranslator();
   return (
     <nav className="inline-flex rounded-xl border border-border bg-surface p-1" aria-label={t("stats.title")}>
-      {periods.map((p) =>
+      {periods.filter((p) => !(hideAll && p === "all")).map((p) =>
         p === "all" && plan !== "pro" ? (
           <span
             key={p}
@@ -21,7 +21,7 @@ export async function PeriodTabs({ current, plan }: { current: Period; plan: Pla
         ) : (
         <Link
           key={p}
-          href={p === "30d" ? "/statistics" : `/statistics?period=${p}`}
+          href={p === "30d" ? basePath : `${basePath}?period=${p}`}
           aria-current={p === current ? "page" : undefined}
           className={cn(
             "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",

@@ -19,7 +19,7 @@ export async function GoalCard({ data }: { data: MonthGoal }) {
         <p className="text-sm text-muted">{t("goal.target", { n: data.goal })}</p>
       </div>
       <div className="mt-3 h-2 rounded-full bg-surface-muted" aria-hidden>
-        <div className={`h-2 rounded-full ${data.reached ? "bg-success" : "bg-primary"}`} style={{ width: `${Math.min(100, Math.max(2, percent))}%` }} />
+        <div className={`bar-grow h-2 rounded-full ${data.reached ? "bg-success" : "bg-primary"}`} style={{ width: `${Math.min(100, Math.max(2, percent))}%` }} />
       </div>
       <p className="mt-2 text-sm text-muted">
         {data.percent === null

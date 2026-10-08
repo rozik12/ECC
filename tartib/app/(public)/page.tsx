@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ListChecks, ShieldCheck, Wallet } from "lucide-react";
 import { PricingCards } from "@/components/landing/PricingCards";
@@ -5,12 +6,18 @@ import { buttonStyles, Card } from "@/components/ui";
 import { getTranslator } from "@/lib/i18n/server";
 
 export default async function LandingPage() {
-  const { t } = await getTranslator();
+  const { t, locale } = await getTranslator();
 
   const pillars = [
     { key: "risk", icon: ShieldCheck },
     { key: "discipline", icon: ListChecks },
     { key: "cost", icon: Wallet },
+  ] as const;
+
+  const shots = [
+    { key: "dashboard", caption: "landing.shots.s1", alt: "landing.shots.alt1" },
+    { key: "statistics", caption: "landing.shots.s2", alt: "landing.shots.alt2" },
+    { key: "rules", caption: "landing.shots.s3", alt: "landing.shots.alt3" },
   ] as const;
 
   const steps = ["step1", "step2", "step3", "step4"] as const;
@@ -74,6 +81,30 @@ export default async function LandingPage() {
           <p className="mx-auto mt-8 max-w-xl text-balance text-center text-lg">{t("landing.demo.text")}</p>
           <p className="mt-3 text-center text-xs text-muted">{t("landing.demo.note")}</p>
         </div>
+      </section>
+
+      {/* Скриншоты приложения */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <h2 className="text-center text-2xl font-bold sm:text-3xl">{t("landing.shots.title")}</h2>
+        <p className="mx-auto mt-3 max-w-xl text-center text-sm text-muted">{t("landing.shots.subtitle")}</p>
+        <ul className="mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
+          {shots.map((s) => (
+            <li key={s.key} className="w-[16.5rem] shrink-0 snap-center md:w-auto">
+              <div className="mx-auto max-w-[16.5rem] rounded-[2rem] border-4 border-border bg-surface-muted p-1.5 shadow-lg">
+                <Image
+                  src={`/shots/${s.key}-${locale}.jpg`}
+                  alt={t(s.alt)}
+                  width={780}
+                  height={1520}
+                  unoptimized
+                  loading="lazy"
+                  className="h-auto w-full rounded-[1.5rem]"
+                />
+              </div>
+              <p className="mt-4 text-center text-sm font-medium">{t(s.caption)}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Как это работает */}

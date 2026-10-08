@@ -52,7 +52,7 @@ export async function DisciplineCostCard({
         {column(t("stats.discipline.violated"), data.violatedPnl, data.violatedCount)}
         <div className="col-span-2 sm:col-span-1">
           <p className="text-sm text-muted">{t("stats.discipline.cost")}</p>
-          <p className={cn("mt-1 text-2xl font-bold tabular-nums", data.cost > 0 ? "text-danger" : "text-muted")}>{money(data.cost)}</p>
+          <p className={cn("mt-1 text-3xl font-bold tabular-nums", data.cost > 0 ? "text-danger" : "text-muted")}>{money(data.cost)}</p>
           <p className="text-xs text-muted">
             {t("stats.discipline.difference")}: {money(data.difference, true)}
           </p>
@@ -62,10 +62,10 @@ export async function DisciplineCostCard({
       {total > 0 && (
         <div className="mt-6 space-y-2" aria-hidden>
           <div className="h-3 rounded-full bg-surface-muted">
-            <div className={cn("h-3 rounded-full", data.followedPnl >= 0 ? "bg-success" : "bg-danger")} style={{ width: width(data.followedPnl) }} />
+            <div className={cn("bar-grow h-3 rounded-full", data.followedPnl >= 0 ? "bg-success" : "bg-danger")} style={{ width: width(data.followedPnl) }} />
           </div>
           <div className="h-3 rounded-full bg-surface-muted">
-            <div className={cn("h-3 rounded-full", data.violatedPnl >= 0 ? "bg-success" : "bg-danger")} style={{ width: width(data.violatedPnl) }} />
+            <div className={cn("bar-grow h-3 rounded-full", data.violatedPnl >= 0 ? "bg-success" : "bg-danger")} style={{ width: width(data.violatedPnl) }} />
           </div>
         </div>
       )}

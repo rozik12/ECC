@@ -21,7 +21,7 @@
     "optional": "majburiy emas"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "dashboard": "Bosh sahifa",
     "calculator": "Kalkulyator",
     "trades": "Bitimlarim",
     "rules": "Qoidalar",
@@ -98,6 +98,16 @@
     "cta": {
       "title": "Ongli savdoga tayyormisan?",
       "text": "Bir daqiqada akkaunt yarat va birinchi qoidalaringni qo'sh."
+    },
+    "shots": {
+      "title": "Ilova shunday ko'rinadi",
+      "subtitle": "Demo akkaunt skrinshotlari. Raqamlar haqiqiy emas, ular hammasi qanday ishlashini ko'rsatadi.",
+      "s1": "Bosh sahifada intizom narxi",
+      "s2": "Statistika va kapital grafigi",
+      "s3": "Avtomatik tekshiruvli o'z qoidalaring",
+      "alt1": "Tartib bosh ekrani",
+      "alt2": "Tartib statistika ekrani",
+      "alt3": "Tartib qoidalar ekrani"
     }
   },
   "pricing": {
@@ -648,11 +658,13 @@
       "title": "Tez-tez buzadigan qoidalaring",
       "period": "Oxirgi 30 kun",
       "none": "Oxirgi 30 kunda buzilishlar yo'q.",
-      "times": "Buzilishlar: {n}"
+      "times": "Buzilishlar: {n}",
+      "period7d": "Oxirgi 7 kun"
     },
     "discipline": {
       "period": "Oxirgi 30 kun",
-      "more": "Statistikada batafsil"
+      "more": "Statistikada batafsil",
+      "period7d": "Oxirgi 7 kun"
     }
   },
   "settings": {

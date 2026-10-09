@@ -36,7 +36,8 @@
     "blog": "Blog",
     "tools": "Asboblar",
     "charts": "Grafiklar",
-    "market": "Bozor"
+    "market": "Bozor",
+    "more": "Yana: bozor va asboblar"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1462,6 +1463,10 @@
       "h8_24": "8–24 soat",
       "gt24": "bir kundan ortiq"
     },
-    "deleteTemplate": "Shablonni o'chirish"
+    "deleteTemplate": "Shablonni o'chirish",
+    "modeSimpleText": "Faqat asosiy maydonlar ko'rsatilgan.",
+    "modeFullText": "Barcha maydonlar ko'rsatilgan.",
+    "modeToFull": "Barcha maydonlarni ko'rsatish",
+    "modeToSimple": "Faqat asosiy"
   }
 }

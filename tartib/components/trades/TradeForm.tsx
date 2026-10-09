@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { saveTradeAction } from "@/app/actions/trades";
 import { deleteTemplateAction } from "@/app/actions/templates";
@@ -69,6 +69,24 @@ type Props = {
   fromClone?: boolean;
 };
 
+// Режим формы («только главное» / «все поля») помнится в браузере. Это удобство, а не данные: без хранилища форма просто простая.
+const MODE_KEY = "tartib.formMode";
+const modeListeners = new Set<() => void>();
+function readMode(): string {
+  try { return localStorage.getItem(MODE_KEY) ?? "simple"; } catch { return "simple"; }
+}
+function writeMode(mode: string) {
+  try { localStorage.setItem(MODE_KEY, mode); } catch { /* хранилище недоступно */ }
+  modeListeners.forEach((l) => l());
+}
+function useFormMode() {
+  return useSyncExternalStore(
+    (cb) => { modeListeners.add(cb); window.addEventListener("storage", cb); return () => { modeListeners.delete(cb); window.removeEventListener("storage", cb); }; },
+    readMode,
+    () => "simple",
+  );
+}
+
 const round2 = (n: number) => Math.round(n * 100) / 100;
 
 export function TradeForm({
@@ -104,6 +122,12 @@ export function TradeForm({
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [tplId, setTplId] = useState("");
+  const mode = useFormMode();
+  const ADVANCED_FIELDS = ["leverage", "riskPercent", "takeProfit", "fees", "strategy", "tags", "grade", "closedAt", "reason", "plan", "comment"];
+  // Поля из «дополнительных» нельзя прятать, если в них уже что-то есть или в них ошибка
+  const hasExtra = !!(initial.takeProfit || initial.risk || initial.fees || initial.strategy || initial.tags || initial.grade || initial.mistakes.length || initial.reason || initial.plan || initial.comment || (initial.leverage && initial.leverage !== "1"));
+  const full = mode === "full" || !!tradeId || hasExtra || ADVANCED_FIELDS.some((k) => errors[k]) || tplId !== "";
+  const adv = full ? "" : "hidden";
   const [formError, setFormError] = useState<string | null>(null);
 
   const set = <K extends keyof TradeFormValues>(key: K, value: TradeFormValues[K]) => setV((prev) => ({ ...prev, [key]: value }));
@@ -239,6 +263,14 @@ export function TradeForm({
   return (
     <form onSubmit={submit} noValidate className="mx-auto max-w-3xl space-y-6">
       <h1 className="text-2xl font-bold sm:text-3xl">{tradeId ? t("trades.form.editTitle") : t("trades.form.newTitle")}</h1>
+      {!tradeId && !hasExtra && tplId === "" && (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border bg-surface-muted px-4 py-3 text-sm">
+          <span className="text-muted">{full ? t("journal.modeFullText") : t("journal.modeSimpleText")}</span>
+          <button type="button" className="min-h-10 px-2 font-medium text-primary hover:underline" onClick={() => writeMode(full ? "simple" : "full")}>
+            {full ? t("journal.modeToSimple") : t("journal.modeToFull")}
+          </button>
+        </div>
+      )}
       {fromCalculator && <Alert tone="info">{t("trades.form.fromCalculator")}</Alert>}
       {fromClone && <Alert tone="info">{t("journal.fromClone")}</Alert>}
       {formError && <Alert tone="danger">{t(formError)}</Alert>}
@@ -285,11 +317,11 @@ export function TradeForm({
           <Input id="t-exit" inputMode="decimal" label={t("trades.form.exit")} error={err("exitPrice")} {...bind("exit")} />
           <Input id="t-size" inputMode="decimal" label={t("trades.form.size")} error={err("positionSize")} {...bind("size")} />
           <Input id="t-stop" inputMode="decimal" label={t("trades.form.stop")} error={err("stopLoss")} {...bind("stop")} />
-          <Input id="t-tp" inputMode="decimal" label={t("trades.form.takeProfit")} error={err("takeProfit")} {...bind("takeProfit")} />
-          <Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} />
-          <Input id="t-risk" inputMode="decimal" label={t("trades.form.riskPercent")} error={err("riskPercent")} {...bind("risk")} />
+          <div className={adv}><Input id="t-tp" inputMode="decimal" label={t("trades.form.takeProfit")} error={err("takeProfit")} {...bind("takeProfit")} /></div>
+          <div className={adv}><Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} /></div>
+          <div className={adv}><Input id="t-risk" inputMode="decimal" label={t("trades.form.riskPercent")} error={err("riskPercent")} {...bind("risk")} /></div>
         </div>
-        <Input id="t-fees" inputMode="decimal" label={t("trades.form.fees")} hint={t("trades.form.feesHint")} error={err("fees")} {...bind("fees")} />
+        <div className={adv}><Input id="t-fees" inputMode="decimal" label={t("trades.form.fees")} hint={t("trades.form.feesHint")} error={err("fees")} {...bind("fees")} /></div>
         <Input
           id="t-pnl"
           inputMode="decimal"
@@ -309,8 +341,8 @@ export function TradeForm({
           <Select id="t-emotion" label={t("trades.form.emotion")} {...bind("emotion")}>
             {emotions.map((em) => <option key={em} value={em}>{t(`emotions.${em}`)}</option>)}
           </Select>
-          <Input id="t-strategy" list="strategies" label={t("trades.form.strategy")} hint={t("trades.form.strategyHint")} error={err("strategy")} {...bind("strategy")} />
-          <datalist id="strategies">{strategies.map((x) => <option key={x} value={x} />)}</datalist>
+          <div className={adv}><Input id="t-strategy" list="strategies" label={t("trades.form.strategy")} hint={t("trades.form.strategyHint")} error={err("strategy")} {...bind("strategy")} />
+          <datalist id="strategies">{strategies.map((x) => <option key={x} value={x} />)}</datalist></div>
         </div>
 
         <fieldset>
@@ -344,7 +376,7 @@ export function TradeForm({
         </fieldset>
       </Card>
 
-      <Card className="space-y-5">
+      <Card className={cn("space-y-5", adv)}>
         <h2 className="font-semibold">{t("journal.title")}</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Input id="t-tags" list="known-tags" label={t("journal.tags")} hint={t("journal.tagsHint")} error={err("tags")} {...bind("tags")} />
@@ -376,7 +408,7 @@ export function TradeForm({
         </fieldset>
       </Card>
 
-      <Card className="space-y-4">
+      <Card className={cn("space-y-4", adv)}>
         <Textarea id="t-reason" label={t("trades.form.reason")} error={err("reason")} {...bind("reason")} />
         <Textarea id="t-plan" label={t("trades.form.plan")} error={err("plan")} {...bind("plan")} />
         <Textarea id="t-comment" label={t("trades.form.comment")} error={err("comment")} {...bind("comment")} />

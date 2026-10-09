@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useI18n } from "@/lib/i18n/provider";
 import { mainNav, secondaryNav } from "./nav-items";
@@ -16,6 +16,9 @@ function useIsActive() {
 export function Sidebar() {
   const { t } = useI18n();
   const isActive = useIsActive();
+  const extraNav = secondaryNav.filter((n) => !["/settings", "/profile"].includes(n.href));
+  const accountNav = secondaryNav.filter((n) => ["/settings", "/profile"].includes(n.href));
+  const extraActive = extraNav.some((n) => isActive(n.href));
 
   const item = (href: string, labelKey: string, Icon: React.ElementType) => (
     <Link
@@ -38,7 +41,15 @@ export function Sidebar() {
     <nav aria-label={t("nav.main")} className="flex h-full flex-col justify-between">
       <div className="flex flex-col gap-1">{mainNav.map((n) => item(n.href, n.labelKey, n.icon))}</div>
       <div className="flex flex-col gap-1 border-t border-border pt-3">
-        {secondaryNav.map((n) => item(n.href, n.labelKey, n.icon))}
+        {/* Рыночные разделы свёрнуты, чтобы меню не пестрело. Если открыт один из них, список раскрыт сам. */}
+        <details key={extraActive ? "open" : "closed"} open={extraActive} className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted hover:bg-surface-muted hover:text-foreground">
+            <ChevronRight className="h-5 w-5 transition-transform group-open:rotate-90" aria-hidden />
+            {t("nav.more")}
+          </summary>
+          <div className="mt-1 flex flex-col gap-1">{extraNav.map((n) => item(n.href, n.labelKey, n.icon))}</div>
+        </details>
+        {accountNav.map((n) => item(n.href, n.labelKey, n.icon))}
       </div>
     </nav>
   );
@@ -93,9 +104,9 @@ export function TopIcons() {
   const { t } = useI18n();
   const isActive = useIsActive();
   return (
-    <nav aria-label={t("nav.main")} className="flex gap-5 overflow-x-auto border-t border-border px-4 py-2 text-sm lg:hidden">
+    <nav aria-label={t("nav.main")} className="flex gap-5 overflow-x-auto border-t border-border px-4 py-0.5 text-sm lg:hidden">
       {secondaryNav.map(({ href, labelKey, icon: Icon }) => (
-        <Link key={href} href={href} className={cn("flex shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
+        <Link key={href} href={href} className={cn("flex min-h-10 shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
           <Icon className="h-4 w-4" aria-hidden />
           {t(labelKey)}
         </Link>

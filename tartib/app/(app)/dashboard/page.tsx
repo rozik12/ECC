@@ -108,7 +108,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-semibold">{t("dashboard.recent.title")}</h2>
           {recent.length > 0 && (
-            <Link href="/trades" className="text-sm font-medium text-primary hover:underline">{t("dashboard.recent.all")} →</Link>
+            <Link href="/trades" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("dashboard.recent.all")} →</Link>
           )}
         </div>
         {recent.length === 0 ? (
@@ -129,7 +129,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
               {recent.map((r) => (
                 <Tr key={r.id}>
                   <Td label={t("trades.cols.instrument")}>
-                    <Link href={`/trades/${r.id}`} className="font-semibold text-primary hover:underline">{r.instrument}</Link>
+                    <Link href={`/trades/${r.id}`} className="inline-block py-2 font-semibold text-primary hover:underline">{r.instrument}</Link>
                   </Td>
                   <Td label={t("trades.cols.direction")}><Badge tone={r.direction === "long" ? "success" : "danger"}>{t(`directions.${r.direction}`)}</Badge></Td>
                   <Td label={t("trades.cols.entry")} className="tabular-nums">{formatNumber(r.entryPrice, locale, 8)}</Td>

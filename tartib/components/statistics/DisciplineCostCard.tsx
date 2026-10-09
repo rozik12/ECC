@@ -72,7 +72,7 @@ export async function DisciplineCostCard({
 
       <p className="mt-5 text-sm">{message}</p>
       {moreHref && (
-        <Link href={moreHref} className="mt-3 inline-block text-sm font-medium text-primary hover:underline">
+        <Link href={moreHref} className="mt-3 inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">
           {t("dashboard.discipline.more")} →
         </Link>
       )}

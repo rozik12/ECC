@@ -100,7 +100,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     <>
     {cooldown && <Alert tone="warning" className="mb-4">{t("trades.cooldown", { m: cooldown.minutesAgo })}</Alert>}
     <div className="mb-4 flex justify-end">
-      <Link href="/trades/quick" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+      <Link href="/trades/quick" className="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-primary hover:underline">
         <Zap className="h-4 w-4" aria-hidden /> {t("quick.button")}
       </Link>
     </div>

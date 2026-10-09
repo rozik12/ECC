@@ -36,7 +36,8 @@
     "blog": "Blog",
     "tools": "Tools",
     "charts": "Charts",
-    "market": "Market"
+    "market": "Market",
+    "more": "More: market and tools"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1462,6 +1463,10 @@
       "h8_24": "8–24 hours",
       "gt24": "over a day"
     },
-    "deleteTemplate": "Delete template"
+    "deleteTemplate": "Delete template",
+    "modeSimpleText": "Showing only the main fields.",
+    "modeFullText": "Showing all fields.",
+    "modeToFull": "Show all fields",
+    "modeToSimple": "Main only"
   }
 }

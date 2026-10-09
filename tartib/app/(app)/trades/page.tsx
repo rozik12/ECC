@@ -130,7 +130,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                     <Tr key={r.id}>
                       <Td label={t("trades.cols.date")} className="whitespace-nowrap text-muted">{formatDateTime(r.traded_at, locale, tz)}</Td>
                       <Td label={t("trades.cols.instrument")}>
-                        <Link href={`/trades/${r.id}`} className="font-semibold text-primary hover:underline">{r.instrument}</Link>
+                        <Link href={`/trades/${r.id}`} className="inline-block py-2 font-semibold text-primary hover:underline">{r.instrument}</Link>
                         {((r.tags ?? []).length > 0 || r.grade) && (
                           <span className="mt-1 flex flex-wrap gap-1">
                             {r.grade && <span className="rounded bg-primary-soft px-1.5 text-xs font-semibold text-primary">{r.grade}</span>}

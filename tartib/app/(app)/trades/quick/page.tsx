@@ -20,7 +20,7 @@ export default async function QuickTradePage() {
     <div className="space-y-4">
       <div className="mx-auto flex max-w-xl items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">{t("quick.title")}</h1>
-        <Link href="/trades/new" className="text-sm font-medium text-primary hover:underline">{t("quick.full")}</Link>
+        <Link href="/trades/new" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("quick.full")}</Link>
       </div>
       <QuickTradeForm accounts={accounts} />
     </div>

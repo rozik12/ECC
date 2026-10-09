@@ -81,7 +81,7 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
       <Card className="space-y-4">
         <p className="text-sm text-muted">{t("import.intro")}</p>
         <p className="text-sm text-muted">{t("import.required")}</p>
-        <a href="/api/trades/export?template=1" className="inline-block text-sm font-medium text-primary hover:underline">{t("import.template")}</a>
+        <a href="/api/trades/export?template=1" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("import.template")}</a>
 
         {accounts.length > 1 && (
           <Select id="imp-account" label={t("trades.form.account")} value={accountId} onChange={(e) => setAccountId(e.target.value)}>
@@ -154,7 +154,7 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
               {failed.length > 8 && <li>{t("import.more", { n: failed.length - 8 })}</li>}
             </ul>
           )}
-          <Link href="/trades" className="inline-block text-sm font-medium text-primary hover:underline">{t("trades.detail.back")} →</Link>
+          <Link href="/trades" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("trades.detail.back")} →</Link>
         </Card>
       )}
     </div>

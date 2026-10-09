@@ -13,10 +13,10 @@ import { normalizePair, type Timeframe } from "@/lib/market-data";
 const QUICK = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "BNBUSDT", "DOGEUSDT", "ADAUSDT", "TONUSDT"];
 
 /** Раздел «Графики»: свежие свечи любой криптопары, без привязки к сделке. */
-export function MarketChart() {
+export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string }) {
   const { t, locale } = useI18n();
-  const [pair, setPair] = useState("BTCUSDT");
-  const [input, setInput] = useState("BTCUSDT");
+  const [pair, setPair] = useState(initialPair);
+  const [input, setInput] = useState(initialPair);
   const [tf, setTf] = useState<Timeframe>("15m");
   const [refresh, setRefresh] = useState(0);
   const normalized = normalizePair(pair);

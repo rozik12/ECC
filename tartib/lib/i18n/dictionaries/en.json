@@ -35,7 +35,8 @@
     "news": "News",
     "blog": "Blog",
     "tools": "Tools",
-    "charts": "Charts"
+    "charts": "Charts",
+    "market": "Market"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1178,11 +1179,14 @@
       "achievement": "New achievement",
       "violation": "Rules broken: {count}",
       "goal": "Monthly goal reached",
-      "report": "Weekly report is ready"
+      "report": "Weekly report is ready",
+      "price_alert": "Alert triggered: {symbol}"
     },
     "bodies": {
       "goal": "Discipline {percent}% against a goal of {goal}%.",
-      "report": "Open statistics to read the report."
+      "report": "Open statistics to read the report.",
+      "priceAbove": "{symbol}: price rose to your level {price} (now {last}).",
+      "priceBelow": "{symbol}: price fell to your level {price} (now {last})."
     }
   },
   "adv": {
@@ -1305,5 +1309,79 @@
     "refresh": "Refresh",
     "unsupported": "I can't find that crypto pair. Enter, for example, BTCUSDT, ETH/USDT or SOLUSDT. Charts are available for crypto only.",
     "note": "Data: {source} (spot), the last 120 candles. This is a reference chart, not trading advice."
+  },
+  "market": {
+    "title": "Market",
+    "subtitle": "Market mood, the day's leaders, your watchlist, price alerts and the events calendar. The data is free.",
+    "unavailable": "Data is unavailable right now. Try again later.",
+    "sources": "Sources: alternative.me, OKX, CoinGecko, ForexFactory.",
+    "badSymbol": "I can't find that pair on the exchange. Examples: BTC, ETH/USDT, SOLUSDT.",
+    "badAlert": "Check the price: it must be a positive number.",
+    "noPrice": "Could not get the current price to choose a direction. Pick the direction manually.",
+    "limitWatch": "The watchlist holds at most 30 pairs.",
+    "limitAlerts": "You can keep at most 20 active alerts at once.",
+    "fear": {
+      "title": "Fear and Greed Index",
+      "labels": {
+        "extreme_fear": "Extreme fear",
+        "fear": "Fear",
+        "neutral": "Neutral",
+        "greed": "Greed",
+        "extreme_greed": "Extreme greed"
+      },
+      "fear": "fear",
+      "greed": "greed",
+      "previous": "Yesterday: {v}",
+      "dominance": "Bitcoin's share of the market cap: {v}%",
+      "hint": "Shows crypto market sentiment on a scale from 0 to 100. This is a reference indicator, not a signal."
+    },
+    "movers": {
+      "title": "24-hour leaders",
+      "hint": "USDT pairs with a daily turnover above 2 million (OKX, spot). Tap a pair to open its chart.",
+      "gainers": "Gainers",
+      "losers": "Losers"
+    },
+    "watch": {
+      "title": "Watchlist",
+      "add": "Add a pair",
+      "addButton": "Add",
+      "empty": "Empty for now. Add the pairs you follow.",
+      "noPrice": "no price",
+      "remove": "Remove {symbol}"
+    },
+    "alerts": {
+      "title": "Price alerts",
+      "subtitle": "When the price reaches the level you get a notification on the site and in Telegram. Checked every minute.",
+      "symbol": "Pair",
+      "price": "Price level",
+      "direction": "Condition",
+      "auto": "Detect automatically",
+      "above": "Price is at or above",
+      "below": "Price is at or below",
+      "aboveShort": "≥",
+      "belowShort": "≤",
+      "note": "Note (optional)",
+      "create": "Create alert",
+      "empty": "No active alerts.",
+      "delete": "Delete alert",
+      "triggered": "Recently triggered"
+    },
+    "calendar": {
+      "title": "Events calendar",
+      "subtitle": "Upcoming events this week, time zone: {tz}. Important news moves the market.",
+      "important": "Important only",
+      "allEvents": "All events",
+      "none": "No upcoming events.",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "forecast": "forecast",
+      "previous": "previous",
+      "impact": {
+        "high": "High impact",
+        "medium": "Medium impact",
+        "low": "Low impact",
+        "holiday": "Holiday"
+      }
+    }
   }
 }

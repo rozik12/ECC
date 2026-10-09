@@ -35,7 +35,8 @@
     "news": "Yangiliklar",
     "blog": "Blog",
     "tools": "Asboblar",
-    "charts": "Grafiklar"
+    "charts": "Grafiklar",
+    "market": "Bozor"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1178,11 +1179,14 @@
       "achievement": "Yangi yutuq",
       "violation": "Buzilgan qoidalar: {count}",
       "goal": "Oy maqsadiga erishildi",
-      "report": "Haftalik hisobot tayyor"
+      "report": "Haftalik hisobot tayyor",
+      "price_alert": "Alert ishladi: {symbol}"
     },
     "bodies": {
       "goal": "Intizom {percent}%, maqsad {goal}%.",
-      "report": "Hisobotni o'qish uchun statistikani oching."
+      "report": "Hisobotni o'qish uchun statistikani oching.",
+      "priceAbove": "{symbol}: narx {price} darajasiga ko'tarildi (hozir {last}).",
+      "priceBelow": "{symbol}: narx {price} darajasiga tushdi (hozir {last})."
     }
   },
   "adv": {
@@ -1305,5 +1309,79 @@
     "refresh": "Yangilash",
     "unsupported": "Bunday kripto juftlikni ko'rmayapman. Masalan, BTCUSDT, ETH/USDT yoki SOLUSDT kiriting. Grafiklar faqat kriptovalyutalar uchun.",
     "note": "Ma'lumot: {source} (spot), oxirgi 120 sham. Bu ma'lumot uchun grafik, savdo tavsiyasi emas."
+  },
+  "market": {
+    "title": "Bozor",
+    "subtitle": "Bozor kayfiyati, kun yetakchilari, kuzatuv ro'yxatingiz, narx alertlari va voqealar kalendari. Ma'lumotlar bepul.",
+    "unavailable": "Ma'lumotlar hozir mavjud emas. Keyinroq urinib ko'ring.",
+    "sources": "Manbalar: alternative.me, OKX, CoinGecko, ForexFactory.",
+    "badSymbol": "Birjada bunday juftlik topilmadi. Misol: BTC, ETH/USDT, SOLUSDT.",
+    "badAlert": "Narxni tekshiring: u musbat son bo'lishi kerak.",
+    "noPrice": "Yo'nalishni tanlash uchun joriy narxni bilib bo'lmadi. Yo'nalishni qo'lda ko'rsating.",
+    "limitWatch": "Kuzatuv ro'yxatida 30 tadan ortiq juftlik bo'lmaydi.",
+    "limitAlerts": "Bir vaqtda 20 tadan ortiq faol alert saqlab bo'lmaydi.",
+    "fear": {
+      "title": "Qo'rquv va ochko'zlik indeksi",
+      "labels": {
+        "extreme_fear": "Haddan tashqari qo'rquv",
+        "fear": "Qo'rquv",
+        "neutral": "Neytral",
+        "greed": "Ochko'zlik",
+        "extreme_greed": "Haddan tashqari ochko'zlik"
+      },
+      "fear": "qo'rquv",
+      "greed": "ochko'zlik",
+      "previous": "Kecha: {v}",
+      "dominance": "Bitcoin ning bozor kapitalizatsiyasidagi ulushi: {v}%",
+      "hint": "Kripto bozor kayfiyatini 0 dan 100 gacha shkalada ko'rsatadi. Bu ma'lumot ko'rsatkichi, signal emas."
+    },
+    "movers": {
+      "title": "24 soatlik yetakchilar",
+      "hint": "Sutkalik aylanmasi 2 mln dan ortiq USDT juftliklari (OKX, spot). Grafikni ochish uchun juftlikni bosing.",
+      "gainers": "O'sish",
+      "losers": "Tushish"
+    },
+    "watch": {
+      "title": "Kuzatuv ro'yxati",
+      "add": "Juftlik qo'shish",
+      "addButton": "Qo'shish",
+      "empty": "Hozircha bo'sh. Kuzatayotgan juftliklaringizni qo'shing.",
+      "noPrice": "narx yo'q",
+      "remove": "{symbol} ni olib tashlash"
+    },
+    "alerts": {
+      "title": "Narx alertlari",
+      "subtitle": "Narx darajaga yetganda saytda va Telegram'da bildirishnoma keladi. Har daqiqada tekshiriladi.",
+      "symbol": "Juftlik",
+      "price": "Narx darajasi",
+      "direction": "Shart",
+      "auto": "O'zi aniqlasin",
+      "above": "Narx teng yoki yuqori",
+      "below": "Narx teng yoki past",
+      "aboveShort": "≥",
+      "belowShort": "≤",
+      "note": "Izoh (ixtiyoriy)",
+      "create": "Alert yaratish",
+      "empty": "Faol alertlar yo'q.",
+      "delete": "Alertni o'chirish",
+      "triggered": "Yaqinda ishlaganlar"
+    },
+    "calendar": {
+      "title": "Voqealar kalendari",
+      "subtitle": "Haftaning eng yaqin voqealari, vaqt: {tz}. Muhim yangiliklar bozorni harakatga keltiradi.",
+      "important": "Faqat muhimlari",
+      "allEvents": "Barcha voqealar",
+      "none": "Yaqin voqealar yo'q.",
+      "today": "Bugun",
+      "tomorrow": "Ertaga",
+      "forecast": "prognoz",
+      "previous": "oldingi",
+      "impact": {
+        "high": "Yuqori ahamiyat",
+        "medium": "O'rta ahamiyat",
+        "low": "Past ahamiyat",
+        "holiday": "Dam olish kuni"
+      }
+    }
   }
 }

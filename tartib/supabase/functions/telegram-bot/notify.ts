@@ -3,7 +3,7 @@
 import { tr, type Lang } from "./text.ts";
 
 export type Params = Record<string, string | number | string[]>;
-export type Draft = { kind: "achievement" | "violation" | "goal" | "report" | "announcement"; params: Params };
+export type Draft = { kind: "achievement" | "violation" | "goal" | "report" | "announcement" | "price_alert"; params: Params };
 
 export type TradeNotifyInput = {
   achBefore: string[]; achAfter: string[]; goalBefore: boolean; goalAfter: boolean; goal: number; percent: number | null; instrument: string; violated: string[];
@@ -37,6 +37,8 @@ export function renderNotification(lang: Lang, kind: string, params: unknown): s
       return tr(lang, "nGoal", { percent: Number(p.percent) || 0, goal: Number(p.goal) || 0 });
     case "report":
       return tr(lang, "nReport");
+    case "price_alert":
+      return tr(lang, p.direction === "below" ? "nPriceBelow" : "nPriceAbove", { symbol: esc(str(p.symbol, 24)), price: esc(str(p.price, 24)), last: esc(str(p.last, 24)) });
     case "announcement":
       return `📣 <b>${esc(str(p.title, 80))}</b>\n${esc(str(p.body, 500))}`;
     default:

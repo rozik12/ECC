@@ -42,6 +42,7 @@ export type State = {
   customRules?: string[];
   rules?: string[];
   accounts?: string[];
+  alerts?: string[];
 };
 
 export async function loadState(chatId: number): Promise<State> {
@@ -267,4 +268,37 @@ export async function markNotificationsRead(userId: string, ids: string[]) {
 
 export async function clearNotifications(userId: string) {
   await db.from("notifications").delete().eq("user_id", userId);
+}
+
+// ---------- рынок: список наблюдения и алерты ----------
+export async function listWatch(userId: string): Promise<string[]> {
+  const { data } = await db.from("watchlist").select("symbol").eq("user_id", userId).order("created_at", { ascending: true });
+  return (data ?? []).map((r) => r.symbol as string);
+}
+
+export async function addWatch(userId: string, symbol: string): Promise<"ok" | "limit" | "error"> {
+  const { error } = await db.from("watchlist").insert({ user_id: userId, symbol });
+  if (!error || error.code === "23505") return "ok";
+  return error.message.includes("limit_watchlist") ? "limit" : "error";
+}
+
+export async function removeWatch(userId: string, symbol: string) {
+  await db.from("watchlist").delete().eq("user_id", userId).eq("symbol", symbol);
+}
+
+export type AlertRow = { id: string; symbol: string; direction: "above" | "below"; price: number };
+
+export async function listAlerts(userId: string): Promise<AlertRow[]> {
+  const { data } = await db.from("price_alerts").select("id, symbol, direction, price").eq("user_id", userId).eq("active", true).order("created_at", { ascending: false }).limit(20);
+  return (data ?? []).map((r) => ({ id: r.id as string, symbol: r.symbol as string, direction: r.direction === "below" ? "below" : "above", price: Number(r.price) }));
+}
+
+export async function createAlert(userId: string, symbol: string, direction: "above" | "below", price: number): Promise<"ok" | "limit" | "error"> {
+  const { error } = await db.from("price_alerts").insert({ user_id: userId, symbol, direction, price });
+  if (!error) return "ok";
+  return error.message.includes("limit_alerts") ? "limit" : "error";
+}
+
+export async function deleteAlert(userId: string, id: string) {
+  await db.from("price_alerts").delete().eq("user_id", userId).eq("id", id);
 }

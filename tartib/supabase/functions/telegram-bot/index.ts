@@ -1,10 +1,12 @@
 // Telegram-бот Tartib. Работает как функция Supabase рядом с базой данных.
 // Бот действует с правами сервиса, поэтому все запросы к данным ограничены владельцем чата (см. db.ts).
 import {
-  activeAccount, clearNotifications, closeTrade, countTrades, createTrade, db, deleteTrade, fetchTrades, getLinked, getTrade, listAccounts, listNotifications, listRules, loadState, markNotificationsRead, periodStart,
+  activeAccount, addWatch, clearNotifications, createAlert, deleteAlert, listAlerts, listWatch, removeWatch, closeTrade, countTrades, createTrade, db, deleteTrade, fetchTrades, getLinked, getTrade, listAccounts, listNotifications, listRules, loadState, markNotificationsRead, periodStart,
   recentInstruments, recentStrategies, saveState, toggleRule, toggleViolation, updateTradeFields, type Linked, type NewTrade, type State,
 } from "./db.ts";
 import { isLoginCancel, LOGIN_PREFIX, loginContact, loginStart, type Contact } from "./login.ts";
+import { alertTriggered, defaultDirection, getCalendar, getDominance, getFearGreed, getTickers, priceMap, topMovers } from "./feed.ts";
+import { parseAlertArgs, toSymbol } from "./feedcmd.ts";
 import { fetchHeadlines } from "./news.ts";
 import { parseNums, parseTradeMessage } from "./parse.ts";
 import { dayBounds, safeTimeZone } from "./time.ts";
@@ -279,6 +281,55 @@ async function showSettings(c: Ctx) {
   return show(c, ui.settingsScreen(c.lang, { reminders: u.reminders, daily: u.daily, weekly: u.weekly, notify: u.notify }, activeAccount(u, accs)?.name ?? tr(c.lang, "dash")));
 }
 
+async function watchView(c: Ctx, note = ""): Promise<ui.Screen> {
+  const symbols = await listWatch(c.u.userId);
+  const prices = symbols.length > 0 ? priceMap(await getTickers(), symbols) : {};
+  return ui.watchScreen(c.lang, symbols, prices, note);
+}
+
+async function alertsView(c: Ctx, note = ""): Promise<ui.Screen> {
+  const alerts = await listAlerts(c.u.userId);
+  c.st.alerts = alerts.map((a) => a.id);
+  return ui.alertsScreen(c.lang, alerts, note);
+}
+
+async function marketScreen(c: Ctx, kind: string): Promise<ui.Screen> {
+  switch (kind) {
+    case "fear": {
+      const [fng, dom] = await Promise.all([getFearGreed(), getDominance()]);
+      return ui.fearScreen(c.lang, fng, dom);
+    }
+    case "movers": {
+      const m = topMovers(await getTickers());
+      return ui.moversScreen(c.lang, m.gainers, m.losers);
+    }
+    case "cal": return ui.calendarScreen(c.lang, await getCalendar(), c.u.tz, Date.now());
+    case "watch": return watchView(c);
+    case "alerts": return alertsView(c);
+    default: return ui.marketMenu(c.lang);
+  }
+}
+
+/** Проверка ценовых алертов: вызывает база раз в минуту. Сработавший алерт выключается и создаёт уведомление (на сайт и в Telegram). */
+async function runAlerts(): Promise<{ checked: number; triggered: number }> {
+  const { data: alerts } = await db.from("price_alerts").select("id, user_id, symbol, direction, price").eq("active", true).limit(2000);
+  if (!alerts || alerts.length === 0) return { checked: 0, triggered: 0 };
+  const tickers = await getTickers();
+  if (tickers.length === 0) return { checked: alerts.length, triggered: 0 };
+  const prices = priceMap(tickers, [...new Set(alerts.map((a) => a.symbol as string))]);
+  let triggered = 0;
+  for (const a of alerts) {
+    const p = prices[a.symbol as string];
+    if (!p || !alertTriggered(a.direction === "below" ? "below" : "above", Number(a.price), p.last)) continue;
+    // Выключаем атомарно: если алерт уже обработал другой запуск, строка не вернётся и дубль не создаётся
+    const { data: done } = await db.from("price_alerts").update({ active: false, triggered_at: new Date().toISOString(), triggered_price: p.last }).eq("id", a.id).eq("active", true).select("id");
+    if (!done || done.length === 0) continue;
+    await db.from("notifications").insert({ user_id: a.user_id, kind: "price_alert", params: { symbol: a.symbol, direction: a.direction, price: Number(a.price), last: p.last } });
+    triggered++;
+  }
+  return { checked: alerts.length, triggered };
+}
+
 /** Показывает последние уведомления; всё показанное считается прочитанным (метки «Новое» остаются на этом экране). */
 async function showNotifications(c: Ctx) {
   const items = await listNotifications(c.u.userId, 8);
@@ -364,6 +415,7 @@ async function menuCallback(c: Ctx, op: string) {
     case "stats": return show(c, ui.statsMenu(c.lang));
     case "ach": return show(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId)));
     case "notif": return showNotifications(c);
+    case "market": return show(c, ui.marketMenu(c.lang));
     case "tools": return show(c, ui.toolsMenu(c.lang));
     case "sess": return show(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz));
     case "news": return show(c, ui.newsScreen(c.lang, await fetchHeadlines(c.lang)));
@@ -396,6 +448,15 @@ async function onCallback(c: Ctx, data: string) {
       return show(c, ui.checklistScreen(c.lang, c.u.checklist, c.st.chk));
     }
     case "h": return show(c, parts[0] === "menu" ? ui.helpMenu(c.lang) : ui.helpTopic(c.lang, parts[0]));
+    case "mk": return show(c, await marketScreen(c, parts[0]));
+    case "al": {
+      if (parts[0] === "d") {
+        const id = c.st.alerts?.[Number(parts[1])];
+        if (id) await deleteAlert(c.u.userId, id);
+        return show(c, await alertsView(c, tr(c.lang, "alertDeleted")));
+      }
+      return;
+    }
     case "nt":
       if (parts[0] === "clear") await clearNotifications(c.u.userId);
       return showNotifications(c);
@@ -422,6 +483,40 @@ const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
   "/instruments": async (c) => say(c, await statsScreen(c, "instr")),
   "/achievements": async (c) => say(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId))),
   "/notifications": (c) => showNotifications(c),
+  "/market": (c) => say(c, ui.marketMenu(c.lang)),
+  "/fear": async (c) => say(c, await marketScreen(c, "fear")),
+  "/movers": async (c) => say(c, await marketScreen(c, "movers")),
+  "/calendar": async (c) => say(c, await marketScreen(c, "cal")),
+  "/alerts": async (c) => say(c, await alertsView(c)),
+  "/alert": async (c, arg) => {
+    const a = parseAlertArgs(arg);
+    if (!a) return say(c, { text: tr(c.lang, "alertUsage"), kb: menuKb(c.lang) });
+    const tickers = await getTickers();
+    const last = tickers.find((t) => t.symbol === a.symbol)?.last;
+    if (tickers.length > 0 && last === undefined) return say(c, { text: tr(c.lang, "alertBad"), kb: menuKb(c.lang) });
+    const direction = a.direction ?? (last === undefined ? null : defaultDirection(a.price, last));
+    if (direction === null) return say(c, { text: tr(c.lang, "alertNoPrice"), kb: menuKb(c.lang) });
+    const r = await createAlert(c.u.userId, a.symbol, direction, a.price);
+    if (r === "limit") return say(c, { text: tr(c.lang, "alertLimit"), kb: menuKb(c.lang) });
+    if (r !== "ok") return say(c, { text: tr(c.lang, "error"), kb: menuKb(c.lang) });
+    return say(c, await alertsView(c, tr(c.lang, "alertCreated", { symbol: a.symbol, dir: direction === "above" ? "≥" : "≤", price: String(a.price) })));
+  },
+  "/watch": async (c, arg) => {
+    const [first, second] = arg.trim().split(/\s+/);
+    const del = !!first && /^(del|delete|rm|remove|убрать|удалить|ochir|olib)$/i.test(first);
+    const word = del || first?.toLowerCase() === "add" ? second : first;
+    if (!word) return say(c, await watchView(c));
+    const symbol = toSymbol(word);
+    if (!symbol) return say(c, await watchView(c, tr(c.lang, "watchBad")));
+    if (del) {
+      await removeWatch(c.u.userId, symbol);
+      return say(c, await watchView(c, tr(c.lang, "watchRemoved", { symbol })));
+    }
+    const tickers = await getTickers();
+    if (tickers.length > 0 && !tickers.some((t) => t.symbol === symbol)) return say(c, await watchView(c, tr(c.lang, "watchBad")));
+    const r = await addWatch(c.u.userId, symbol);
+    return say(c, await watchView(c, r === "limit" ? tr(c.lang, "watchLimit") : r === "ok" ? tr(c.lang, "watchAdded", { symbol }) : tr(c.lang, "error")));
+  },
   "/tools": (c) => say(c, ui.toolsMenu(c.lang)),
   "/sessions": (c) => say(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz)),
   "/rr": (c, arg) => say(c, ui.rrScreen(c.lang, parseNums(arg))),
@@ -663,6 +758,10 @@ Deno.serve(async (req) => {
     const cfg = await config();
     const path = new URL(req.url).pathname;
     const tg = new Tg(cfg.telegram_token);
+    if (path.endsWith("/alerts")) {
+      if (!same(req.headers.get("x-cron-secret"), cfg.cron_secret)) return new Response("forbidden", { status: 403 });
+      return Response.json(await runAlerts());
+    }
     if (path.endsWith("/notify")) {
       if (!same(req.headers.get("x-cron-secret"), cfg.cron_secret)) return new Response("forbidden", { status: 403 });
       const body = (await req.json().catch(() => ({}))) as { id?: unknown };

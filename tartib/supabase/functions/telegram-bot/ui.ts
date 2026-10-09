@@ -2,6 +2,7 @@
 import { SESSIONS, positionSize, riskReward, sessionStatus } from "./tools.ts";
 import { bestWorst, tiltAnalysis } from "./stats.ts";
 import { computeAchievements, disciplineCost, disciplineStreak, byEmotion, monthDiscipline, pnlByInstrument, summarize, topViolations, type StatTrade } from "./stats.ts";
+import { upcomingEvents, type CalendarEvent, type FearGreed, type Ticker } from "./feed.ts";
 import type { Headline } from "./news.ts";
 import { renderNotification } from "./notify.ts";
 import { emotionKeys, emotionLabel, tr, type Lang } from "./text.ts";
@@ -56,7 +57,8 @@ export function mainMenu(lang: Lang): Screen {
       [b(tr(lang, "mRules"), "m:rules"), b(tr(lang, "mAcc"), "m:acc")],
       [b(tr(lang, "mSettings"), "m:set"), b(tr(lang, "mHelp"), "h:menu")],
       [b(tr(lang, "mNews"), "m:news"), b(tr(lang, "mTools"), "m:tools")],
-      [b(tr(lang, "mNotif"), "m:notif"), { text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
+      [b(tr(lang, "mMarket"), "m:market"), b(tr(lang, "mNotif"), "m:notif")],
+      [{ text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
     ),
   };
 }
@@ -425,4 +427,63 @@ export function notificationsScreen(lang: Lang, items: { kind: string; params: u
 export function notificationPush(lang: Lang, kind: string, params: unknown): Screen | null {
   const text = renderNotification(lang, kind, params);
   return text === null ? null : { text, kb: kb([b(tr(lang, "mNotif"), "m:notif"), { text: tr(lang, "mSite"), url: SITE + "/dashboard" }]) };
+}
+
+// ---------- рынок ----------
+const marketNav = (lang: Lang, self: string): Kb => kb([b(tr(lang, "refresh"), self), b(tr(lang, "back"), "m:market")], menuRow(lang));
+const priceText = (v: number, lang: Lang) => num(v, lang, v >= 1000 ? 0 : v >= 10 ? 2 : v >= 1 ? 3 : 6);
+const pctText = (v: number, lang: Lang) => `${v >= 0 ? "+" : ""}${num(v, lang, 2)}%`;
+
+export function marketMenu(lang: Lang): Screen {
+  return {
+    text: tr(lang, "marketMenu"),
+    kb: kb([b(tr(lang, "mkFear"), "mk:fear"), b(tr(lang, "mkMovers"), "mk:movers")], [b(tr(lang, "mkCal"), "mk:cal"), b(tr(lang, "mkWatch"), "mk:watch")], [b(tr(lang, "mkAlerts"), "mk:alerts")], menuRow(lang)),
+  };
+}
+
+export function fearScreen(lang: Lang, data: FearGreed | null, dominance: number | null): Screen {
+  if (!data) return { text: `${tr(lang, "fearTitle")}\n\n${tr(lang, "fearNone")}`, kb: marketNav(lang, "mk:fear") };
+  const lines = [tr(lang, "fearTitle"), "", tr(lang, "fearLine", { v: data.value, label: tr(lang, `fng_${data.label}`) })];
+  if (data.previous !== null) lines.push(tr(lang, "fearPrev", { v: data.previous }));
+  if (dominance !== null) lines.push(tr(lang, "fearDom", { v: num(dominance, lang, 1) }));
+  lines.push("", tr(lang, "fearHint"));
+  return { text: lines.join("\n"), kb: marketNav(lang, "mk:fear") };
+}
+
+export function moversScreen(lang: Lang, gainers: Ticker[], losers: Ticker[]): Screen {
+  if (gainers.length === 0) return { text: `${tr(lang, "moversTitle")}\n\n${tr(lang, "fearNone")}`, kb: marketNav(lang, "mk:movers") };
+  const row = (r: Ticker, dot: string) => `${dot} ${esc(r.base)}/${esc(r.quote)}  ${pctText(r.change, lang)}  ·  ${priceText(r.last, lang)}`;
+  const text = [tr(lang, "moversTitle"), "", `<b>${tr(lang, "moversUp")}</b>`, ...gainers.slice(0, 5).map((r) => row(r, "🟢")), "", `<b>${tr(lang, "moversDown")}</b>`, ...losers.slice(0, 5).map((r) => row(r, "🔴"))].join("\n");
+  return { text, kb: marketNav(lang, "mk:movers") };
+}
+
+export function calendarScreen(lang: Lang, events: CalendarEvent[], tz: string, now: number): Screen {
+  const shown = upcomingEvents(events, now, { impacts: ["high"], limit: 8 });
+  const head = tr(lang, "calTitle", { tz });
+  if (shown.length === 0) return { text: `${head}\n\n${events.length === 0 ? tr(lang, "fearNone") : tr(lang, "calEmpty")}`, kb: marketNav(lang, "mk:cal") };
+  const fmt = new Intl.DateTimeFormat(LOCALE[lang], { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: tz });
+  const body = shown.map((e) => {
+    const extra = [e.forecast && tr(lang, "calForecast", { f: esc(e.forecast) }), e.previous && tr(lang, "calPrev", { p: esc(e.previous) })].filter(Boolean).join(" · ");
+    return `🔴 ${fmt.format(new Date(e.at))}  <b>${esc(e.country)}</b> ${esc(e.title)}${extra ? `\n      <i>${extra}</i>` : ""}`;
+  });
+  return { text: `${head}\n\n${body.join("\n")}`, kb: marketNav(lang, "mk:cal") };
+}
+
+export function watchScreen(lang: Lang, symbols: string[], prices: Record<string, { last: number; change: number }>, note = ""): Screen {
+  const head = note ? `${note}\n\n${tr(lang, "watchTitle")}` : tr(lang, "watchTitle");
+  if (symbols.length === 0) return { text: `${head}\n\n${tr(lang, "watchEmpty")}`, kb: marketNav(lang, "mk:watch") };
+  const rows = symbols.map((s) => {
+    const p = prices[s];
+    return p ? `${p.change >= 0 ? "🟢" : "🔴"} ${esc(s)}  ${priceText(p.last, lang)}  ${pctText(p.change, lang)}` : `⚪ ${esc(s)}  —`;
+  });
+  return { text: `${head}\n\n${rows.join("\n")}\n\n${tr(lang, "watchHint")}`, kb: marketNav(lang, "mk:watch") };
+}
+
+export function alertsScreen(lang: Lang, alerts: { symbol: string; direction: "above" | "below"; price: number }[], note = ""): Screen {
+  const head = note ? `${note}\n\n${tr(lang, "alertsTitle")}` : tr(lang, "alertsTitle");
+  if (alerts.length === 0) return { text: `${head}\n\n${tr(lang, "alertsEmpty")}`, kb: marketNav(lang, "mk:alerts") };
+  return {
+    text: `${head}\n\n${tr(lang, "alertsHint")}`,
+    kb: kb(...alerts.map((a, i) => [b(`🗑 ${a.symbol} ${a.direction === "above" ? "≥" : "≤"} ${priceText(a.price, lang)}`.slice(0, 60), `al:d:${i}`)]), [b(tr(lang, "back"), "m:market")], menuRow(lang)),
+  };
 }

@@ -38,7 +38,7 @@ test("уведомления: логика сайта и бота совпада
 });
 
 test("уведомления: тексты есть на всех языках для каждого вида", () => {
-  const params = { id: "first_trade", count: 2, instrument: "BTC", rules: ["Правило"], percent: 85, goal: 80, title: "T", body: "B" };
+  const params = { id: "first_trade", count: 2, instrument: "BTC", rules: ["Правило"], percent: 85, goal: 80, title: "T", body: "B", symbol: "BTCUSDT", direction: "above", price: 70000, last: 70010 };
   for (const dict of [ru, en, uz]) {
     for (const kind of NOTIFICATION_KINDS) {
       const d = describeNotification(kind, params, tFor(dict));

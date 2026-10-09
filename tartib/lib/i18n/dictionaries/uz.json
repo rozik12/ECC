@@ -1280,5 +1280,13 @@
     "exit": "Chiqish",
     "note": "Juftlik {symbol}, ma'lumot: {source} (spot). Bu birjadagi narxlar brokeringiz yoki fyuchers narxlaridan biroz farq qilishi mumkin.",
     "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring."
+  },
+  "pwa": {
+    "title": "Telefondagi ilova",
+    "text": "Tartib'ni bosh ekranga o'rnating: oddiy ilova kabi ochiladi, manzil satrisiz, belgini uzoq bosganda tezkor amallar bilan.",
+    "install": "Ilovani o'rnatish",
+    "installed": "Ilova bu qurilmaga o'rnatilgan.",
+    "ios": "iPhone'da: saytni Safari'da oching, «Ulashish» tugmasini (strelkali kvadrat), keyin «Bosh ekranga» ni bosing.",
+    "manual": "Brauzer menyusini oching va «Ilovani o'rnatish» yoki «Bosh ekranga qo'shish» ni tanlang. Kompyuterdagi Chrome'da o'rnatish belgisi manzil satrining o'ng tomonida."
   }
 }

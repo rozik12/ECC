@@ -1280,5 +1280,13 @@
     "exit": "Exit",
     "note": "Pair {symbol}, data: {source} (spot). Prices on this exchange can differ slightly from your broker or futures prices.",
     "offChart": "Some trade prices (entry, stop, target or exit) are far from the market at that time and are not drawn. Check the instrument, time and prices."
+  },
+  "pwa": {
+    "title": "Phone app",
+    "text": "Install Tartib on your home screen: it opens like a regular app, without the address bar, with quick actions on long-press of the icon.",
+    "install": "Install app",
+    "installed": "The app is installed on this device.",
+    "ios": "On iPhone: open the site in Safari, tap Share (the square with an arrow), then “Add to Home Screen”.",
+    "manual": "Open the browser menu and choose “Install app” or “Add to Home screen”. In desktop Chrome the install icon is at the right of the address bar."
   }
 }

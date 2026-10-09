@@ -4,6 +4,7 @@ import { Download, LogOut, Shield } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import { MfaCard } from "@/components/profile/MfaCard";
 import { ShareCard } from "@/components/profile/ShareCard";
+import { InstallApp } from "@/components/profile/InstallApp";
 import { TelegramCard } from "@/components/profile/TelegramCard";
 import { DeleteAccount } from "@/components/profile/DeleteAccount";
 import { ProfileForm } from "@/components/profile/ProfileForm";
@@ -55,6 +56,7 @@ export default async function ProfilePage() {
         </dl>
       </Card>
 
+      <InstallApp />
       <TelegramCard linked={!!tg} reminders={tg?.reminders ?? true} notify={tg?.notify ?? true} />
 
       <ShareCard token={profile?.share_token ?? null} />

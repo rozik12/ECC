@@ -1283,7 +1283,8 @@
     "tp": "Maqsad",
     "exit": "Chiqish",
     "note": "Juftlik {symbol}, ma'lumot: {source} (spot). Bu birjadagi narxlar brokeringiz yoki fyuchers narxlaridan biroz farq qilishi mumkin.",
-    "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring."
+    "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring.",
+    "retry": "Qayta urinish"
   },
   "pwa": {
     "title": "Telefondagi ilova",

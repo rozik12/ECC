@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Bar, CartesianGrid, ComposedChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Card } from "@/components/ui";
+import { Button, Card } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
@@ -41,7 +41,8 @@ export function TradeChart({ instrument, tradedAt, entry, exit, stop, takeProfit
   const { t, locale } = useI18n();
   const supported = normalizePair(instrument) !== null;
   const [tf, setTf] = useState<Timeframe>("1h");
-  const key = `${instrument}|${tradedAt}|${tf}`;
+  const [attempt, setAttempt] = useState(0);
+  const key = `${instrument}|${tradedAt}|${tf}|${attempt}`;
   const [loaded, setLoaded] = useState<Loaded | null>(null);
 
   useEffect(() => {
@@ -109,7 +110,10 @@ export function TradeChart({ instrument, tradedAt, entry, exit, stop, takeProfit
       </div>
 
       {error ? (
-        <p className="py-6 text-center text-sm text-muted">{t(`chart.${error}`)}</p>
+        <div className="space-y-3 py-6 text-center">
+          <p className="text-sm text-muted">{t(`chart.${error}`)}</p>
+          {error === "unavailable" && <Button type="button" variant="secondary" size="sm" onClick={() => setAttempt((n) => n + 1)}>{t("chart.retry")}</Button>}
+        </div>
       ) : !candles ? (
         <div className="h-72 animate-pulse rounded-xl bg-surface-muted" aria-label={t("chart.loading")} />
       ) : (

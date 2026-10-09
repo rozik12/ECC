@@ -866,7 +866,7 @@
     "columns": "Ustunlar",
     "required": "Majburiy maydonlar: instrument, yo'nalish (long/short yoki buy/sell), kirish narxi va hajm. Bir katakdagi bir nechta buzilgan qoidani | belgisi bilan ajrat.",
     "template": "Namuna faylni yuklab olish",
-    "file": "CSV fayl",
+    "file": "Fayl (CSV yoki MetaTrader HTML hisoboti)",
     "missing": "Majburiy maydonlar uchun ustunlar topilmadi: {cols}. Ularni quyida qo'lda tanla.",
     "limitRows": "Dastlabki {n} qator qayta ishlanadi.",
     "summary": "Mos qatorlar: {valid}. Xatolari bor: {invalid}.",
@@ -903,7 +903,11 @@
       "reason": "Kirish sababi",
       "plan": "Savdo rejasi",
       "comment": "Izoh"
-    }
+    },
+    "detected": "{platform} hisoboti aniqlandi: bitimlar {used}, o'tkazib yuborildi {skipped}",
+    "mtNotice": "Yopilgan buy va sell bitimlar olindi. Depozitlar, kutilayotgan buyurtmalar va yopilmagan pozitsiyalar o'tkazib yuborildi. Natija = foyda + komissiya + svop. Bitim vaqti broker serveri soati bo'yicha olindi. Hajm lotdan birlikka o'tkazildi (valyuta juftliklari ×100 000, oltin ×100).",
+    "unknownHtml": "Bu HTML faylda MetaTrader hisoboti topilmadi. MT4 uchun «Batafsil hisobot» (Detailed Statement), MT5 uchun «Savdo tarixi hisoboti» (Trade History Report) ni tanlab, HTML sifatida saqlang.",
+    "duplicate": "bunday bitim jurnalda allaqachon bor"
   },
   "quick": {
     "button": "Tezkor yozuv",

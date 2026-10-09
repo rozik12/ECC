@@ -5,6 +5,7 @@ import Link from "next/link";
 import { importTradesAction, type ImportRowResult } from "@/app/actions/import";
 import { Alert, Button, Card, Select } from "@/components/ui";
 import { parseCsv } from "@/lib/csv";
+import { convertMetaTrader, decodeText, parseHtmlTables, type MtPlatform } from "@/lib/import-presets";
 import { mapCsvRows, MAX_IMPORT_ROWS } from "@/lib/import";
 import { autoMapColumns, IMPORT_FIELDS, REQUIRED_FIELDS, type ColumnMapping, type ImportField } from "@/lib/import-map";
 import { useI18n } from "@/lib/i18n/provider";
@@ -20,6 +21,7 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [results, setResults] = useState<ImportRowResult[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [preset, setPreset] = useState<{ platform: MtPlatform; used: number; skipped: number } | null>(null);
 
   const mapped = useMemo(() => (rows ? mapCsvRows(rows, mapping ?? undefined) : null), [rows, mapping]);
   const valid = mapped?.items.filter((i) => i.payload) ?? [];
@@ -31,9 +33,22 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
     setResults(null);
     setError(null);
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) return setError("import.tooBig");
+    setPreset(null);
+    if (file.size > 5 * 1024 * 1024) return setError("import.tooBig");
     setFileName(file.name);
-    const parsed = parseCsv(await file.text());
+    const text = decodeText(new Uint8Array(await file.arrayBuffer()));
+    const isHtml = /<(html|table)\b/i.test(text.slice(0, 20000));
+    let parsed = isHtml ? parseHtmlTables(text) : parseCsv(text);
+    // Отчёт MetaTrader 4 или 5 (HTML или CSV) распознаётся сам, столбцы настраивать не нужно
+    const mt = convertMetaTrader(parsed);
+    if (mt) {
+      setPreset({ platform: mt.platform, used: mt.used, skipped: mt.skipped });
+      parsed = [mt.header, ...mt.rows];
+    } else if (isHtml) {
+      setRows(null);
+      setMapping(null);
+      return setError("import.unknownHtml");
+    }
     setRows(parsed);
     setMapping(parsed.length > 0 ? autoMapColumns(parsed[0]) : null);
   }
@@ -75,11 +90,16 @@ export function ImportTrades({ accounts }: { accounts: Account[] }) {
         )}
         <div>
           <label htmlFor="imp-file" className="mb-1.5 block text-sm font-medium">{t("import.file")}</label>
-          <input id="imp-file" type="file" accept=".csv,text/csv,text/plain" onChange={onFile} className="block w-full text-sm file:mr-3 file:rounded-xl file:border-0 file:bg-primary-soft file:px-4 file:py-2.5 file:font-medium file:text-primary" />
+          <input id="imp-file" type="file" accept=".csv,.txt,.htm,.html,text/csv,text/plain,text/html" onChange={onFile} className="block w-full text-sm file:mr-3 file:rounded-xl file:border-0 file:bg-primary-soft file:px-4 file:py-2.5 file:font-medium file:text-primary" />
         </div>
       </Card>
 
       {error && <Alert tone="danger">{t(error)}</Alert>}
+      {preset && (
+        <Alert tone="info" title={t("import.detected", { platform: preset.platform === "mt4" ? "MetaTrader 4" : "MetaTrader 5", used: preset.used, skipped: preset.skipped })}>
+          {t("import.mtNotice")}
+        </Alert>
+      )}
       {mapped && mapped.missing.length > 0 && (
         <Alert tone="warning">{t("import.missing", { cols: mapped.missing.map((f) => t(`import.fields.${f}`)).join(", ") })}</Alert>
       )}

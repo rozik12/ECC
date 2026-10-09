@@ -866,7 +866,7 @@
     "columns": "Columns",
     "required": "Required fields: instrument, direction (long/short or buy/sell), entry price and size. Separate several broken rules in one cell with the | sign.",
     "template": "Download a sample file",
-    "file": "CSV file",
+    "file": "File (CSV or MetaTrader HTML report)",
     "missing": "No columns found for required fields: {cols}. Choose them manually below.",
     "limitRows": "The first {n} rows will be processed.",
     "summary": "Valid rows: {valid}. With errors: {invalid}.",
@@ -903,7 +903,11 @@
       "reason": "Reason for entry",
       "plan": "Trading plan",
       "comment": "Comment"
-    }
+    },
+    "detected": "{platform} report detected: {used} trades, {skipped} skipped",
+    "mtNotice": "Closed buy and sell trades were taken. Deposits, pending orders and open positions were skipped. Result = profit + commission + swap. Trade time is taken from the broker server clock. Size is converted from lots to units (currency pairs ×100,000, gold ×100).",
+    "unknownHtml": "No MetaTrader report was found in this HTML file. For MT4 choose “Detailed Statement”, for MT5 “Trade History Report”, and save it as HTML.",
+    "duplicate": "this trade is already in your journal"
   },
   "quick": {
     "button": "Quick entry",

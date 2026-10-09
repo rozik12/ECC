@@ -93,6 +93,12 @@ export function parseDateTime(value: string): Date | null {
     const d = new Date(Number(dmy[3]), Number(dmy[2]) - 1, Number(dmy[1]), Number(dmy[4] ?? 0), Number(dmy[5] ?? 0), Number(dmy[6] ?? 0));
     return isNaN(d.getTime()) ? null : d;
   }
+  // «2026.10.01 10:30:00» (MetaTrader) и «2026/10/01»
+  const ymd = /^(\d{4})[./](\d{1,2})[./](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?$/.exec(v);
+  if (ymd) {
+    const d = new Date(Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3]), Number(ymd[4] ?? 0), Number(ymd[5] ?? 0), Number(ymd[6] ?? 0));
+    return isNaN(d.getTime()) ? null : d;
+  }
   const d = new Date(v.replace(" ", "T"));
   return isNaN(d.getTime()) ? null : d;
 }
@@ -102,7 +108,7 @@ const FIAT = "(EUR|USD|GBP|JPY|CHF|AUD|NZD|CAD|SEK|NOK|PLN|TRY|ZAR|MXN|CNH|CNY)"
 /** Рынок по названию инструмента, если в файле нет столбца «рынок». */
 export function inferMarket(instrument: string): "crypto" | "forex" | "stocks" | "futures" {
   const s = instrument.toUpperCase().replace(/[\s/_-]/g, "");
-  if (new RegExp(`^${FIAT}${FIAT}$`).test(s)) return "forex";
+  if (new RegExp(`^(XAU|XAG|${FIAT.slice(1, -1)})${FIAT}$`).test(s)) return "forex";
   if (/(USDT|USDC|BUSD|BTC|ETH|PERP)$/.test(s)) return "crypto";
   if (/^(NQ|ES|YM|RTY|CL|GC|SI|ZB|ZN)[A-Z]?\d{0,2}$/.test(s)) return "futures";
   if (/^[A-Z]{1,5}$/.test(s)) return "stocks";

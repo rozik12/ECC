@@ -6,6 +6,7 @@ import { TradeForm, type TemplateView, type TradeFormValues } from "@/components
 import { requireUser } from "@/lib/auth";
 import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getKnownTags, getLastTrade, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
+import { losingRun } from "@/lib/risk-stats";
 import { lossCooldown } from "@/lib/statistics";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import { directions, emotions, markets, type DirectionKey, type EmotionKey, type MarketKey } from "@/lib/trading";
@@ -48,6 +49,8 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
   const direction = (directions as readonly string[]).includes(one(sp.direction)) ? (one(sp.direction) as DirectionKey) : "long";
 
   const cooldown = lossCooldown(last, new Date());
+  const { data: recentRows } = await supabase.from("trades").select("traded_at, pnl").order("traded_at", { ascending: false }).limit(8);
+  const run = losingRun((recentRows ?? []).map((r) => ({ tradedAt: String(r.traded_at), pnl: Number(r.pnl) })), new Date());
 
   const initial: TradeFormValues = {
     accountId: account.id,
@@ -98,7 +101,8 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-    {cooldown && <Alert tone="warning" className="mb-4">{t("trades.cooldown", { m: cooldown.minutesAgo })}</Alert>}
+    {run.count >= 3 && <Alert tone="warning" className="mb-4">{t("hero.pauseBanner", { n: run.count, m: run.minutesSince })}</Alert>}
+    {cooldown && run.count < 3 && <Alert tone="warning" className="mb-4">{t("trades.cooldown", { m: cooldown.minutesAgo })}</Alert>}
     <div className="mb-4 flex justify-end">
       <Link href="/trades/quick" className="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-primary hover:underline">
         <Zap className="h-4 w-4" aria-hidden /> {t("quick.button")}

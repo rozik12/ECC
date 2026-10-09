@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Alert } from "@/components/ui";
+import { QuickLine } from "@/components/trades/QuickLine";
 import { QuickTradeForm } from "@/components/trades/QuickTradeForm";
 import { requireUser } from "@/lib/auth";
 import { getAccounts } from "@/lib/data";
@@ -22,6 +23,7 @@ export default async function QuickTradePage() {
         <h1 className="text-2xl font-bold">{t("quick.title")}</h1>
         <Link href="/trades/new" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("quick.full")}</Link>
       </div>
+      <QuickLine />
       <QuickTradeForm accounts={accounts} />
     </div>
   );

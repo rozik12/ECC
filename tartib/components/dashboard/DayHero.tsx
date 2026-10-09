@@ -17,6 +17,10 @@ type Props = {
   goal: number;
   /** Дневной итог отрицательный (для спокойного напоминания) */
   losingDay: boolean;
+  /** Дневной лимит убытка из правил пользователя; null — правила нет */
+  limit: { pct: number; lossPct: number; usedPct: number; level: "ok" | "warn" | "hit" } | null;
+  /** Убыточных сделок подряд за последние часы (для паузы) */
+  lossRun: number;
 };
 
 /** Кольцо дисциплины: доля сделок по правилам за месяц. Цвет зависит от цели, а не от прибыли. */
@@ -50,13 +54,17 @@ export async function DayHero(p: Props) {
   const { t } = await getTranslator();
   // Подсказка: одна, спокойная и про процесс, а не про результат
   const hint =
-    p.tradesToday === 0
-      ? { key: "hero.hintNone", tone: "text-muted" }
-      : p.violationsToday > 0
-        ? { key: "hero.hintViolated", tone: "text-warning" }
-        : p.losingDay
-          ? { key: "hero.hintLosing", tone: "text-muted" }
-          : { key: "hero.hintOk", tone: "text-success" };
+    p.limit?.level === "hit"
+      ? { key: "hero.hintLimit", tone: "text-danger" }
+      : p.lossRun >= 3
+        ? { key: "hero.hintPause", tone: "text-warning" }
+        : p.tradesToday === 0
+        ? { key: "hero.hintNone", tone: "text-muted" }
+        : p.violationsToday > 0
+          ? { key: "hero.hintViolated", tone: "text-warning" }
+          : p.losingDay
+            ? { key: "hero.hintLosing", tone: "text-muted" }
+            : { key: "hero.hintOk", tone: "text-success" };
 
   return (
     <section aria-labelledby="hero-title" className="card-enter surface-card overflow-hidden rounded-3xl p-5 sm:p-7">
@@ -74,7 +82,26 @@ export async function DayHero(p: Props) {
         <Ring percent={p.monthPercent} goal={p.goal} label={t("hero.discipline")} />
       </div>
 
-      <p className={cn("mt-5 rounded-xl bg-surface-muted/70 px-4 py-3 text-sm leading-relaxed", hint.tone)}>{t(hint.key)}</p>
+      {p.limit ? (
+        <div className="mt-5">
+          <div className="flex items-baseline justify-between gap-3 text-sm">
+            <span className="text-muted">{t("hero.limit")}</span>
+            <span className={cn("font-semibold", p.limit.level === "hit" ? "text-danger" : p.limit.level === "warn" ? "text-warning" : "text-foreground")}>
+              {t("hero.limitUsed", { loss: p.limit.lossPct.toFixed(1), limit: p.limit.pct })}
+            </span>
+          </div>
+          <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-surface-muted" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(p.limit.usedPct)} aria-label={t("hero.limit")}>
+            <div className={cn("bar-grow h-full rounded-full", p.limit.level === "hit" ? "bg-danger" : p.limit.level === "warn" ? "bg-warning" : "bg-primary")} style={{ width: `${Math.max(p.limit.usedPct, p.limit.usedPct > 0 ? 3 : 0)}%` }} />
+          </div>
+        </div>
+      ) : (
+        <Link href="/rules" className="mt-5 flex min-h-11 items-center justify-between gap-2 rounded-xl border border-dashed border-border px-4 text-sm text-muted hover:text-foreground">
+          <span>{t("hero.limitNone")}</span>
+          <span className="font-medium text-primary">{t("hero.limitSet")} →</span>
+        </Link>
+      )}
+
+      <p className={cn("mt-4 rounded-xl bg-surface-muted/70 px-4 py-3 text-sm leading-relaxed", hint.tone)}>{t(hint.key)}</p>
 
       <div className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
         <Link href="/trades/new" className={buttonStyles({ size: "lg", className: "col-span-2" })}>
@@ -84,7 +111,7 @@ export async function DayHero(p: Props) {
           <Zap className="h-4 w-4 shrink-0" aria-hidden /> <span className="truncate">{t("hero.quick")}</span>
         </Link>
         <Link href="/diary" className={buttonStyles({ variant: "secondary", size: "md", className: "h-12 px-3" })}>
-          <BookOpen className="h-4 w-4 shrink-0" aria-hidden /> <span className="truncate">{t("hero.diary")}</span>
+          <BookOpen className="h-4 w-4 shrink-0" aria-hidden /> <span className="truncate">{t("nav.diary")}</span>
         </Link>
       </div>
     </section>

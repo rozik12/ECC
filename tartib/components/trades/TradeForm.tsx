@@ -7,6 +7,7 @@ import { deleteTemplateAction } from "@/app/actions/templates";
 import { Alert, Badge, Button, Card, Input, Select, Textarea } from "@/components/ui";
 import { evaluateRules, type RuleLike } from "@/lib/calculations/rules";
 import { calculatePnl, tradeMetrics } from "@/lib/calculations/trade";
+import { positionSize } from "@/lib/tools";
 import { cn } from "@/lib/cn";
 import { GRADES, MISTAKES, parseTags } from "@/lib/journal";
 import { parseNumber, toLocalInput } from "@/lib/format";
@@ -148,6 +149,13 @@ export function TradeForm({
     leverage: parseNumber(v.leverage),
     risk: parseNumber(v.risk),
   };
+
+  // Подсказка размера позиции: из стопа, риска (по умолчанию 1%) и баланса счёта
+  const riskForSize = n.risk ?? 1;
+  const suggestion =
+    account && n.entry !== null && n.stop !== null && account.balance > 0
+      ? positionSize({ balance: account.balance, riskPct: riskForSize, entry: n.entry, stop: n.stop })
+      : null;
 
   // P&L считается сам, пока пользователь не изменил его вручную
   const feesNum = parseNumber(v.fees) ?? 0;
@@ -315,7 +323,14 @@ export function TradeForm({
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
           <Input id="t-entry" inputMode="decimal" label={t("trades.form.entry")} error={err("entryPrice")} {...bind("entry")} />
           <Input id="t-exit" inputMode="decimal" label={t("trades.form.exit")} error={err("exitPrice")} {...bind("exit")} />
-          <Input id="t-size" inputMode="decimal" label={t("trades.form.size")} error={err("positionSize")} {...bind("size")} />
+          <div>
+            <Input id="t-size" inputMode="decimal" label={t("trades.form.size")} error={err("positionSize")} {...bind("size")} />
+            {suggestion && suggestion.ok && (
+              <button type="button" onClick={() => set("size", String(Math.floor(suggestion.units * 1e6) / 1e6))} className="mt-1.5 min-h-10 text-left text-xs text-primary hover:underline">
+                {t("journal.sizeHint", { size: String(Math.floor(suggestion.units * 1e6) / 1e6), risk: riskForSize, amount: suggestion.riskAmount.toFixed(2) })}
+              </button>
+            )}
+          </div>
           <Input id="t-stop" inputMode="decimal" label={t("trades.form.stop")} error={err("stopLoss")} {...bind("stop")} />
           <div className={adv}><Input id="t-tp" inputMode="decimal" label={t("trades.form.takeProfit")} error={err("takeProfit")} {...bind("takeProfit")} /></div>
           <div className={adv}><Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} /></div>

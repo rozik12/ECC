@@ -85,7 +85,7 @@ export function BottomNav() {
           href={href}
           aria-current={isActive(href) ? "page" : undefined}
           className={cn(
-            "flex flex-col items-center gap-1 px-1 py-2 text-[11px] font-medium",
+            "flex flex-col items-center gap-1 px-0.5 py-2 text-[10px] font-medium tracking-tight",
             isActive(href) ? "text-primary" : "text-muted",
           )}
         >

@@ -926,7 +926,11 @@
     "title": "Quick trade entry",
     "full": "Full form",
     "hint": "You can add the rest later in the trade itself. Rules are checked automatically.",
-    "invalid": "Fill in the instrument, entry price and size. Numbers must be above zero."
+    "invalid": "Fill in the instrument, entry price and size. Numbers must be above zero.",
+    "line": "One line",
+    "lineHint": "Instrument, direction, entry, stop, take profit, size, leverage. Any order.",
+    "lineFound": "Recognised",
+    "lineOpen": "Open the form"
   },
   "reminder": {
     "title": "You haven't logged trades for {n} days",
@@ -1586,7 +1590,8 @@
     "modeSimpleText": "Showing only the main fields.",
     "modeFullText": "Showing all fields.",
     "modeToFull": "Show all fields",
-    "modeToSimple": "Main only"
+    "modeToSimple": "Main only",
+    "sizeHint": "By formula: size {size} (risk {risk}% = {amount}). Use it"
   },
   "risk": {
     "title": "System quality and risk",
@@ -1703,6 +1708,35 @@
     "hintViolated": "There is a trade with a rule violation today. Stop and reread your rules before opening the next one.",
     "hintLosing": "The day is in the red. That is normal. Check your daily limit and your rules, not the urge to win it back.",
     "hintOk": "Every trade today followed your rules. Keep this pace; the result is secondary.",
-    "quick": "Quick"
+    "quick": "Quick",
+    "limit": "Daily loss limit",
+    "limitUsed": "{loss}% of {limit}%",
+    "limitNone": "No daily loss limit set",
+    "limitSet": "Set it",
+    "hintLimit": "Your daily loss limit is reached. Your own rule says: enough for today. Close the terminal and come back tomorrow.",
+    "hintPause": "Several losses in a row. Take a 15–30 minute break, stand up, walk, then reread your plan.",
+    "pauseBanner": "{n} losses in a row, the last one {m} min ago. Take a 15–30 minute break and reread your plan before opening a new trade."
+  },
+  "week": {
+    "title": "Week review",
+    "link": "Week review",
+    "subtitle": "The last 7 days against the previous 7. One takeaway and a few numbers.",
+    "empty": "No trades in the last 7 days. Record one and the review will appear here.",
+    "takeaway": "Main takeaway of the week",
+    "result": "Result",
+    "trades": "Trades",
+    "winRate": "Win rate",
+    "discipline": "Discipline",
+    "vsPrev": "vs last week",
+    "same": "same as last week",
+    "was": "was",
+    "best": "Best day",
+    "worst": "Worst day",
+    "takeRule": "Biggest leak this week: the rule “{name}” was broken in {n} trades, net {amount}. Think about what stops you following it and write it in your diary.",
+    "takeMistake": "Most expensive mistake this week: “{name}”, {n} trades, net {amount}. Tag it in your trades to catch the moment earlier.",
+    "takeDiscipline": "Discipline {pct}% against a {goal}% goal. The result is secondary: first bring back the share of trades made by your rules.",
+    "takeSteady": "No serious leaks this week: rules were mostly followed. Keep up the journal and the diary.",
+    "takeNone": "Not enough data yet.",
+    "note": "The takeaway is built from your records by simple rules; it is not a forecast."
   }
 }

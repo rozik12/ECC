@@ -926,7 +926,11 @@
     "title": "Bitimni tezkor yozish",
     "full": "To'liq forma",
     "hint": "Qolganini keyinroq bitimning o'zida to'ldirishing mumkin. Qoidalar avtomatik tekshiriladi.",
-    "invalid": "Instrument, kirish narxi va hajmni to'ldir. Sonlar noldan katta bo'lishi kerak."
+    "invalid": "Instrument, kirish narxi va hajmni to'ldir. Sonlar noldan katta bo'lishi kerak.",
+    "line": "Bir qatorda",
+    "lineHint": "Instrument, yo'nalish, kirish narxi, stop, teyk, hajm, yelka. Tartibi ixtiyoriy.",
+    "lineFound": "Aniqlandi",
+    "lineOpen": "Shaklni ochish"
   },
   "reminder": {
     "title": "Sen {n} kundan beri bitim yozmading",
@@ -1586,7 +1590,8 @@
     "modeSimpleText": "Faqat asosiy maydonlar ko'rsatilgan.",
     "modeFullText": "Barcha maydonlar ko'rsatilgan.",
     "modeToFull": "Barcha maydonlarni ko'rsatish",
-    "modeToSimple": "Faqat asosiy"
+    "modeToSimple": "Faqat asosiy",
+    "sizeHint": "Formula bo'yicha: hajm {size} (risk {risk}% = {amount}). Qo'yish"
   },
   "risk": {
     "title": "Tizim sifati va risk",
@@ -1703,6 +1708,35 @@
     "hintViolated": "Bugun qoida buzilgan bitim bor. Keyingisini ochishdan oldin to'xtab, qoidalaringizni qayta o'qing.",
     "hintLosing": "Kun minusda. Bu normal. O'ch olish istagiga emas, kunlik limit va qoidalarga qarang.",
     "hintOk": "Kunning barcha bitimlari qoidalar bo'yicha. Shu sur'atni saqlang, natija ikkinchi darajali.",
-    "quick": "Tezkor"
+    "quick": "Tezkor",
+    "limit": "Kunlik zarar limiti",
+    "limitUsed": "{limit}% dan {loss}%",
+    "limitNone": "Kunlik zarar limiti belgilanmagan",
+    "limitSet": "Belgilash",
+    "hintLimit": "Kunlik zarar limitiga yetildi. Qoidangiz aytadi: bugunga yetarli. Terminalni yoping va ertaga qayting.",
+    "hintPause": "Ketma-ket bir necha zarar. 15–30 daqiqa tanaffus qiling, turing, sayr qiling, so'ng rejangizni qayta o'qing.",
+    "pauseBanner": "Ketma-ket {n} ta zarar, oxirgisi {m} daqiqa oldin. Yangi bitim ochishdan oldin 15–30 daqiqa tanaffus qiling va rejani qayta o'qing."
+  },
+  "week": {
+    "title": "Hafta tahlili",
+    "link": "Hafta tahlili",
+    "subtitle": "Oxirgi 7 kun oldingi 7 kunga qarshi. Bitta xulosa va bir necha raqam.",
+    "empty": "Oxirgi 7 kunda bitimlar yo'q. Birinchisini yozing, shunda bu yerda tahlil paydo bo'ladi.",
+    "takeaway": "Haftaning asosiy xulosasi",
+    "result": "Natija",
+    "trades": "Bitimlar",
+    "winRate": "Foydali",
+    "discipline": "Intizom",
+    "vsPrev": "o'tgan haftaga nisbatan",
+    "same": "o'tgan haftadagidek",
+    "was": "edi",
+    "best": "Eng yaxshi kun",
+    "worst": "Eng yomon kun",
+    "takeRule": "Haftaning asosiy yo'qotishi: «{name}» qoidasi {n} ta bitimda buzilgan, ular bo'yicha natija {amount}. Unga amal qilishga nima xalaqit berayotganini o'ylab, kundalikka yozing.",
+    "takeMistake": "Haftaning eng qimmat xatosi: «{name}», {n} ta bitim, natija {amount}. Lahzani oldindan sezish uchun uni bitimlarda belgilab boring.",
+    "takeDiscipline": "Intizom {pct}%, maqsad {goal}%. Natija ikkinchi darajali: avval qoidalar bo'yicha bitimlar ulushini qaytaring.",
+    "takeSteady": "Hafta davomida jiddiy yo'qotishlar ko'rinmaydi: qoidalar asosan bajarilgan. Jurnal va kundalikni yuritishda davom eting.",
+    "takeNone": "Ma'lumot hali kam.",
+    "note": "Xulosa yozuvlaringiz bo'yicha oddiy qoidalar asosida tuziladi, bu bashorat emas."
   }
 }

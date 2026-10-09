@@ -13,9 +13,10 @@ import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/co
 import { computeAchievements, daysSinceLastTrade, monthDiscipline } from "@/lib/achievements";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts, getPlan } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getPlan, getRules } from "@/lib/data";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
+import { dailyLimit, losingRun } from "@/lib/risk-stats";
 import { disciplineCost, disciplineStreak, filterByPeriod, summarize, topViolations } from "@/lib/statistics";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import type { EmotionKey } from "@/lib/trading";
@@ -30,7 +31,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const { supabase, user, profile } = await requireUser();
   const sp = await searchParams;
   const period: "7d" | "30d" = sp.period === "7d" ? "7d" : "30d";
-  const [accounts, all, plan] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getPlan(supabase, user.id)]);
+  const [accounts, all, plan, rules] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getPlan(supabase, user.id), getRules(supabase)]);
 
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
@@ -42,6 +43,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   });
   const todaySummary = summarize(today);
   const balance = accounts.reduce((s, a) => s + a.balance, 0);
+
+  const limitRule = rules.find((r) => r.is_active && r.rule_type === "max_daily_loss_percent" && r.value !== null && r.value > 0);
+  const limitState = limitRule ? dailyLimit(todaySummary.totalPnl, balance - todaySummary.totalPnl, limitRule.value as number) : null;
+  const run = losingRun(all, new Date());
 
   const inPeriod = filterByPeriod(all, period);
   const discipline = disciplineCost(inPeriod);
@@ -79,6 +84,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         monthPercent={goal.percent}
         goal={goal.goal}
         losingDay={today.length > 0 && todaySummary.totalPnl < 0}
+        limit={limitState && limitRule ? { pct: limitRule.value as number, lossPct: limitState.lossPct, usedPct: limitState.usedPct, level: limitState.level } : null}
+        lossRun={run.count}
       />
 
       <GettingStarted steps={startSteps} />

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Info, NotebookText, Plus, Zap } from "lucide-react";
+import { Info, NotebookText } from "lucide-react";
 import { AchievementsCard } from "@/components/statistics/AchievementsCard";
 import { GoalCard } from "@/components/statistics/GoalCard";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
+import { DayHero } from "@/components/dashboard/DayHero";
 import { GettingStarted } from "@/components/dashboard/GettingStarted";
 import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
@@ -62,28 +63,23 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     { key: "telegram" as const, done: !!tgLink, href: "/profile" },
   ];
 
-  const stat = (label: string, value: string, tone = "") => (
-    <Card className="p-4 sm:p-4">
-      <p className="text-sm text-muted">{label}</p>
-      <p className={cn("mt-1 text-xl font-bold tabular-nums", tone)}>{value}</p>
-    </Card>
-  );
-
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold sm:text-3xl">
-          {profile?.name ? t("dashboard.greeting", { name: profile.name }) : t("pages.dashboard")}
-        </h1>
-        <div className="flex flex-wrap gap-2">
-          <Link href="/trades/quick" className={buttonStyles({ variant: "secondary" })}>
-            <Zap className="h-4 w-4" aria-hidden /> {t("quick.button")}
-          </Link>
-          <Link href="/trades/new" className={buttonStyles()}>
-            <Plus className="h-4 w-4" aria-hidden /> {t("trades.add")}
-          </Link>
-        </div>
-      </div>
+      <h1 className="text-xl font-bold sm:text-2xl">
+        {profile?.name ? t("dashboard.greeting", { name: profile.name }) : t("pages.dashboard")}
+      </h1>
+
+      <DayHero
+        pnlText={today.length ? money(todaySummary.totalPnl, true) : money(0)}
+        pnlTone={today.length ? pnlTone(todaySummary.totalPnl) : "text-muted"}
+        tradesToday={today.length}
+        violationsToday={today.filter((x) => !x.rulesFollowed).length}
+        winRateText={todaySummary.winRate === null ? t("stats.none") : `${formatNumber(todaySummary.winRate, locale, 0)}%`}
+        balanceText={money(balance)}
+        monthPercent={goal.percent}
+        goal={goal.goal}
+        losingDay={today.length > 0 && todaySummary.totalPnl < 0}
+      />
 
       <GettingStarted steps={startSteps} />
 
@@ -99,16 +95,6 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <PeriodTabs current={period} plan={plan} basePath="/dashboard" hideAll />
       </div>
       <DisciplineCostCard data={discipline} currency={currency} subtitle={t(period === "7d" ? "dashboard.discipline.period7d" : "dashboard.discipline.period")} moreHref="/statistics" />
-
-      <section aria-labelledby="today-title">
-        <h2 id="today-title" className="mb-3 font-semibold">{t("dashboard.today.title")}</h2>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {stat(t("dashboard.today.balance"), money(balance))}
-          {stat(t("dashboard.today.pnl"), today.length ? money(todaySummary.totalPnl, true) : money(0), today.length ? pnlTone(todaySummary.totalPnl) : "text-muted")}
-          {stat(t("dashboard.today.trades"), String(today.length))}
-          {stat(t("dashboard.today.winRate"), todaySummary.winRate === null ? t("stats.none") : `${formatNumber(todaySummary.winRate, locale, 0)}%`)}
-        </div>
-      </section>
 
       {all.length > 0 && (
         <div className="grid gap-4 lg:grid-cols-2">

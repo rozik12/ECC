@@ -25,7 +25,7 @@ export default async function LandingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="mx-auto max-w-4xl px-4 pb-16 pt-14 text-center sm:px-6 sm:pt-24">
+      <section className="hero-glow mx-auto max-w-4xl px-4 pb-16 pt-14 text-center sm:px-6 sm:pt-24">
         <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
           {t("landing.hero.title")}
         </h1>
@@ -40,6 +40,14 @@ export default async function LandingPage() {
             {t("landing.hero.demo")}
           </a>
         </div>
+        <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted">
+          {(["t1", "t2", "t3"] as const).map((k) => (
+            <li key={k} className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
+              {t(`landing.hero.${k}`)}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Преимущества */}

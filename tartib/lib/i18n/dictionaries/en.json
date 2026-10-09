@@ -54,7 +54,10 @@
       "title": "Trade by your rules, not by emotions.",
       "subtitle": "Tartib helps traders control risk, keep a trade journal and see the real price of their mistakes.",
       "start": "Start for free",
-      "demo": "See the demo"
+      "demo": "See the demo",
+      "t1": "No signals, no profit promises",
+      "t2": "Your data stays yours",
+      "t3": "RU · UZ · EN"
     },
     "pillars": {
       "title": "Don't guess the market. Control yourself.",
@@ -530,7 +533,8 @@
       "rules": "Rules",
       "all": "All",
       "apply": "Apply",
-      "reset": "Reset"
+      "reset": "Reset",
+      "title": "Filters and search"
     },
     "pagination": {
       "prev": "Back",
@@ -1687,5 +1691,18 @@
       "diary": "Write your first day diary entry",
       "telegram": "Connect the Telegram bot"
     }
+  },
+  "hero": {
+    "today": "Today",
+    "trades": "Trades",
+    "winRate": "Win rate",
+    "balance": "Balance",
+    "discipline": "Discipline",
+    "diary": "Day diary",
+    "hintNone": "No trades today. Plan first: write it in your diary, then open a position.",
+    "hintViolated": "There is a trade with a rule violation today. Stop and reread your rules before opening the next one.",
+    "hintLosing": "The day is in the red. That is normal. Check your daily limit and your rules, not the urge to win it back.",
+    "hintOk": "Every trade today followed your rules. Keep this pace; the result is secondary.",
+    "quick": "Quick"
   }
 }

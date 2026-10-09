@@ -12,7 +12,7 @@ const inter = Inter({
   display: "swap",
 });
 
-export const viewport: Viewport = { themeColor: "#0f766e" };
+export const viewport: Viewport = { themeColor: "#080c12" };
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /** Ставит тёмную тему до отрисовки страницы, чтобы не было «вспышки». */
-const themeScript = `try{var t=localStorage.getItem("tartib_theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}`;
+const themeScript = `try{var t=localStorage.getItem("tartib_theme");if(t!=="light"){document.documentElement.classList.add("dark")}}catch(e){}`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();

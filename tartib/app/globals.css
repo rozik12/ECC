@@ -3,39 +3,44 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f7f8fa;
+  /* Светлая тема: спокойная, с холодным оттенком. Зелёный и красный зарезервированы под деньги (прибыль и убыток),
+     поэтому кнопки и ссылки синие: акцент не должен выглядеть как «прибыль». */
+  --background: #f3f5f9;
   --surface: #ffffff;
-  --surface-muted: #f0f2f5;
-  --border: #e2e6ec;
-  --foreground: #1b2430;
-  --muted: #5f6b7a;
-  --primary: #0f766e;
-  --primary-hover: #0d6159;
-  --primary-soft: #e3f3f1;
-  --success: #15803d;
-  --success-soft: #e6f4ea;
-  --danger: #b42318;
-  --danger-soft: #fdecea;
-  --warning: #a15c07;
-  --warning-soft: #fdf3e1;
+  --surface-muted: #eceff5;
+  --border: #dde3ec;
+  --foreground: #121a26;
+  --muted: #566274;
+  --primary: #2458d6;
+  --primary-hover: #1d49b3;
+  --primary-soft: #e6edfd;
+  --success: #12794a;
+  --success-soft: #e3f5ec;
+  --danger: #c0213a;
+  --danger-soft: #fdebee;
+  --warning: #9a5b00;
+  --warning-soft: #fdf1da;
+  --glow: rgba(36, 88, 214, 0.12);
 }
 
 .dark {
-  --background: #0f1419;
-  --surface: #171d25;
-  --surface-muted: #1e2630;
-  --border: #2a3441;
-  --foreground: #e6eaf0;
-  --muted: #94a0b0;
-  --primary: #2dd4bf;
-  --primary-hover: #5eead4;
-  --primary-soft: #12302d;
-  --success: #4ade80;
-  --success-soft: #12301f;
-  --danger: #f87171;
-  --danger-soft: #3a1a18;
+  /* Тёмная тема в духе торгового терминала: почти чёрный фон, мягкие границы, яркие, но не кричащие цвета */
+  --background: #080c12;
+  --surface: #0f151e;
+  --surface-muted: #161e29;
+  --border: #212c3a;
+  --foreground: #e9eef5;
+  --muted: #8896a8;
+  --primary: #5b95ff;
+  --primary-hover: #86b0ff;
+  --primary-soft: #12223f;
+  --success: #34d399;
+  --success-soft: #0d2a22;
+  --danger: #fb7185;
+  --danger-soft: #35141c;
   --warning: #fbbf24;
-  --warning-soft: #3a2c10;
+  --warning-soft: #33260c;
+  --glow: rgba(91, 149, 255, 0.16);
 }
 
 @theme inline {
@@ -65,6 +70,46 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  /* Ровные цифры одной ширины: столбцы чисел не «прыгают», а деньги читаются быстрее */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "cv11", "ss03";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Поверхность карточки: тонкий светлый блик сверху в тёмной теме придаёт глубину без теней */
+.surface-card {
+  background-color: var(--surface);
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--foreground) 3.5%, transparent), transparent 55%);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--foreground) 4%, transparent) inset, 0 8px 24px -16px rgba(0, 0, 0, 0.35);
+}
+
+/* Подсветка и сетка за первым экраном: глубина без изображений */
+.hero-glow {
+  position: relative;
+  isolation: isolate;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: -4rem 0 auto 0;
+  height: 28rem;
+  z-index: -1;
+  background:
+    radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%),
+    linear-gradient(var(--border) 1px, transparent 1px) 0 0 / 100% 3.5rem,
+    linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 3.5rem 100%;
+  -webkit-mask-image: radial-gradient(70% 80% at 50% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(70% 80% at 50% 0%, #000 20%, transparent 75%);
+  opacity: 0.75;
+}
+
+/* Крупные числа (деньги, проценты) */
+.num-xl {
+  font-size: clamp(1.9rem, 7vw, 2.75rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* Таблицы на телефоне превращаются в карточки */

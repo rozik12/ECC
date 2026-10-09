@@ -6,7 +6,7 @@ export function Card({ className, padded = true, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "card-enter rounded-2xl border border-border bg-surface shadow-sm",
+        "card-enter surface-card rounded-2xl",
         padded && "p-5 sm:p-6",
         className,
       )}

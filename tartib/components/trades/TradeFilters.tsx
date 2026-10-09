@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { Button, Card, Input, Select } from "@/components/ui";
 import { useI18n } from "@/lib/i18n/provider";
@@ -34,10 +35,18 @@ export function TradeFilters({ initial }: { initial: TradeFilterValues }) {
     router.push("/trades");
   }
 
+  const active = Object.values(initial).filter(Boolean).length;
   const all = <option value="">{t("trades.filters.all")}</option>;
   return (
-    <Card>
-      <form onSubmit={apply} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <Card padded={false}>
+      <details open={active > 0} className="group">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center gap-2 px-4 text-sm font-medium sm:px-6">
+          <SlidersHorizontal className="h-4 w-4 text-muted" aria-hidden />
+          {t("trades.filters.title")}
+          {active > 0 && <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">{active}</span>}
+          <ChevronDown className="ml-auto h-4 w-4 text-muted transition-transform group-open:rotate-180" aria-hidden />
+        </summary>
+      <form onSubmit={apply} className="grid grid-cols-2 gap-3 px-4 pb-4 sm:px-6 sm:pb-6 lg:grid-cols-4">
         <Input id="f-from" type="date" label={t("trades.filters.from")} {...bind("from")} />
         <Input id="f-to" type="date" label={t("trades.filters.to")} {...bind("to")} />
         <Input id="f-instrument" label={t("trades.filters.instrument")} {...bind("instrument")} />
@@ -74,6 +83,7 @@ export function TradeFilters({ initial }: { initial: TradeFilterValues }) {
           <Button variant="secondary" onClick={reset}>{t("trades.filters.reset")}</Button>
         </div>
       </form>
+      </details>
     </Card>
   );
 }

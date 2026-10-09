@@ -54,7 +54,10 @@
       "title": "Hissiyotga emas, qoidalarga amal qilib savdo qil.",
       "subtitle": "Tartib treyderlarga xavfni nazorat qilish, bitimlar jurnalini yuritish va xatolarining haqiqiy narxini ko'rishga yordam beradi.",
       "start": "Bepul boshlash",
-      "demo": "Demoni ko'rish"
+      "demo": "Demoni ko'rish",
+      "t1": "Signal va foyda va'dasiz",
+      "t2": "Ma'lumotlar faqat sizda",
+      "t3": "RU · UZ · EN"
     },
     "pillars": {
       "title": "Bozorni topishga urinma. O'zingni nazorat qil.",
@@ -530,7 +533,8 @@
       "rules": "Qoidalar",
       "all": "Hammasi",
       "apply": "Qo'llash",
-      "reset": "Tozalash"
+      "reset": "Tozalash",
+      "title": "Filtrlar va qidiruv"
     },
     "pagination": {
       "prev": "Orqaga",
@@ -1687,5 +1691,18 @@
       "diary": "Kun kundaligida birinchi yozuvni yozish",
       "telegram": "Telegram-botni ulash"
     }
+  },
+  "hero": {
+    "today": "Bugun",
+    "trades": "Bitimlar",
+    "winRate": "Foydali",
+    "balance": "Balans",
+    "discipline": "Intizom",
+    "diary": "Kun kundaligi",
+    "hintNone": "Bugun bitimlar yo'q. Avval reja: kundalikka yozing, keyin pozitsiya oching.",
+    "hintViolated": "Bugun qoida buzilgan bitim bor. Keyingisini ochishdan oldin to'xtab, qoidalaringizni qayta o'qing.",
+    "hintLosing": "Kun minusda. Bu normal. O'ch olish istagiga emas, kunlik limit va qoidalarga qarang.",
+    "hintOk": "Kunning barcha bitimlari qoidalar bo'yicha. Shu sur'atni saqlang, natija ikkinchi darajali.",
+    "quick": "Tezkor"
   }
 }

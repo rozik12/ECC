@@ -5,6 +5,7 @@ import {
   recentInstruments, recentStrategies, saveState, toggleRule, toggleViolation, updateTradeFields, type Linked, type NewTrade, type State,
 } from "./db.ts";
 import { isLoginCancel, LOGIN_PREFIX, loginContact, loginStart, type Contact } from "./login.ts";
+import { fetchHeadlines } from "./news.ts";
 import { parseTradeMessage } from "./parse.ts";
 import { dayBounds, safeTimeZone } from "./time.ts";
 import { Tg } from "./tg.ts";
@@ -331,6 +332,7 @@ async function menuCallback(c: Ctx, op: string) {
     case "repeat": return repeatLast(c);
     case "stats": return show(c, ui.statsMenu(c.lang));
     case "ach": return show(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId)));
+    case "news": return show(c, ui.newsScreen(c.lang, await fetchHeadlines(c.lang)));
     case "check": return show(c, ui.checklistScreen(c.lang, c.u.checklist, c.st.chk ?? []));
     case "rules": return showRules(c);
     case "acc": return showAccounts(c);
@@ -382,6 +384,7 @@ const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
   "/emotions": async (c) => say(c, await statsScreen(c, "emo")),
   "/instruments": async (c) => say(c, await statsScreen(c, "instr")),
   "/achievements": async (c) => say(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId))),
+  "/news": async (c) => say(c, ui.newsScreen(c.lang, await fetchHeadlines(c.lang))),
   "/checklist": (c) => say(c, ui.checklistScreen(c.lang, c.u.checklist, c.st.chk ?? [])),
   "/last": async (c) => { c.msgId = undefined; return showList(c, "l", 0); },
   "/open": async (c) => { c.msgId = undefined; return showList(c, "o", 0); },

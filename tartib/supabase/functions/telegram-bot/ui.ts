@@ -1,5 +1,6 @@
 // Экраны и кнопки бота. Чистые функции: получают данные, возвращают текст и клавиатуру.
 import { computeAchievements, disciplineCost, disciplineStreak, byEmotion, monthDiscipline, pnlByInstrument, summarize, topViolations, type StatTrade } from "./stats.ts";
+import type { Headline } from "./news.ts";
 import { emotionKeys, emotionLabel, tr, type Lang } from "./text.ts";
 
 export type Btn = { text: string; callback_data?: string; url?: string };
@@ -51,7 +52,7 @@ export function mainMenu(lang: Lang): Screen {
       [b(tr(lang, "mAch"), "m:ach"), b(tr(lang, "mCheck"), "m:check")],
       [b(tr(lang, "mRules"), "m:rules"), b(tr(lang, "mAcc"), "m:acc")],
       [b(tr(lang, "mSettings"), "m:set"), b(tr(lang, "mHelp"), "h:menu")],
-      [{ text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
+      [b(tr(lang, "mNews"), "m:news"), { text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
     ),
   };
 }
@@ -253,6 +254,12 @@ export function achievementsScreen(lang: Lang, all: TradeRow[]): Screen {
   const done = a.filter((x) => x.unlocked).length;
   const body = a.map((x) => `${x.unlocked ? "🏅" : "🔒"} ${tr(lang, `ach_${x.id}`)}${x.unlocked ? "" : ` (${x.current}/${x.target})`}`).join("\n");
   return { text: `${tr(lang, "achTitle", { done, total: a.length })}\n\n${body}`, kb: kb([b(tr(lang, "refresh"), "m:ach")], menuRow(lang)) };
+}
+
+export function newsScreen(lang: Lang, items: Headline[]): Screen {
+  if (items.length === 0) return { text: tr(lang, "newsEmpty"), kb: kb([b(tr(lang, "refresh"), "m:news")], menuRow(lang)) };
+  const body = items.map((h) => `▫️ <a href="${esc(h.link).replace(/"/g, "&quot;")}">${esc(h.title)}</a>\n<i>${esc(h.source)}</i>`).join("\n\n");
+  return { text: `${tr(lang, "newsTitle")}\n\n${body}\n\n${tr(lang, "newsNote")}`, kb: kb([b(tr(lang, "refresh"), "m:news")], [{ text: tr(lang, "mSite"), url: SITE + "/news" }], menuRow(lang)) };
 }
 
 // ---------- счета, правила, настройки, чек-лист, помощь ----------

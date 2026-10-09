@@ -52,7 +52,7 @@ const parseNum = (t: string): number | null => {
 // ---------- запись сделки ----------
 async function afterSave(c: Ctx, r: Extract<Awaited<ReturnType<typeof createTrade>>, { ok: true }>) {
   const { trade } = r;
-  const line = ui.tradeLine(c.lang, trade) + (trade.exit !== null ? `\nP&L: ${ui.money(trade.pnl, r.currency, c.lang, true)}` : "");
+  const line = ui.tradeLine(c.lang, trade) + (trade.exit !== null ? `\nP&amp;L: ${ui.money(trade.pnl, r.currency, c.lang, true)}` : "");
   const rules = r.violated.length === 0 ? tr(c.lang, "rulesOk") : tr(c.lang, "rulesBroken", { names: ui.esc(r.violated.join(", ")) });
   const extra = [
     ...r.warnings.map((w) => tr(c.lang, w.key, w.vars)),
@@ -550,6 +550,7 @@ async function runScheduled(tg: Tg) {
 
 Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("ok");
+  let authed = false;
   try {
     const cfg = await config();
     const path = new URL(req.url).pathname;
@@ -559,11 +560,13 @@ Deno.serve(async (req) => {
       return Response.json({ sent: await runScheduled(tg) });
     }
     if (!same(req.headers.get("x-telegram-bot-api-secret-token"), cfg.webhook_secret)) return new Response("forbidden", { status: 403 });
+    authed = true;
     await handleUpdate(tg, (await req.json()) as Update);
     // Для настоящих чатов тела нет; для тестовых чатов возвращаем то, что бот отправил
     return tg.out.length > 0 ? Response.json({ out: tg.out }) : new Response("ok");
   } catch (e) {
     console.error("fatal", e instanceof Error ? e.message : e);
-    return new Response("ok");
+    // Telegram всегда получает 200 (иначе будет повторять). Текст ошибки показываем только тому, кто знает секрет (нам при проверках).
+    return authed ? Response.json({ error: e instanceof Error ? e.message : String(e) }) : new Response("ok");
   }
 });

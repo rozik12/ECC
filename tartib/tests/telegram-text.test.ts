@@ -46,3 +46,9 @@ test("все ключи текстов, которые использует ко
   for (const key of ["wizBad", "missing_instrument", "missing_entry", "missing_size", "missing_direction", "bExport", "discNone", "instrTitle", "violNone"]) assert.ok(key in _dicts.ru, key);
   void ternary;
 });
+
+test("в текстах с разметкой нет «голых» амперсандов (Telegram HTML)", () => {
+  for (const l of ["ru", "en", "uz"] as const) {
+    for (const [k, v] of Object.entries(_dicts[l])) assert.equal(/&(?!amp;|lt;|gt;)/.test(v), false, `${l}.${k}`);
+  }
+});

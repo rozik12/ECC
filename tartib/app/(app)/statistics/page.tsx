@@ -113,9 +113,14 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
         <PeriodTabs current={period} plan={plan} />
       </div>
       {all.length > 0 && (
-        <Link href="/statistics/advanced" className="inline-flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary-soft px-4 py-2 text-sm font-medium text-primary hover:border-primary">
-          {t("adv.link")} →
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/statistics/advanced" className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-primary/40 bg-primary-soft px-4 py-2 text-sm font-medium text-primary hover:border-primary">
+            {t("adv.link")} →
+          </Link>
+          <Link href="/statistics/report" className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted hover:text-foreground">
+            {t("report.link")}
+          </Link>
+        </div>
       )}
 
       {all.length === 0 ? (

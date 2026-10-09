@@ -14,8 +14,8 @@ import { ThemeToggle } from "./ThemeToggle";
 export async function AppShell({ children, unread }: { children: React.ReactNode; unread?: number }) {
   const { t } = await getTranslator();
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
-      <aside className="hidden border-r border-border bg-surface p-4 lg:block">
+    <div className="min-h-screen lg:grid lg:grid-cols-[16rem_1fr] print:block">
+      <aside className="hidden print:hidden border-r border-border bg-surface p-4 lg:block">
         <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col gap-6">
           <Logo href="/dashboard" className="px-3" />
           <div className="min-h-0 flex-1">
@@ -25,7 +25,7 @@ export async function AppShell({ children, unread }: { children: React.ReactNode
       </aside>
 
       <div className="flex min-w-0 flex-col">
-        <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
+        <header className="sticky top-0 z-20 print:hidden border-b border-border bg-background/90 backdrop-blur">
           <div className="flex h-14 items-center justify-between gap-2 px-4 sm:px-6">
           <Logo href="/dashboard" className="lg:hidden" />
           <div className="ml-auto flex items-center gap-1.5">
@@ -51,11 +51,11 @@ export async function AppShell({ children, unread }: { children: React.ReactNode
           {children}
           <Disclaimer className="mt-10" />
           <PoweredBy className="mt-3" />
-          <Shortcuts />
+          <div className="print:hidden"><Shortcuts /></div>
         </main>
       </div>
 
-      <BottomNav />
+      <div className="print:hidden"><BottomNav /></div>
     </div>
   );
 }

@@ -22,13 +22,15 @@ export async function GET() {
   };
 
   try {
-    const [profile, accounts, rules, trades, transactions, reports] = await Promise.all([
+    const [profile, accounts, rules, trades, transactions, reports, diary, templates] = await Promise.all([
       supabase.from("profiles").select("name, language, timezone, currency, created_at").eq("id", user.id).maybeSingle(),
       all("trading_accounts", "id, name, starting_balance, currency, created_at", "created_at"),
       all("rules", "id, name, description, rule_type, value, is_active, created_at", "created_at"),
       all("trades", "*, trade_rule_violations(rule:rules(name))", "traded_at"),
       all("account_transactions", "id, account_id, kind, amount, occurred_at, note", "occurred_at"),
       all("weekly_reports", "period_start, period_end, content, created_at", "period_start"),
+      all("diary_entries", "day, mood, energy, plan, review, lesson, followed_plan, created_at, updated_at", "day"),
+      all("trade_templates", "name, data, created_at", "created_at"),
     ]);
 
     const body = {
@@ -40,6 +42,8 @@ export async function GET() {
       trades,
       transactions,
       weeklyReports: reports,
+      diary,
+      tradeTemplates: templates,
     };
     return new NextResponse(JSON.stringify(body, null, 2), {
       headers: {

@@ -1659,5 +1659,33 @@
     "history": "Oxirgi yozuvlar",
     "delete": "Yozuvni o'chirish",
     "deleteConfirm": "Shu kun yozuvi o'chirilsinmi?"
+  },
+  "report": {
+    "title": "Chop etish uchun hisobot",
+    "print": "Chop etish / PDF saqlash",
+    "hint": "Chop etish oynasi ochiladi. Fayl olish uchun «PDF sifatida saqlash» ni tanlang.",
+    "generated": "yaratilgan {date}",
+    "empty": "Bu davrda bitimlar yo'q.",
+    "trades": "Bitimlar",
+    "net": "Natija",
+    "winRate": "Foydali",
+    "profitFactor": "Profit-faktor",
+    "expectancy": "Bitimga kutilma",
+    "maxDd": "Maksimal cho'kish",
+    "discipline": "Qoidalarga amal qilingan",
+    "rulesCost": "Qoida buzilishlari narxi",
+    "lastTrades": "Oxirgi bitimlar",
+    "link": "Chop etish / PDF hisoboti"
+  },
+  "start": {
+    "title": "Birinchi qadamlar",
+    "subtitle": "{total} tadan {done} tasi bajarildi. Faqat o'zingizga foydali narsani qiling.",
+    "hide": "Yashirish",
+    "steps": {
+      "trade": "Birinchi bitimni yozish",
+      "journal": "Bitimga teg, baho yoki xatolarni qo'yish",
+      "diary": "Kun kundaligida birinchi yozuvni yozish",
+      "telegram": "Telegram-botni ulash"
+    }
   }
 }

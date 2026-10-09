@@ -1659,5 +1659,33 @@
     "history": "Recent entries",
     "delete": "Delete entry",
     "deleteConfirm": "Delete this day's entry?"
+  },
+  "report": {
+    "title": "Printable report",
+    "print": "Print / save as PDF",
+    "hint": "The print dialog will open. Choose “Save as PDF” to get a file.",
+    "generated": "generated {date}",
+    "empty": "No trades in this period.",
+    "trades": "Trades",
+    "net": "Net result",
+    "winRate": "Win rate",
+    "profitFactor": "Profit factor",
+    "expectancy": "Expectancy per trade",
+    "maxDd": "Maximum drawdown",
+    "discipline": "Rules followed",
+    "rulesCost": "Cost of rule violations",
+    "lastTrades": "Latest trades",
+    "link": "Printable report / PDF"
+  },
+  "start": {
+    "title": "First steps",
+    "subtitle": "{done} of {total} done. Do only what is useful to you.",
+    "hide": "Hide",
+    "steps": {
+      "trade": "Record your first trade",
+      "journal": "Add tags, a grade or mistakes to a trade",
+      "diary": "Write your first day diary entry",
+      "telegram": "Connect the Telegram bot"
+    }
   }
 }

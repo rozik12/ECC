@@ -4,6 +4,7 @@ import { Info, NotebookText, Plus, Zap } from "lucide-react";
 import { AchievementsCard } from "@/components/statistics/AchievementsCard";
 import { GoalCard } from "@/components/statistics/GoalCard";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
+import { GettingStarted } from "@/components/dashboard/GettingStarted";
 import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
@@ -50,6 +51,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const achievements = computeAchievements(all);
   const daysSinceLast = daysSinceLastTrade(all);
 
+  const [{ count: diaryCount }, { data: tgLink }] = await Promise.all([
+    supabase.from("diary_entries").select("id", { count: "exact", head: true }),
+    supabase.from("telegram_links").select("user_id").eq("user_id", user.id).maybeSingle(),
+  ]);
+  const startSteps = [
+    { key: "trade" as const, done: all.length > 0, href: "/trades/new" },
+    { key: "journal" as const, done: all.some((x) => (x.tags ?? []).length > 0 || x.grade || (x.mistakes ?? []).length > 0), href: "/trades/new" },
+    { key: "diary" as const, done: (diaryCount ?? 0) > 0, href: "/diary" },
+    { key: "telegram" as const, done: !!tgLink, href: "/profile" },
+  ];
+
   const stat = (label: string, value: string, tone = "") => (
     <Card className="p-4 sm:p-4">
       <p className="text-sm text-muted">{label}</p>
@@ -72,6 +84,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           </Link>
         </div>
       </div>
+
+      <GettingStarted steps={startSteps} />
 
       {daysSinceLast !== null && daysSinceLast >= 3 && (
         <p className="flex flex-wrap items-center gap-x-2 rounded-xl border border-primary/30 bg-primary-soft px-3 py-2 text-sm">

@@ -17,11 +17,11 @@ Tartib (https://tartib.uk) — сайт для дисциплины трейде
 - Перед работой прочитай `AGENTS.md` (Next.js здесь новее, чем в твоей памяти: смотри `node_modules/next/dist/docs/`).
 
 ## Что уже сделано (всё выложено)
-Достижения, цель, карточка для шаринга, быстрый ввод сделок, напоминания, дизайн-улучшения, логотип, «Powered by Rozikbek», проверка безопасности (CSP, заголовки, пароли), Telegram-бот v2 (45 новшеств, логотип, напоминания и сводки через pg_cron), вход по номеру телефона через бота, новости `/news` (только про трейдинг, с картинками, категории: крипто/рынки/Forex/Узбекистан, фильтр по языку), команда и кнопка «Новости» в боте (`supabase/functions/telegram-bot/news.ts`), блог `/blog` с 4 учебными статьями на 3 языках (`lib/articles.ts`). Импорт сделок из CSV уже был (`lib/import.ts`). Публичные инструменты `/tools` (6 калькуляторов), тильт и лучшие/худшие сделки в статистике, пауза после убытка, горячие клавиши, команды бота `/size /rr /sessions /tilt /best`, уведомления (колокольчик на сайте `/notifications`, пуш в Telegram, `/notifications` в боте, объявления в панели владельца) (см. `docs/WHAT-WAS-DONE.md`). После отзыва трейдеров («слабый сайт») сделаны: импорт отчётов MT4/MT5, график цены в сделке, расширенная аналитика `/statistics/advanced`, установка как приложение (PWA). Подробно: `docs/WHAT-WAS-DONE.md`, `docs/TELEGRAM-BOT.md`, `docs/DEPLOY-CLOUDFLARE.md`.
+Достижения, цель, карточка для шаринга, быстрый ввод сделок, напоминания, дизайн-улучшения, логотип, «Powered by Rozikbek», проверка безопасности (CSP, заголовки, пароли), Telegram-бот v2 (45 новшеств, логотип, напоминания и сводки через pg_cron), вход по номеру телефона через бота, новости `/news` (только про трейдинг, с картинками, категории: крипто/рынки/Forex/Узбекистан, фильтр по языку), команда и кнопка «Новости» в боте (`supabase/functions/telegram-bot/news.ts`), блог `/blog` с 4 учебными статьями на 3 языках (`lib/articles.ts`). Импорт сделок из CSV уже был (`lib/import.ts`). Публичные инструменты `/tools` (13 калькуляторов), тильт и лучшие/худшие сделки в статистике, пауза после убытка, горячие клавиши, команды бота `/size /rr /sessions /tilt /best`, уведомления (колокольчик на сайте `/notifications`, пуш в Telegram, `/notifications` в боте, объявления в панели владельца) (см. `docs/WHAT-WAS-DONE.md`). После отзыва трейдеров («слабый сайт») сделаны: импорт отчётов MT4/MT5, график цены в сделке, расширенная аналитика `/statistics/advanced`, установка как приложение (PWA). Потом сделаны «40 новшеств» в 6 блоках: рынок и алерты, расширенный журнал, дневник дня, риск и аналитика, 7 калькуляторов, платформа (простая форма, отчёт для печати, «Первые шаги»). Подробно: `docs/WHAT-WAS-DONE.md`, `docs/TELEGRAM-BOT.md`, `docs/DEPLOY-CLOUDFLARE.md`.
 
 ## Где что живёт
 - Хостинг: Cloudflare Workers через OpenNext. Домены tartib.uk и www. Старый Netlify больше не используется (кредиты закончились).
-- База и вход: Supabase, проект `rwmhsjznrlgsxqgclbbl`. Миграции в `supabase/migrations/` (все применены, последняя 20260113, уведомления).
+- База и вход: Supabase, проект `rwmhsjznrlgsxqgclbbl`. Миграции в `supabase/migrations/` (все применены, последняя 20260117, дневник дня).
 - Бот: Edge Function `telegram-bot` (`supabase/functions/telegram-bot/`), webhook настроен, почасовой cron `telegram-reminders`.
 - Инструменты: `lib/tools.ts` (копия в боте `supabase/functions/telegram-bot/tools.ts`, должны быть идентичны), `lib/tool-defs.ts`, `components/tools/`.
 - Новости: `lib/news.ts`, страница `app/(public)/news/page.tsx`, тесты `tests/news.test.ts`.
@@ -30,9 +30,12 @@ Tartib (https://tartib.uk) — сайт для дисциплины трейде
 1. Скопировать `tartib/` (без node_modules, .next, .open-next, .git) в ЧИСТУЮ папку вне репозитория (иначе Next неправильно определит корень). В прошлой сессии это была `.../scratchpad/cf2`.
 2. В ней `npm run cf:build`, затем `npx wrangler deploy` с переменными `CLOUDFLARE_API_TOKEN` и `CLOUDFLARE_ACCOUNT_ID=be3d5e546a4431c634853900fc64528f` (токен просить у владельца, если нужно).
 3. После выкладки подождать ~20 секунд и проверить живой сайт.
-- Тесты: `node --test tests/*.test.ts` (сейчас 128 проходят), `npx tsc --noEmit`, `npx eslint .`.
+- Тесты: `node --test tests/*.test.ts` (сейчас 169 проходят), `npx tsc --noEmit`, `npx eslint .`.
 - Сеть в песочнице: `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`.
 - Правило репозитория: коммиты в стиле conventional (feat/fix/docs), пуш только в ветку выше, PR не создавать без просьбы.
+
+## Состояние выкладки (важно)
+Блоки 2–6 лежат в ветке, но на tartib.uk и в боте могут быть ещё НЕ выложены (проверь `git log` и живой сайт: есть ли `/diary`). Для выкладки нужны токены Cloudflare и Supabase (спроси у владельца). Бот: изменился `closeTrade` (ставит `closed_at`) и `tools.ts`.
 
 ## Незавершённое (что дальше)
 1. **Вход через Google.** Ждём, когда владелец создаст проект в Google Cloud и пришлёт Client ID и Secret. Нужно: redirect URI `https://rwmhsjznrlgsxqgclbbl.supabase.co/auth/v1/callback`, JS origin `https://tartib.uk`. Потом: включить провайдера Google в Supabase (Management API, `external_google_*`), поставить `NEXT_PUBLIC_GOOGLE_AUTH` в "true" в `wrangler.jsonc` и в скрипте `cf:build`, пересобрать и выложить. Владелец говорил, что Google Cloud «платный» — совет: не включать пробный период и не привязывать карту, для входа через Google это не нужно.

@@ -162,6 +162,303 @@ export const ARTICLES: Article[] = [
       },
     },
   },
+  {
+    "slug": "risk-of-ruin",
+    "date": "2026-10-09",
+    "text": {
+      "ru": {
+        "title": "Риск разорения: почему размер риска важнее точки входа",
+        "description": "Как маленький процент риска на сделку защищает депозит от серий убытков и что показывает расчёт вероятностей.",
+        "minutes": 5,
+        "sections": [
+          {
+            "h": "Серии убытков неизбежны",
+            "p": [
+              "Даже у рабочей стратегии бывают серии убытков подряд. Если доля прибыльных сделок 45%, вероятность убытка в каждой сделке 55%. Вероятность, что пять конкретных сделок подряд окажутся убыточными, равна 0,55 в пятой степени, то есть около 5%. За сотню сделок такие серии встречаются заметно чаще, чем кажется."
+            ]
+          },
+          {
+            "h": "Что серия делает с депозитом",
+            "p": [
+              "При риске 1% на сделку десять убытков подряд уменьшают депозит примерно на 9,6%. При риске 10% те же десять убытков съедают около 65% депозита. Серия одинаковая, разница только в размере риска. Поэтому процент риска решает, переживёт ли счёт неудачную полосу."
+            ]
+          },
+          {
+            "h": "Почему возвращаться тяжелее, чем терять",
+            "p": [
+              "После просадки на 50% нужно удвоить остаток депозита, чтобы вернуться к началу. После просадки на 20% нужно 25%. Чем глубже яма, тем длиннее путь назад, поэтому важно не заходить в глубокую просадку. Калькулятор «Восстановление после просадки» в Tartib показывает это для любого процента."
+            ]
+          },
+          {
+            "h": "Как этим пользоваться",
+            "p": [
+              "Калькулятор «Риск разорения» в Tartib оценивает вероятность когда-либо потерять выбранную долю депозита при заданных проценте прибыльных сделок, отношении прибыли к риску и риске на сделку. Это упрощённая модель независимых сделок: она не прогноз, а способ увидеть, как сильно размер риска влияет на устойчивость счёта."
+            ]
+          }
+        ]
+      },
+      "uz": {
+        "title": "Vayron bo'lish xavfi: nega risk hajmi kirish nuqtasidan muhimroq",
+        "description": "Bitimga kichik risk foizi depozitni ketma-ket zararlardan qanday himoya qiladi va ehtimollar hisobi nimani ko'rsatadi.",
+        "minutes": 5,
+        "sections": [
+          {
+            "h": "Zararlar seriyasi muqarrar",
+            "p": [
+              "Ishlaydigan strategiyada ham ketma-ket zararlar bo'ladi. Foydali bitimlar ulushi 45% bo'lsa, har bir bitimning zarar bilan tugash ehtimoli 55%. Aniq beshta bitimning ketma-ket zararli bo'lish ehtimoli 0,55 ning beshinchi darajasi, ya'ni taxminan 5%. Yuzlab bitimda bunday seriyalar ko'rinadiganidan ancha tez-tez uchraydi."
+            ]
+          },
+          {
+            "h": "Seriya depozitga nima qiladi",
+            "p": [
+              "Bitimga 1% risk bilan ketma-ket o'nta zarar depozitni taxminan 9,6% ga kamaytiradi. 10% risk bilan xuddi shu o'nta zarar depozitning taxminan 65% ini yeydi. Seriya bir xil, farq faqat risk hajmida. Shuning uchun risk foizi hisob omadsiz davrdan omon qolishini belgilaydi."
+            ]
+          },
+          {
+            "h": "Nega qaytish yo'qotishdan qiyinroq",
+            "p": [
+              "50% cho'kishdan keyin boshlang'ich darajaga qaytish uchun qolgan summani ikki barobar oshirish kerak. 20% cho'kishdan keyin 25% kerak. Chuqurlik qancha katta bo'lsa, qaytish yo'li shuncha uzun, shuning uchun chuqur cho'kishga kirmaslik muhim. Tartib dagi «Cho'kishdan tiklanish» kalkulyatori buni istalgan foiz uchun ko'rsatadi."
+            ]
+          },
+          {
+            "h": "Bundan qanday foydalanish",
+            "p": [
+              "Tartib dagi «Vayron bo'lish xavfi» kalkulyatori foydali bitimlar foizi, foyda/risk nisbati va bitimga risk berilganda depozitning tanlangan ulushini qachondir yo'qotish ehtimolini baholaydi. Bu mustaqil bitimlarning soddalashtirilgan modeli: bashorat emas, risk hajmi hisob barqarorligiga qanchalik ta'sir qilishini ko'rish usuli."
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "Risk of ruin: why position risk matters more than entries",
+        "description": "How a small risk per trade protects an account from losing streaks, and what the probability maths actually shows.",
+        "minutes": 5,
+        "sections": [
+          {
+            "h": "Losing streaks are unavoidable",
+            "p": [
+              "Even a working strategy has runs of losses in a row. With a 45% win rate each trade has a 55% chance of losing. The chance that five specific trades in a row all lose is 0.55 to the fifth power, about 5%. Over a hundred trades such runs appear far more often than most people expect."
+            ]
+          },
+          {
+            "h": "What a streak does to the account",
+            "p": [
+              "At 1% risk per trade, ten losses in a row cut the account by about 9.6%. At 10% risk the same ten losses take about 65% of it. The streak is identical; only the risk size differs. That is why risk per trade decides whether an account survives a bad stretch."
+            ]
+          },
+          {
+            "h": "Why getting back is harder than losing",
+            "p": [
+              "After a 50% drawdown you need to double what is left to get back to the start. After a 20% drawdown you need 25%. The deeper the hole, the longer the way back, so avoiding deep drawdowns matters. The Drawdown recovery calculator in Tartib shows this for any percentage."
+            ]
+          },
+          {
+            "h": "How to use this",
+            "p": [
+              "The Risk of ruin calculator in Tartib estimates the probability of ever losing a chosen share of the account for a given win rate, reward-to-risk ratio and risk per trade. It is a simplified model of independent trades: not a forecast, but a way to see how strongly risk size affects the survival of an account."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "slug": "trading-diary",
+    "date": "2026-10-09",
+    "text": {
+      "ru": {
+        "title": "Дневник трейдера: как вести записи, которые действительно помогают",
+        "description": "Простая система из утреннего плана и вечернего итога, которая занимает несколько минут в день.",
+        "minutes": 4,
+        "sections": [
+          {
+            "h": "Зачем нужен дневник, если есть журнал сделок",
+            "p": [
+              "Журнал сделок хранит цифры: вход, выход, результат. Дневник хранит контекст: в каком состоянии вы торговали, что планировали и что из этого сделали. Именно контекст объясняет, почему при одной и той же стратегии одни дни выходят в плюс, а другие нет."
+            ]
+          },
+          {
+            "h": "Утром: план и состояние",
+            "p": [
+              "Перед торговлей запишите план на день: что торгуете, где готовы входить, при каких условиях остановитесь. Отметьте настроение и энергию по шкале от 1 до 5. Если вы устали или раздражены, это повод снизить размер или не торговать вовсе. Запись занимает две минуты."
+            ]
+          },
+          {
+            "h": "Вечером: итог и один урок",
+            "p": [
+              "В конце дня напишите, что получилось и что нет, и честно отметьте, следовали ли вы плану. Затем одним предложением сформулируйте урок дня. Один короткий урок запоминается лучше длинного разбора, а через месяц из них складывается ваш личный список правил."
+            ]
+          },
+          {
+            "h": "Раз в неделю: ищем закономерности",
+            "p": [
+              "Просмотрите записи за неделю. Сравните результат в дни, когда план соблюдён и когда нет, и в дни с разным настроением. В разделе «Дневник» Tartib это считается автоматически. Это наблюдения, а не доказательства причины, но они подсказывают, какие правила стоит добавить."
+            ]
+          }
+        ]
+      },
+      "uz": {
+        "title": "Treyder kundaligi: haqiqatan yordam beradigan yozuvlarni qanday yuritish",
+        "description": "Ertalabki reja va kechki natijadan iborat, kuniga bir necha daqiqa oladigan oddiy tizim.",
+        "minutes": 4,
+        "sections": [
+          {
+            "h": "Bitimlar jurnali bo'lsa, kundalik nega kerak",
+            "p": [
+              "Bitimlar jurnali raqamlarni saqlaydi: kirish, chiqish, natija. Kundalik kontekstni saqlaydi: qaysi holatda savdo qildingiz, nimani rejalashtirdingiz va shundan nimani bajardingiz. Aynan kontekst bir xil strategiyada nega ba'zi kunlar foydada, ba'zilari yo'qligini tushuntiradi."
+            ]
+          },
+          {
+            "h": "Ertalab: reja va holat",
+            "p": [
+              "Savdodan oldin kun rejasini yozing: nimani savdo qilasiz, qayerda kirishga tayyorsiz, qanday sharoitda to'xtaysiz. Kayfiyat va energiyani 1 dan 5 gacha shkalada belgilang. Charchagan yoki asabiy bo'lsangiz, hajmni kamaytirish yoki savdo qilmaslik uchun sabab. Yozuv ikki daqiqa oladi."
+            ]
+          },
+          {
+            "h": "Kechqurun: natija va bitta saboq",
+            "p": [
+              "Kun oxirida nima bo'ldi va nima bo'lmaganini yozing, rejaga amal qilgan-qilmaganingizni halol belgilang. So'ng kun saboqini bitta gap bilan ifodalang. Qisqa saboq uzun tahlildan yaxshiroq eslab qolinadi, bir oydan keyin ulardan shaxsiy qoidalar ro'yxati paydo bo'ladi."
+            ]
+          },
+          {
+            "h": "Haftada bir marta: qonuniyatlarni qidiramiz",
+            "p": [
+              "Hafta yozuvlarini ko'rib chiqing. Reja bajarilgan va bajarilmagan kunlar hamda turli kayfiyatdagi kunlar natijasini taqqoslang. Tartib dagi «Kundalik» bo'limida bu avtomatik hisoblanadi. Bu kuzatuvlar, sabab isboti emas, lekin qaysi qoidalarni qo'shish kerakligini ko'rsatadi."
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "The trader's diary: how to keep notes that actually help",
+        "description": "A simple system of a morning plan and an evening review that takes a few minutes a day.",
+        "minutes": 4,
+        "sections": [
+          {
+            "h": "Why a diary if you already have a trade journal",
+            "p": [
+              "A trade journal stores numbers: entry, exit, result. A diary stores context: what state you traded in, what you planned and how much of it you did. Context explains why the same strategy gives good days and bad days."
+            ]
+          },
+          {
+            "h": "Morning: plan and state",
+            "p": [
+              "Before trading, write the plan for the day: what you trade, where you are ready to enter, and under what conditions you stop. Rate your mood and energy from 1 to 5. If you are tired or irritated, that is a reason to cut size or skip trading. It takes two minutes."
+            ]
+          },
+          {
+            "h": "Evening: result and one lesson",
+            "p": [
+              "At the end of the day write what worked and what did not, and mark honestly whether you followed the plan. Then put the lesson of the day in one sentence. One short lesson is remembered better than a long analysis, and after a month they form your personal list of rules."
+            ]
+          },
+          {
+            "h": "Weekly: look for patterns",
+            "p": [
+              "Read through the week. Compare results on days you followed the plan and days you did not, and on days with different moods. The Diary section in Tartib calculates this automatically. These are observations, not proof of cause, but they hint at which rules to add."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "slug": "kelly-and-leverage",
+    "date": "2026-10-09",
+    "text": {
+      "ru": {
+        "title": "Критерий Келли и плечо: что на самом деле показывает математика",
+        "description": "Формула Келли, почему полный Келли слишком агрессивен и чем плечо отличается от риска.",
+        "minutes": 5,
+        "sections": [
+          {
+            "h": "Формула Келли",
+            "p": [
+              "Критерий Келли отвечает на вопрос, какую долю капитала математически выгодно рисковать, если известны доля прибыльных сделок p и отношение прибыли к риску b. Формула: f = p − (1 − p) / b. При p = 50% и b = 2 получается 0,5 − 0,25 = 25%. Если результат отрицательный, у системы нет преимущества, и рисковать нечем."
+            ]
+          },
+          {
+            "h": "Почему полный Келли слишком агрессивен",
+            "p": [
+              "Формула предполагает точное знание p и b, а в реальности они оценены по ограниченному числу сделок и меняются. Ошибка в оценке сильно увеличивает просадки. Поэтому на практике используют половину или четверть значения. Калькулятор «Критерий Келли» в Tartib показывает все три варианта."
+            ]
+          },
+          {
+            "h": "Плечо не равно риску",
+            "p": [
+              "Плечо определяет, сколько собственных денег блокируется под позицию, а риск определяется расстоянием до стопа и размером позиции. Если размер считать по формуле, убыток на стопе одинаков при плече 2 и плече 20. Опасность плеча в другом: при высоком плече цена ликвидации находится близко, и обычное колебание может закрыть позицию раньше стопа."
+            ]
+          },
+          {
+            "h": "Как проверить свои цифры",
+            "p": [
+              "Калькуляторы «Цена ликвидации» и «Маржа и плечо» в Tartib показывают приблизительные значения; точную цену ликвидации всегда сверяйте с биржей. А в расширенной аналитике Tartib считаются ваши собственные Келли и риск разорения по фактическим сделкам. Это справочная математика, а не рекомендация."
+            ]
+          }
+        ]
+      },
+      "uz": {
+        "title": "Kelli mezoni va yelka: matematika aslida nimani ko'rsatadi",
+        "description": "Kelli formulasi, nega to'liq Kelli juda agressiv va yelka riskdan nimasi bilan farq qiladi.",
+        "minutes": 5,
+        "sections": [
+          {
+            "h": "Kelli formulasi",
+            "p": [
+              "Kelli mezoni foydali bitimlar ulushi p va foyda/risk nisbati b ma'lum bo'lganda kapitalning qancha ulushini xavf ostiga qo'yish matematik jihatdan foydali ekanini aytadi. Formula: f = p − (1 − p) / b. p = 50% va b = 2 bo'lsa, 0,5 − 0,25 = 25% chiqadi. Natija manfiy bo'lsa, tizimda ustunlik yo'q va xavf ostiga qo'yadigan narsa yo'q."
+            ]
+          },
+          {
+            "h": "Nega to'liq Kelli juda agressiv",
+            "p": [
+              "Formula p va b ni aniq bilishni nazarda tutadi, amalda esa ular cheklangan bitimlar bo'yicha baholanadi va o'zgarib turadi. Baholashdagi xato cho'kishlarni ancha oshiradi. Shuning uchun amalda qiymatning yarmi yoki choragi ishlatiladi. Tartib dagi «Kelli mezoni» kalkulyatori uchala variantni ko'rsatadi."
+            ]
+          },
+          {
+            "h": "Yelka riskka teng emas",
+            "p": [
+              "Yelka pozitsiya uchun qancha o'z pulingiz bloklanishini belgilaydi, risk esa stopgacha masofa va pozitsiya hajmi bilan aniqlanadi. Hajm formula bo'yicha hisoblansa, stopdagi zarar 2 yelkada ham, 20 yelkada ham bir xil. Yelka xavfi boshqa joyda: yuqori yelkada likvidatsiya narxi yaqin bo'ladi va oddiy tebranish pozitsiyani stopdan oldin yopib qo'yishi mumkin."
+            ]
+          },
+          {
+            "h": "O'z raqamlaringizni qanday tekshirish",
+            "p": [
+              "Tartib dagi «Likvidatsiya narxi» va «Marja va yelka» kalkulyatorlari taxminiy qiymatlarni ko'rsatadi; aniq likvidatsiya narxini doim birja bilan solishtiring. Tartib ning kengaytirilgan tahlilida esa haqiqiy bitimlaringiz bo'yicha shaxsiy Kelli va vayron bo'lish xavfi hisoblanadi. Bu ma'lumot beruvchi matematika, tavsiya emas."
+            ]
+          }
+        ]
+      },
+      "en": {
+        "title": "Kelly criterion and leverage: what the maths really says",
+        "description": "The Kelly formula, why full Kelly is too aggressive, and how leverage differs from risk.",
+        "minutes": 5,
+        "sections": [
+          {
+            "h": "The Kelly formula",
+            "p": [
+              "The Kelly criterion answers what share of capital is mathematically worth risking when you know the win rate p and the reward-to-risk ratio b. The formula is f = p − (1 − p) / b. With p = 50% and b = 2 you get 0.5 − 0.25 = 25%. If the result is negative the system has no edge and there is nothing to risk."
+            ]
+          },
+          {
+            "h": "Why full Kelly is too aggressive",
+            "p": [
+              "The formula assumes you know p and b exactly, while in reality they are estimated from a limited number of trades and change over time. An error in the estimate increases drawdowns a lot. That is why practitioners use half or a quarter of the value. The Kelly criterion calculator in Tartib shows all three."
+            ]
+          },
+          {
+            "h": "Leverage is not risk",
+            "p": [
+              "Leverage sets how much of your own money is locked for a position, while risk is set by the distance to the stop and the position size. If size is calculated by formula, the loss at the stop is the same at 2x and at 20x. The danger of leverage is different: at high leverage the liquidation price is close, and ordinary price noise can close the position before your stop."
+            ]
+          },
+          {
+            "h": "How to check your own numbers",
+            "p": [
+              "The Liquidation price and Margin and leverage calculators in Tartib show approximate values; always confirm the exact liquidation price on your exchange. The advanced analytics in Tartib also calculate your own Kelly and risk of ruin from your actual trades. This is reference maths, not a recommendation."
+            ]
+          }
+        ]
+      }
+    }
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {

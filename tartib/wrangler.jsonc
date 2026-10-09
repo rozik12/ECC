@@ -4,8 +4,9 @@
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
-  // Сервер сайта ставим во Франкфурт, рядом с базой данных Supabase (eu-central-1)
-  "placement": { "region": "aws:eu-central-1" },
+  // Умное размещение: Cloudflare сам переносит сервер ближе к базе данных (Supabase, Франкфурт).
+  // Принудительный регион (region) давал ошибки 503 при одновременных запросах, поэтому не используем.
+  "placement": { "mode": "smart" },
   "observability": { "enabled": true },
   "vars": {
     "NEXT_PUBLIC_SITE_URL": "https://tartib.uk",

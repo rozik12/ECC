@@ -1,6 +1,6 @@
 # Размещение на Cloudflare Workers
 
-Сайт собирается адаптером OpenNext и работает как Cloudflare Worker. Сервер сайта ставится во Франкфурт (`placement.region` в `wrangler.jsonc`), рядом с базой Supabase.
+Сайт собирается адаптером OpenNext и работает как Cloudflare Worker. Размещение «smart» (`placement.mode` в `wrangler.jsonc`) переносит сервер ближе к базе Supabase. Принудительный регион `aws:eu-central-1` давал ошибки 503 при одновременных запросах, поэтому не используется.
 
 ## Выкладка
 
@@ -22,5 +22,5 @@ npm run cf:deploy
 
 ## Проверка
 
-- `curl -I https://<адрес>/login` должен вернуть заголовок `cf-placement: remote-FRA`.
+- 30–40 одновременных запросов к `/login` должны отвечать 200 без ошибок 503.
 - Вход, запись сделки и переключение правил проверяются так же, как на Netlify.

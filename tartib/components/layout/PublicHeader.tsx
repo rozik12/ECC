@@ -15,6 +15,9 @@ export async function PublicHeader() {
           <Link href="/news" className="text-sm text-muted hover:text-foreground">
             {t("nav.news")}
           </Link>
+          <Link href="/blog" className="hidden text-sm text-muted hover:text-foreground sm:block">
+            {t("nav.blog")}
+          </Link>
           <Link href="/pricing" className="hidden text-sm text-muted hover:text-foreground sm:block">
             {t("nav.pricing")}
           </Link>

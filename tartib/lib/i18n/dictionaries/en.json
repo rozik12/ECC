@@ -32,7 +32,8 @@
     "login": "Log in",
     "register": "Sign up",
     "main": "Main navigation",
-    "news": "News"
+    "news": "News",
+    "blog": "Blog"
   },
   "footer": {
     "terms": "Terms of use",
@@ -989,5 +990,15 @@
     "empty": "No news for this filter yet.",
     "unavailable": "The sources are unavailable right now. Please try again later.",
     "note": "Headlines, images and links belong to their authors; articles open on the sources' sites. Sources:"
+  },
+  "blog": {
+    "title": "Blog on trading discipline",
+    "subtitle": "Short, clear articles: how to keep a journal, calculate risk and stop emotions from spending your money.",
+    "read": "Read",
+    "minutes": "{n} min read",
+    "back": "← All articles",
+    "cta": "Try it in practice: keep a journal and see the cost of your rule-breaking.",
+    "ctaBtn": "Start for free",
+    "edu": "This material is educational."
   }
 }

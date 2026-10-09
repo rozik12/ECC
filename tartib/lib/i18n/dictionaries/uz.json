@@ -32,7 +32,8 @@
     "login": "Kirish",
     "register": "Ro'yxatdan o'tish",
     "main": "Asosiy navigatsiya",
-    "news": "Yangiliklar"
+    "news": "Yangiliklar",
+    "blog": "Blog"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -989,5 +990,15 @@
     "empty": "Bu filtr bo'yicha hozircha yangilik yo'q.",
     "unavailable": "Manbalar hozir mavjud emas. Keyinroq qayta urinib ko'ring.",
     "note": "Sarlavhalar, rasmlar va havolalar mualliflarga tegishli; maqolalar manba saytlarida ochiladi. Manbalar:"
+  },
+  "blog": {
+    "title": "Treyding intizomi haqida blog",
+    "subtitle": "Qisqa va tushunarli maqolalar: jurnal yuritish, xavfni hisoblash va his-tuyg'ularga pulingizni sarflatmaslik.",
+    "read": "O'qish",
+    "minutes": "{n} daqiqa o'qish",
+    "back": "← Barcha maqolalar",
+    "cta": "Amalda sinab ko'ring: jurnal yuriting va buzilishlar narxini ko'ring.",
+    "ctaBtn": "Bepul boshlash",
+    "edu": "Material ta'limiy xarakterga ega."
   }
 }

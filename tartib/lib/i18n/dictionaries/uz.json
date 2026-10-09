@@ -1154,6 +1154,120 @@
       "h": "{h} soat",
       "m": "{m} daqiqa",
       "d": "{d} kun"
+    },
+    "kelly": {
+      "title": "Kelli mezoni",
+      "desc": "Foydali bitimlar foizi va risk/foyda nisbati ma'lum bo'lganda depozitning qancha ulushini bitimga qo'yish matematik jihatdan foydali.",
+      "f": {
+        "winRate": "Foydali bitimlar foizi, %",
+        "rr": "Foyda/risk (masalan, 1:2 uchun 2)"
+      },
+      "o": {
+        "edge": "Bitimga kutilma, R",
+        "full": "To'liq Kelli",
+        "half": "Yarim Kelli",
+        "quarter": "Chorak Kelli"
+      },
+      "note": "To'liq Kelli katta cho'kishlarga olib keladi. Amaliyotda yarim yoki chorak olinadi. Kutilma manfiy bo'lsa natija 0%: qo'yadigan narsa yo'q."
+    },
+    "ruin": {
+      "title": "Vayron bo'lish xavfi",
+      "desc": "Belgilangan risk bilan depozit tanlangan darajagacha cho'kib ketish ehtimoli. Risk hajmi kirish nuqtasidan muhimroq ekanini ko'rsatadi.",
+      "f": {
+        "winRate": "Foydali bitimlar foizi, %",
+        "rr": "Foyda/risk (masalan, 1:2 uchun 2)",
+        "riskPct": "Bitimga risk, %",
+        "ruinDrawdown": "«Vayronlik» deb hisoblanadigan cho'kish, %"
+      },
+      "o": {
+        "expectancy": "Bitimga kutilma, R",
+        "cushion": "Zaxira, ketma-ket zararli bitimlar",
+        "ruin": "Shu cho'kishga yetish ehtimoli"
+      },
+      "note": "Model mustaqil bitimlar va doimiy ehtimol hamda riskni nazarda tutadi. Bu taxmin, bashorat emas."
+    },
+    "liq": {
+      "title": "Likvidatsiya narxi",
+      "desc": "Yelkali izolyatsiyalangan pozitsiya birja tomonidan majburan yopiladigan taxminiy narx.",
+      "f": {
+        "entry": "Kirish narxi",
+        "size": "Pozitsiya hajmi, birlik",
+        "leverage": "Yelka",
+        "maintenance": "Ushlab turish marjasi, %",
+        "side": "Yo'nalish"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "price": "Likvidatsiya narxi",
+        "distance": "Kirishdan masofa",
+        "margin": "Pozitsiya marjasi"
+      },
+      "note": "Hisob taxminiy: birjalar komissiya va o'z formulalarini hisobga oladi. Bitimdan oldin birja bilan solishtiring."
+    },
+    "fee": {
+      "title": "Komissiya bilan zararsizlik",
+      "desc": "Kirish va chiqish komissiyasi bilan bitim nolga chiqadigan narx.",
+      "f": {
+        "entry": "Kirish narxi",
+        "feePct": "Bir tomon komissiyasi, %",
+        "side": "Yo'nalish"
+      },
+      "o": {
+        "price": "Zararsizlik narxi",
+        "move": "Kerakli narx harakati",
+        "total": "Kirish va chiqish komissiyasi"
+      },
+      "note": "Spred va sirpanish hisobga olinmagan."
+    },
+    "profit": {
+      "title": "Bitim natijasi",
+      "desc": "Komissiyani hisobga olgan holda bitim foydasi yoki zarari.",
+      "f": {
+        "entry": "Kirish narxi",
+        "exit": "Chiqish narxi",
+        "size": "Pozitsiya hajmi, birlik",
+        "feePct": "Bir tomon komissiyasi, %",
+        "balance": "Depozit (ixtiyoriy)",
+        "side": "Yo'nalish"
+      },
+      "o": {
+        "gross": "Komissiyagacha",
+        "fees": "Komissiya",
+        "net": "Natija",
+        "pctPosition": "Pozitsiya summasidan",
+        "pctBalance": "Depozitdan"
+      }
+    },
+    "goal": {
+      "title": "Maqsad rejasi",
+      "desc": "Oylik daromad barqaror bo'lib, to'ldirib borilganda summa maqsadga necha oyda yetadi.",
+      "f": {
+        "start": "Hozir",
+        "target": "Maqsad",
+        "monthlyPct": "Oylik daromad, %",
+        "deposit": "Oylik to'ldirish"
+      },
+      "o": {
+        "months": "Oy",
+        "years": "Yil",
+        "deposited": "Muddat davomida kiritilgan"
+      },
+      "note": "Treydingda daromad tekis bo'lmaydi. Bu foizlar arifmetikasi, bashorat ham, va'da ham emas."
+    },
+    "margin": {
+      "title": "Marja va yelka",
+      "desc": "Yelkali pozitsiya uchun o'z pulingizdan qancha kerak va u depozitning qancha ulushini egallaydi.",
+      "f": {
+        "positionValue": "Pozitsiya qiymati",
+        "leverage": "Yelka",
+        "balance": "Depozit (ixtiyoriy)"
+      },
+      "o": {
+        "margin": "Kerakli marja",
+        "pctBalance": "Depozit ulushi",
+        "maxPosition": "Shu yelkada maksimal pozitsiya"
+      },
+      "note": "Yelka qanchalik katta bo'lsa, likvidatsiya narxi shunchalik yaqin. Yelka kutilmani oshirmaydi, riskni oshiradi."
     }
   },
   "shortcuts": {

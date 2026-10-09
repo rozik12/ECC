@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import { Card, Input } from "@/components/ui";
+import { Card, Input, Select } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatNumber, parseNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
@@ -37,7 +37,17 @@ export function ToolRunner({ slug }: { slug: ToolSlug }) {
   return (
     <div className="grid gap-6 md:grid-cols-2">
       <Card className="space-y-4">
-        {def.fields.map((f) => (
+        {def.fields.map((f) => f.choices ? (
+          <Select
+            key={f.id}
+            id={`tool-${f.id}`}
+            label={t(`tools.${dict}.f.${f.id}`)}
+            value={values[f.id] ?? f.def}
+            onChange={(e) => setValues((prev) => ({ ...prev, [f.id]: e.target.value }))}
+          >
+            {f.choices.map((c) => <option key={c} value={String(c)}>{t(c === 2 ? "tools.short" : "tools.long")}</option>)}
+          </Select>
+        ) : (
           <Input
             key={f.id}
             id={`tool-${f.id}`}

@@ -1154,6 +1154,120 @@
       "h": "{h} h",
       "m": "{m} min",
       "d": "{d} d"
+    },
+    "kelly": {
+      "title": "Kelly criterion",
+      "desc": "What share of your account is mathematically worth risking per trade, given your win rate and reward-to-risk ratio.",
+      "f": {
+        "winRate": "Win rate, %",
+        "rr": "Reward to risk (e.g. 2 for 1:2)"
+      },
+      "o": {
+        "edge": "Expectancy per trade, R",
+        "full": "Full Kelly",
+        "half": "Half Kelly",
+        "quarter": "Quarter Kelly"
+      },
+      "note": "Full Kelly means big drawdowns. Practitioners use half or a quarter. If expectancy is negative the result is 0%: there is nothing to bet."
+    },
+    "ruin": {
+      "title": "Risk of ruin",
+      "desc": "The probability that, at a given risk per trade, your account ever falls to the chosen drawdown. It shows why position risk matters more than entries.",
+      "f": {
+        "winRate": "Win rate, %",
+        "rr": "Reward to risk (e.g. 2 for 1:2)",
+        "riskPct": "Risk per trade, %",
+        "ruinDrawdown": "Drawdown counted as “ruin”, %"
+      },
+      "o": {
+        "expectancy": "Expectancy per trade, R",
+        "cushion": "Cushion, losing trades in a row",
+        "ruin": "Probability of reaching this drawdown"
+      },
+      "note": "The model assumes independent trades with constant probability and risk. It is an approximation, not a forecast."
+    },
+    "liq": {
+      "title": "Liquidation price",
+      "desc": "The approximate price at which an isolated leveraged position is force-closed by the exchange.",
+      "f": {
+        "entry": "Entry price",
+        "size": "Position size, units",
+        "leverage": "Leverage",
+        "maintenance": "Maintenance margin, %",
+        "side": "Direction"
+      },
+      "o": {
+        "direction": "Direction",
+        "price": "Liquidation price",
+        "distance": "Distance from entry",
+        "margin": "Position margin"
+      },
+      "note": "Approximate: exchanges include fees and use their own formulas. Check the price on your exchange before trading."
+    },
+    "fee": {
+      "title": "Break-even with fees",
+      "desc": "The price at which a trade with entry and exit fees ends at zero.",
+      "f": {
+        "entry": "Entry price",
+        "feePct": "Fee per side, %",
+        "side": "Direction"
+      },
+      "o": {
+        "price": "Break-even price",
+        "move": "Price move needed",
+        "total": "Entry plus exit fee"
+      },
+      "note": "Spread and slippage are not included."
+    },
+    "profit": {
+      "title": "Trade result",
+      "desc": "Profit or loss of a trade including fees.",
+      "f": {
+        "entry": "Entry price",
+        "exit": "Exit price",
+        "size": "Position size, units",
+        "feePct": "Fee per side, %",
+        "balance": "Account balance (optional)",
+        "side": "Direction"
+      },
+      "o": {
+        "gross": "Before fees",
+        "fees": "Fees",
+        "net": "Net result",
+        "pctPosition": "Of position value",
+        "pctBalance": "Of account"
+      }
+    },
+    "goal": {
+      "title": "Goal planner",
+      "desc": "How many months it takes to reach a target at a steady monthly return with deposits.",
+      "f": {
+        "start": "Now",
+        "target": "Target",
+        "monthlyPct": "Monthly return, %",
+        "deposit": "Monthly deposit"
+      },
+      "o": {
+        "months": "Months",
+        "years": "Years",
+        "deposited": "Deposited over the period"
+      },
+      "note": "Trading returns are never steady. This is percentage arithmetic, not a forecast or a promise."
+    },
+    "margin": {
+      "title": "Margin and leverage",
+      "desc": "How much of your own money a leveraged position needs and what share of your account it takes.",
+      "f": {
+        "positionValue": "Position value",
+        "leverage": "Leverage",
+        "balance": "Account balance (optional)"
+      },
+      "o": {
+        "margin": "Margin needed",
+        "pctBalance": "Share of account",
+        "maxPosition": "Maximum position at this leverage"
+      },
+      "note": "Higher leverage puts liquidation closer. Leverage does not raise expectancy, it raises risk."
     }
   },
   "shortcuts": {

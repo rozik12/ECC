@@ -106,3 +106,107 @@ export function sessionStatus(now: Date, s: SessionDef): { open: boolean; minute
   }
   return { open: false, minutes: 0 };
 }
+
+// ---------- критерий Келли ----------
+export type KellyResult = { ok: true; edge: number; kellyPct: number; halfPct: number; quarterPct: number } | Fail;
+
+/** Доля капитала на сделку по критерию Келли: f = p − q / b, где b — отношение прибыли к риску. Отрицательное значение = ожидание ниже нуля, ставить нельзя. */
+export function kelly(i: { winRate: number; rr: number }): KellyResult {
+  if (!fin(i.winRate, i.rr) || i.winRate <= 0 || i.winRate >= 100 || i.rr <= 0 || i.rr > 1000) return FAIL;
+  const p = i.winRate / 100;
+  const f = p - (1 - p) / i.rr;
+  const pct = Math.max(0, f * 100);
+  return { ok: true, edge: p * i.rr - (1 - p), kellyPct: pct, halfPct: pct / 2, quarterPct: pct / 4 };
+}
+
+// ---------- риск разорения ----------
+export type RuinResult = { ok: true; ruinPct: number; cushionR: number; expectancyR: number } | Fail;
+
+/**
+ * Вероятность когда-либо потерять `ruinDrawdown`% депозита при фиксированном риске на сделку.
+ * Сделка: +rr с вероятностью p или −1 (в единицах риска). Убыток всегда ровно −1, поэтому вероятность дойти
+ * до −U равна z^U, где z — корень уравнения p·z^rr + q/z = 1 (0 < z < 1). Запас U оценивается через сложный процент.
+ * Это модель независимых сделок: приближение, а не прогноз.
+ */
+export function riskOfRuin(i: { winRate: number; rr: number; riskPct: number; ruinDrawdown: number }): RuinResult {
+  if (!fin(i.winRate, i.rr, i.riskPct, i.ruinDrawdown)) return FAIL;
+  if (i.winRate <= 0 || i.winRate >= 100 || i.rr <= 0 || i.rr > 1000 || i.riskPct <= 0 || i.riskPct >= 100 || i.ruinDrawdown <= 0 || i.ruinDrawdown >= 100) return FAIL;
+  const p = i.winRate / 100;
+  const q = 1 - p;
+  const expectancyR = p * i.rr - q;
+  const cushionR = Math.log(1 - i.ruinDrawdown / 100) / Math.log(1 - i.riskPct / 100);
+  if (expectancyR <= 1e-12) return { ok: true, ruinPct: 100, cushionR, expectancyR };
+  // f(z) = p·z^rr + q/z − 1: f(1)=0, f<0 чуть левее 1, f→∞ при z→0. Ищем корень в (0, 1) делением пополам.
+  const f = (z: number) => p * Math.pow(z, i.rr) + q / z - 1;
+  let lo = 1e-9;
+  let hi = 1 - 1e-12;
+  for (let k = 0; k < 200; k++) {
+    const mid = (lo + hi) / 2;
+    if (f(mid) > 0) lo = mid;
+    else hi = mid;
+  }
+  const z = (lo + hi) / 2;
+  return { ok: true, ruinPct: Math.min(100, Math.max(0, Math.pow(z, cushionR) * 100)), cushionR, expectancyR };
+}
+
+// ---------- цена ликвидации ----------
+export type LiqResult = { ok: true; direction: "long" | "short"; price: number; distancePct: number; margin: number } | Fail;
+
+/** Приблизительная цена ликвидации изолированной позиции: вход ∓ вход·(1/плечо − поддерживающая маржа). Биржи считают чуть иначе, сверяй с биржей. */
+export function liquidation(i: { entry: number; leverage: number; direction: "long" | "short"; maintenancePct: number; size: number }): LiqResult {
+  if (!fin(i.entry, i.leverage, i.maintenancePct, i.size) || i.entry <= 0 || i.leverage < 1 || i.leverage > 1000 || i.maintenancePct < 0 || i.size <= 0) return FAIL;
+  const k = 1 / i.leverage - i.maintenancePct / 100;
+  if (k <= 0) return FAIL; // при таком плече и поддерживающей марже позиция ликвидируется сразу
+  const long = i.direction === "long";
+  const price = long ? i.entry * (1 - k) : i.entry * (1 + k);
+  return { ok: true, direction: i.direction, price, distancePct: k * 100, margin: (i.entry * i.size) / i.leverage };
+}
+
+// ---------- безубыток с учётом комиссии ----------
+export type BreakevenResult = { ok: true; price: number; movePct: number; feeTotalPct: number } | Fail;
+
+/** Цена, при которой сделка с комиссией за вход и выход выходит в ноль. */
+export function feeBreakeven(i: { entry: number; feePct: number; direction: "long" | "short" }): BreakevenResult {
+  if (!fin(i.entry, i.feePct) || i.entry <= 0 || i.feePct < 0 || i.feePct >= 50) return FAIL;
+  const f = i.feePct / 100;
+  const price = i.direction === "long" ? (i.entry * (1 + f)) / (1 - f) : (i.entry * (1 - f)) / (1 + f);
+  return { ok: true, price, movePct: (Math.abs(price - i.entry) / i.entry) * 100, feeTotalPct: i.feePct * 2 };
+}
+
+// ---------- результат сделки ----------
+export type ProfitResult = { ok: true; gross: number; fees: number; net: number; pctOfPosition: number; pctOfBalance: number | null } | Fail;
+
+export function tradeProfit(i: { entry: number; exit: number; size: number; direction: "long" | "short"; feePct: number; balance?: number | null }): ProfitResult {
+  if (!fin(i.entry, i.exit, i.size, i.feePct) || i.entry <= 0 || i.exit <= 0 || i.size <= 0 || i.feePct < 0 || i.feePct >= 50) return FAIL;
+  const gross = (i.direction === "long" ? i.exit - i.entry : i.entry - i.exit) * i.size;
+  const fees = ((i.entry + i.exit) * i.size * i.feePct) / 100;
+  const net = gross - fees;
+  const b = i.balance;
+  return { ok: true, gross, fees, net, pctOfPosition: (net / (i.entry * i.size)) * 100, pctOfBalance: b !== null && b !== undefined && Number.isFinite(b) && b > 0 ? (net / b) * 100 : null };
+}
+
+// ---------- план цели ----------
+export type GoalResult = { ok: true; months: number; years: number; deposited: number } | Fail;
+
+/** Сколько месяцев нужно, чтобы дойти от `start` до `target` при ровной месячной доходности и пополнениях. Иллюстрация арифметики, не прогноз. */
+export function goalPlan(i: { start: number; target: number; monthlyPct: number; monthlyDeposit: number }): GoalResult {
+  if (!fin(i.start, i.target, i.monthlyPct, i.monthlyDeposit) || i.start < 0 || i.target <= i.start || i.monthlyDeposit < 0 || i.monthlyPct <= -100 || i.monthlyPct > 1000) return FAIL;
+  if (i.monthlyPct <= 0 && i.monthlyDeposit <= 0) return FAIL;
+  let bal = i.start;
+  for (let m = 1; m <= 1200; m++) {
+    bal = bal * (1 + i.monthlyPct / 100) + i.monthlyDeposit;
+    if (bal >= i.target) return { ok: true, months: m, years: m / 12, deposited: i.start + i.monthlyDeposit * m };
+  }
+  return FAIL; // дольше 100 лет
+}
+
+// ---------- маржа ----------
+export type MarginResult = { ok: true; margin: number; marginPctOfBalance: number | null; maxPosition: number | null } | Fail;
+
+export function margin(i: { positionValue: number; leverage: number; balance?: number | null }): MarginResult {
+  if (!fin(i.positionValue, i.leverage) || i.positionValue <= 0 || i.leverage < 1 || i.leverage > 1000) return FAIL;
+  const m = i.positionValue / i.leverage;
+  const b = i.balance;
+  const ok = b !== null && b !== undefined && Number.isFinite(b) && b > 0;
+  return { ok: true, margin: m, marginPctOfBalance: ok ? (m / b) * 100 : null, maxPosition: ok ? b * i.leverage : null };
+}

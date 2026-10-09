@@ -6,6 +6,7 @@ import { BottomNav, Sidebar, TopIcons } from "./AppNav";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Logo } from "./Logo";
 import { PoweredBy } from "./PoweredBy";
+import { Shortcuts } from "./Shortcuts";
 import { ThemeToggle } from "./ThemeToggle";
 
 /** Каркас приватных страниц: сайдбар на компьютере, нижнее меню на телефоне. */
@@ -46,6 +47,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
           {children}
           <Disclaimer className="mt-10" />
           <PoweredBy className="mt-3" />
+          <Shortcuts />
         </main>
       </div>
 

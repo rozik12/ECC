@@ -162,3 +162,9 @@ export async function getTransactions(supabase: SupabaseClient, limit = 1000): P
     note: (r.note as string) ?? "",
   }));
 }
+
+/** Самая поздняя сделка: нужна, чтобы подсказать паузу после недавнего убытка. */
+export async function getLastTrade(supabase: SupabaseClient): Promise<{ tradedAt: string; pnl: number } | null> {
+  const { data } = await supabase.from("trades").select("traded_at, pnl").order("traded_at", { ascending: false }).limit(1).maybeSingle();
+  return data ? { tradedAt: String(data.traded_at), pnl: Number(data.pnl) } : null;
+}

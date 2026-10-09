@@ -33,7 +33,8 @@
     "register": "Ro'yxatdan o'tish",
     "main": "Asosiy navigatsiya",
     "news": "Yangiliklar",
-    "blog": "Blog"
+    "blog": "Blog",
+    "tools": "Asboblar"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -583,7 +584,8 @@
     "saveFailed": "Bitimni saqlab bo'lmadi. Qayta urinib ko'r.",
     "deleteFailed": "Bitimni o'chirib bo'lmadi. Qayta urinib ko'r.",
     "export": "CSV yuklab olish",
-    "import": "Import"
+    "import": "Import",
+    "cooldown": "Oxirgi bitim {m} daqiqa oldin zararda yopilgan. Yangisini ochishdan oldin tanaffus qiling va cheklistdan o'ting."
   },
   "stats": {
     "title": "Statistika",
@@ -650,6 +652,24 @@
       "worstHour": "Qoidabuzarliklar ko'proq sutkaning shu vaqtida: {hours} ({n} ta bitimda {v} ta buzilish).",
       "noPattern": "Hozircha aniq qonuniyat yo'q: bir kunda yoki vaqtda kamida 3 ta bitim va 2 ta buzilish kerak.",
       "note": "Bu sening jurnaling bo'yicha kuzatuv, ma'lum vaqtda savdo qilish tavsiyasi emas."
+    },
+    "tilt": {
+      "title": "Zarardan keyin",
+      "subtitle": "Zararli bitimdan keyingi bir soat ichida qanday savdo qilasiz.",
+      "afterLoss": "Zarardan keyingi bir soat ichidagi bitimlar",
+      "other": "Qolgan bitimlar",
+      "trades": "bitim",
+      "violations": "qoidalar buzilgan",
+      "avg": "o'rtacha natija",
+      "warn": "Zarardan keyin qoidalarni tez-tez buzasiz. Tanaffus qoidasini sinab ko'ring: stopdan keyin 15 daqiqa yangi bitim ochmang.",
+      "ok": "Sezilarli farq yo'q: zarardan keyin ham qoidalarga har doimgidek amal qilasiz.",
+      "notEnough": "Ma'lumot hozircha kam: har bir guruhda kamida 3 tadan bitim kerak."
+    },
+    "best": {
+      "title": "Eng yaxshi va eng yomon bitimlar",
+      "best": "Eng yaxshilari",
+      "worst": "Eng yomonlari",
+      "none": "yo'q"
     }
   },
   "dashboard": {
@@ -1000,5 +1020,133 @@
     "cta": "Amalda sinab ko'ring: jurnal yuriting va buzilishlar narxini ko'ring.",
     "ctaBtn": "Bepul boshlash",
     "edu": "Material ta'limiy xarakterga ega."
+  },
+  "tools": {
+    "title": "Treyder asboblari",
+    "subtitle": "Bepul kalkulyatorlar. Ro'yxatdan o'tmasdan ishlaydi, barcha hisob-kitoblar brauzeringizning o'zida bajariladi.",
+    "open": "Ochish",
+    "all": "← Barcha asboblar",
+    "result": "Natija",
+    "fillIn": "Natijani ko'rish uchun maydonlarni to'ldiring.",
+    "invalid": "Qiymatlarni tekshiring: sonlar to'g'ri va musbat bo'lishi, stop esa kirishga teng bo'lmasligi kerak.",
+    "note": "Hisob-kitoblar ma'lumot uchun, komissiya, sirpanish va gaplarni hisobga olmaydi. Bu investitsiya tavsiyasi emas.",
+    "cta": "Bitimlar jurnalini yuritib, buzilishlar narxini ko'rmoqchimisiz?",
+    "ctaBtn": "Bepul boshlash",
+    "long": "Long (sotib olish)",
+    "short": "Short (sotish)",
+    "none": "ma'lumot yo'q",
+    "size": {
+      "title": "Pozitsiya hajmi kalkulyatori",
+      "desc": "Stop ishlaganda oldindan tanlangan summani yo'qotish uchun aktivning necha birligini olish kerak.",
+      "f": {
+        "balance": "Depozit",
+        "riskPct": "Bitimdagi xavf, %",
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "riskAmount": "Xavf summasi",
+        "distance": "Stopgacha masofa",
+        "units": "Pozitsiya hajmi, birlik",
+        "value": "Pozitsiya qiymati"
+      }
+    },
+    "rr": {
+      "title": "Xavf va foyda kalkulyatori",
+      "desc": "Potentsial foyda va zararning nisbati hamda savdo zarar tomonga o'tmasligi uchun kerak bo'lgan foydali bitimlarning minimal foizi.",
+      "f": {
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi",
+        "target": "Maqsad narxi (teyk-profit)",
+        "winRate": "Foydali bitimlar foizi, % (ixtiyoriy)"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "risk": "Birlikka xavf",
+        "reward": "Birlikka foyda",
+        "rr": "Xavf va foyda nisbati",
+        "breakEven": "Zararsiz foydali bitimlar foizi",
+        "expectancy": "Bitimga kutilma, R"
+      }
+    },
+    "streak": {
+      "title": "Ketma-ket zararlar seriyasi",
+      "desc": "Ishlaydigan strategiyada ham uzun zarar seriyalari qanchalik tez-tez uchraydi va ular depozitga nima qiladi.",
+      "f": {
+        "winRate": "Foydali bitimlar foizi, %",
+        "trades": "Bitimlar soni",
+        "streak": "Ketma-ket zararlar",
+        "riskPct": "Bitimdagi xavf, %"
+      },
+      "o": {
+        "single": "Aniq bir joyda shunday seriya ehtimoli",
+        "atLeast": "Shu bitimlar sonida kamida bitta shunday seriya ehtimoli",
+        "drawdown": "Seriyadan keyingi pasayish",
+        "recovery": "Qaytish uchun kerakli o'sish, %"
+      },
+      "note": "Hisob bitimlar bog'liq emas va ehtimol bir xil deb faraz qiladi. Amalda bu taxminiy."
+    },
+    "recovery": {
+      "title": "Pasayishdan tiklanish",
+      "desc": "50% yo'qotish oson, qaytarish qiyin: pasayishdan keyin qancha o'sish kerak.",
+      "f": {
+        "drawdown": "Pasayish, %"
+      },
+      "o": {
+        "needed": "Qaytish uchun kerakli o'sish, %",
+        "mult": "Depozitni necha marta oshirish kerak"
+      }
+    },
+    "compound": {
+      "title": "Murakkab foiz",
+      "desc": "Oylik daromadlilik va to'ldirishlar doimiy bo'lganda summa qanday o'sadi. Bu matematika namunasi, bashorat emas.",
+      "f": {
+        "start": "Boshlang'ich summa",
+        "monthlyPct": "Oylik daromadlilik, %",
+        "months": "Muddat, oy",
+        "deposit": "Oylik to'ldirish"
+      },
+      "o": {
+        "final": "Yakuniy summa",
+        "deposited": "Jami kiritilgan",
+        "gain": "O'sish"
+      },
+      "note": "Treydingda tekis daromadlilik bo'lmaydi. Natija faqat foiz arifmetikasini ko'rsatadi."
+    },
+    "sessions": {
+      "title": "Savdo sessiyalari va bozor soatlari",
+      "desc": "Sidney, Tokio, London va Nyu-Yorkda qaysi birja sessiyalari hozir ochiq va ochilish yoki yopilishgacha qancha vaqt qoldi.",
+      "open": "Ochiq",
+      "closed": "Yopiq",
+      "closesIn": "{t} dan keyin yopiladi",
+      "opensIn": "{t} dan keyin ochiladi",
+      "yourTime": "Sizning vaqtingiz: {tz}",
+      "hours": "Mahalliy vaqt bo'yicha {o}:00–{c}:00",
+      "overlap": "Hozir bir vaqtda ikki sessiya ketmoqda: {names}.",
+      "names": {
+        "sydney": "Sidney",
+        "tokyo": "Tokio",
+        "london": "London",
+        "newyork": "Nyu-York"
+      },
+      "note": "Soatlar Forex bozori uchun odatiy va yozgi vaqtni hisobga oladi. Aniq birjada jadval boshqacha bo'lishi mumkin, dam olish kunlari shanba va yakshanba.",
+      "h": "{h} soat",
+      "m": "{m} daqiqa",
+      "d": "{d} kun"
+    }
+  },
+  "shortcuts": {
+    "title": "Tezkor tugmalar",
+    "hint": "Tezkor tugmalarni ko'rish uchun ? bosing",
+    "new": "Yangi bitim",
+    "dashboard": "Bosh sahifa",
+    "trades": "Bitimlar",
+    "stats": "Statistika",
+    "rules": "Qoidalar",
+    "calc": "Kalkulyator",
+    "tools": "Asboblar",
+    "close": "Yopish",
+    "help": "Bu maslahat"
   }
 }

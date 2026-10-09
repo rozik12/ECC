@@ -1,4 +1,6 @@
 // Экраны и кнопки бота. Чистые функции: получают данные, возвращают текст и клавиатуру.
+import { SESSIONS, positionSize, riskReward, sessionStatus } from "./tools.ts";
+import { bestWorst, tiltAnalysis } from "./stats.ts";
 import { computeAchievements, disciplineCost, disciplineStreak, byEmotion, monthDiscipline, pnlByInstrument, summarize, topViolations, type StatTrade } from "./stats.ts";
 import type { Headline } from "./news.ts";
 import { emotionKeys, emotionLabel, tr, type Lang } from "./text.ts";
@@ -52,7 +54,8 @@ export function mainMenu(lang: Lang): Screen {
       [b(tr(lang, "mAch"), "m:ach"), b(tr(lang, "mCheck"), "m:check")],
       [b(tr(lang, "mRules"), "m:rules"), b(tr(lang, "mAcc"), "m:acc")],
       [b(tr(lang, "mSettings"), "m:set"), b(tr(lang, "mHelp"), "h:menu")],
-      [b(tr(lang, "mNews"), "m:news"), { text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
+      [b(tr(lang, "mNews"), "m:news"), b(tr(lang, "mTools"), "m:tools")],
+      [{ text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
     ),
   };
 }
@@ -191,7 +194,7 @@ export function statsMenu(lang: Lang): Screen {
   const s = (key: string, data: string) => b(tr(lang, key), data);
   return {
     text: tr(lang, "statsMenu"),
-    kb: kb([s("sToday", "s:today"), s("sWeek", "s:week")], [s("sMonth", "s:month"), s("sAll", "s:all")], [s("sDiscipline", "s:disc")], [s("sStreak", "s:streak"), s("sGoal", "s:goal")], [s("sViol", "s:viol"), s("sEmo", "s:emo")], [s("sInstr", "s:instr")], menuRow(lang)),
+    kb: kb([s("sToday", "s:today"), s("sWeek", "s:week")], [s("sMonth", "s:month"), s("sAll", "s:all")], [s("sDiscipline", "s:disc")], [s("sStreak", "s:streak"), s("sGoal", "s:goal")], [s("sViol", "s:viol"), s("sEmo", "s:emo")], [s("sInstr", "s:instr"), s("sTilt", "s:tilt")], [s("sBest", "s:best")], menuRow(lang)),
   };
 }
 
@@ -336,4 +339,73 @@ export function tradesCsv(rows: TradeRow[]): string {
     t.followed ? "yes" : "no", csvText(t.violations.map((v) => v.name).join(" | ")), csvText(t.comment),
   ].join(","));
   return "﻿" + [head.join(","), ...lines].join("\n") + "\n";
+}
+
+// ---------- инструменты ----------
+const fmt = (n: number, lang: Lang, d = 4) => num(n, lang, d);
+const toolsKb = (lang: Lang, self?: string): Kb => kb(...(self ? [[b(tr(lang, "refresh"), self)]] : []), [b(tr(lang, "mTools"), "m:tools")], menuRow(lang));
+
+export function toolsMenu(lang: Lang): Screen {
+  return { text: tr(lang, "toolsMenu"), kb: kb([b(tr(lang, "sessTitle").replace(/<[^>]+>/g, ""), "m:sess")], menuRow(lang)) };
+}
+
+/** nums: числа из команды; balance — баланс активного счёта для короткой записи без депозита. */
+export function sizeScreen(lang: Lang, nums: number[] | null, balance: { value: number; cur: string } | null): Screen {
+  if (!nums || (nums.length !== 3 && nums.length !== 4)) return { text: tr(lang, "sizeUsage"), kb: toolsKb(lang) };
+  let bal: number;
+  let cur = "";
+  let rest = nums;
+  if (nums.length === 4) { [bal, ...rest] = nums; } else {
+    if (!balance) return { text: tr(lang, "noAccBal"), kb: toolsKb(lang) };
+    bal = balance.value; cur = balance.cur;
+  }
+  const r = positionSize({ balance: bal, riskPct: rest[0], entry: rest[1], stop: rest[2] });
+  if (!r.ok) return { text: tr(lang, "sizeBad"), kb: toolsKb(lang) };
+  const m = (n: number) => `${fmt(n, lang, 2)}${cur ? " " + cur : ""}`;
+  return {
+    text: tr(lang, "sizeRes", { dir: tr(lang, r.direction === "long" ? "tLong" : "tShort"), risk: m(r.riskAmount), dist: fmt(r.distance, lang), units: fmt(r.units, lang), value: m(r.value) }),
+    kb: toolsKb(lang),
+  };
+}
+
+export function rrScreen(lang: Lang, nums: number[] | null): Screen {
+  if (!nums || (nums.length !== 3 && nums.length !== 4)) return { text: tr(lang, "rrUsage"), kb: toolsKb(lang) };
+  const r = riskReward({ entry: nums[0], stop: nums[1], target: nums[2], winRate: nums.length === 4 ? nums[3] : null });
+  if (!r.ok) return { text: tr(lang, "rrBad"), kb: toolsKb(lang) };
+  const exp = r.expectancyR === null ? "" : tr(lang, "rrExp", { r: fmt(r.expectancyR, lang, 2) });
+  return {
+    text: tr(lang, "rrRes", { dir: tr(lang, r.direction === "long" ? "tLong" : "tShort"), risk: fmt(r.risk, lang), reward: fmt(r.reward, lang), rr: fmt(r.rr, lang, 2), be: fmt(r.breakEvenWinRate, lang, 1), exp }),
+    kb: toolsKb(lang),
+  };
+}
+
+export function sessionsScreen(lang: Lang, now: Date, tz: string): Screen {
+  const dur = (mins: number) => {
+    const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
+    return [d ? tr(lang, "durD", { d }) : "", h ? tr(lang, "durH", { h }) : "", !d && (m || !h) ? tr(lang, "durM", { m }) : ""].filter(Boolean).join(" ");
+  };
+  const rows = SESSIONS.map((s) => ({ s, st: sessionStatus(now, s), name: tr(lang, `sess${s.id[0].toUpperCase()}${s.id.slice(1)}`) }));
+  const lines = rows.map((r) => tr(lang, r.st.open ? "sessOpen" : "sessClosed", { name: r.name, t: dur(r.st.minutes) }));
+  const open = rows.filter((r) => r.st.open).map((r) => r.name);
+  const time = new Intl.DateTimeFormat(LOCALE[lang], { hour: "2-digit", minute: "2-digit", timeZone: tz, hourCycle: "h23" }).format(now);
+  const text = [tr(lang, "sessTitle"), tr(lang, "sessNow", { time }), "", ...lines, ...(open.length >= 2 ? ["", tr(lang, "sessOverlap", { names: open.join(" + ") })] : []), "", tr(lang, "sessNote")].join("\n");
+  return { text, kb: toolsKb(lang, "m:sess") };
+}
+
+export function tiltScreen(lang: Lang, rows: TradeRow[], cur: string): Screen {
+  const r = tiltAnalysis(rows.map(toStat));
+  if (r.afterLoss.count + r.other.count < 6) return { text: `${tr(lang, "tiltTitle")}\n\n${tr(lang, "tiltEmpty")}`, kb: statsNav(lang, "s:tilt") };
+  const line = (label: string, g: typeof r.afterLoss) =>
+    tr(lang, "tiltRow", { label, n: g.count, v: g.violationRate === null ? "—" : Math.round(g.violationRate), avg: g.avgPnl === null ? "—" : money(g.avgPnl, cur, lang, true) });
+  const enough = r.afterLoss.count >= 3 && r.other.count >= 3;
+  const verdict = !enough ? tr(lang, "tiltMore") : r.tilt ? tr(lang, "tiltWarn") : tr(lang, "tiltOk");
+  return { text: `${tr(lang, "tiltTitle")}\n\n${line(tr(lang, "tiltAfter"), r.afterLoss)}\n${line(tr(lang, "tiltOther"), r.other)}\n\n${verdict}`, kb: statsNav(lang, "s:tilt") };
+}
+
+export function bestScreen(lang: Lang, rows: TradeRow[], cur: string, tz: string): Screen {
+  const { best, worst } = bestWorst(rows.map(toStat), 3);
+  if (best.length + worst.length === 0) return { text: `${tr(lang, "bestTitle")}\n\n${tr(lang, "repEmpty")}`, kb: statsNav(lang, "s:best") };
+  const date = (iso: string) => new Intl.DateTimeFormat(LOCALE[lang], { day: "2-digit", month: "2-digit", timeZone: tz }).format(new Date(iso));
+  const list = (xs: typeof best) => (xs.length ? xs.map((x) => `${pnlDot(x.pnl)} ${esc(x.instrument)} · ${date(x.tradedAt)} · ${money(x.pnl, cur, lang, true)}`).join("\n") : tr(lang, "bestNone"));
+  return { text: `${tr(lang, "bestTitle")}\n\n<b>${tr(lang, "bestWin")}</b>\n${list(best)}\n\n<b>${tr(lang, "bestLoss")}</b>\n${list(worst)}`, kb: statsNav(lang, "s:best") };
 }

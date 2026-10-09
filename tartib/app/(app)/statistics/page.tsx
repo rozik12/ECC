@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WeeklyReportCard } from "@/components/reports/WeeklyReportCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
+import { BestWorstCard } from "@/components/statistics/BestWorstCard";
+import { TiltCard } from "@/components/statistics/TiltCard";
 import { TimeAnalysis } from "@/components/statistics/TimeAnalysis";
 import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
 import { PnlCalendar } from "@/components/statistics/PnlCalendar";
@@ -187,6 +189,8 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
 
           <EmotionAnalysis stats={emotions} currency={currency} />
           <TimeAnalysis trades={trades} timeZone={tz} currency={currency} />
+          <TiltCard trades={all} currency={currency} />
+          <BestWorstCard trades={trades} currency={currency} timeZone={tz} />
           <WeeklyReportCard plan={plan} report={latest?.content ?? null} currency={currency} />
         </>
       )}

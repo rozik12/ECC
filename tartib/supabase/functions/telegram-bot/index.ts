@@ -6,7 +6,7 @@ import {
 } from "./db.ts";
 import { isLoginCancel, LOGIN_PREFIX, loginContact, loginStart, type Contact } from "./login.ts";
 import { fetchHeadlines } from "./news.ts";
-import { parseTradeMessage } from "./parse.ts";
+import { parseNums, parseTradeMessage } from "./parse.ts";
 import { dayBounds, safeTimeZone } from "./time.ts";
 import { Tg } from "./tg.ts";
 import { emotionKeys, emotionLabel, langOf, menuAction, tr, type Lang } from "./text.ts";
@@ -252,6 +252,8 @@ async function statsScreen(c: Ctx, kind: string): Promise<ui.Screen> {
     case "emo": return ui.emotionsScreen(lang, await fetchTrades(uid, { from: periodStart("30d", c.u.tz) }), cur);
     case "instr": return ui.instrumentsScreen(lang, await fetchTrades(uid, { from: periodStart("30d", c.u.tz) }), cur);
     case "streak": return ui.streakScreen(lang, await fetchTrades(uid));
+    case "tilt": return ui.tiltScreen(lang, await fetchTrades(uid), cur);
+    case "best": return ui.bestScreen(lang, await fetchTrades(uid, { from: periodStart("30d", c.u.tz) }), cur, c.u.tz);
     case "goal": return ui.goalScreen(lang, await fetchTrades(uid), c.u.goal, c.u.tz);
     default: return ui.statsMenu(lang);
   }
@@ -332,6 +334,8 @@ async function menuCallback(c: Ctx, op: string) {
     case "repeat": return repeatLast(c);
     case "stats": return show(c, ui.statsMenu(c.lang));
     case "ach": return show(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId)));
+    case "tools": return show(c, ui.toolsMenu(c.lang));
+    case "sess": return show(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz));
     case "news": return show(c, ui.newsScreen(c.lang, await fetchHeadlines(c.lang)));
     case "check": return show(c, ui.checklistScreen(c.lang, c.u.checklist, c.st.chk ?? []));
     case "rules": return showRules(c);
@@ -384,6 +388,21 @@ const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
   "/emotions": async (c) => say(c, await statsScreen(c, "emo")),
   "/instruments": async (c) => say(c, await statsScreen(c, "instr")),
   "/achievements": async (c) => say(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId))),
+  "/tools": (c) => say(c, ui.toolsMenu(c.lang)),
+  "/sessions": (c) => say(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz)),
+  "/rr": (c, arg) => say(c, ui.rrScreen(c.lang, parseNums(arg))),
+  "/size": async (c, arg) => {
+    const nums = parseNums(arg);
+    let balance: { value: number; cur: string } | null = null;
+    if (nums && nums.length === 3) {
+      const accs = await listAccounts(c.u.userId);
+      const a = activeAccount(c.u, accs);
+      if (a) balance = { value: a.balance, cur: a.currency };
+    }
+    return say(c, ui.sizeScreen(c.lang, nums, balance));
+  },
+  "/tilt": async (c) => say(c, await statsScreen(c, "tilt")),
+  "/best": async (c) => say(c, await statsScreen(c, "best")),
   "/news": async (c) => say(c, ui.newsScreen(c.lang, await fetchHeadlines(c.lang))),
   "/checklist": (c) => say(c, ui.checklistScreen(c.lang, c.u.checklist, c.st.chk ?? [])),
   "/last": async (c) => { c.msgId = undefined; return showList(c, "l", 0); },

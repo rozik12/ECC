@@ -33,7 +33,8 @@
     "register": "Sign up",
     "main": "Main navigation",
     "news": "News",
-    "blog": "Blog"
+    "blog": "Blog",
+    "tools": "Tools"
   },
   "footer": {
     "terms": "Terms of use",
@@ -583,7 +584,8 @@
     "saveFailed": "Couldn't save the trade. Please try again.",
     "deleteFailed": "Couldn't delete the trade. Please try again.",
     "export": "Download CSV",
-    "import": "Import"
+    "import": "Import",
+    "cooldown": "Your last trade closed at a loss {m} min ago. Take a pause and go through your checklist before opening a new one."
   },
   "stats": {
     "title": "Statistics",
@@ -650,6 +652,24 @@
       "worstHour": "Violations happen most at this time of day: {hours} ({v} violations in {n} trades).",
       "noPattern": "No clear pattern yet: it takes at least 3 trades and 2 violations on the same day or time.",
       "note": "This is an observation from your journal, not a recommendation to trade at a certain time."
+    },
+    "tilt": {
+      "title": "After a loss",
+      "subtitle": "How you trade within an hour after a losing trade.",
+      "afterLoss": "Trades within an hour after a loss",
+      "other": "Other trades",
+      "trades": "trades",
+      "violations": "with rule violations",
+      "avg": "average result",
+      "warn": "You break the rules more often after a loss. Try a pause rule: after a stop-out, do not open a new trade for 15 minutes.",
+      "ok": "No noticeable difference: after a loss you keep to the rules as usual.",
+      "notEnough": "Not enough data yet: at least 3 trades are needed in each group."
+    },
+    "best": {
+      "title": "Best and worst trades",
+      "best": "Best",
+      "worst": "Worst",
+      "none": "none"
     }
   },
   "dashboard": {
@@ -1000,5 +1020,133 @@
     "cta": "Try it in practice: keep a journal and see the cost of your rule-breaking.",
     "ctaBtn": "Start for free",
     "edu": "This material is educational."
+  },
+  "tools": {
+    "title": "Trader tools",
+    "subtitle": "Free calculators. They work without signing up and every calculation runs right in your browser.",
+    "open": "Open",
+    "all": "← All tools",
+    "result": "Result",
+    "fillIn": "Fill in the fields to see the result.",
+    "invalid": "Check the values: numbers must be valid and positive, and the stop must differ from the entry.",
+    "note": "Calculations are for reference and ignore fees, slippage and gaps. This is not investment advice.",
+    "cta": "Want to keep a trade journal and see the cost of breaking your rules?",
+    "ctaBtn": "Start for free",
+    "long": "Long (buy)",
+    "short": "Short (sell)",
+    "none": "no data",
+    "size": {
+      "title": "Position size calculator",
+      "desc": "How many units of the asset to buy so that a stop-out loses the amount you chose in advance.",
+      "f": {
+        "balance": "Account",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price",
+        "stop": "Stop price"
+      },
+      "o": {
+        "direction": "Direction",
+        "riskAmount": "Amount at risk",
+        "distance": "Distance to stop",
+        "units": "Position size, units",
+        "value": "Position value"
+      }
+    },
+    "rr": {
+      "title": "Risk to reward calculator",
+      "desc": "The ratio of potential profit to loss and the minimum win rate at which trading does not lose money.",
+      "f": {
+        "entry": "Entry price",
+        "stop": "Stop price",
+        "target": "Target price (take profit)",
+        "winRate": "Win rate, % (optional)"
+      },
+      "o": {
+        "direction": "Direction",
+        "risk": "Risk per unit",
+        "reward": "Reward per unit",
+        "rr": "Risk to reward",
+        "breakEven": "Break-even win rate",
+        "expectancy": "Expectancy per trade, R"
+      }
+    },
+    "streak": {
+      "title": "Losing streaks",
+      "desc": "How often long losing streaks happen even with a working strategy and what they do to your account.",
+      "f": {
+        "winRate": "Win rate, %",
+        "trades": "Number of trades",
+        "streak": "Losing streak length",
+        "riskPct": "Risk per trade, %"
+      },
+      "o": {
+        "single": "Chance of such a streak at a given spot",
+        "atLeast": "Chance of at least one such streak over these trades",
+        "drawdown": "Drawdown after the streak",
+        "recovery": "Growth needed to recover, %"
+      },
+      "note": "The calculation assumes independent trades with the same probability. In real life this is an approximation."
+    },
+    "recovery": {
+      "title": "Drawdown recovery",
+      "desc": "Why losing 50% is easy and getting it back is hard: how much growth you need after a drawdown.",
+      "f": {
+        "drawdown": "Drawdown, %"
+      },
+      "o": {
+        "needed": "Growth needed to recover, %",
+        "mult": "Account must be multiplied by"
+      }
+    },
+    "compound": {
+      "title": "Compound growth",
+      "desc": "How an amount grows with a constant monthly return and deposits. A math illustration, not a forecast.",
+      "f": {
+        "start": "Starting amount",
+        "monthlyPct": "Monthly return, %",
+        "months": "Months",
+        "deposit": "Monthly deposit"
+      },
+      "o": {
+        "final": "Final amount",
+        "deposited": "Total deposited",
+        "gain": "Gain"
+      },
+      "note": "Steady returns do not exist in trading. The result only shows the arithmetic of percentages."
+    },
+    "sessions": {
+      "title": "Trading sessions and market hours",
+      "desc": "Which market sessions are open right now in Sydney, Tokyo, London and New York, and how long until they open or close.",
+      "open": "Open",
+      "closed": "Closed",
+      "closesIn": "closes in {t}",
+      "opensIn": "opens in {t}",
+      "yourTime": "Your time: {tz}",
+      "hours": "{o}:00–{c}:00 local time",
+      "overlap": "Two sessions are running at once: {names}.",
+      "names": {
+        "sydney": "Sydney",
+        "tokyo": "Tokyo",
+        "london": "London",
+        "newyork": "New York"
+      },
+      "note": "Hours are typical for the Forex market and follow daylight saving time. A specific exchange may differ; weekends are Saturday and Sunday.",
+      "h": "{h} h",
+      "m": "{m} min",
+      "d": "{d} d"
+    }
+  },
+  "shortcuts": {
+    "title": "Keyboard shortcuts",
+    "hint": "Press ? to see keyboard shortcuts",
+    "new": "New trade",
+    "dashboard": "Dashboard",
+    "trades": "Trades",
+    "stats": "Statistics",
+    "rules": "Rules",
+    "calc": "Calculator",
+    "tools": "Tools",
+    "close": "Close",
+    "help": "This help"
   }
 }

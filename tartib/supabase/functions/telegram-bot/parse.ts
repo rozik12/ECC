@@ -117,3 +117,16 @@ export function parseTradeMessage(text: string): ParseResult {
     },
   };
 }
+
+/** Числа из аргумента команды: «5000 1 100 98» или «5000, 1, 100,5». Любой не-числовой кусок → null. */
+export function parseNums(arg: string): number[] | null {
+  const parts = arg.trim().split(/[\s;]+/).filter(Boolean);
+  if (parts.length === 0) return null;
+  const out: number[] = [];
+  for (const p of parts) {
+    const n = Number(p.replace(",", "."));
+    if (!Number.isFinite(n)) return null;
+    out.push(n);
+  }
+  return out;
+}

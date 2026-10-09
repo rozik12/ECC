@@ -68,3 +68,21 @@ test("статистика и достижения совпадают с сай�
   assert.deepEqual(botStats.computeAchievements(trades, now), siteAch.computeAchievements(trades, now));
   assert.deepEqual(botStats.monthDiscipline(trades, 80, "UTC", now), siteAch.monthDiscipline(trades, 80, "UTC", now));
 });
+
+test("тильт, лучшие и худшие сделки, перерыв после убытка совпадают с сайтом", () => {
+  const mk = (i: number, min: number, pnl: number, ok: boolean) => ({
+    id: String(i), tradedAt: new Date(Date.UTC(2026, 9, 1, 10, min)).toISOString(), instrument: "X", direction: "long" as const, entryPrice: 1, exitPrice: 1,
+    pnl, emotion: "calm", rulesFollowed: ok, riskAmount: null, strategy: "", violations: [],
+  });
+  const trades = [mk(1, 0, -10, true), mk(2, 20, 5, false), mk(3, 40, -3, true), mk(4, 50, 8, false), mk(5, 70, -2, true), mk(6, 80, 4, false), mk(7, 100, -1, true), mk(8, 110, 2, false), mk(9, 300, 9, true), mk(10, 400, 3, true), mk(11, 500, 1, true), mk(12, 600, 2, true)];
+  assert.deepEqual(botStats.tiltAnalysis(trades), siteStats.tiltAnalysis(trades));
+  assert.equal(siteStats.tiltAnalysis(trades).tilt, true);
+  assert.deepEqual(botStats.bestWorst(trades, 2), siteStats.bestWorst(trades, 2));
+  const now = new Date(Date.UTC(2026, 9, 1, 11, 0));
+  const last = { tradedAt: new Date(Date.UTC(2026, 9, 1, 10, 45)).toISOString(), pnl: -5 };
+  assert.deepEqual(botStats.lossCooldown(last, now), siteStats.lossCooldown(last, now));
+  assert.deepEqual(siteStats.lossCooldown(last, now), { minutesAgo: 15 });
+  assert.equal(siteStats.lossCooldown({ ...last, pnl: 5 }, now), null);
+  assert.equal(siteStats.lossCooldown(last, new Date(Date.UTC(2026, 9, 1, 12, 0))), null);
+  assert.equal(siteStats.lossCooldown(null, now), null);
+});

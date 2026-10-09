@@ -12,8 +12,11 @@ export async function PublicHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-3 sm:px-6">
         <div className="flex items-center gap-6">
           <Logo />
-          <Link href="/news" className="text-sm text-muted hover:text-foreground">
+          <Link href="/news" className="hidden text-sm text-muted hover:text-foreground sm:block">
             {t("nav.news")}
+          </Link>
+          <Link href="/tools" className="hidden text-sm text-muted hover:text-foreground sm:block">
+            {t("nav.tools")}
           </Link>
           <Link href="/blog" className="hidden text-sm text-muted hover:text-foreground sm:block">
             {t("nav.blog")}
@@ -33,6 +36,14 @@ export async function PublicHeader() {
           </Link>
         </div>
       </div>
+      {/* На телефоне ссылки не помещаются в одну строку с кнопками, поэтому идут второй строкой */}
+      <nav aria-label={t("nav.main")} className="flex gap-5 overflow-x-auto border-t border-border px-4 py-2 text-sm text-muted sm:hidden">
+        {(["/news", "/tools", "/blog", "/pricing"] as const).map((href) => (
+          <Link key={href} href={href} className="shrink-0 hover:text-foreground">
+            {t(`nav.${href.slice(1)}`)}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

@@ -152,3 +152,45 @@ export function monthDiscipline(trades: { tradedAt: string; rulesFollowed: boole
   if (total > 0 && !reached && goal < 100) needed = Math.ceil((goal * total - 100 * followed) / (100 - goal));
   return { total, followed, percent, goal, reached, needed };
 }
+
+// ---------- поведение после убытка (тильт) ----------
+export type TiltGroup = { count: number; violationRate: number | null; avgPnl: number | null };
+export type TiltStats = { afterLoss: TiltGroup; other: TiltGroup; tilt: boolean };
+
+const tiltGroup = (xs: StatTrade[]): TiltGroup => ({
+  count: xs.length,
+  violationRate: xs.length ? (xs.filter((t) => !t.rulesFollowed).length / xs.length) * 100 : null,
+  avgPnl: xs.length ? sum(xs.map((t) => t.pnl)) / xs.length : null,
+});
+
+/** Сравнивает сделки, открытые вскоре после убыточной, с остальными: чаще ли в них нарушаются правила. */
+export function tiltAnalysis(trades: StatTrade[], windowMinutes = 60): TiltStats {
+  const sorted = [...trades].sort(byTime);
+  const after: StatTrade[] = [];
+  const other: StatTrade[] = [];
+  sorted.forEach((t, i) => {
+    if (i === 0) return;
+    const prev = sorted[i - 1];
+    const gap = (new Date(t.tradedAt).getTime() - new Date(prev.tradedAt).getTime()) / 60000;
+    (prev.pnl < 0 && gap >= 0 && gap <= windowMinutes ? after : other).push(t);
+  });
+  const a = tiltGroup(after);
+  const o = tiltGroup(other);
+  const tilt = a.count >= 3 && o.count >= 3 && (a.violationRate ?? 0) - (o.violationRate ?? 0) >= 15;
+  return { afterLoss: a, other: o, tilt };
+}
+
+/** Лучшие и худшие сделки по результату. */
+export function bestWorst(trades: StatTrade[], n = 3): { best: StatTrade[]; worst: StatTrade[] } {
+  return {
+    best: trades.filter((t) => t.pnl > 0).sort((a, b) => b.pnl - a.pnl).slice(0, n),
+    worst: trades.filter((t) => t.pnl < 0).sort((a, b) => a.pnl - b.pnl).slice(0, n),
+  };
+}
+
+/** Если последняя сделка закрыта в минус совсем недавно — вернёт, сколько минут назад. */
+export function lossCooldown(last: { tradedAt: string; pnl: number } | null, now: Date, minutes = 30): { minutesAgo: number } | null {
+  if (!last || last.pnl >= 0) return null;
+  const ago = Math.floor((now.getTime() - new Date(last.tradedAt).getTime()) / 60000);
+  return ago >= 0 && ago < minutes ? { minutesAgo: ago } : null;
+}

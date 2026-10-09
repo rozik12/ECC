@@ -8,6 +8,9 @@ import { evaluateRules as botEval } from "../supabase/functions/telegram-bot/rul
 import { calculatePnl as botPnl, tradeMetrics as botMetrics } from "../supabase/functions/telegram-bot/calc.ts";
 import { dayBounds as botDay } from "../supabase/functions/telegram-bot/time.ts";
 import { inferMarket as botMarket } from "../supabase/functions/telegram-bot/market.ts";
+import * as siteStats from "../lib/statistics/index.ts";
+import * as siteAch from "../lib/achievements.ts";
+import * as botStats from "../supabase/functions/telegram-bot/stats.ts";
 
 // Бот живёт отдельно от сайта и держит копии формул. Этот тест не даст им разойтись.
 
@@ -44,4 +47,24 @@ test("границы дня и определение рынка совпада�
     assert.deepEqual(botDay(tz, d), siteDay(tz, d));
   }
   for (const s of ["BTCUSDT", "EURUSD", "AAPL", "NQ", "ETH", "что-то"]) assert.equal(botMarket(s), siteMarket(s));
+});
+
+test("статистика и достижения совпадают с сайтом", () => {
+  const mk = (i: number, pnl: number, ok: boolean, emotion = "calm", instrument = "BTCUSDT") => ({
+    id: `t${i}`, tradedAt: new Date(Date.UTC(2026, 9, 1 + i, 10)).toISOString(), instrument, direction: "long" as const,
+    entryPrice: 100, exitPrice: 101, pnl, emotion, rulesFollowed: ok, riskAmount: 10, strategy: "",
+    violations: ok ? [] : [{ id: "r1", name: "Стоп" }],
+  });
+  const trades = [mk(1, 50, true), mk(2, -30, false, "fomo", "ETHUSDT"), mk(3, 20, true), mk(4, -10, false, "fomo"), mk(5, 40, true, "calm", "ETHUSDT"), mk(6, 15, true)];
+  const now = new Date("2026-10-12T12:00:00Z");
+  const summary = botStats.summarize(trades);
+  const siteSummary = siteStats.summarize(trades);
+  for (const k of Object.keys(summary) as (keyof typeof summary)[]) assert.equal(summary[k], siteSummary[k], String(k));
+  assert.deepEqual(botStats.disciplineCost(trades), siteStats.disciplineCost(trades));
+  assert.deepEqual(botStats.topViolations(trades), siteStats.topViolations(trades));
+  assert.deepEqual(botStats.byEmotion(trades), siteStats.byEmotion(trades));
+  assert.deepEqual(botStats.pnlByInstrument(trades), siteStats.pnlByInstrument(trades));
+  assert.deepEqual(botStats.disciplineStreak(trades, now), siteStats.disciplineStreak(trades, now));
+  assert.deepEqual(botStats.computeAchievements(trades, now), siteAch.computeAchievements(trades, now));
+  assert.deepEqual(botStats.monthDiscipline(trades, 80, "UTC", now), siteAch.monthDiscipline(trades, 80, "UTC", now));
 });

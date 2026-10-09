@@ -1,0 +1,223 @@
+// Все тексты бота на трёх языках. Подстановки: {name}.
+export type Lang = "ru" | "uz" | "en";
+export const langOf = (code: string | null | undefined): Lang => (code === "ru" || code === "uz" ? code : "en");
+
+type Dict = Record<string, string>;
+
+const ru: Dict = {
+  bExport: "📎 Экспорт CSV",
+  back: "‹ Назад", menu: "🏠 Меню", cancel: "✖ Отмена", yes: "Да", no: "Нет", skip: "Пропустить ›", save: "✅ Сохранить", refresh: "🔄 Обновить",
+  kNew: "➕ Сделка", kToday: "📊 Сегодня", kStats: "📈 Статистика", kTrades: "📋 Сделки", kSettings: "⚙️ Настройки", kHelp: "❓ Помощь",
+  menuTitle: "🏠 Главное меню\nВыбери действие или просто напиши сделку сообщением:\n<code>BTCUSDT long 65000 0.1 стоп 64500</code>",
+  mNew: "➕ Новая сделка", mRepeat: "⚡ Повторить последнюю", mOpen: "📂 Открытые", mLast: "📋 Последние", mToday: "📊 Сегодня", mStats: "📈 Статистика",
+  mAch: "🏆 Достижения", mCheck: "✅ Чек-лист", mRules: "📜 Правила", mAcc: "💼 Счета", mSettings: "⚙️ Настройки", mHelp: "❓ Помощь", mSite: "🌐 Сайт",
+  needLink: "Чтобы пользоваться ботом, подключи аккаунт: на сайте tartib.uk открой «Профиль» → «Telegram» и нажми «Подключить».",
+  startHelp: "👋 Привет! Я бот Tartib: помогаю вести журнал сделок и соблюдать свои правила. Я ничего не советую и не торгую за тебя.\n\nЧтобы начать, подключи аккаунт: tartib.uk → «Профиль» → «Telegram».",
+  linked: "✅ Аккаунт подключён!\n\nТеперь можно записывать сделки: кнопкой «➕ Сделка» или сообщением, например:\n<code>BTCUSDT long 65000 0.1 стоп 64500</code>\n\nВнизу появилось меню. Если пропадёт, нажми /menu.",
+  codeInvalid: "Код не подошёл или устарел. Получи новый на сайте: «Профиль» → «Telegram».",
+  error: "Что-то пошло не так. Попробуй ещё раз позже.", tooFast: "Слишком часто. Подожди минуту.", noAccount: "У тебя нет торгового счёта. Создай его на сайте: tartib.uk → «Настройки».",
+  limitTrades: "Достигнут лимит бесплатного тарифа (30 сделок). Сделку не записал.", notFound: "Не нашёл. Возможно, её уже удалили.", unknown: "Не понял сообщение. Вот что можно сделать:",
+  disclaimer: "Я только веду учёт. Это не инвестиционные рекомендации.",
+  // мастер сделки
+  wizInstrument: "➕ <b>Новая сделка</b>, шаг 1/7\nКакой инструмент? Выбери из недавних или напиши (например BTCUSDT).",
+  wizDirection: "Шаг 2/7. Направление?", wizEntry: "Шаг 3/7. Цена входа? Напиши число.", wizSize: "Шаг 4/7. Объём (в единицах актива)? Напиши число, например 0.1",
+  wizStop: "Шаг 5/7. Стоп-лосс? Напиши цену или нажми «Пропустить».", wizExit: "Шаг 6/7. Цена выхода? Если сделка ещё открыта, нажми «Пропустить».", wizEmotion: "Шаг 7/7. Какая эмоция?",
+  wizConfirm: "Проверь сделку:\n\n{summary}\n\nСохранить?", wizBad: "Не понял число. Напиши положительное число, например 65000 или 0.1.", wizCancelled: "Отменено. Ничего не сохранено.",
+  wizEditWhat: "Что изменить?", fInstrument: "Инструмент", fDirection: "Направление", fEntry: "Вход", fSize: "Объём", fStop: "Стоп", fExit: "Выход", fEmotion: "Эмоция",
+  // после сохранения
+  saved: "✅ <b>Записал</b>\n{line}\n{rules}", rulesOk: "Правила: соблюдены ✓", rulesBroken: "⚠️ Правила нарушены: {names}",
+  warnTrades: "⚠️ Лимит сделок на сегодня достигнут: {n} из {limit}.", warnLoss: "🛑 Дневной лимит убытка достигнут: {p}% из {limit}%.",
+  streakMilestone: "🔥 Серия: {n} сделок по правилам подряд!", newAch: "🏅 Новое достижение: {name}",
+  bClose: "🏁 Закрыть", bEmotion: "🎭 Эмоция", bComment: "💬 Комментарий", bStrategy: "🧩 Стратегия", bRulesMark: "📜 Отметить правило", bDelete: "🗑 Удалить", bDetails: "🔎 Подробнее", bOpenSite: "🌐 На сайте",
+  closeAsk: "🏁 Цена выхода для {instrument}? Напиши число.", closed: "🏁 Закрыл {instrument}\nP&L: {pnl}", notOpen: "Эта сделка уже закрыта.",
+  commentAsk: "💬 Напиши комментарий к сделке (до 500 символов).", commentSaved: "💬 Комментарий сохранён.",
+  strategyAsk: "🧩 Напиши название стратегии (до 40 символов) или выбери недавнюю.", strategySaved: "🧩 Стратегия: {name}",
+  emotionAsk: "🎭 Какая эмоция была в этой сделке?", emotionSaved: "🎭 Эмоция: {name}",
+  rulesMarkTitle: "📜 Отметь пользовательские правила, которые нарушены в этой сделке:", rulesMarkNone: "У тебя нет пользовательских правил (тип «своё»). Автоматические правила проверяются сами.",
+  deleteAsk: "Удалить сделку?\n{line}", deleted: "🗑 Сделка удалена.",
+  // списки
+  lastTitle: "📋 <b>Последние сделки</b> (страница {p} из {pp})", lastEmpty: "Сделок пока нет. Нажми «➕ Новая сделка».", openTitle: "📂 <b>Открытые сделки</b> ({n})", openEmpty: "Открытых сделок нет.",
+  card: "{dir} <b>{instrument}</b> {DIR}\nВход {entry} · Объём {size}\nСтоп {stop} · Тейк {tp}\nВыход {exit}\nP&L: {pnl}\nЭмоция: {emotion}\nСтратегия: {strategy}\nПравила: {rules}\nКомментарий: {comment}\n🕒 {date}",
+  openWord: "открыта", repeatNone: "Пока нет сделок, которые можно повторить.", repeatDone: "⚡ Повторил как новую открытую сделку.",
+  // статистика
+  statsMenu: "📈 <b>Статистика</b>\nКакой отчёт показать?", sToday: "Сегодня", sWeek: "7 дней", sMonth: "Этот месяц", sAll: "Всё время", sDiscipline: "💰 Цена дисциплины", sStreak: "🔥 Серия", sGoal: "🎯 Цель месяца",
+  sViol: "⚠️ Нарушения", sEmo: "🎭 Эмоции", sInstr: "🏷 Инструменты",
+  repPeriod: "📊 <b>{title}</b>\nСделок: {n} · по правилам: {followed} ({pct})\nP&L: {pnl}\nWin rate: {wr} · Profit factor: {pf}\nСр. прибыль: {aw} · Ср. убыток: {al}", repEmpty: "За этот период сделок нет.",
+  discTitle: "💰 <b>Цена дисциплины</b> (30 дней)\nПо правилам: {fp} ({fc} сд.)\nС нарушениями: {vp} ({vc} сд.)", discCost: "Нарушения стоили тебе {cost}.", discNone: "Нарушений нет, так держать.", discNoLoss: "Сделки с нарушениями не принесли убытка, но дисциплина важнее удачи.",
+  streakText: "🔥 <b>Серия по правилам</b>\nСейчас: {cur} сд. подряд\nЛучшая: {best}\nДней без нарушений: {days}", streakNever: "ещё не было нарушений",
+  goalText: "🎯 <b>Цель месяца: {goal}%</b>\nСейчас: {pct} ({f} из {t})", goalReached: "Цель достигнута 🎉", goalLeft: "Чтобы дойти до цели, нужно ещё {n} сделок по правилам подряд.", goalNone: "В этом месяце ещё нет сделок.",
+  violTitle: "⚠️ <b>Частые нарушения</b> (30 дней)", violNone: "Нарушений за 30 дней нет.", emoTitle: "🎭 <b>Результат по эмоциям</b> (30 дней)", instrTitle: "🏷 <b>Инструменты</b> (30 дней, по P&L)", times: "{n} раз", tradesShort: "{n} сд.",
+  achTitle: "🏆 <b>Достижения</b> ({done} из {total})",
+  ach_first_trade: "Первая запись", ach_trades_10: "10 записей", ach_trades_50: "50 записей", ach_trades_100: "100 записей", ach_streak_5: "Серия 5", ach_streak_10: "Серия 10", ach_streak_20: "Серия 20", ach_clean_week: "Чистая неделя",
+  todayTitle: "📊 Сегодня", weekTitle: "За 7 дней", monthTitle: "За месяц", allTitle: "За всё время",
+  // счета, правила, настройки
+  accTitle: "💼 <b>Счета</b>\nЗаписи идут на активный счёт (отмечен ✅).", accBalance: "{name}: {balance}", accSet: "Активный счёт: {name}",
+  rulesTitle: "📜 <b>Правила</b>\nНажми, чтобы включить или выключить.", rulesEmpty: "Правил нет. Добавь их на сайте: tartib.uk → «Правила».", ruleOn: "✅", ruleOff: "⛔",
+  setTitle: "⚙️ <b>Настройки</b>", setLang: "Язык", setRem: "Напоминания (нет записей 3 дня)", setDaily: "Итог дня в 21:00", setWeekly: "Итог недели (вс, 19:00)", setAcc: "Активный счёт", on: "вкл", off: "выкл",
+  bLang: "🌐 Язык", bAcc: "💼 Счёт", bUnlink: "🔌 Отключить аккаунт", unlinkAsk: "Отключить Telegram от аккаунта Tartib? Сделки останутся на сайте.", unlinked: "Аккаунт отключён. Чтобы подключить снова, получи новый код на сайте.",
+  langChanged: "Язык изменён на русский.",
+  // чек-лист
+  checkTitle: "✅ <b>Чек-лист перед сделкой</b>\nОтметь пункты:", checkDone: "Чек-лист пройден ✅\nЭто проверка дисциплины, а не совет входить в сделку.", check_plan: "Есть торговый план", check_stop: "Стоп-лосс определён", check_risk: "Риск в рамках моих правил", check_calm: "Я спокоен", check_revenge: "Это не попытка отыграться",
+  // помощь
+  helpTitle: "❓ <b>Помощь</b>\nВыбери тему:", hFormat: "✍️ Как записать сделку", hCmds: "⌨️ Команды", hBtns: "🔘 Кнопки и мастер", hAbout: "ℹ️ О боте",
+  helpFormat: "✍️ <b>Запись сообщением</b>\n<code>BTCUSDT long 65000 0.1 стоп 64500</code>\n\nПорядок: инструмент, направление (long/short, лонг/шорт, buy/sell), цена входа, объём.\nДобавить можно: <code>тейк 67000</code>, <code>выход 66000</code>, <code>плечо 5</code> или <code>x5</code>, эмоцию (<code>fomo</code>, <code>страх</code>, <code>спокойствие</code>).\nДробные числа можно с запятой: 65,5.\n\nПримеры:\n<code>eth short 2000 1 sl 2050 tp 1900</code>\n<code>SOLUSDT лонг 150 2 стоп 145 выход 160</code>",
+  helpCmds: "⌨️ <b>Команды</b>\n/menu: главное меню\n/new: мастер новой сделки\n/today: итог дня\n/week, /month: итоги\n/stats: все отчёты\n/discipline: цена дисциплины\n/streak, /goal, /violations, /emotions\n/last: последние сделки\n/open: открытые сделки\n/undo: удалить последнюю\n/rules: правила\n/accounts: счета\n/checklist: чек-лист\n/achievements: достижения\n/export: выгрузка сделок в CSV\n/settings: настройки\n/language: язык\n/unlink: отключить аккаунт\n/cancel: отменить текущее действие",
+  helpBtns: "🔘 <b>Кнопки</b>\n«➕ Сделка» ведёт по шагам: инструмент, направление, цены, эмоция. Перед сохранением показывается итог.\nПод записанной сделкой есть кнопки: закрыть, эмоция, комментарий, стратегия, отметить правило, удалить.\nОткрытая сделка: нет цены выхода. «🏁 Закрыть» посчитает P&L.",
+  helpAbout: "ℹ️ <b>О боте</b>\nБот ведёт учёт твоих сделок и показывает, соблюдаешь ли ты свои правила. Данные те же, что на сайте tartib.uk.\nОн не даёт торговых советов, сигналов и не гарантирует прибыль.",
+  exportCaption: "📎 Твои сделки (CSV), строк: {n}", exportEmpty: "Пока нет сделок для выгрузки.",
+  // расписание
+  reminder: "Ты не записывал сделки уже {d} дн. Если торговал, внеси их, пока помнишь детали.\nВыключить напоминания: /settings",
+  dailySummary: "🌙 <b>Итог дня</b>\nСделок: {n} · по правилам: {followed}\nP&L: {pnl}", weeklySummary: "📅 <b>Итог недели</b>\nСделок: {n} · по правилам: {followed} ({pct})\nP&L: {pnl}\nСерия по правилам: {streak}\n{viol}",
+  weeklyViol: "Чаще всего нарушалось: {name}",
+  missing_instrument: "Не понял инструмент (например BTCUSDT).", missing_direction: "Не понял направление: long или short.", missing_entry: "Не понял цену входа.", missing_size: "Не понял объём.",
+  example: "Пример:\n<code>BTCUSDT long 65000 0.1 стоп 64500</code>",
+  e_calm: "😌 Спокойствие", e_fear: "😨 Страх", e_greed: "🤑 Жадность", e_fomo: "😰 FOMO", e_revenge: "😡 Месть", e_confident: "😎 Уверенность", e_uncertain: "🤔 Сомнение", e_other: "😶 Другое",
+  none: "нет", dash: "—",
+};
+
+const en: Dict = {
+  bExport: "📎 Export CSV",
+  back: "‹ Back", menu: "🏠 Menu", cancel: "✖ Cancel", yes: "Yes", no: "No", skip: "Skip ›", save: "✅ Save", refresh: "🔄 Refresh",
+  kNew: "➕ Trade", kToday: "📊 Today", kStats: "📈 Stats", kTrades: "📋 Trades", kSettings: "⚙️ Settings", kHelp: "❓ Help",
+  menuTitle: "🏠 Main menu\nChoose an action or just send a trade as a message:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>",
+  mNew: "➕ New trade", mRepeat: "⚡ Repeat last", mOpen: "📂 Open", mLast: "📋 Recent", mToday: "📊 Today", mStats: "📈 Stats",
+  mAch: "🏆 Achievements", mCheck: "✅ Checklist", mRules: "📜 Rules", mAcc: "💼 Accounts", mSettings: "⚙️ Settings", mHelp: "❓ Help", mSite: "🌐 Website",
+  needLink: "To use the bot, connect your account: on tartib.uk open “Profile” → “Telegram” and press “Connect”.",
+  startHelp: "👋 Hi! I'm the Tartib bot: I help you keep a trade journal and follow your own rules. I don't give advice and I don't trade for you.\n\nTo start, connect your account: tartib.uk → “Profile” → “Telegram”.",
+  linked: "✅ Account connected!\n\nYou can now log trades with the “➕ Trade” button or by message, for example:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>\n\nA menu appeared below. If it disappears, send /menu.",
+  codeInvalid: "The code is wrong or expired. Get a new one on the site: “Profile” → “Telegram”.",
+  error: "Something went wrong. Please try again later.", tooFast: "Too fast. Please wait a minute.", noAccount: "You have no trading account. Create one on the site: tartib.uk → “Settings”.",
+  limitTrades: "Free plan limit reached (30 trades). The trade was not saved.", notFound: "Not found. It may have been deleted.", unknown: "I didn't understand. Here is what you can do:",
+  disclaimer: "I only keep records. This is not investment advice.",
+  wizInstrument: "➕ <b>New trade</b>, step 1/7\nWhich instrument? Pick a recent one or type it (e.g. BTCUSDT).",
+  wizDirection: "Step 2/7. Direction?", wizEntry: "Step 3/7. Entry price? Send a number.", wizSize: "Step 4/7. Size (units of the asset)? Send a number, e.g. 0.1",
+  wizStop: "Step 5/7. Stop-loss? Send a price or press “Skip”.", wizExit: "Step 6/7. Exit price? If the trade is still open, press “Skip”.", wizEmotion: "Step 7/7. Which emotion?",
+  wizConfirm: "Check the trade:\n\n{summary}\n\nSave?", wizBad: "I couldn't read the number. Send a positive number, e.g. 65000 or 0.1.", wizCancelled: "Cancelled. Nothing was saved.",
+  wizEditWhat: "What to change?", fInstrument: "Instrument", fDirection: "Direction", fEntry: "Entry", fSize: "Size", fStop: "Stop", fExit: "Exit", fEmotion: "Emotion",
+  saved: "✅ <b>Logged</b>\n{line}\n{rules}", rulesOk: "Rules: followed ✓", rulesBroken: "⚠️ Rules broken: {names}",
+  warnTrades: "⚠️ Today's trade limit reached: {n} of {limit}.", warnLoss: "🛑 Daily loss limit reached: {p}% of {limit}%.",
+  streakMilestone: "🔥 Streak: {n} trades by the rules in a row!", newAch: "🏅 New achievement: {name}",
+  bClose: "🏁 Close", bEmotion: "🎭 Emotion", bComment: "💬 Comment", bStrategy: "🧩 Strategy", bRulesMark: "📜 Mark rule", bDelete: "🗑 Delete", bDetails: "🔎 Details", bOpenSite: "🌐 On the site",
+  closeAsk: "🏁 Exit price for {instrument}? Send a number.", closed: "🏁 Closed {instrument}\nP&L: {pnl}", notOpen: "This trade is already closed.",
+  commentAsk: "💬 Send a comment for this trade (up to 500 characters).", commentSaved: "💬 Comment saved.",
+  strategyAsk: "🧩 Send the strategy name (up to 40 characters) or pick a recent one.", strategySaved: "🧩 Strategy: {name}",
+  emotionAsk: "🎭 Which emotion did you have in this trade?", emotionSaved: "🎭 Emotion: {name}",
+  rulesMarkTitle: "📜 Mark the custom rules that were broken in this trade:", rulesMarkNone: "You have no custom rules (type “custom”). Automatic rules are checked by themselves.",
+  deleteAsk: "Delete this trade?\n{line}", deleted: "🗑 Trade deleted.",
+  lastTitle: "📋 <b>Recent trades</b> (page {p} of {pp})", lastEmpty: "No trades yet. Press “➕ New trade”.", openTitle: "📂 <b>Open trades</b> ({n})", openEmpty: "No open trades.",
+  card: "{dir} <b>{instrument}</b> {DIR}\nEntry {entry} · Size {size}\nStop {stop} · Take {tp}\nExit {exit}\nP&L: {pnl}\nEmotion: {emotion}\nStrategy: {strategy}\nRules: {rules}\nComment: {comment}\n🕒 {date}",
+  openWord: "open", repeatNone: "No trades to repeat yet.", repeatDone: "⚡ Repeated as a new open trade.",
+  statsMenu: "📈 <b>Statistics</b>\nWhich report?", sToday: "Today", sWeek: "7 days", sMonth: "This month", sAll: "All time", sDiscipline: "💰 Price of discipline", sStreak: "🔥 Streak", sGoal: "🎯 Monthly goal",
+  sViol: "⚠️ Violations", sEmo: "🎭 Emotions", sInstr: "🏷 Instruments",
+  repPeriod: "📊 <b>{title}</b>\nTrades: {n} · by the rules: {followed} ({pct})\nP&L: {pnl}\nWin rate: {wr} · Profit factor: {pf}\nAvg win: {aw} · Avg loss: {al}", repEmpty: "No trades in this period.",
+  discTitle: "💰 <b>Price of discipline</b> (30 days)\nBy the rules: {fp} ({fc} trades)\nWith violations: {vp} ({vc} trades)", discCost: "Violations cost you {cost}.", discNone: "No violations, keep it up.", discNoLoss: "Trades with violations did not lose money, but discipline matters more than luck.",
+  streakText: "🔥 <b>Streak by the rules</b>\nNow: {cur} trades in a row\nBest: {best}\nDays without violations: {days}", streakNever: "no violations yet",
+  goalText: "🎯 <b>Monthly goal: {goal}%</b>\nNow: {pct} ({f} of {t})", goalReached: "Goal reached 🎉", goalLeft: "To reach the goal you need {n} more trades by the rules in a row.", goalNone: "No trades yet this month.",
+  violTitle: "⚠️ <b>Frequent violations</b> (30 days)", violNone: "No violations in 30 days.", emoTitle: "🎭 <b>Result by emotion</b> (30 days)", instrTitle: "🏷 <b>Instruments</b> (30 days, by P&L)", times: "{n} times", tradesShort: "{n} tr.",
+  achTitle: "🏆 <b>Achievements</b> ({done} of {total})",
+  ach_first_trade: "First entry", ach_trades_10: "10 entries", ach_trades_50: "50 entries", ach_trades_100: "100 entries", ach_streak_5: "Streak 5", ach_streak_10: "Streak 10", ach_streak_20: "Streak 20", ach_clean_week: "Clean week",
+  todayTitle: "📊 Today", weekTitle: "Last 7 days", monthTitle: "This month", allTitle: "All time",
+  accTitle: "💼 <b>Accounts</b>\nTrades go to the active account (marked ✅).", accBalance: "{name}: {balance}", accSet: "Active account: {name}",
+  rulesTitle: "📜 <b>Rules</b>\nTap to turn on or off.", rulesEmpty: "No rules. Add them on the site: tartib.uk → “Rules”.", ruleOn: "✅", ruleOff: "⛔",
+  setTitle: "⚙️ <b>Settings</b>", setLang: "Language", setRem: "Reminders (no entries for 3 days)", setDaily: "Daily summary at 21:00", setWeekly: "Weekly summary (Sun, 19:00)", setAcc: "Active account", on: "on", off: "off",
+  bLang: "🌐 Language", bAcc: "💼 Account", bUnlink: "🔌 Disconnect account", unlinkAsk: "Disconnect Telegram from your Tartib account? Trades stay on the site.", unlinked: "Account disconnected. To connect again, get a new code on the site.",
+  langChanged: "Language changed to English.",
+  checkTitle: "✅ <b>Pre-trade checklist</b>\nTick the items:", checkDone: "Checklist done ✅\nThis is a discipline check, not advice to enter a trade.", check_plan: "I have a trading plan", check_stop: "Stop-loss is defined", check_risk: "Risk is within my rules", check_calm: "I am calm", check_revenge: "This is not an attempt to win it back",
+  helpTitle: "❓ <b>Help</b>\nChoose a topic:", hFormat: "✍️ How to log a trade", hCmds: "⌨️ Commands", hBtns: "🔘 Buttons and wizard", hAbout: "ℹ️ About",
+  helpFormat: "✍️ <b>Logging by message</b>\n<code>BTCUSDT long 65000 0.1 stop 64500</code>\n\nOrder: instrument, direction (long/short, buy/sell), entry price, size.\nYou can add: <code>tp 67000</code>, <code>exit 66000</code>, <code>leverage 5</code> or <code>x5</code>, an emotion (<code>fomo</code>, <code>fear</code>, <code>calm</code>).\nDecimals may use a comma: 65,5.\n\nExamples:\n<code>eth short 2000 1 sl 2050 tp 1900</code>\n<code>SOLUSDT long 150 2 stop 145 exit 160</code>",
+  helpCmds: "⌨️ <b>Commands</b>\n/menu: main menu\n/new: new trade wizard\n/today: today's summary\n/week, /month: summaries\n/stats: all reports\n/discipline: price of discipline\n/streak, /goal, /violations, /emotions\n/last: recent trades\n/open: open trades\n/undo: delete the last trade\n/rules: rules\n/accounts: accounts\n/checklist: checklist\n/achievements: achievements\n/export: export trades to CSV\n/settings: settings\n/language: language\n/unlink: disconnect account\n/cancel: cancel the current action",
+  helpBtns: "🔘 <b>Buttons</b>\n“➕ Trade” walks you through: instrument, direction, prices, emotion. A summary is shown before saving.\nUnder a logged trade there are buttons: close, emotion, comment, strategy, mark rule, delete.\nAn open trade has no exit price. “🏁 Close” will calculate P&L.",
+  helpAbout: "ℹ️ <b>About</b>\nThe bot keeps your trade records and shows whether you follow your own rules. The data is the same as on tartib.uk.\nIt gives no trading advice or signals and does not guarantee profit.",
+  exportCaption: "📎 Your trades (CSV), rows: {n}", exportEmpty: "No trades to export yet.",
+  reminder: "You haven't logged trades for {d} days. If you traded, add them while you remember the details.\nTurn reminders off: /settings",
+  dailySummary: "🌙 <b>Daily summary</b>\nTrades: {n} · by the rules: {followed}\nP&L: {pnl}", weeklySummary: "📅 <b>Weekly summary</b>\nTrades: {n} · by the rules: {followed} ({pct})\nP&L: {pnl}\nStreak by the rules: {streak}\n{viol}",
+  weeklyViol: "Most often broken: {name}",
+  missing_instrument: "I couldn't find the instrument (e.g. BTCUSDT).", missing_direction: "I couldn't find the direction: long or short.", missing_entry: "I couldn't find the entry price.", missing_size: "I couldn't find the size.",
+  example: "Example:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>",
+  e_calm: "😌 Calm", e_fear: "😨 Fear", e_greed: "🤑 Greed", e_fomo: "😰 FOMO", e_revenge: "😡 Revenge", e_confident: "😎 Confident", e_uncertain: "🤔 Uncertain", e_other: "😶 Other",
+  none: "none", dash: "—",
+};
+
+const uz: Dict = {
+  bExport: "📎 CSV eksport",
+  back: "‹ Orqaga", menu: "🏠 Menyu", cancel: "✖ Bekor qilish", yes: "Ha", no: "Yo'q", skip: "O'tkazib yuborish ›", save: "✅ Saqlash", refresh: "🔄 Yangilash",
+  kNew: "➕ Bitim", kToday: "📊 Bugun", kStats: "📈 Statistika", kTrades: "📋 Bitimlar", kSettings: "⚙️ Sozlamalar", kHelp: "❓ Yordam",
+  menuTitle: "🏠 Asosiy menyu\nAmalni tanlang yoki bitimni xabar bilan yuboring:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>",
+  mNew: "➕ Yangi bitim", mRepeat: "⚡ Oxirgisini takrorlash", mOpen: "📂 Ochiq", mLast: "📋 Oxirgilari", mToday: "📊 Bugun", mStats: "📈 Statistika",
+  mAch: "🏆 Yutuqlar", mCheck: "✅ Cheklist", mRules: "📜 Qoidalar", mAcc: "💼 Hisoblar", mSettings: "⚙️ Sozlamalar", mHelp: "❓ Yordam", mSite: "🌐 Sayt",
+  needLink: "Botdan foydalanish uchun akkauntni ulang: tartib.uk saytida «Profil» → «Telegram» bo'limini ochib, «Ulash» tugmasini bosing.",
+  startHelp: "👋 Salom! Men Tartib botiman: bitimlar jurnalini yuritishga va o'z qoidalaringizga rioya qilishga yordam beraman. Men maslahat bermayman va sizning o'rningizga savdo qilmayman.\n\nBoshlash uchun akkauntni ulang: tartib.uk → «Profil» → «Telegram».",
+  linked: "✅ Akkaunt ulandi!\n\nEndi bitimlarni «➕ Bitim» tugmasi yoki xabar bilan yozishingiz mumkin, masalan:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>\n\nPastda menyu paydo bo'ldi. Yo'qolsa, /menu yuboring.",
+  codeInvalid: "Kod mos kelmadi yoki eskirgan. Saytdan yangisini oling: «Profil» → «Telegram».",
+  error: "Nimadir xato ketdi. Keyinroq qayta urinib ko'ring.", tooFast: "Juda tez. Bir daqiqa kuting.", noAccount: "Sizda savdo hisobi yo'q. Uni saytda yarating: tartib.uk → «Sozlamalar».",
+  limitTrades: "Bepul tarif limitiga yetildi (30 ta bitim). Bitim yozilmadi.", notFound: "Topilmadi. U o'chirilgan bo'lishi mumkin.", unknown: "Xabarni tushunmadim. Mana nima qilish mumkin:",
+  disclaimer: "Men faqat hisob yuritaman. Bu investitsiya tavsiyasi emas.",
+  wizInstrument: "➕ <b>Yangi bitim</b>, 1/7-qadam\nQaysi instrument? Oxirgilaridan tanlang yoki yozing (masalan BTCUSDT).",
+  wizDirection: "2/7-qadam. Yo'nalish?", wizEntry: "3/7-qadam. Kirish narxi? Son yozing.", wizSize: "4/7-qadam. Hajm (aktiv birligida)? Son yozing, masalan 0.1",
+  wizStop: "5/7-qadam. Stop-loss? Narxni yozing yoki «O'tkazib yuborish»ni bosing.", wizExit: "6/7-qadam. Chiqish narxi? Bitim hali ochiq bo'lsa, «O'tkazib yuborish»ni bosing.", wizEmotion: "7/7-qadam. Qanday hissiyot?",
+  wizConfirm: "Bitimni tekshiring:\n\n{summary}\n\nSaqlansinmi?", wizBad: "Sonni tushunmadim. Musbat son yozing, masalan 65000 yoki 0.1.", wizCancelled: "Bekor qilindi. Hech narsa saqlanmadi.",
+  wizEditWhat: "Nimani o'zgartirish kerak?", fInstrument: "Instrument", fDirection: "Yo'nalish", fEntry: "Kirish", fSize: "Hajm", fStop: "Stop", fExit: "Chiqish", fEmotion: "Hissiyot",
+  saved: "✅ <b>Yozildi</b>\n{line}\n{rules}", rulesOk: "Qoidalar: bajarildi ✓", rulesBroken: "⚠️ Qoidalar buzildi: {names}",
+  warnTrades: "⚠️ Bugungi bitimlar limitiga yetildi: {n} / {limit}.", warnLoss: "🛑 Kunlik zarar limitiga yetildi: {p}% / {limit}%.",
+  streakMilestone: "🔥 Seriya: ketma-ket {n} ta bitim qoida bo'yicha!", newAch: "🏅 Yangi yutuq: {name}",
+  bClose: "🏁 Yopish", bEmotion: "🎭 Hissiyot", bComment: "💬 Izoh", bStrategy: "🧩 Strategiya", bRulesMark: "📜 Qoidani belgilash", bDelete: "🗑 O'chirish", bDetails: "🔎 Batafsil", bOpenSite: "🌐 Saytda",
+  closeAsk: "🏁 {instrument} uchun chiqish narxi? Son yozing.", closed: "🏁 {instrument} yopildi\nP&L: {pnl}", notOpen: "Bu bitim allaqachon yopilgan.",
+  commentAsk: "💬 Bitimga izoh yozing (500 belgigacha).", commentSaved: "💬 Izoh saqlandi.",
+  strategyAsk: "🧩 Strategiya nomini yozing (40 belgigacha) yoki oxirgilaridan tanlang.", strategySaved: "🧩 Strategiya: {name}",
+  emotionAsk: "🎭 Bu bitimda qanday hissiyot bo'lgan?", emotionSaved: "🎭 Hissiyot: {name}",
+  rulesMarkTitle: "📜 Bu bitimda buzilgan shaxsiy qoidalarni belgilang:", rulesMarkNone: "Sizda shaxsiy qoidalar yo'q («o'zimniki» turi). Avtomatik qoidalar o'zi tekshiriladi.",
+  deleteAsk: "Bitim o'chirilsinmi?\n{line}", deleted: "🗑 Bitim o'chirildi.",
+  lastTitle: "📋 <b>Oxirgi bitimlar</b> ({p} / {pp}-sahifa)", lastEmpty: "Hali bitim yo'q. «➕ Yangi bitim»ni bosing.", openTitle: "📂 <b>Ochiq bitimlar</b> ({n})", openEmpty: "Ochiq bitimlar yo'q.",
+  card: "{dir} <b>{instrument}</b> {DIR}\nKirish {entry} · Hajm {size}\nStop {stop} · Take {tp}\nChiqish {exit}\nP&L: {pnl}\nHissiyot: {emotion}\nStrategiya: {strategy}\nQoidalar: {rules}\nIzoh: {comment}\n🕒 {date}",
+  openWord: "ochiq", repeatNone: "Takrorlash uchun bitim hali yo'q.", repeatDone: "⚡ Yangi ochiq bitim sifatida takrorlandi.",
+  statsMenu: "📈 <b>Statistika</b>\nQaysi hisobot?", sToday: "Bugun", sWeek: "7 kun", sMonth: "Shu oy", sAll: "Butun vaqt", sDiscipline: "💰 Intizom narxi", sStreak: "🔥 Seriya", sGoal: "🎯 Oy maqsadi",
+  sViol: "⚠️ Buzilishlar", sEmo: "🎭 Hissiyotlar", sInstr: "🏷 Instrumentlar",
+  repPeriod: "📊 <b>{title}</b>\nBitimlar: {n} · qoida bo'yicha: {followed} ({pct})\nP&L: {pnl}\nWin rate: {wr} · Profit factor: {pf}\nO'rt. foyda: {aw} · O'rt. zarar: {al}", repEmpty: "Bu davrda bitim yo'q.",
+  discTitle: "💰 <b>Intizom narxi</b> (30 kun)\nQoida bo'yicha: {fp} ({fc} ta)\nBuzilishlar bilan: {vp} ({vc} ta)", discCost: "Buzilishlar sizga {cost} turdi.", discNone: "Buzilishlar yo'q, shunday davom eting.", discNoLoss: "Buzilgan bitimlar zarar keltirmadi, lekin intizom omaddan muhimroq.",
+  streakText: "🔥 <b>Qoida bo'yicha seriya</b>\nHozir: ketma-ket {cur} ta\nEng yaxshisi: {best}\nBuzilishsiz kunlar: {days}", streakNever: "hali buzilish bo'lmagan",
+  goalText: "🎯 <b>Oy maqsadi: {goal}%</b>\nHozir: {pct} ({t} tadan {f})", goalReached: "Maqsadga erishildi 🎉", goalLeft: "Maqsadga yetish uchun yana {n} ta bitimni ketma-ket qoida bo'yicha qilish kerak.", goalNone: "Bu oyda hali bitim yo'q.",
+  violTitle: "⚠️ <b>Tez-tez buzilganlar</b> (30 kun)", violNone: "30 kunda buzilishlar yo'q.", emoTitle: "🎭 <b>Hissiyotlar bo'yicha natija</b> (30 kun)", instrTitle: "🏷 <b>Instrumentlar</b> (30 kun, P&L bo'yicha)", times: "{n} marta", tradesShort: "{n} ta",
+  achTitle: "🏆 <b>Yutuqlar</b> ({total} tadan {done})",
+  ach_first_trade: "Birinchi yozuv", ach_trades_10: "10 ta yozuv", ach_trades_50: "50 ta yozuv", ach_trades_100: "100 ta yozuv", ach_streak_5: "5 ta seriya", ach_streak_10: "10 ta seriya", ach_streak_20: "20 ta seriya", ach_clean_week: "Toza hafta",
+  todayTitle: "📊 Bugun", weekTitle: "Oxirgi 7 kun", monthTitle: "Shu oy", allTitle: "Butun vaqt",
+  accTitle: "💼 <b>Hisoblar</b>\nBitimlar faol hisobga yoziladi (✅ bilan belgilangan).", accBalance: "{name}: {balance}", accSet: "Faol hisob: {name}",
+  rulesTitle: "📜 <b>Qoidalar</b>\nYoqish yoki o'chirish uchun bosing.", rulesEmpty: "Qoidalar yo'q. Ularni saytda qo'shing: tartib.uk → «Qoidalar».", ruleOn: "✅", ruleOff: "⛔",
+  setTitle: "⚙️ <b>Sozlamalar</b>", setLang: "Til", setRem: "Eslatmalar (3 kun yozuv yo'q)", setDaily: "Kun yakuni 21:00 da", setWeekly: "Hafta yakuni (yak, 19:00)", setAcc: "Faol hisob", on: "yoq", off: "o'ch",
+  bLang: "🌐 Til", bAcc: "💼 Hisob", bUnlink: "🔌 Akkauntni uzish", unlinkAsk: "Telegramni Tartib akkauntidan uzilsinmi? Bitimlar saytda qoladi.", unlinked: "Akkaunt uzildi. Qayta ulash uchun saytdan yangi kod oling.",
+  langChanged: "Til o'zbekchaga o'zgartirildi.",
+  checkTitle: "✅ <b>Bitim oldidan cheklist</b>\nBandlarni belgilang:", checkDone: "Cheklist bajarildi ✅\nBu intizom tekshiruvi, bitimga kirish maslahati emas.", check_plan: "Savdo rejam bor", check_stop: "Stop-loss belgilangan", check_risk: "Xavf qoidalarim doirasida", check_calm: "Men xotirjamman", check_revenge: "Bu o'chni qaytarishga urinish emas",
+  helpTitle: "❓ <b>Yordam</b>\nMavzuni tanlang:", hFormat: "✍️ Bitimni qanday yozish", hCmds: "⌨️ Buyruqlar", hBtns: "🔘 Tugmalar va yordamchi", hAbout: "ℹ️ Bot haqida",
+  helpFormat: "✍️ <b>Xabar bilan yozish</b>\n<code>BTCUSDT long 65000 0.1 stop 64500</code>\n\nTartib: instrument, yo'nalish (long/short, buy/sell), kirish narxi, hajm.\nQo'shish mumkin: <code>take 67000</code>, <code>exit 66000</code>, <code>yelka 5</code> yoki <code>x5</code>, hissiyot (<code>fomo</code>, <code>fear</code>, <code>calm</code>).\nKasr sonlarni vergul bilan yozish mumkin: 65,5.\n\nMisollar:\n<code>eth short 2000 1 sl 2050 tp 1900</code>\n<code>SOLUSDT long 150 2 stop 145 exit 160</code>",
+  helpCmds: "⌨️ <b>Buyruqlar</b>\n/menu: asosiy menyu\n/new: yangi bitim yordamchisi\n/today: bugungi natija\n/week, /month: natijalar\n/stats: barcha hisobotlar\n/discipline: intizom narxi\n/streak, /goal, /violations, /emotions\n/last: oxirgi bitimlar\n/open: ochiq bitimlar\n/undo: oxirgisini o'chirish\n/rules: qoidalar\n/accounts: hisoblar\n/checklist: cheklist\n/achievements: yutuqlar\n/export: bitimlarni CSV ga yuklash\n/settings: sozlamalar\n/language: til\n/unlink: akkauntni uzish\n/cancel: joriy amalni bekor qilish",
+  helpBtns: "🔘 <b>Tugmalar</b>\n«➕ Bitim» sizni qadamma-qadam olib boradi: instrument, yo'nalish, narxlar, hissiyot. Saqlashdan oldin yakun ko'rsatiladi.\nYozilgan bitim ostida tugmalar bor: yopish, hissiyot, izoh, strategiya, qoidani belgilash, o'chirish.\nOchiq bitimda chiqish narxi yo'q. «🏁 Yopish» P&L ni hisoblaydi.",
+  helpAbout: "ℹ️ <b>Bot haqida</b>\nBot bitimlaringiz hisobini yuritadi va o'z qoidalaringizga rioya qilayotganingizni ko'rsatadi. Ma'lumotlar tartib.uk saytidagi bilan bir xil.\nU savdo maslahati yoki signal bermaydi va foydani kafolatlamaydi.",
+  exportCaption: "📎 Bitimlaringiz (CSV), qatorlar: {n}", exportEmpty: "Yuklash uchun hali bitim yo'q.",
+  reminder: "Siz {d} kundan beri bitim yozmadingiz. Savdo qilgan bo'lsangiz, tafsilotlar esingizda turganda kiriting.\nEslatmalarni o'chirish: /settings",
+  dailySummary: "🌙 <b>Kun yakuni</b>\nBitimlar: {n} · qoida bo'yicha: {followed}\nP&L: {pnl}", weeklySummary: "📅 <b>Hafta yakuni</b>\nBitimlar: {n} · qoida bo'yicha: {followed} ({pct})\nP&L: {pnl}\nQoida bo'yicha seriya: {streak}\n{viol}",
+  weeklyViol: "Eng ko'p buzilgan: {name}",
+  missing_instrument: "Instrumentni tushunmadim (masalan BTCUSDT).", missing_direction: "Yo'nalishni tushunmadim: long yoki short.", missing_entry: "Kirish narxini tushunmadim.", missing_size: "Hajmni tushunmadim.",
+  example: "Misol:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>",
+  e_calm: "😌 Xotirjam", e_fear: "😨 Qo'rquv", e_greed: "🤑 Ochko'zlik", e_fomo: "😰 FOMO", e_revenge: "😡 O'ch", e_confident: "😎 Ishonch", e_uncertain: "🤔 Shubha", e_other: "😶 Boshqa",
+  none: "yo'q", dash: "—",
+};
+
+const DICTS: Record<Lang, Dict> = { ru, en, uz };
+
+/** Текст по ключу с подстановкой {name}. Если ключа нет на языке, берётся английский. */
+export function tr(lang: Lang, key: string, vars: Record<string, string | number> = {}): string {
+  const raw = DICTS[lang][key] ?? en[key] ?? key;
+  return raw.replace(/\{(\w+)\}/g, (_, k) => (k in vars ? String(vars[k]) : `{${k}}`));
+}
+
+export const emotionKeys = ["calm", "fear", "greed", "fomo", "revenge", "confident", "uncertain", "other"] as const;
+export const emotionLabel = (lang: Lang, key: string) => tr(lang, `e_${key}`);
+
+/** Подписи кнопок нижнего меню на всех языках: по ним определяем, какую кнопку нажали. */
+export const MENU_KEYS = ["kNew", "kToday", "kStats", "kTrades", "kSettings", "kHelp"] as const;
+export function menuAction(text: string): (typeof MENU_KEYS)[number] | null {
+  for (const l of ["ru", "en", "uz"] as Lang[]) for (const k of MENU_KEYS) if (DICTS[l][k] === text) return k;
+  return null;
+}
+
+/** Для теста: у всех языков одинаковый набор ключей. */
+export const _dicts = DICTS;

@@ -1,4 +1,4 @@
-import { BarChart3, Calculator, LayoutDashboard, ListChecks, Newspaper, NotebookText, Settings, User, Wrench } from "lucide-react";
+import { BarChart3, Calculator, LayoutDashboard, ListChecks, CandlestickChart, Newspaper, NotebookText, Settings, User, Wrench } from "lucide-react";
 
 export const mainNav = [
   { href: "/dashboard", labelKey: "nav.dashboard", icon: LayoutDashboard },
@@ -9,6 +9,7 @@ export const mainNav = [
 ] as const;
 
 export const secondaryNav = [
+  { href: "/charts", labelKey: "nav.charts", icon: CandlestickChart },
   { href: "/news", labelKey: "nav.news", icon: Newspaper },
   { href: "/tools", labelKey: "nav.tools", icon: Wrench },
   { href: "/settings", labelKey: "nav.settings", icon: Settings },

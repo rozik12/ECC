@@ -34,7 +34,8 @@
     "main": "Main navigation",
     "news": "News",
     "blog": "Blog",
-    "tools": "Tools"
+    "tools": "Tools",
+    "charts": "Charts"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1293,5 +1294,16 @@
     "installed": "The app is installed on this device.",
     "ios": "On iPhone: open the site in Safari, tap Share (the square with an arrow), then “Add to Home Screen”.",
     "manual": "Open the browser menu and choose “Install app” or “Add to Home screen”. In desktop Chrome the install icon is at the right of the address bar."
+  },
+  "charts": {
+    "title": "Charts",
+    "subtitle": "Fresh candles for any crypto pair: pick the pair and timeframe. Data is free and keyless, refreshed with a button.",
+    "quick": "Popular pairs",
+    "pair": "Pair",
+    "pairHint": "For example BTCUSDT or ETH/USDT",
+    "show": "Show",
+    "refresh": "Refresh",
+    "unsupported": "I can't find that crypto pair. Enter, for example, BTCUSDT, ETH/USDT or SOLUSDT. Charts are available for crypto only.",
+    "note": "Data: {source} (spot), the last 120 candles. This is a reference chart, not trading advice."
   }
 }

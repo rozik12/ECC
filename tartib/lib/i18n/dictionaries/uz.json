@@ -34,7 +34,8 @@
     "main": "Asosiy navigatsiya",
     "news": "Yangiliklar",
     "blog": "Blog",
-    "tools": "Asboblar"
+    "tools": "Asboblar",
+    "charts": "Grafiklar"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1293,5 +1294,16 @@
     "installed": "Ilova bu qurilmaga o'rnatilgan.",
     "ios": "iPhone'da: saytni Safari'da oching, «Ulashish» tugmasini (strelkali kvadrat), keyin «Bosh ekranga» ni bosing.",
     "manual": "Brauzer menyusini oching va «Ilovani o'rnatish» yoki «Bosh ekranga qo'shish» ni tanlang. Kompyuterdagi Chrome'da o'rnatish belgisi manzil satrining o'ng tomonida."
+  },
+  "charts": {
+    "title": "Grafiklar",
+    "subtitle": "Istalgan kripto juftlikning yangi shamlari: juftlik va masshtabni tanlang. Ma'lumotlar bepul va kalitsiz, tugma bilan yangilanadi.",
+    "quick": "Mashhur juftliklar",
+    "pair": "Juftlik",
+    "pairHint": "Masalan, BTCUSDT yoki ETH/USDT",
+    "show": "Ko'rsatish",
+    "refresh": "Yangilash",
+    "unsupported": "Bunday kripto juftlikni ko'rmayapman. Masalan, BTCUSDT, ETH/USDT yoki SOLUSDT kiriting. Grafiklar faqat kriptovalyutalar uchun.",
+    "note": "Ma'lumot: {source} (spot), oxirgi 120 sham. Bu ma'lumot uchun grafik, savdo tavsiyasi emas."
   }
 }

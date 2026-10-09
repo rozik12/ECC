@@ -13,6 +13,7 @@ import { getTranslator } from "@/lib/i18n/server";
 import {
   avgDuration, byDuration, byGrade, bySession, bySide, byTag, mistakeCost, type GroupRow, coreStats, drawdownSeries, heatmap, instrumentTable, monthly, rHistogram, riskConsistency, rMultiples, ruleCost, SESSION_IDS, winLossStreaks,
 } from "@/lib/analytics";
+import { byWeekday, personalRiskMath, recoveryFactor, sqn, underwater } from "@/lib/risk-stats";
 import { equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, type Period } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
 
@@ -56,6 +57,11 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
   const risk = riskConsistency(trades);
   const rules = ruleCost(trades);
   const instruments = instrumentTable(trades);
+  const weekdayRows = byWeekday(trades, tz);
+  const quality = sqn(trades);
+  const recovery = recoveryFactor(trades.reduce((s, x) => s + x.pnl, 0), dd.amount);
+  const water = underwater(curve);
+  const mathRow = personalRiskMath(trades);
   const tagRows = byTag(trades);
   const gradeRows = byGrade(trades);
   const mistakeRows = mistakeCost(trades);
@@ -271,6 +277,37 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
               </Table>
             )}
           </Card>
+
+          <Card className="space-y-3">
+            <div>
+              <h2 className="text-lg font-semibold">{t("risk.title")}</h2>
+              <p className="mt-1 text-sm text-muted">{t("risk.subtitle")}</p>
+            </div>
+            <dl className="grid gap-x-8 divide-y divide-border text-sm sm:grid-cols-2 sm:divide-y-0">
+              {[
+                [t("risk.sqn"), quality ? `${formatNumber(quality.value, locale, 2)} · ${t(`risk.band.${quality.band}`)}` : t("risk.sqnNone"), t("risk.sqnHint")],
+                [t("risk.recovery"), recovery === null ? none : formatNumber(recovery, locale, 2), t("risk.recoveryHint")],
+                [t("risk.longestWater"), t("risk.days", { n: formatNumber(water.longestDays, locale, 1) }), t("risk.waterHint")],
+                [t("risk.currentWater"), water.currentDays > 0 ? t("risk.days", { n: formatNumber(water.currentDays, locale, 1) }) : t("risk.atPeak"), ""],
+              ].map(([label, value, hint]) => (
+                <div key={label} className="py-2">
+                  <div className="flex justify-between gap-4"><dt className="text-muted">{label}</dt><dd className="text-right font-medium tabular-nums">{value}</dd></div>
+                  {hint && <p className="mt-0.5 text-xs text-muted">{hint}</p>}
+                </div>
+              ))}
+            </dl>
+            {mathRow ? (
+              <div className="rounded-xl bg-surface-muted p-4 text-sm leading-relaxed">
+                <p className="font-medium">{t("risk.mathTitle")}</p>
+                <p className="mt-1 text-muted">{t("risk.mathText", { win: formatNumber(mathRow.winRate, locale, 1), payoff: formatNumber(mathRow.payoff, locale, 2), kelly: formatNumber(mathRow.kellyPct, locale, 1), ruin: formatNumber(mathRow.ruinPct, locale, 2) })}</p>
+                <p className="mt-2 text-xs text-muted">{t("risk.mathNote")}</p>
+              </div>
+            ) : (
+              <p className="text-sm text-muted">{t("risk.mathNone")}</p>
+            )}
+          </Card>
+
+          {groupCard(t("risk.weekday"), weekdayRows.map((r) => ({ ...r, label: t(`risk.days7.${r.day}`) })), t("risk.weekdayNone"), t("risk.weekdayHint"))}
 
           {groupCard(t("journal.an.mistakes"), mistakeRows.map((r) => ({ ...r, label: t(`journal.mistakeNames.${r.key}`) })), t("journal.an.noMistakes"), t("journal.an.mistakesHint"))}
           <div className="grid gap-6 lg:grid-cols-2">

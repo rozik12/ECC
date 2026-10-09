@@ -1582,5 +1582,43 @@
     "modeFullText": "Barcha maydonlar ko'rsatilgan.",
     "modeToFull": "Barcha maydonlarni ko'rsatish",
     "modeToSimple": "Faqat asosiy"
+  },
+  "risk": {
+    "title": "Tizim sifati va risk",
+    "subtitle": "Raqamlar tanlangan davr bitimlari bo'yicha hisoblanadi. Bu o'tgan bitimlar arifmetikasi, bashorat emas.",
+    "sqn": "SQN (tizim sifati)",
+    "sqnNone": "riski ko'rsatilgan 10+ bitim kerak",
+    "sqnHint": "R dagi natijalar barqarorligini ko'rsatadi. Qancha yuqori bo'lsa, risk birligiga foyda shuncha tekis.",
+    "band": {
+      "poor": "zaif",
+      "belowAvg": "o'rtachadan past",
+      "average": "o'rtacha",
+      "good": "yaxshi",
+      "excellent": "a'lo",
+      "superb": "ajoyib"
+    },
+    "recovery": "Tiklanish omili",
+    "recoveryHint": "Sof foydaning pulda maksimal cho'kishga nisbati.",
+    "longestWater": "Maksimumdan pastda eng uzoq davr",
+    "waterHint": "Balans oldingi cho'qqiga necha kun qaytolmadi.",
+    "currentWater": "Hozir maksimumdan pastda",
+    "atPeak": "hozir maksimumda",
+    "days": "{n} kun",
+    "mathTitle": "Kelli va vayron bo'lish xavfi bo'yicha raqamlaringiz",
+    "mathText": "Foydali bitimlar {win}% va o'rtacha foyda/o'rtacha zarar {payoff} bo'lganda Kelli matematikasi bitimga depozitning {kelly}% ini beradi. Bitimga 1% risk bilan depozitning 50% ini yo'qotish ehtimoli bu modelda — {ruin}%.",
+    "mathNote": "Model mustaqil bitimlar va doimiy raqamlarni nazarda tutadi; bu ma'lumot, maslahat ham, bashorat ham emas.",
+    "mathNone": "Kamida 20 ta bitim kerak, ularda foydali ham, zararli ham bo'lishi shart.",
+    "weekday": "Hafta kunlari bo'yicha",
+    "weekdayHint": "Vaqt mintaqasi — sozlamalaringizdan.",
+    "weekdayNone": "Davr uchun bitimlar yo'q.",
+    "days7": {
+      "0": "Dushanba",
+      "1": "Seshanba",
+      "2": "Chorshanba",
+      "3": "Payshanba",
+      "4": "Juma",
+      "5": "Shanba",
+      "6": "Yakshanba"
+    }
   }
 }

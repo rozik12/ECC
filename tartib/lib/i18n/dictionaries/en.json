@@ -1582,5 +1582,43 @@
     "modeFullText": "Showing all fields.",
     "modeToFull": "Show all fields",
     "modeToSimple": "Main only"
+  },
+  "risk": {
+    "title": "System quality and risk",
+    "subtitle": "Figures are calculated from trades in the selected period. This is arithmetic on past trades, not a forecast.",
+    "sqn": "SQN (system quality)",
+    "sqnNone": "needs 10+ trades with risk set",
+    "sqnHint": "Shows how steady your results are in R. Higher means smoother profit per unit of risk.",
+    "band": {
+      "poor": "poor",
+      "belowAvg": "below average",
+      "average": "average",
+      "good": "good",
+      "excellent": "excellent",
+      "superb": "superb"
+    },
+    "recovery": "Recovery factor",
+    "recoveryHint": "Net profit divided by the maximum drawdown in money.",
+    "longestWater": "Longest time below the peak",
+    "waterHint": "How many days the balance could not get back to its previous high.",
+    "currentWater": "Currently below the peak for",
+    "atPeak": "at the peak now",
+    "days": "{n} d",
+    "mathTitle": "Your Kelly and risk-of-ruin figures",
+    "mathText": "With {win}% winning trades and an average win to average loss of {payoff}, Kelly maths gives {kelly}% of the account per trade. At 1% risk per trade, the chance of ever losing 50% of the account in this model is {ruin}%.",
+    "mathNote": "The model assumes independent trades and constant numbers; it is a reference, not advice or a forecast.",
+    "mathNone": "Needs at least 20 trades, including both winners and losers.",
+    "weekday": "By day of the week",
+    "weekdayHint": "Time zone comes from your settings.",
+    "weekdayNone": "No trades in this period yet.",
+    "days7": {
+      "0": "Monday",
+      "1": "Tuesday",
+      "2": "Wednesday",
+      "3": "Thursday",
+      "4": "Friday",
+      "5": "Saturday",
+      "6": "Sunday"
+    }
   }
 }

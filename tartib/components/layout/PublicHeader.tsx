@@ -12,6 +12,9 @@ export async function PublicHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-3 sm:px-6">
         <div className="flex items-center gap-6">
           <Logo />
+          <Link href="/news" className="text-sm text-muted hover:text-foreground">
+            {t("nav.news")}
+          </Link>
           <Link href="/pricing" className="hidden text-sm text-muted hover:text-foreground sm:block">
             {t("nav.pricing")}
           </Link>

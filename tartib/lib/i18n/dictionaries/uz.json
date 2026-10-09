@@ -31,7 +31,8 @@
     "pricing": "Tariflar",
     "login": "Kirish",
     "register": "Ro'yxatdan o'tish",
-    "main": "Asosiy navigatsiya"
+    "main": "Asosiy navigatsiya",
+    "news": "Yangiliklar"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -967,5 +968,25 @@
     "reminders": "3 kun yozuv bo'lmasa eslatma",
     "disconnect": "Uzish",
     "failed": "Bajarilmadi. Qayta urinib ko'ring."
+  },
+  "news": {
+    "title": "Bozor yangiliklari",
+    "subtitle": "Ochiq manbalardan so'nggi sarlavhalar: kripto, moliya bozorlari va O'zbekiston iqtisodiyoti. Maqolani manba saytida o'qish uchun sarlavhani bosing.",
+    "cats": {
+      "all": "Barchasi",
+      "crypto": "Kripto",
+      "markets": "Bozorlar",
+      "uzbekistan": "O'zbekiston"
+    },
+    "langLabel": "Til",
+    "langs": {
+      "all": "Barchasi",
+      "ru": "RU",
+      "en": "EN",
+      "uz": "UZ"
+    },
+    "empty": "Bu filtr bo'yicha hozircha yangilik yo'q.",
+    "unavailable": "Manbalar hozir mavjud emas. Keyinroq qayta urinib ko'ring.",
+    "note": "Sarlavhalar va havolalar mualliflariga tegishli, maqolalar manba saytlarida ochiladi. Manbalar:"
   }
 }

@@ -13,6 +13,7 @@ export async function Footer() {
           <Logo />
           <nav className="flex gap-5 text-sm text-muted">
             <Link href="/pricing" className="hover:text-foreground">{t("nav.pricing")}</Link>
+            <Link href="/news" className="hover:text-foreground">{t("nav.news")}</Link>
             <Link href="/terms" className="hover:text-foreground">{t("footer.terms")}</Link>
             <Link href="/privacy" className="hover:text-foreground">{t("footer.privacy")}</Link>
           </nav>

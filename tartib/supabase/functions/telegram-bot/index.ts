@@ -310,6 +310,18 @@ async function marketScreen(c: Ctx, kind: string): Promise<ui.Screen> {
   }
 }
 
+/** Обновляет кэш рыночных данных (календарь, доминирование BTC, индекс страха). Вызывает база раз в 10 минут. */
+async function refreshMarketCache(): Promise<Record<string, number | boolean>> {
+  const [calendar, dominance, fng] = await Promise.all([getCalendar(), getDominance(), getFearGreed()]);
+  const rows: { key: string; value: unknown }[] = [];
+  if (calendar.length > 0) rows.push({ key: "calendar", value: calendar });
+  if (dominance !== null) rows.push({ key: "dominance", value: dominance });
+  if (fng !== null) rows.push({ key: "fng", value: fng });
+  const now = new Date().toISOString();
+  for (const r of rows) await db.from("market_cache").upsert({ key: r.key, value: r.value, updated_at: now });
+  return { calendar: calendar.length, dominance: dominance !== null, fng: fng !== null };
+}
+
 /** Проверка ценовых алертов: вызывает база раз в минуту. Сработавший алерт выключается и создаёт уведомление (на сайт и в Telegram). */
 async function runAlerts(): Promise<{ checked: number; triggered: number }> {
   const { data: alerts } = await db.from("price_alerts").select("id, user_id, symbol, direction, price").eq("active", true).limit(2000);
@@ -758,6 +770,10 @@ Deno.serve(async (req) => {
     const cfg = await config();
     const path = new URL(req.url).pathname;
     const tg = new Tg(cfg.telegram_token);
+    if (path.endsWith("/refresh")) {
+      if (!same(req.headers.get("x-cron-secret"), cfg.cron_secret)) return new Response("forbidden", { status: 403 });
+      return Response.json(await refreshMarketCache());
+    }
     if (path.endsWith("/alerts")) {
       if (!same(req.headers.get("x-cron-secret"), cfg.cron_secret)) return new Response("forbidden", { status: 403 });
       return Response.json(await runAlerts());

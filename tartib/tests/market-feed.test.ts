@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { alertTriggered, classifyFng, clearMarketCache, defaultDirection, getCalendar, getTickers, parseCalendar, parseDominance, parseFearGreed, parseOkxTickers, priceMap, topMovers, upcomingEvents } from "../lib/market-feed.ts";
+import { alertTriggered, classifyFng, clearMarketCache, defaultDirection, getCalendar, getTickers, isFearGreed, parseCachedCalendar, parseCalendar, parseDominance, parseFearGreed, parseOkxTickers, priceMap, topMovers, upcomingEvents } from "../lib/market-feed.ts";
 
 test("данные рынка: копия в боте совпадает с сайтом", () => {
   assert.equal(readFileSync("supabase/functions/telegram-bot/feed.ts", "utf8"), readFileSync("lib/market-feed.ts", "utf8"));
@@ -123,4 +123,16 @@ test("кэш: при отказе источника отдаются после
   assert.equal((await getTickers(bad, 600)).length, 7); // свежие данные из памяти, источник не вызывается
   clearMarketCache();
   assert.equal((await getTickers(bad, 0)).length, 0); // ничего не запомнено — честная пустота
+});
+
+test("кэш рынка: данные из базы проверяются по форме и обрезаются", () => {
+  const good = { title: "CPI", country: "USD", at: 1000, impact: "high", forecast: "0.3%", previous: "0.2%" };
+  const cleaned = parseCachedCalendar([{ ...good, at: 3000 }, good, { title: 5, at: 1, impact: "high" }, { ...good, impact: "evil" }, { ...good, at: "x" }, null, "str", { ...good, title: "T".repeat(500), at: 2000 }]);
+  assert.deepEqual(cleaned.map((e) => e.at), [1000, 2000, 3000]);
+  assert.equal(cleaned[1].title.length, 140);
+  assert.deepEqual(parseCachedCalendar({ not: "array" }), []);
+  assert.equal(isFearGreed({ value: 50, label: "neutral", previous: null, at: 0 }), true);
+  assert.equal(isFearGreed({ value: 500, label: "neutral" }), false);
+  assert.equal(isFearGreed({ value: 50, label: "<script>" }), false);
+  assert.equal(isFearGreed(null), false);
 });

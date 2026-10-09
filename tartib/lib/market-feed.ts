@@ -105,6 +105,21 @@ export function parseDominance(body: unknown): number | null {
   return Number.isFinite(n) && n > 0 && n < 100 ? n : null;
 }
 
+/** В кэше (таблица market_cache) события хранятся уже разобранными. Форма проверяется заново, потому что данные пришли из базы. */
+export function parseCachedCalendar(value: unknown): CalendarEvent[] {
+  if (!Array.isArray(value)) return [];
+  const impacts = ["high", "medium", "low", "holiday"];
+  return (value as Record<string, unknown>[])
+    .filter((e) => typeof e?.title === "string" && typeof e.at === "number" && Number.isFinite(e.at) && impacts.includes(String(e.impact)))
+    .map((e) => ({ title: String(e.title).slice(0, 140), country: String(e.country ?? "").slice(0, 8), at: e.at as number, impact: e.impact as Impact, forecast: String(e.forecast ?? "").slice(0, 20), previous: String(e.previous ?? "").slice(0, 20) }))
+    .sort((a, b) => a.at - b.at);
+}
+
+export function isFearGreed(v: unknown): v is FearGreed {
+  const f = v as FearGreed | null;
+  return !!f && typeof f.value === "number" && f.value >= 0 && f.value <= 100 && ["extreme_fear", "fear", "neutral", "greed", "extreme_greed"].includes(f.label);
+}
+
 // ---------- загрузка ----------
 async function getJson(fetchFn: Fetch, url: string, ttl: number): Promise<unknown | null> {
   try {

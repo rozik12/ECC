@@ -6,7 +6,8 @@ import { MoversCard } from "@/components/market/MoversCard";
 import { WatchlistCard } from "@/components/market/WatchlistCard";
 import { requireUser } from "@/lib/auth";
 import { getTranslator } from "@/lib/i18n/server";
-import { getCalendar, getDominance, getFearGreed, getTickers, topMovers } from "@/lib/market-feed";
+import { loadMarketExtras } from "@/lib/market-cache";
+import { getTickers, topMovers } from "@/lib/market-feed";
 import { safeTimeZone } from "@/lib/time";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,11 +20,9 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
   const { t } = await getTranslator();
   const { supabase, user, profile } = await requireUser();
 
-  const [fear, tickers, calendar, dominance, watch, alerts] = await Promise.all([
-    getFearGreed(),
+  const [extras, tickers, watch, alerts] = await Promise.all([
+    loadMarketExtras(supabase),
     getTickers(),
-    getCalendar(),
-    getDominance(),
     supabase.from("watchlist").select("symbol").eq("user_id", user.id).order("created_at", { ascending: true }),
     supabase.from("price_alerts").select("id, symbol, direction, price, note, active, triggered_at, triggered_price").eq("user_id", user.id).order("created_at", { ascending: false }).limit(60),
   ]);
@@ -40,12 +39,12 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
         <p className="mt-1 text-muted">{t("market.subtitle")}</p>
       </div>
       <div className="grid gap-6 lg:grid-cols-[2fr_3fr]">
-        <FearGreedCard data={fear} dominance={dominance} />
+        <FearGreedCard data={extras.fear} dominance={extras.dominance} />
         <WatchlistCard symbols={(watch.data ?? []).map((r) => String(r.symbol))} />
       </div>
       <AlertsCard alerts={alertViews} />
       <MoversCard gainers={movers.gainers} losers={movers.losers} />
-      <CalendarCard events={calendar} timeZone={safeTimeZone(profile?.timezone)} all={sp.events === "all"} now={new Date().getTime()} />
+      <CalendarCard events={extras.calendar} timeZone={safeTimeZone(profile?.timezone)} all={sp.events === "all"} now={new Date().getTime()} />
       <p className="text-xs text-muted">{t("market.sources")} {t("common.disclaimer")}</p>
     </div>
   );

@@ -1,7 +1,7 @@
 // Связь с Telegram. Чаты с номером от 900 миллиардов не существуют: для них ответы не отправляются, а возвращаются в ответе функции (для автотестов).
 import type { Kb } from "./ui.ts";
 
-export type Out = { op: "send" | "edit" | "doc" | "answer" | "action"; chat_id?: number; message_id?: number; text?: string; markup?: unknown; filename?: string; content?: string };
+export type Out = { op: "send" | "edit" | "doc" | "answer" | "action" | "photo"; chat_id?: number; message_id?: number; text?: string; markup?: unknown; filename?: string; content?: string };
 export const TEST_CHAT_MIN = 900_000_000_000;
 
 export class Tg {
@@ -28,6 +28,16 @@ export class Tg {
     if (this.isTest(chatId)) return void this.out.push({ op: "send", chat_id: chatId, text, markup });
     const r = await this.call("sendMessage", { chat_id: chatId, text: text.slice(0, 4000), parse_mode: "HTML", disable_web_page_preview: true, reply_markup: markup });
     if (!r.ok) console.error("sendMessage failed", r.description);
+  }
+
+  /** Картинка по ссылке с подписью. Если Telegram не принял картинку, отправляем обычное сообщение. */
+  async photo(chatId: number, url: string, caption: string, markup?: unknown) {
+    if (this.isTest(chatId)) return void this.out.push({ op: "photo", chat_id: chatId, text: caption, markup, filename: url });
+    const r = await this.call("sendPhoto", { chat_id: chatId, photo: url, caption: caption.slice(0, 1000), parse_mode: "HTML", reply_markup: markup });
+    if (!r.ok) {
+      console.error("sendPhoto failed", r.description);
+      await this.send(chatId, caption, markup);
+    }
   }
 
   /** Заменяет текст и кнопки существующего сообщения. Если не вышло, отправляет новое. */

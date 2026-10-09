@@ -11,6 +11,8 @@ import { emotionKeys, emotionLabel, langOf, menuAction, tr, type Lang } from "./
 import * as ui from "./ui.ts";
 import { disciplineStreak, summarize, topViolations } from "./stats.ts";
 
+const LOGO_URL = "https://tartib.uk/logo/tartib-mark-512.png";
+
 // ---------- настройки бота ----------
 type Config = { telegram_token: string; webhook_secret: string; cron_secret: string };
 let cached: Config | null = null;
@@ -441,7 +443,7 @@ async function linkWithCode(tg: Tg, chatId: number, payload: string, fallback: L
   if (error) return tg.send(chatId, tr(fallback, "error"));
   const { data: p } = await db.from("profiles").select("language").eq("id", userId).maybeSingle();
   const lang = langOf(p?.language);
-  await tg.send(chatId, tr(lang, "linked"), ui.replyMenu(lang));
+  await tg.photo(chatId, LOGO_URL, tr(lang, "linked"), ui.replyMenu(lang));
   return tg.send(chatId, ui.mainMenu(lang).text, ui.mainMenu(lang).kb);
 }
 
@@ -468,7 +470,8 @@ async function handleUpdate(tg: Tg, up: Update) {
   const u = await getLinked(chatId);
   if (!u) {
     if (cb) return;
-    return tg.send(chatId, tr(fallback, cmd0.toLowerCase().startsWith("/start") ? "startHelp" : "needLink"));
+    if (cmd0.toLowerCase().startsWith("/start")) return tg.photo(chatId, LOGO_URL, tr(fallback, "startHelp"));
+    return tg.send(chatId, tr(fallback, "needLink"));
   }
 
   const st = await loadState(chatId);

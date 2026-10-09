@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ArrowLeft, CheckCircle2, Pencil } from "lucide-react";
+import { TradeChart } from "@/components/trades/TradeChart";
 import { ScreenshotCard } from "@/components/trades/ScreenshotCard";
 import { DeleteTradeButton } from "@/components/trades/DeleteTradeButton";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
@@ -121,6 +122,16 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
           {fact(t("trades.detail.riskReward"), rr === null ? t("trades.detail.none") : `1 : ${formatNumber(rr, locale, 2)}`)}
         </dl>
       </Card>
+
+      <TradeChart
+        instrument={trade.instrument}
+        tradedAt={trade.traded_at}
+        direction={trade.direction}
+        entry={Number(trade.entry_price)}
+        exit={trade.exit_price === null ? null : Number(trade.exit_price)}
+        stop={trade.stop_loss === null ? null : Number(trade.stop_loss)}
+        takeProfit={trade.take_profit === null ? null : Number(trade.take_profit)}
+      />
 
       <ScreenshotCard tradeId={id} url={screenshotUrl} />
 

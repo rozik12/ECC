@@ -1266,5 +1266,19 @@
       "pnl": "Natija",
       "avgR": "O'rtacha R"
     }
+  },
+  "chart": {
+    "title": "Narx grafigi",
+    "timeframe": "Shamlar masshtabi",
+    "loading": "Grafik yuklanmoqda…",
+    "unsupported": "Grafik kripto juftliklar uchun mavjud (masalan, BTCUSDT). Valyuta, aksiya va fyuchers uchun kalitsiz bepul ma'lumot yo'q.",
+    "no_data": "Bu vaqtda shamlar yo'q: ehtimol, juftlik o'sha paytda hali savdo qilinmagan.",
+    "unavailable": "Birjadan ma'lumot yuklab bo'lmadi. Keyinroq urinib ko'ring.",
+    "entry": "Kirish",
+    "stop": "Stop",
+    "tp": "Maqsad",
+    "exit": "Chiqish",
+    "note": "Juftlik {symbol}, ma'lumot: {source} (spot). Bu birjadagi narxlar brokeringiz yoki fyuchers narxlaridan biroz farq qilishi mumkin.",
+    "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring."
   }
 }

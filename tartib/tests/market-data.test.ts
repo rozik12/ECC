@@ -30,20 +30,54 @@ test("график: разбор ответов Binance и OKX, мусор от�
 });
 
 const json = (body: unknown, status = 200) => Promise.resolve(new Response(JSON.stringify(body), { status }));
+const okxRow = (t: number) => [String(t), "1", "2", "0.5", "1.5", "1"];
+const HOUR = TIMEFRAMES["1h"];
 
-test("график: запасной источник при сбое Binance", async () => {
+test("график: OKX первым, постраничная загрузка по 100 свечей", async () => {
   const pair = normalizePair("BTCUSDT")!;
   const urls: string[] = [];
-  const okxBody = { code: "0", data: [["5000", "1", "2", "0.5", "1.5", "1"], ["1000", "1", "2", "0.5", "1.5", "1"]] };
-  const r1 = await fetchCandles(pair, "1h", 1000, 6000, (u) => { urls.push(u); return u.includes("binance") ? json({ code: 0 }, 451) : json(okxBody); });
-  assert.equal(r1?.source, "okx");
-  assert.deepEqual(r1?.candles.map((c) => c.t), [1000, 5000]);
-  assert.ok(urls[0].includes("symbol=BTCUSDT") && urls[0].includes("interval=1h") && urls[1].includes("instId=BTC-USDT") && urls[1].includes("bar=1H"));
-  const r2 = await fetchCandles(pair, "1h", 1000, 6000, () => json([[1000, "1", "2", "0.5", "1.5", "1"]]));
-  assert.equal(r2?.source, "binance");
-  assert.equal(r2?.candles.length, 1);
-  assert.equal(await fetchCandles(pair, "1h", 1000, 6000, () => json({}, 500)), null);
-  assert.equal(await fetchCandles(pair, "1h", 1000, 6000, () => Promise.reject(new Error("network"))), null);
-  const empty = await fetchCandles(pair, "1h", 1000, 6000, () => json([])); // у Binance пара есть, свечей нет
-  assert.deepEqual(empty, { candles: [], source: "binance" });
+  const start = 1000 * HOUR;
+  const end = start + 119 * HOUR; // 120 свечей: нужно две страницы по 100
+  const fake = (u: string) => {
+    urls.push(u);
+    const after = Number(new URL(u).searchParams.get("after"));
+    const ts: number[] = [];
+    for (let t = Math.floor((after - 1) / HOUR) * HOUR; ts.length < 100 && t >= start; t -= HOUR) ts.push(t); // новые первыми
+    return json({ code: "0", data: ts.map(okxRow) });
+  };
+  const r = await fetchCandles(pair, "1h", start, end, fake);
+  assert.equal(r.source, "okx");
+  assert.equal(r.candles?.length, 120);
+  assert.equal(r.candles?.[0].t, start);
+  assert.equal(r.candles?.[119].t, end);
+  assert.equal(urls.length, 2);
+  assert.ok(urls.every((u) => u.includes("instId=BTC-USDT") && u.includes("bar=1H") && !u.includes("binance")));
+  assert.deepEqual(r.attempts, [{ source: "okx", status: 200 }, { source: "okx", status: 200 }]);
+});
+
+test("график: запасной Binance при сбое OKX, диагностика попыток", async () => {
+  const pair = normalizePair("BTCUSDT")!;
+  const byHost = (okx: () => Promise<Response>, bin: () => Promise<Response>) => (u: string) => (u.includes("okx.com") ? okx() : bin());
+  const r1 = await fetchCandles(pair, "1h", 1000, 6000, byHost(() => json({}, 429), () => json([[1000, "1", "2", "0.5", "1.5", "1"]])));
+  assert.equal(r1.source, "binance");
+  assert.equal(r1.candles?.length, 1);
+  assert.deepEqual(r1.attempts, [{ source: "okx", status: 429 }, { source: "binance", status: 200 }]);
+  // обе биржи недоступны
+  const r2 = await fetchCandles(pair, "1h", 1000, 6000, byHost(() => json({}, 500), () => json({ code: 0 }, 451)));
+  assert.equal(r2.candles, null);
+  assert.deepEqual(r2.attempts, [{ source: "okx", status: 500 }, { source: "binance", status: 451 }]);
+  // сеть упала
+  const r3 = await fetchCandles(pair, "1h", 1000, 6000, () => Promise.reject(new Error("network")));
+  assert.equal(r3.candles, null);
+  assert.equal(r3.attempts.every((a) => a.status === 0), true);
+  // OKX не знает пару (код 51001), Binance знает
+  const r4 = await fetchCandles(pair, "1h", 1000, 6000, byHost(() => json({ code: "51001", data: [] }), () => json([[2000, "1", "2", "0.5", "1.5", "1"]])));
+  assert.equal(r4.source, "binance");
+  assert.equal(r4.candles?.[0].t, 2000);
+});
+
+test("график: свечей за это время нет у обеих бирж", async () => {
+  const pair = normalizePair("BTCUSDT")!;
+  const r = await fetchCandles(pair, "1h", 1000, 6000, (u) => (u.includes("okx.com") ? json({ code: "0", data: [] }) : json([])));
+  assert.deepEqual(r.candles, []);
 });

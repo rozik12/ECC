@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
   const { start, end } = candleWindow(at, tf);
   const result = await fetchCandles(pair, tf, start, end);
-  if (!result) return NextResponse.json({ error: "unavailable" }, { status: 502, headers: { "cache-control": "no-store" } });
+  if (result.candles === null) return NextResponse.json({ error: "unavailable", attempts: result.attempts }, { status: 502, headers: { "cache-control": "no-store" } });
   if (result.candles.length === 0) return NextResponse.json({ error: "no_data" }, { status: 404, headers: JSON_HEADERS });
   return NextResponse.json({ symbol: pair.symbol, tf, source: result.source, candles: result.candles.map((c) => [c.t, c.o, c.h, c.l, c.c, c.v]) }, { headers: JSON_HEADERS });
 }

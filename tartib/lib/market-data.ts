@@ -45,28 +45,57 @@ export function parseOkx(body: unknown): Candle[] {
 const OKX_BAR: Record<Timeframe, string> = { "5m": "5m", "15m": "15m", "1h": "1H", "4h": "4H", "1d": "1D" };
 export type CandleSource = "binance" | "okx";
 type Fetch = (url: string, init?: RequestInit) => Promise<Response>;
+/** Что ответил каждый источник (для разбора сбоев): код ответа или 0, если не удалось соединиться. */
+export type Attempt = { source: CandleSource; status: number };
 
-async function getJson(fetchFn: Fetch, url: string): Promise<unknown | null> {
+async function getJson(fetchFn: Fetch, url: string): Promise<{ status: number; body: unknown | null }> {
   try {
     const res = await fetchFn(url, {
       headers: { "user-agent": "Mozilla/5.0 (compatible; Tartib/1.0; +https://tartib.uk)", accept: "application/json" },
       signal: AbortSignal.timeout(5000),
       ...({ cf: { cacheTtl: 120, cacheEverything: true } } as object),
     });
-    return res.ok ? await res.json() : null;
+    return { status: res.status, body: res.ok ? await res.json() : null };
   } catch {
-    return null;
+    return { status: 0, body: null };
   }
 }
 
-/** Свечи за окно. Сначала Binance, при сбое OKX. null — источники недоступны, [] — пара есть, но свечей за это время нет. */
-export async function fetchCandles(pair: Pair, tf: Timeframe, start: number, end: number, fetchFn: Fetch = fetch): Promise<{ candles: Candle[]; source: CandleSource } | null> {
+/** OKX отдаёт за запрос не больше 100 свечей, поэтому для окна в 120 свечей нужно две страницы (идём от конца к началу). */
+async function fromOkx(pair: Pair, tf: Timeframe, start: number, end: number, fetchFn: Fetch, attempts: Attempt[]): Promise<Candle[] | null> {
+  const all = new Map<number, Candle>();
+  let cursor = end + TIMEFRAMES[tf];
+  for (let page = 0; page < 4; page++) {
+    const { status, body } = await getJson(fetchFn, `https://www.okx.com/api/v5/market/history-candles?instId=${pair.base}-${pair.quote}&bar=${OKX_BAR[tf]}&after=${cursor}&limit=100`);
+    attempts.push({ source: "okx", status });
+    if (!body || (body as { code?: string }).code !== "0") return page === 0 ? null : [...all.values()].sort((a, b) => a.t - b.t);
+    const got = parseOkx(body);
+    if (got.length === 0) break;
+    for (const c of got) if (c.t >= start && c.t <= end) all.set(c.t, c);
+    const oldest = got[0].t;
+    if (oldest <= start || got.length < 100) break;
+    cursor = oldest;
+  }
+  return [...all.values()].sort((a, b) => a.t - b.t);
+}
+
+/**
+ * Свечи за окно. Сначала OKX (доступен из большинства регионов, в том числе с серверов Cloudflare), при сбое Binance.
+ * candles = null — оба источника недоступны, [] — пара есть, но свечей за это время нет.
+ */
+export async function fetchCandles(pair: Pair, tf: Timeframe, start: number, end: number, fetchFn: Fetch = fetch): Promise<{ candles: Candle[] | null; source: CandleSource | null; attempts: Attempt[] }> {
+  const attempts: Attempt[] = [];
+  const okx = await fromOkx(pair, tf, start, end, fetchFn, attempts);
+  if (okx && okx.length > 0) return { candles: okx, source: "okx", attempts };
+
   const limit = Math.min(1000, Math.ceil((end - start) / TIMEFRAMES[tf]) + 2);
   const bin = await getJson(fetchFn, `https://data-api.binance.vision/api/v3/klines?symbol=${pair.symbol}&interval=${tf}&startTime=${start}&endTime=${end}&limit=${limit}`);
-  if (Array.isArray(bin)) return { candles: parseBinance(bin), source: "binance" };
-
-  // OKX: «after» отдаёт свечи старше указанного времени, за раз не больше 100
-  const okx = await getJson(fetchFn, `https://www.okx.com/api/v5/market/history-candles?instId=${pair.base}-${pair.quote}&bar=${OKX_BAR[tf]}&after=${end + TIMEFRAMES[tf]}&limit=100`);
-  if (okx && (okx as { code?: string }).code === "0") return { candles: parseOkx(okx).filter((c) => c.t >= start && c.t <= end), source: "okx" };
-  return null;
+  attempts.push({ source: "binance", status: bin.status });
+  if (Array.isArray(bin.body)) {
+    const candles = parseBinance(bin.body);
+    if (candles.length > 0 || okx !== null) return { candles, source: "binance", attempts };
+  }
+  // OKX ответил, но свечей нет, и Binance не помог: данных действительно нет
+  if (okx !== null && okx.length === 0 && (bin.status === 200 || bin.status === 400)) return { candles: [], source: "okx", attempts };
+  return { candles: null, source: null, attempts };
 }

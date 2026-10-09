@@ -6,6 +6,11 @@ type Dict = Record<string, string>;
 
 const ru: Dict = {
   bExport: "📎 Экспорт CSV",
+  loginAsk: "🔐 <b>Вход на tartib.uk</b>\nНажми «📱 Поделиться номером», чтобы подтвердить вход. Номер подтверждает сам Telegram.\n\n⚠️ Подтверждай только вход, который ты сам начал на сайте.",
+  loginShare: "📱 Поделиться номером", loginCancel: "✖ Отмена",
+  loginWrong: "Нужен именно твой номер. Нажми кнопку «📱 Поделиться номером» внизу, а не отправляй чужой контакт.",
+  loginDone: "✅ Номер подтверждён. Вернись на сайт tartib.uk: вход выполнится сам.",
+  loginExpired: "Ссылка для входа устарела. Вернись на сайт и нажми «Войти по номеру» ещё раз.", loginAborted: "Вход отменён.", loginErr: "Не получилось войти. Попробуй ещё раз на сайте.",
   back: "‹ Назад", menu: "🏠 Меню", cancel: "✖ Отмена", yes: "Да", no: "Нет", skip: "Пропустить ›", save: "✅ Сохранить", refresh: "🔄 Обновить",
   kNew: "➕ Сделка", kToday: "📊 Сегодня", kStats: "📈 Статистика", kTrades: "📋 Сделки", kSettings: "⚙️ Настройки", kHelp: "❓ Помощь",
   menuTitle: "🏠 Главное меню\nВыбери действие или просто напиши сделку сообщением:\n<code>BTCUSDT long 65000 0.1 стоп 64500</code>",
@@ -77,6 +82,11 @@ const ru: Dict = {
 
 const en: Dict = {
   bExport: "📎 Export CSV",
+  loginAsk: "🔐 <b>Sign in to tartib.uk</b>\nPress “📱 Share my number” to confirm the sign-in. Telegram itself verifies the number.\n\n⚠️ Confirm only a sign-in you started yourself on the site.",
+  loginShare: "📱 Share my number", loginCancel: "✖ Cancel",
+  loginWrong: "It must be your own number. Press the “📱 Share my number” button below instead of sending someone else's contact.",
+  loginDone: "✅ Number confirmed. Go back to tartib.uk: you will be signed in automatically.",
+  loginExpired: "The sign-in link has expired. Go back to the site and press “Sign in with phone” again.", loginAborted: "Sign-in cancelled.", loginErr: "Could not sign in. Please try again on the site.",
   back: "‹ Back", menu: "🏠 Menu", cancel: "✖ Cancel", yes: "Yes", no: "No", skip: "Skip ›", save: "✅ Save", refresh: "🔄 Refresh",
   kNew: "➕ Trade", kToday: "📊 Today", kStats: "📈 Stats", kTrades: "📋 Trades", kSettings: "⚙️ Settings", kHelp: "❓ Help",
   menuTitle: "🏠 Main menu\nChoose an action or just send a trade as a message:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>",
@@ -140,6 +150,11 @@ const en: Dict = {
 
 const uz: Dict = {
   bExport: "📎 CSV eksport",
+  loginAsk: "🔐 <b>tartib.uk ga kirish</b>\nKirishni tasdiqlash uchun «📱 Raqamni ulashish» tugmasini bosing. Raqamni Telegramning o'zi tasdiqlaydi.\n\n⚠️ Faqat o'zingiz saytda boshlagan kirishni tasdiqlang.",
+  loginShare: "📱 Raqamni ulashish", loginCancel: "✖ Bekor qilish",
+  loginWrong: "Aynan o'zingizning raqamingiz kerak. Boshqa kontaktni yubormasdan, pastdagi «📱 Raqamni ulashish» tugmasini bosing.",
+  loginDone: "✅ Raqam tasdiqlandi. tartib.uk saytiga qayting: kirish o'zi bajariladi.",
+  loginExpired: "Kirish havolasi eskirgan. Saytga qaytib, «Raqam bilan kirish»ni qayta bosing.", loginAborted: "Kirish bekor qilindi.", loginErr: "Kirib bo'lmadi. Saytda qayta urinib ko'ring.",
   back: "‹ Orqaga", menu: "🏠 Menyu", cancel: "✖ Bekor qilish", yes: "Ha", no: "Yo'q", skip: "O'tkazib yuborish ›", save: "✅ Saqlash", refresh: "🔄 Yangilash",
   kNew: "➕ Bitim", kToday: "📊 Bugun", kStats: "📈 Statistika", kTrades: "📋 Bitimlar", kSettings: "⚙️ Sozlamalar", kHelp: "❓ Yordam",
   menuTitle: "🏠 Asosiy menyu\nAmalni tanlang yoki bitimni xabar bilan yuboring:\n<code>BTCUSDT long 65000 0.1 stop 64500</code>",

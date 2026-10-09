@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Alert } from "@/components/ui";
-import { GoogleButton } from "@/components/auth/GoogleButton";
+import { SocialAuth } from "@/components/auth/SocialAuth";
 import { LoginSwitch } from "@/components/auth/LoginSwitch";
 import { getTranslator } from "@/lib/i18n/server";
 
@@ -22,7 +22,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <p className="mb-6 mt-2 text-muted">{t("auth.login.subtitle")}</p>
           {error === "oauth" && <Alert tone="danger" className="mb-4">{t("auth.oauthFailed")}</Alert>}
           {error === "link" && <Alert tone="warning" className="mb-4">{t("auth.linkExpired")}</Alert>}
-          <GoogleButton />
+          <SocialAuth />
         </>
       }
       after={

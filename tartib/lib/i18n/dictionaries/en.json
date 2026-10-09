@@ -191,6 +191,14 @@
       "cancel": "Cancel and log out",
       "invalid": "Wrong code. Please try again.",
       "sessionExpired": "The sign-in session has expired. Please log in again."
+    },
+    "phone": {
+      "button": "Sign in or sign up with phone number",
+      "hint": "The Tartib Telegram bot will open. Press “Start”, then “📱 Share my number”. Telegram itself verifies the number, no SMS needed.",
+      "open": "Open Telegram",
+      "waiting": "Waiting for confirmation in Telegram…",
+      "expired": "Time ran out or the sign-in was cancelled. Press the button again.",
+      "error": "Something went wrong. Try again or sign in with email."
     }
   },
   "pages": {

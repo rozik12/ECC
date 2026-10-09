@@ -33,6 +33,7 @@ export async function getLinked(chatId: number): Promise<Linked | null> {
 export type State = {
   w?: { step: string; d: Record<string, unknown>; edit?: boolean; rep?: boolean };
   p?: { kind: "close" | "comment" | "strategy"; id: string };
+  login?: string;
   chk?: number[];
   rl?: { ws: number; n: number };
   recent?: string[];

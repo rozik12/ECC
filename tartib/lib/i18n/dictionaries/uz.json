@@ -191,6 +191,14 @@
       "cancel": "Bekor qilish va chiqish",
       "invalid": "Kod noto'g'ri. Qayta urinib ko'r.",
       "sessionExpired": "Kirish seansi tugadi. Qaytadan kir."
+    },
+    "phone": {
+      "button": "Telefon raqami bilan kirish yoki ro'yxatdan o'tish",
+      "hint": "Tartib Telegram boti ochiladi. «Start»ni bosing, so'ng «📱 Raqamni ulashish»ni. Raqamni Telegramning o'zi tasdiqlaydi, SMS kerak emas.",
+      "open": "Telegramni ochish",
+      "waiting": "Telegramda tasdiqlash kutilmoqda…",
+      "expired": "Vaqt tugadi yoki kirish bekor qilindi. Tugmani qayta bosing.",
+      "error": "Bajarilmadi. Qayta urinib ko'ring yoki pochta bilan kiring."
     }
   },
   "pages": {

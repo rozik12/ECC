@@ -4,6 +4,7 @@ import {
   activeAccount, closeTrade, countTrades, createTrade, db, deleteTrade, fetchTrades, getLinked, getTrade, listAccounts, listRules, loadState, periodStart,
   recentInstruments, recentStrategies, saveState, toggleRule, toggleViolation, updateTradeFields, type Linked, type NewTrade, type State,
 } from "./db.ts";
+import { isLoginCancel, LOGIN_PREFIX, loginContact, loginStart, type Contact } from "./login.ts";
 import { parseTradeMessage } from "./parse.ts";
 import { dayBounds, safeTimeZone } from "./time.ts";
 import { Tg } from "./tg.ts";
@@ -447,9 +448,51 @@ async function linkWithCode(tg: Tg, chatId: number, payload: string, fallback: L
   return tg.send(chatId, ui.mainMenu(lang).text, ui.mainMenu(lang).kb);
 }
 
+// ---------- вход на сайт по номеру телефона ----------
+async function handleLogin(tg: Tg, chatId: number, msg: NonNullable<Update["message"]>, fallback: Lang): Promise<boolean> {
+  const text = msg.text?.trim().slice(0, 500) ?? "";
+  const [cmd0, arg0] = text.split(/\s+/);
+  const isStart = cmd0.toLowerCase().split("@")[0] === "/start";
+
+  if (isStart && arg0?.startsWith(LOGIN_PREFIX)) {
+    const lang = (await getLinked(chatId))?.lang ?? fallback;
+    const st = await loadState(chatId);
+    st.login = (await loginStart(tg, chatId, arg0.slice(LOGIN_PREFIX.length), lang)) ?? undefined;
+    await saveState(chatId, st);
+    return true;
+  }
+  // Состояние читаем только когда сообщение может относиться ко входу
+  if (!msg.contact && !isLoginCancel(text) && text.toLowerCase() !== "/cancel") return false;
+  const st = await loadState(chatId);
+  if (!st.login) {
+    if (msg.contact) { await tg.send(chatId, tr(fallback, "loginExpired"), { remove_keyboard: true }); return true; }
+    return false;
+  }
+  const lang = (await getLinked(chatId))?.lang ?? fallback;
+  if (msg.contact) {
+    const token = st.login;
+    st.login = undefined;
+    const out = await loginContact(tg, chatId, msg.from?.id, msg.contact, token, lang);
+    if (!out.done && msg.contact.user_id !== msg.from?.id) st.login = token; // чужой контакт: даём ещё попытку
+    await saveState(chatId, st);
+    if (out.done) {
+      const l = (await getLinked(chatId))?.lang ?? lang;
+      await tg.send(chatId, tr(l, "loginDone"), out.linkedChat ? ui.replyMenu(l) : { remove_keyboard: true });
+    }
+    return true;
+  }
+  if (isLoginCancel(text) || text.toLowerCase() === "/cancel") {
+    st.login = undefined;
+    await saveState(chatId, st);
+    await tg.send(chatId, tr(lang, "loginAborted"), { remove_keyboard: true });
+    return true;
+  }
+  return false;
+}
+
 // ---------- разбор обновления ----------
 type Update = {
-  message?: { chat: { id: number; type: string }; text?: string; from?: { language_code?: string } };
+  message?: { chat: { id: number; type: string }; text?: string; contact?: Contact; from?: { id?: number; language_code?: string } };
   callback_query?: { id: string; data?: string; from?: { language_code?: string }; message?: { message_id: number; chat: { id: number; type: string } } };
 };
 
@@ -461,6 +504,12 @@ async function handleUpdate(tg: Tg, up: Update) {
   const chatId = chat.id;
   const fallback = langOf((cb ?? msg)?.from?.language_code ?? msg?.from?.language_code);
   if (cb) await tg.answer(chatId, cb.id);
+
+  // Вход на сайт по номеру: ссылка с сайта, номер, отмена
+  if (!cb && msg && (msg.contact || typeof msg.text === "string")) {
+    const handled = await handleLogin(tg, chatId, msg, fallback);
+    if (handled) return;
+  }
   if (!cb && !(msg && typeof msg.text === "string")) return;
 
   const text = msg?.text?.trim().slice(0, 500) ?? "";

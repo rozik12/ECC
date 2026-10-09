@@ -7,7 +7,7 @@ export async function GoogleButton() {
   if (process.env.NEXT_PUBLIC_GOOGLE_AUTH !== "true") return null;
   const { t } = await getTranslator();
   return (
-    <div className="mb-6">
+    <div>
       <form action={googleSignInAction}>
         <Button type="submit" variant="secondary" size="lg" className="w-full">
           <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
@@ -19,7 +19,6 @@ export async function GoogleButton() {
           {t("auth.google")}
         </Button>
       </form>
-      <p className="mt-4 text-center text-xs uppercase tracking-wide text-muted">{t("auth.or")}</p>
     </div>
   );
 }

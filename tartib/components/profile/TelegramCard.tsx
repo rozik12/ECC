@@ -3,12 +3,13 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Send } from "lucide-react";
+import { setTelegramNotifyAction } from "@/app/actions/notifications";
 import { createTelegramCodeAction, setTelegramRemindersAction, unlinkTelegramAction } from "@/app/actions/telegram";
 import { Alert, Badge, Button, buttonStyles, Card, Switch } from "@/components/ui";
 import { TELEGRAM_BOT_USERNAME } from "@/lib/constants";
 import { useI18n } from "@/lib/i18n/provider";
 
-export function TelegramCard({ linked, reminders }: { linked: boolean; reminders: boolean }) {
+export function TelegramCard({ linked, reminders, notify }: { linked: boolean; reminders: boolean; notify: boolean }) {
   const { t } = useI18n();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -43,6 +44,15 @@ export function TelegramCard({ linked, reminders }: { linked: boolean; reminders
     });
   }
 
+  function toggleNotify(on: boolean) {
+    setError(null);
+    startTransition(async () => {
+      const result = await setTelegramNotifyAction(on);
+      if (!result.ok) setError(result.error);
+      router.refresh();
+    });
+  }
+
   return (
     <Card className="space-y-3">
       <div className="flex items-center gap-2">
@@ -58,6 +68,10 @@ export function TelegramCard({ linked, reminders }: { linked: boolean; reminders
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border p-3 text-sm">
             <span>{t("telegram.reminders")}</span>
             <Switch checked={reminders} disabled={pending} label={t("telegram.reminders")} onChange={toggleReminders} />
+          </div>
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-border p-3 text-sm">
+            <span>{t("telegram.notify")}</span>
+            <Switch checked={notify} disabled={pending} label={t("telegram.notify")} onChange={toggleNotify} />
           </div>
           <Button type="button" variant="secondary" disabled={pending} onClick={disconnect}>{t("telegram.disconnect")}</Button>
         </>

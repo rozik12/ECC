@@ -1,7 +1,7 @@
 // Telegram-бот Tartib. Работает как функция Supabase рядом с базой данных.
 // Бот действует с правами сервиса, поэтому все запросы к данным ограничены владельцем чата (см. db.ts).
 import {
-  activeAccount, closeTrade, countTrades, createTrade, db, deleteTrade, fetchTrades, getLinked, getTrade, listAccounts, listRules, loadState, periodStart,
+  activeAccount, clearNotifications, closeTrade, countTrades, createTrade, db, deleteTrade, fetchTrades, getLinked, getTrade, listAccounts, listNotifications, listRules, loadState, markNotificationsRead, periodStart,
   recentInstruments, recentStrategies, saveState, toggleRule, toggleViolation, updateTradeFields, type Linked, type NewTrade, type State,
 } from "./db.ts";
 import { isLoginCancel, LOGIN_PREFIX, loginContact, loginStart, type Contact } from "./login.ts";
@@ -276,7 +276,35 @@ async function showSettings(c: Ctx) {
   const link = await getLinked(c.chatId);
   const u = link ?? c.u;
   c.u = u;
-  return show(c, ui.settingsScreen(c.lang, { reminders: u.reminders, daily: u.daily, weekly: u.weekly }, activeAccount(u, accs)?.name ?? tr(c.lang, "dash")));
+  return show(c, ui.settingsScreen(c.lang, { reminders: u.reminders, daily: u.daily, weekly: u.weekly, notify: u.notify }, activeAccount(u, accs)?.name ?? tr(c.lang, "dash")));
+}
+
+/** Показывает последние уведомления; всё показанное считается прочитанным (метки «Новое» остаются на этом экране). */
+async function showNotifications(c: Ctx) {
+  const items = await listNotifications(c.u.userId, 8);
+  const screen = ui.notificationsScreen(c.lang, items);
+  await markNotificationsRead(c.u.userId, items.filter((n) => n.unread).map((n) => n.id));
+  return show(c, screen);
+}
+
+/** Пуш о новом уведомлении с сайта. Вызывает база (триггер), секрет в заголовке. */
+async function pushNotification(tg: Tg, id: unknown): Promise<{ sent: boolean }> {
+  if (typeof id !== "string" || !/^[0-9a-f-]{36}$/i.test(id)) return { sent: false };
+  const { data: n } = await db.from("notifications").select("id, user_id, kind, params, pushed_at").eq("id", id).maybeSingle();
+  if (!n || n.pushed_at) return { sent: false };
+  const { data: l } = await db.from("telegram_links").select("chat_id, notify").eq("user_id", n.user_id).maybeSingle();
+  if (!l || l.notify === false) return { sent: false };
+  const { data: p } = await db.from("profiles").select("language").eq("id", n.user_id).maybeSingle();
+  const screen = ui.notificationPush(langOf(p?.language), n.kind as string, n.params);
+  if (!screen) return { sent: false };
+  try {
+    await tg.send(l.chat_id as number, screen.text, screen.kb);
+  } catch (e) {
+    console.error("push", e instanceof Error ? e.message : e);
+    return { sent: false };
+  }
+  await db.from("notifications").update({ pushed_at: new Date().toISOString() }).eq("id", id);
+  return { sent: true };
 }
 
 async function settingsCallback(c: Ctx, parts: string[]) {
@@ -287,6 +315,7 @@ async function settingsCallback(c: Ctx, parts: string[]) {
     case "rem": return toggle("reminders", c.u.reminders);
     case "daily": return toggle("daily_summary", c.u.daily);
     case "weekly": return toggle("weekly_report", c.u.weekly);
+    case "notify": return toggle("notify", c.u.notify);
     case "lang":
       if (arg === "ru" || arg === "uz" || arg === "en") {
         await db.from("profiles").update({ language: arg }).eq("id", uid);
@@ -334,6 +363,7 @@ async function menuCallback(c: Ctx, op: string) {
     case "repeat": return repeatLast(c);
     case "stats": return show(c, ui.statsMenu(c.lang));
     case "ach": return show(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId)));
+    case "notif": return showNotifications(c);
     case "tools": return show(c, ui.toolsMenu(c.lang));
     case "sess": return show(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz));
     case "news": return show(c, ui.newsScreen(c.lang, await fetchHeadlines(c.lang)));
@@ -366,6 +396,9 @@ async function onCallback(c: Ctx, data: string) {
       return show(c, ui.checklistScreen(c.lang, c.u.checklist, c.st.chk));
     }
     case "h": return show(c, parts[0] === "menu" ? ui.helpMenu(c.lang) : ui.helpTopic(c.lang, parts[0]));
+    case "nt":
+      if (parts[0] === "clear") await clearNotifications(c.u.userId);
+      return showNotifications(c);
     case "x": return exportCsv(c);
   }
 }
@@ -388,6 +421,7 @@ const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
   "/emotions": async (c) => say(c, await statsScreen(c, "emo")),
   "/instruments": async (c) => say(c, await statsScreen(c, "instr")),
   "/achievements": async (c) => say(c, ui.achievementsScreen(c.lang, await fetchTrades(c.u.userId))),
+  "/notifications": (c) => showNotifications(c),
   "/tools": (c) => say(c, ui.toolsMenu(c.lang)),
   "/sessions": (c) => say(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz)),
   "/rr": (c, arg) => say(c, ui.rrScreen(c.lang, parseNums(arg))),
@@ -629,6 +663,12 @@ Deno.serve(async (req) => {
     const cfg = await config();
     const path = new URL(req.url).pathname;
     const tg = new Tg(cfg.telegram_token);
+    if (path.endsWith("/notify")) {
+      if (!same(req.headers.get("x-cron-secret"), cfg.cron_secret)) return new Response("forbidden", { status: 403 });
+      const body = (await req.json().catch(() => ({}))) as { id?: unknown };
+      const r = await pushNotification(tg, body.id);
+      return Response.json({ ...r, out: tg.out });
+    }
     if (path.endsWith("/cron")) {
       if (!same(req.headers.get("x-cron-secret"), cfg.cron_secret)) return new Response("forbidden", { status: 403 });
       return Response.json({ sent: await runScheduled(tg) });

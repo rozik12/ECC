@@ -18,7 +18,8 @@ export default async function PrivateLayout({ children }: { children: React.Reac
       </AppShell>
     );
   }
-  const { profile } = await requireUser();
+  const { supabase, user, profile } = await requireUser();
   if (!profile?.onboarded) redirect("/onboarding");
-  return <AppShell>{children}</AppShell>;
+  const { count } = await supabase.from("notifications").select("id", { count: "exact", head: true }).eq("user_id", user.id).is("read_at", null);
+  return <AppShell unread={count ?? 0}>{children}</AppShell>;
 }

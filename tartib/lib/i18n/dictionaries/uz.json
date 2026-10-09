@@ -850,7 +850,15 @@
     "notFound": "Bunday pochtali foydalanuvchi topilmadi.",
     "resetMfa": "Ikki bosqichli himoyani bekor qilish",
     "resetMfaText": "Telefonini yo'qotgan foydalanuvchi uchun. U parol bilan kirib, himoyani qaytadan yoqa oladi.",
-    "resetMfaButton": "Bekor qilish"
+    "resetMfaButton": "Bekor qilish",
+    "broadcast": "Hammaga e'lon",
+    "broadcastText": "Barcha foydalanuvchilar qo'ng'iroqchada ko'radi, Telegram ulaganlar u yerda ham oladi. Faqat bir marta yuboriladi, qaytarib bo'lmaydi.",
+    "broadcastTitle": "Sarlavha",
+    "broadcastBody": "Matn",
+    "broadcastSend": "Hammaga yuborish",
+    "broadcastDone": "Foydalanuvchilarga yuborildi: {n}.",
+    "broadcastInvalid": "Sarlavha (80 belgigacha) va matn (500 gacha) kiriting.",
+    "broadcastConfirm": "E'lonni barcha foydalanuvchilarga yuborasizmi? Qaytarib bo'lmaydi."
   },
   "import": {
     "title": "Bitimlarni import qilish",
@@ -988,7 +996,8 @@
     "check": "Ulandim, yangilash",
     "reminders": "3 kun yozuv bo'lmasa eslatma",
     "disconnect": "Uzish",
-    "failed": "Bajarilmadi. Qayta urinib ko'ring."
+    "failed": "Bajarilmadi. Qayta urinib ko'ring.",
+    "notify": "Telegram'dagi bildirishnomalar"
   },
   "news": {
     "title": "Bozor yangiliklari",
@@ -1148,5 +1157,27 @@
     "tools": "Asboblar",
     "close": "Yopish",
     "help": "Bu maslahat"
+  },
+  "notifications": {
+    "title": "Bildirishnomalar",
+    "subtitle": "Jurnalingiz voqealari: yutuqlar, qoidalar buzilishi, oy maqsadi va Tartib e'lonlari.",
+    "empty": "Hozircha bildirishnomalar yo'q. Yutuq olsangiz, qoidani buzsangiz yoki oy maqsadiga erishsangiz paydo bo'ladi.",
+    "markAll": "Hammasini o'qilgan qilish",
+    "clear": "Tozalash",
+    "enableBrowser": "Brauzer bildirishnomalarini yoqish",
+    "browserOn": "Brauzer bildirishnomalari yoqilgan (oyna yashirin bo'lganda).",
+    "browserDenied": "Brauzer bildirishnomalari sayt sozlamalarida taqiqlangan.",
+    "browserNew": "Yangi bildirishnomalar: {n}",
+    "bellUnread": "Bildirishnomalar: o'qilmagan {n}",
+    "kinds": {
+      "achievement": "Yangi yutuq",
+      "violation": "Buzilgan qoidalar: {count}",
+      "goal": "Oy maqsadiga erishildi",
+      "report": "Haftalik hisobot tayyor"
+    },
+    "bodies": {
+      "goal": "Intizom {percent}%, maqsad {goal}%.",
+      "report": "Hisobotni o'qish uchun statistikani oching."
+    }
   }
 }

@@ -1,6 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { evaluateRules } from "@/lib/calculations/rules";
 import { calculatePnl, tradeMetrics } from "@/lib/calculations/trade";
+import { computeAchievements, monthDiscipline } from "@/lib/achievements";
+import { buildTradeNotifications } from "@/lib/notifications";
 import { dayBounds } from "@/lib/time";
 import { dayLossBefore, getDayContext, getRules } from "@/lib/data";
 import type { TradeInput } from "@/lib/validations/trades";
@@ -17,6 +19,8 @@ type Ctx = {
   timeZone: string;
   /** Правила можно передать готовыми (при импорте), чтобы не загружать их для каждой сделки */
   rules?: Rule[];
+  /** Если задано — после новой сделки создаются уведомления (достижения, нарушения, цель месяца). goal — месячная цель по дисциплине, %. */
+  notify?: { goal: number };
 };
 
 type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees"> & {
@@ -111,6 +115,8 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
     traded_at: t.tradedAt,
   };
 
+  const miniBefore = ctx.notify && !tradeId ? await loadMini(supabase) : null;
+
   let id = tradeId;
   if (tradeId) {
     const { error } = await supabase.from("trades").update(row).eq("id", tradeId).eq("user_id", userId);
@@ -133,5 +139,35 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
       return SAVE_FAILED;
     }
   }
+  if (ctx.notify && miniBefore) {
+    await notifyAfterTrade(supabase, userId, timeZone, ctx.notify.goal, miniBefore, { tradedAt: t.tradedAt, rulesFollowed: violationIds.length === 0 }, t.instrument.toUpperCase(),
+      allRules.filter((r) => violationIds.includes(r.id)).map((r) => r.name));
+  }
   return { ok: true, id: id as string };
+}
+
+type Mini = { tradedAt: string; rulesFollowed: boolean };
+
+async function loadMini(supabase: SupabaseClient): Promise<Mini[] | null> {
+  const { data, error } = await supabase.from("trades").select("traded_at, rules_followed").order("traded_at", { ascending: false }).limit(3000);
+  if (error || !data) return null;
+  return data.map((r) => ({ tradedAt: String(r.traded_at), rulesFollowed: !!r.rules_followed }));
+}
+
+/** Сбой уведомлений никогда не должен мешать сохранению сделки. */
+async function notifyAfterTrade(supabase: SupabaseClient, userId: string, timeZone: string, goal: number, before: Mini[], added: Mini, instrument: string, violated: string[]) {
+  try {
+    const now = new Date();
+    const after = [added, ...before];
+    const unlocked = (list: Mini[]) => computeAchievements(list, now).filter((a) => a.unlocked).map((a) => a.id);
+    const monthBefore = monthDiscipline(before, goal, timeZone, now);
+    const monthAfter = monthDiscipline(after, goal, timeZone, now);
+    const drafts = buildTradeNotifications({
+      achBefore: unlocked(before), achAfter: unlocked(after), goalBefore: monthBefore.reached, goalAfter: monthAfter.reached,
+      goal, percent: monthAfter.percent, instrument, violated,
+    });
+    if (drafts.length > 0) await supabase.from("notifications").insert(drafts.map((d) => ({ user_id: userId, kind: d.kind, params: d.params })));
+  } catch {
+    // уведомление не критично
+  }
 }

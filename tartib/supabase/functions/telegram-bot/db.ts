@@ -2,8 +2,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { calculatePnl, tradeMetrics } from "./calc.ts";
 import { inferMarket } from "./market.ts";
+import { buildTradeNotifications, type Draft } from "./notify.ts";
 import { evaluateRules, type RuleLike } from "./rules.ts";
-import { computeAchievements, disciplineStreak, type StatTrade } from "./stats.ts";
+import { computeAchievements, disciplineStreak, monthDiscipline, type StatTrade } from "./stats.ts";
 import { dayBounds, safeTimeZone, startOfLocalDay } from "./time.ts";
 import { langOf, type Lang } from "./text.ts";
 import type { AccountRow, RuleRow, TradeRow } from "./ui.ts";
@@ -15,17 +16,17 @@ const round = (n: number, d = 2) => Math.round(n * 10 ** d) / 10 ** d;
 
 export type Linked = {
   userId: string; chatId: number; lang: Lang; tz: string; goal: number; checklist: string[]; activeAccountId: string | null;
-  reminders: boolean; daily: boolean; weekly: boolean;
+  reminders: boolean; daily: boolean; weekly: boolean; notify: boolean;
 };
 
 export async function getLinked(chatId: number): Promise<Linked | null> {
-  const { data: l } = await db.from("telegram_links").select("user_id, reminders, daily_summary, weekly_report, active_account_id").eq("chat_id", chatId).maybeSingle();
+  const { data: l } = await db.from("telegram_links").select("user_id, reminders, daily_summary, weekly_report, notify, active_account_id").eq("chat_id", chatId).maybeSingle();
   if (!l) return null;
   const { data: p } = await db.from("profiles").select("language, timezone, discipline_goal, checklist, checklist_enabled").eq("id", l.user_id).maybeSingle();
   const checklist = Array.isArray(p?.checklist) && p.checklist.length > 0 ? (p.checklist as string[]) : ["plan", "stop", "risk", "calm", "revenge"];
   return {
     userId: l.user_id as string, chatId, lang: langOf(p?.language), tz: safeTimeZone(p?.timezone), goal: Number(p?.discipline_goal ?? 80), checklist,
-    activeAccountId: (l.active_account_id as string | null) ?? null, reminders: !!l.reminders, daily: !!l.daily_summary, weekly: !!l.weekly_report,
+    activeAccountId: (l.active_account_id as string | null) ?? null, reminders: !!l.reminders, daily: !!l.daily_summary, weekly: !!l.weekly_report, notify: l.notify !== false,
   };
 }
 
@@ -185,7 +186,8 @@ export async function createTrade(u: Linked, t: NewTrade): Promise<CreateResult>
   const violated = checks.filter((c) => c.status === "violated");
   const pnl = t.exit !== null ? round(calculatePnl(t.direction, t.entry, t.exit, t.size)) : 0;
 
-  const before = computeAchievements(((await fetchAllMini(u.userId)) as { tradedAt: string; rulesFollowed: boolean }[]), now).filter((a) => a.unlocked).map((a) => a.id);
+  const miniBefore = (await fetchAllMini(u.userId)) as { tradedAt: string; rulesFollowed: boolean }[];
+  const before = computeAchievements(miniBefore, now).filter((a) => a.unlocked).map((a) => a.id);
 
   const { data: ins, error } = await db.from("trades").insert({
     user_id: u.userId, account_id: account.id, instrument: t.instrument, market: inferMarket(t.instrument), direction: t.direction, entry_price: t.entry, exit_price: t.exit,
@@ -222,6 +224,19 @@ export async function createTrade(u: Linked, t: NewTrade): Promise<CreateResult>
   const streak = disciplineStreak(mini.map((m, i) => ({ id: String(i), tradedAt: m.tradedAt, rulesFollowed: m.rulesFollowed, instrument: "", direction: "long", entryPrice: 0, exitPrice: null, pnl: 0, emotion: "", riskAmount: null, strategy: "", violations: [] })) as StatTrade[], now).current;
   const milestone = saved.followed && [5, 10, 20, 50, 100].includes(streak) ? streak : null;
 
+  // Событие уже показано в ответе бота, поэтому в Telegram повторно не отправляется (pushed_at заполнен); на сайте оно появится в колокольчике
+  try {
+    const goalBefore = monthDiscipline(miniBefore, u.goal, u.tz, now);
+    const goalAfter = monthDiscipline(mini, u.goal, u.tz, now);
+    const drafts = buildTradeNotifications({
+      achBefore: before, achAfter: computeAchievements(mini, now).filter((a) => a.unlocked).map((a) => a.id), goalBefore: goalBefore.reached, goalAfter: goalAfter.reached,
+      goal: u.goal, percent: goalAfter.percent, instrument: t.instrument.toUpperCase(), violated: violated.map((c) => c.rule.name),
+    });
+    await addNotifications(u.userId, drafts, true);
+  } catch (e) {
+    console.error("notify", e instanceof Error ? e.message : e);
+  }
+
   return { ok: true, trade: saved, violated: violated.map((c) => c.rule.name), warnings, newAch, milestone, currency: account.currency };
 }
 
@@ -230,3 +245,26 @@ async function fetchAllMini(userId: string) {
   return (data ?? []).map((r) => ({ tradedAt: r.traded_at as string, rulesFollowed: !!r.rules_followed }));
 }
 export { toStat };
+
+// ---------- уведомления ----------
+export async function addNotifications(userId: string, drafts: Draft[], alreadyShown: boolean) {
+  if (drafts.length === 0) return;
+  const pushed_at = alreadyShown ? new Date().toISOString() : null;
+  await db.from("notifications").insert(drafts.map((d) => ({ user_id: userId, kind: d.kind, params: d.params, pushed_at })));
+}
+
+export type NotificationRow = { id: string; kind: string; params: unknown; unread: boolean };
+
+export async function listNotifications(userId: string, limit = 8): Promise<NotificationRow[]> {
+  const { data } = await db.from("notifications").select("id, kind, params, read_at").eq("user_id", userId).order("created_at", { ascending: false }).limit(limit);
+  return (data ?? []).map((r) => ({ id: r.id as string, kind: r.kind as string, params: r.params, unread: r.read_at === null }));
+}
+
+export async function markNotificationsRead(userId: string, ids: string[]) {
+  if (ids.length === 0) return;
+  await db.from("notifications").update({ read_at: new Date().toISOString() }).eq("user_id", userId).in("id", ids).is("read_at", null);
+}
+
+export async function clearNotifications(userId: string) {
+  await db.from("notifications").delete().eq("user_id", userId);
+}

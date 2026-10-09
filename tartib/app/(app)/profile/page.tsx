@@ -24,7 +24,7 @@ export default async function ProfilePage() {
   const plan = await getPlan(supabase, user.id);
   const { data: factors } = await supabase.auth.mfa.listFactors();
   const mfaEnabled = (factors?.totp ?? []).length > 0;
-  const { data: tg } = await supabase.from("telegram_links").select("reminders").eq("user_id", user.id).maybeSingle();
+  const { data: tg } = await supabase.from("telegram_links").select("reminders, notify").eq("user_id", user.id).maybeSingle();
   const [{ count: trades }, { count: rules }] = await Promise.all([
     supabase.from("trades").select("id", { count: "exact", head: true }),
     supabase.from("rules").select("id", { count: "exact", head: true }),
@@ -55,7 +55,7 @@ export default async function ProfilePage() {
         </dl>
       </Card>
 
-      <TelegramCard linked={!!tg} reminders={tg?.reminders ?? true} />
+      <TelegramCard linked={!!tg} reminders={tg?.reminders ?? true} notify={tg?.notify ?? true} />
 
       <ShareCard token={profile?.share_token ?? null} />
 

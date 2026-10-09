@@ -22,7 +22,11 @@ export async function saveTradeAction(tradeId: string | null, input: unknown): P
   if (!parsed.success) return { ok: false, error: "errors.generic" };
   try {
     const { supabase, user, profile } = await requireUser();
-    const result = await saveTradeCore({ supabase, userId: user.id, timeZone: safeTimeZone(profile?.timezone) }, tradeId, parsed.data);
+    const result = await saveTradeCore(
+      { supabase, userId: user.id, timeZone: safeTimeZone(profile?.timezone), notify: { goal: profile?.discipline_goal ?? 80 } },
+      tradeId,
+      parsed.data,
+    );
     if (!result.ok) return result;
     revalidateTradePages();
     return { ok: true, id: result.id };

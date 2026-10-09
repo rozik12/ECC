@@ -850,7 +850,15 @@
     "notFound": "No user with this email.",
     "resetMfa": "Reset two-factor authentication",
     "resetMfaText": "For a user who lost their phone. They can sign in with a password and turn protection on again.",
-    "resetMfaButton": "Reset"
+    "resetMfaButton": "Reset",
+    "broadcast": "Announcement to everyone",
+    "broadcastText": "All users see it in the bell, and those who connected Telegram get it there too. It is sent once and cannot be recalled.",
+    "broadcastTitle": "Title",
+    "broadcastBody": "Text",
+    "broadcastSend": "Send to everyone",
+    "broadcastDone": "Sent to users: {n}.",
+    "broadcastInvalid": "Fill in a title (up to 80 characters) and text (up to 500).",
+    "broadcastConfirm": "Send the announcement to all users? It cannot be recalled."
   },
   "import": {
     "title": "Import trades",
@@ -988,7 +996,8 @@
     "check": "I connected, refresh",
     "reminders": "Reminders if no entries for 3 days",
     "disconnect": "Disconnect",
-    "failed": "Something went wrong. Please try again."
+    "failed": "Something went wrong. Please try again.",
+    "notify": "Notifications in Telegram"
   },
   "news": {
     "title": "Market news",
@@ -1148,5 +1157,27 @@
     "tools": "Tools",
     "close": "Close",
     "help": "This help"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Events from your journal: achievements, rule violations, the monthly goal and Tartib announcements.",
+    "empty": "No notifications yet. They appear when you earn an achievement, break a rule or reach your monthly goal.",
+    "markAll": "Mark all as read",
+    "clear": "Clear",
+    "enableBrowser": "Enable browser notifications",
+    "browserOn": "Browser notifications are on (when the tab is hidden).",
+    "browserDenied": "Browser notifications are blocked in the site settings.",
+    "browserNew": "New notifications: {n}",
+    "bellUnread": "Notifications: {n} unread",
+    "kinds": {
+      "achievement": "New achievement",
+      "violation": "Rules broken: {count}",
+      "goal": "Monthly goal reached",
+      "report": "Weekly report is ready"
+    },
+    "bodies": {
+      "goal": "Discipline {percent}% against a goal of {goal}%.",
+      "report": "Open statistics to read the report."
+    }
   }
 }

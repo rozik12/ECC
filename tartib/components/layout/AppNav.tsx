@@ -88,25 +88,18 @@ export function BottomNav() {
 }
 
 /** Ссылки «Настройки» и «Профиль» в верхней панели на телефоне. */
+/** На телефоне второстепенные страницы идут второй строкой под шапкой: иконки в одну строку с кнопками не помещаются. */
 export function TopIcons() {
   const { t } = useI18n();
   const isActive = useIsActive();
   return (
-    <>
+    <nav aria-label={t("nav.main")} className="flex gap-5 overflow-x-auto border-t border-border px-4 py-2 text-sm lg:hidden">
       {secondaryNav.map(({ href, labelKey, icon: Icon }) => (
-        <Link
-          key={href}
-          href={href}
-          aria-label={t(labelKey)}
-          title={t(labelKey)}
-          className={cn(
-            "flex h-9 w-9 items-center justify-center rounded-lg hover:bg-surface-muted lg:hidden",
-            isActive(href) ? "text-primary" : "text-muted",
-          )}
-        >
-          <Icon className="h-5 w-5" />
+        <Link key={href} href={href} className={cn("flex shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
+          <Icon className="h-4 w-4" aria-hidden />
+          {t(labelKey)}
         </Link>
       ))}
-    </>
+    </nav>
   );
 }

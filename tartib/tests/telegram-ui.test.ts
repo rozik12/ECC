@@ -20,7 +20,7 @@ function allScreens(lang: "ru" | "uz" | "en"): ui.Screen[] {
     ui.rulesMark(lang, rows[1].id, rules, new Set(["u1"])), ui.rulesMark(lang, rows[1].id, [], new Set()),
     ui.wizardScreen(lang, "instrument", ["BTCUSDT", "ETHUSDT", "SOLUSDT"]), ui.wizardScreen(lang, "direction", []), ui.wizardScreen(lang, "stop", []), ui.wizardScreen(lang, "emotion", []),
     ui.wizardConfirm(lang, { instrument: "BTCUSDT", direction: "long", entry: 1, size: 2, stop: null, exit: null, emotion: "calm" }), ui.wizardEdit(lang),
-    ui.accountsScreen(lang, accs, null), ui.rulesScreen(lang, rules), ui.rulesScreen(lang, []), ui.settingsScreen(lang, { reminders: true, daily: false, weekly: true }, "Основной"),
+    ui.accountsScreen(lang, accs, null), ui.rulesScreen(lang, rules), ui.rulesScreen(lang, []), ui.settingsScreen(lang, { reminders: true, daily: false, weekly: true, notify: true }, "Основной"),
     ui.languagePicker(lang), ui.unlinkAsk(lang), ui.checklistScreen(lang, ["plan", "stop", "custom-item"], [0]), ui.helpMenu(lang), ui.helpTopic(lang, "fmt"), ui.helpTopic(lang, "cmds"), ui.unknownScreen(lang),
   ];
 }

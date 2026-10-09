@@ -3,6 +3,7 @@ import { SESSIONS, positionSize, riskReward, sessionStatus } from "./tools.ts";
 import { bestWorst, tiltAnalysis } from "./stats.ts";
 import { computeAchievements, disciplineCost, disciplineStreak, byEmotion, monthDiscipline, pnlByInstrument, summarize, topViolations, type StatTrade } from "./stats.ts";
 import type { Headline } from "./news.ts";
+import { renderNotification } from "./notify.ts";
 import { emotionKeys, emotionLabel, tr, type Lang } from "./text.ts";
 
 export type Btn = { text: string; callback_data?: string; url?: string };
@@ -16,7 +17,7 @@ export type TradeRow = {
 };
 export type RuleRow = { id: string; name: string; rule_type: string; is_active: boolean };
 export type AccountRow = { id: string; name: string; currency: string; balance: number };
-export type LinkSettings = { reminders: boolean; daily: boolean; weekly: boolean };
+export type LinkSettings = { reminders: boolean; daily: boolean; weekly: boolean; notify: boolean };
 
 const LOCALE: Record<Lang, string> = { ru: "ru-RU", en: "en-US", uz: "uz-UZ" };
 export const PAGE_SIZE = 5;
@@ -55,7 +56,7 @@ export function mainMenu(lang: Lang): Screen {
       [b(tr(lang, "mRules"), "m:rules"), b(tr(lang, "mAcc"), "m:acc")],
       [b(tr(lang, "mSettings"), "m:set"), b(tr(lang, "mHelp"), "h:menu")],
       [b(tr(lang, "mNews"), "m:news"), b(tr(lang, "mTools"), "m:tools")],
-      [{ text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
+      [b(tr(lang, "mNotif"), "m:notif"), { text: tr(lang, "mSite"), url: SITE + "/dashboard" }],
     ),
   };
 }
@@ -285,12 +286,13 @@ export function settingsScreen(lang: Lang, s: LinkSettings, accountName: string)
     `🔔 ${tr(lang, "setRem")}: ${on(s.reminders)}`,
     `🌙 ${tr(lang, "setDaily")}: ${on(s.daily)}`,
     `📅 ${tr(lang, "setWeekly")}: ${on(s.weekly)}`,
+    `📣 ${tr(lang, "setNotify")}: ${on(s.notify)}`,
     `💼 ${tr(lang, "setAcc")}: ${esc(accountName)}`,
   ].join("\n");
   return {
     text,
     kb: kb(
-      [b(`🔔 ${on(s.reminders)}`, "c:rem"), b(`🌙 ${on(s.daily)}`, "c:daily"), b(`📅 ${on(s.weekly)}`, "c:weekly")],
+      [b(`🔔 ${on(s.reminders)}`, "c:rem"), b(`🌙 ${on(s.daily)}`, "c:daily"), b(`📅 ${on(s.weekly)}`, "c:weekly"), b(`📣 ${on(s.notify)}`, "c:notify")],
       [b(tr(lang, "bLang"), "c:lang"), b(tr(lang, "bAcc"), "m:acc")],
       [b(tr(lang, "bExport"), "x:csv"), b(tr(lang, "bUnlink"), "c:unlink")],
       menuRow(lang),
@@ -408,4 +410,19 @@ export function bestScreen(lang: Lang, rows: TradeRow[], cur: string, tz: string
   const date = (iso: string) => new Intl.DateTimeFormat(LOCALE[lang], { day: "2-digit", month: "2-digit", timeZone: tz }).format(new Date(iso));
   const list = (xs: typeof best) => (xs.length ? xs.map((x) => `${pnlDot(x.pnl)} ${esc(x.instrument)} · ${date(x.tradedAt)} · ${money(x.pnl, cur, lang, true)}`).join("\n") : tr(lang, "bestNone"));
   return { text: `${tr(lang, "bestTitle")}\n\n<b>${tr(lang, "bestWin")}</b>\n${list(best)}\n\n<b>${tr(lang, "bestLoss")}</b>\n${list(worst)}`, kb: statsNav(lang, "s:best") };
+}
+
+// ---------- уведомления ----------
+export function notificationsScreen(lang: Lang, items: { kind: string; params: unknown; unread: boolean }[]): Screen {
+  const shown = items.map((n) => ({ ...n, text: renderNotification(lang, n.kind, n.params) })).filter((n): n is typeof n & { text: string } => n.text !== null);
+  const nav = [[{ text: tr(lang, "notifSite"), url: SITE + "/notifications" }], menuRow(lang)];
+  if (shown.length === 0) return { text: `${tr(lang, "notifTitle")}\n\n${tr(lang, "notifEmpty")}`, kb: kb(...nav) };
+  const body = shown.map((n) => `${n.unread ? "🔵" : "▫️"} ${n.text}${n.unread ? `  <i>${tr(lang, "notifNew")}</i>` : ""}`).join("\n\n");
+  return { text: `${tr(lang, "notifTitle")}\n\n${body}`, kb: kb([b(tr(lang, "notifClear"), "nt:clear")], ...nav) };
+}
+
+/** Сообщение, которое бот присылает сам, когда на сайте создано уведомление. */
+export function notificationPush(lang: Lang, kind: string, params: unknown): Screen | null {
+  const text = renderNotification(lang, kind, params);
+  return text === null ? null : { text, kb: kb([b(tr(lang, "mNotif"), "m:notif"), { text: tr(lang, "mSite"), url: SITE + "/dashboard" }]) };
 }

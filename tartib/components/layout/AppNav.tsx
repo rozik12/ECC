@@ -16,8 +16,8 @@ function useIsActive() {
 export function Sidebar() {
   const { t } = useI18n();
   const isActive = useIsActive();
-  const extraNav = secondaryNav.filter((n) => !["/settings", "/profile"].includes(n.href));
-  const accountNav = secondaryNav.filter((n) => ["/settings", "/profile"].includes(n.href));
+  const extraNav = secondaryNav.filter((n) => !["/diary", "/settings", "/profile"].includes(n.href));
+  const accountNav = secondaryNav.filter((n) => ["/diary", "/settings", "/profile"].includes(n.href));
   const extraActive = extraNav.some((n) => isActive(n.href));
 
   const item = (href: string, labelKey: string, Icon: React.ElementType) => (

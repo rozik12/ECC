@@ -37,7 +37,8 @@
     "tools": "Tools",
     "charts": "Charts",
     "market": "Market",
-    "more": "More: market and tools"
+    "more": "More: market and tools",
+    "diary": "Diary"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1620,5 +1621,43 @@
       "5": "Saturday",
       "6": "Sunday"
     }
+  },
+  "diary": {
+    "title": "Day diary",
+    "subtitle": "Plan and mood in the morning, result and lesson in the evening. After a couple of weeks you can see how your state affects results.",
+    "days": "Days",
+    "today": "Today",
+    "filled": "filled",
+    "mood": "Mood",
+    "energy": "Energy",
+    "scaleHint": "From 1 (bad) to 5 (great). Tap again to clear.",
+    "plan": "Plan for the day",
+    "planHint": "What you trade, where you enter, when you stop. Keep it short.",
+    "review": "Day review",
+    "reviewHint": "What worked, what did not, and why.",
+    "followed": "Did you follow the plan?",
+    "yes": "Yes",
+    "no": "No",
+    "lesson": "One lesson of the day",
+    "lessonHint": "One sentence you want to remember.",
+    "saved": "Saved.",
+    "readOnly": "Entries older than 14 days are read-only.",
+    "errDay": "You cannot write for this day: today and the last 14 days only.",
+    "streak": "Days in a row with an entry",
+    "daysWord": "d",
+    "streakBest": "Best streak: {n}",
+    "planEffect": "Plan and result",
+    "planYesDays": "Plan followed, days: {n}",
+    "planNoDays": "Plan broken, days: {n}",
+    "avgPerDay": "Average result per day.",
+    "planEffectNone": "Mark in your day review whether you followed the plan and a comparison will appear here.",
+    "moodEffect": "Mood and day result",
+    "moodNone": "Needs entries with mood at two or more different ratings and days with trades.",
+    "moodLevel": "Mood {n}",
+    "daysCount": "days: {n}",
+    "moodNote": "Average over days with trades. This is an observation, not cause and effect. Days counted:",
+    "history": "Recent entries",
+    "delete": "Delete entry",
+    "deleteConfirm": "Delete this day's entry?"
   }
 }

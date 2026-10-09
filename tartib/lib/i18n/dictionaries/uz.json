@@ -37,7 +37,8 @@
     "tools": "Asboblar",
     "charts": "Grafiklar",
     "market": "Bozor",
-    "more": "Yana: bozor va asboblar"
+    "more": "Yana: bozor va asboblar",
+    "diary": "Kundalik"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1620,5 +1621,43 @@
       "5": "Shanba",
       "6": "Yakshanba"
     }
+  },
+  "diary": {
+    "title": "Kun kundaligi",
+    "subtitle": "Ertalab — reja va kayfiyat, kechqurun — natija va saboq. Ikki haftadan keyin holat natijaga qanday ta'sir qilishi ko'rinadi.",
+    "days": "Kunlar",
+    "today": "Bugun",
+    "filled": "to'ldirilgan",
+    "mood": "Kayfiyat",
+    "energy": "Energiya",
+    "scaleHint": "1 (yomon) dan 5 (a'lo) gacha. Tanlovni bekor qilish uchun yana bosing.",
+    "plan": "Kun rejasi",
+    "planHint": "Nimani savdo qilasiz, qayerda kirasiz, qachon to'xtaysiz. Qisqa.",
+    "review": "Kun natijasi",
+    "reviewHint": "Nima bo'ldi, nima bo'lmadi, nega.",
+    "followed": "Rejaga amal qildingizmi?",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "lesson": "Kunning bitta saboqi",
+    "lessonHint": "Eslab qolmoqchi bo'lgan bitta gap.",
+    "saved": "Yozildi.",
+    "readOnly": "14 kundan eski yozuvlarni faqat o'qish mumkin.",
+    "errDay": "Bu kun uchun yozib bo'lmaydi: bugun va oxirgi 14 kun mumkin.",
+    "streak": "Ketma-ket yozuvli kunlar",
+    "daysWord": "kun",
+    "streakBest": "Eng yaxshi seriya: {n}",
+    "planEffect": "Reja va natija",
+    "planYesDays": "Reja bajarilgan kunlar: {n}",
+    "planNoDays": "Reja buzilgan kunlar: {n}",
+    "avgPerDay": "Kunning o'rtacha natijasi.",
+    "planEffectNone": "Kun natijasida rejaga amal qilganingizni belgilang, shunda bu yerda taqqoslash chiqadi.",
+    "moodEffect": "Kayfiyat va kun natijasi",
+    "moodNone": "Kamida ikki xil kayfiyat bahosi va bitimli kunlar yozuvlari kerak.",
+    "moodLevel": "Kayfiyat {n}",
+    "daysCount": "kun: {n}",
+    "moodNote": "Bitimli kunlar bo'yicha o'rtacha. Bu kuzatuv, sabab-oqibat emas. Hisobdagi kunlar:",
+    "history": "Oxirgi yozuvlar",
+    "delete": "Yozuvni o'chirish",
+    "deleteConfirm": "Shu kun yozuvi o'chirilsinmi?"
   }
 }

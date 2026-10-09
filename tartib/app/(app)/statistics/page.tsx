@@ -112,6 +112,11 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
         </div>
         <PeriodTabs current={period} plan={plan} />
       </div>
+      {all.length > 0 && (
+        <Link href="/statistics/advanced" className="inline-flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary-soft px-4 py-2 text-sm font-medium text-primary hover:border-primary">
+          {t("adv.link")} →
+        </Link>
+      )}
 
       {all.length === 0 ? (
         <Card className="flex flex-col items-center gap-5 py-12 text-center">

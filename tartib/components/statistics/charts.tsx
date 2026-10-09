@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis,
+  Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
 import { formatCompact, formatMoney, formatNumber } from "@/lib/format";
 import type { Locale } from "@/lib/i18n/config";
@@ -111,6 +111,70 @@ export function PnlBars({ data, currency, layout = "columns", label }: { data: B
             <Bar dataKey="value" radius={4} maxBarSize={28}>{cells}</Bar>
           </BarChart>
         )}
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+export type CountBarView = { name: string; count: number; tone: "bad" | "good" | "neutral" };
+
+/** Столбцы с количеством сделок (например, распределение результатов в R). */
+export function CountBars({ data, label }: { data: CountBarView[]; label: string }) {
+  const { t, locale } = useI18n();
+  if (data.every((d) => d.count === 0)) return <EmptyChart />;
+  const fill = { bad: "var(--danger)", good: "var(--success)", neutral: "var(--muted)" } as const;
+  return (
+    <div className="h-56 w-full" role="img" aria-label={label}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
+          <CartesianGrid stroke={gridStroke} vertical={false} />
+          <XAxis dataKey="name" tick={axisTick} tickLine={false} axisLine={{ stroke: gridStroke }} interval={0} />
+          <YAxis tick={axisTick} tickLine={false} axisLine={false} width={36} allowDecimals={false} tickFormatter={(v: number) => formatNumber(v, locale, 0)} />
+          <Tooltip
+            cursor={{ fill: "var(--surface-muted)", opacity: 0.6 }}
+            content={({ active, payload }) => {
+              if (!active || !payload?.length) return null;
+              const p = payload[0].payload as CountBarView;
+              return <TooltipBox title={p.name} lines={[t("stats.charts.tradesCount", { n: p.count })]} />;
+            }}
+          />
+          <Bar dataKey="count" radius={4} maxBarSize={36}>
+            {data.map((d) => <Cell key={d.name} fill={fill[d.tone]} />)}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+export type DrawdownView = { ts: number; drawdown: number; percent: number };
+
+/** Просадка от максимума баланса: чем ниже, тем глубже. */
+export function DrawdownChart({ data, currency, label }: { data: DrawdownView[]; currency: string; label: string }) {
+  const { locale } = useI18n();
+  if (data.length < 2) return <EmptyChart />;
+  const intl = locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US";
+  const dateFmt = new Intl.DateTimeFormat(intl, { day: "2-digit", month: "2-digit" });
+  const dateTimeFmt = new Intl.DateTimeFormat(intl, { dateStyle: "medium", timeStyle: "short" });
+  return (
+    <div className="h-56 w-full" role="img" aria-label={label}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
+          <CartesianGrid stroke={gridStroke} vertical={false} />
+          <XAxis dataKey="ts" type="number" scale="time" domain={["dataMin", "dataMax"]} tick={axisTick} tickLine={false} axisLine={{ stroke: gridStroke }}
+            tickFormatter={(v: number) => dateFmt.format(new Date(v))} minTickGap={32} />
+          <YAxis tick={axisTick} tickLine={false} axisLine={false} width={52} domain={["auto", 0]} tickFormatter={(v: number) => axisNumber(v, locale)} />
+          <ReferenceLine y={0} stroke="var(--muted)" />
+          <Tooltip
+            cursor={{ stroke: "var(--muted)", strokeDasharray: "3 3" }}
+            content={({ active, payload }) => {
+              if (!active || !payload?.length) return null;
+              const p = payload[0].payload as DrawdownView;
+              return <TooltipBox title={dateTimeFmt.format(new Date(p.ts))} lines={[`${formatMoney(p.drawdown, currency, locale)} (${formatNumber(p.percent, locale, 1)}%)`]} />;
+            }}
+          />
+          <Area type="linear" dataKey="drawdown" stroke="var(--danger)" strokeWidth={2} fill="var(--danger)" fillOpacity={0.15} />
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

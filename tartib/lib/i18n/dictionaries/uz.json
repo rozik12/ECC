@@ -1179,5 +1179,92 @@
       "goal": "Intizom {percent}%, maqsad {goal}%.",
       "report": "Hisobotni o'qish uchun statistikani oching."
     }
+  },
+  "adv": {
+    "title": "Kengaytirilgan tahlil",
+    "subtitle": "Oddiy statistikadan chuqurroq: kutilma, R, long va short, sessiyalar, issiqlik xaritasi, pasayish va har bir qoidaning narxi. Faqat jurnalingizdagi faktlar.",
+    "link": "Kengaytirilgan tahlil",
+    "back": "Statistika",
+    "kpi": {
+      "expectancy": "Bitimga kutilma",
+      "payoff": "Foyda va zarar nisbati",
+      "profitFactor": "Profit-faktor",
+      "winRate": "Foydali bitimlar ulushi",
+      "avgR": "O'rtacha natija R da",
+      "longestWin": "Ketma-ket foydali",
+      "longestLoss": "Ketma-ket zararli"
+    },
+    "kpiHint": {
+      "expectancy": "Bitta bitim o'rtacha qancha keltiradi",
+      "payoff": "O'rtacha foydaning o'rtacha zararga nisbati",
+      "avgR": "Foyda xavf ulushlarida (1R — bitimda xavf qilgan summangiz)"
+    },
+    "r": {
+      "title": "Natijalar R da",
+      "subtitle": "Bitimda necha xavf topasiz yoki yo'qotasiz. Noldan chapda zararlar, o'ngda foyda.",
+      "note": "Xavf summasi ma'lum bitimlar hisobga olindi (stop-loss kerak): {total} dan {n}.",
+      "none": "Xavfi ma'lum bitimlar yo'q. Stop-loss ko'rsating, shunda taqsimot paydo bo'ladi."
+    },
+    "side": {
+      "title": "Long va short",
+      "long": "Long",
+      "short": "Short",
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "avg": "O'rtacha"
+    },
+    "sessions": {
+      "title": "Savdo sessiyalari",
+      "subtitle": "Bitim vaqti UTC bo'yicha. Qachon yaxshiroq savdo qilishingiz va qachon qoidalarni ko'proq buzishingiz ko'rsatilgan.",
+      "asia": "Osiyo (00–07)",
+      "europe": "Yevropa (07–13)",
+      "overlap": "Yevropa + AQSh (13–17)",
+      "us": "AQSh (17–22)",
+      "late": "Kech kechqurun (22–24)",
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "violations": "Buzilishlar"
+    },
+    "heat": {
+      "title": "Qachon eng yaxshi savdo qilasiz",
+      "subtitle": "Hafta kunlari va sutka vaqti bo'yicha natija, vaqt mintaqasi: {tz}. Rang: yashil — foyda, qizil — zarar; son — bitimlar.",
+      "empty": "Bu katakda bitim yo'q"
+    },
+    "dd": {
+      "title": "Maksimumdan pasayish",
+      "max": "Maksimal pasayish: {amount} ({percent})",
+      "none": "Pasayishni hisoblash uchun ma'lumot yo'q."
+    },
+    "months": {
+      "title": "Oylar bo'yicha natija"
+    },
+    "rules": {
+      "title": "Har bir qoida nimaga tushadi",
+      "subtitle": "Qoida buzilgan bitimlarning natijasi. Eng zararlilari yuqorida.",
+      "rule": "Qoida",
+      "count": "Buzilishlar",
+      "pnl": "Bitimlar yakuni",
+      "avg": "O'rtacha",
+      "none": "Bu davrda qoidalar buzilmagan."
+    },
+    "risk": {
+      "title": "Xavf barqarorligi",
+      "avg": "O'rtacha xavf",
+      "min": "Eng kichik",
+      "max": "Eng katta",
+      "variation": "Tarqoqlik",
+      "hint": "Tarqoqlik qanchalik kichik bo'lsa, xavfingiz shunchalik tekis. Katta tarqoqlik xavf hajmi bitimdan bitimga keskin o'zgarishini bildiradi.",
+      "none": "Xavf summasi ma'lum bitimlar yo'q."
+    },
+    "instruments": {
+      "title": "Instrumentlar",
+      "instrument": "Instrument",
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "avgR": "O'rtacha R"
+    }
   }
 }

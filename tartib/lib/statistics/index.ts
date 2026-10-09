@@ -213,7 +213,7 @@ export type TimeBucket = { index: number; pnl: number; count: number; violations
 
 const WEEKDAY_INDEX: Record<string, number> = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 5, Sun: 6 };
 
-function localWeekdayAndHour(iso: string, timeZone: string): { weekday: number; hour: number } {
+export function localWeekdayAndHour(iso: string, timeZone: string): { weekday: number; hour: number } {
   const parts = Object.fromEntries(
     new Intl.DateTimeFormat("en-US", { timeZone, weekday: "short", hour: "2-digit", hourCycle: "h23" })
       .formatToParts(new Date(iso))

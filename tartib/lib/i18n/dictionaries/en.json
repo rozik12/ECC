@@ -1179,5 +1179,92 @@
       "goal": "Discipline {percent}% against a goal of {goal}%.",
       "report": "Open statistics to read the report."
     }
+  },
+  "adv": {
+    "title": "Advanced analytics",
+    "subtitle": "Deeper than ordinary statistics: expectancy, R, long vs short, sessions, heatmap, drawdown and the cost of each rule. Only facts from your journal.",
+    "link": "Advanced analytics",
+    "back": "Statistics",
+    "kpi": {
+      "expectancy": "Expectancy per trade",
+      "payoff": "Payoff ratio",
+      "profitFactor": "Profit factor",
+      "winRate": "Win rate",
+      "avgR": "Average result in R",
+      "longestWin": "Longest winning streak",
+      "longestLoss": "Longest losing streak"
+    },
+    "kpiHint": {
+      "expectancy": "What one trade brings on average",
+      "payoff": "Average win divided by average loss",
+      "avgR": "Profit in units of risk (1R is the amount you risk in a trade)"
+    },
+    "r": {
+      "title": "Results in R",
+      "subtitle": "How many units of risk you win or lose per trade. Losses are left of zero, profits are right.",
+      "note": "Counting trades with a known risk amount (a stop-loss is needed): {n} of {total}.",
+      "none": "No trades with a known risk. Set a stop-loss and the distribution will appear here."
+    },
+    "side": {
+      "title": "Long and short",
+      "long": "Long",
+      "short": "Short",
+      "trades": "Trades",
+      "winRate": "Winners",
+      "pnl": "Result",
+      "avg": "Average"
+    },
+    "sessions": {
+      "title": "Trading sessions",
+      "subtitle": "Trade time in UTC. Shows when you trade best and when you break rules most.",
+      "asia": "Asia (00–07)",
+      "europe": "Europe (07–13)",
+      "overlap": "Europe + US (13–17)",
+      "us": "US (17–22)",
+      "late": "Late evening (22–24)",
+      "trades": "Trades",
+      "winRate": "Winners",
+      "pnl": "Result",
+      "violations": "Violations"
+    },
+    "heat": {
+      "title": "When you trade best",
+      "subtitle": "Result by weekday and time of day, time zone: {tz}. Colour: green is profit, red is loss; the number is trades.",
+      "empty": "No trades in this cell"
+    },
+    "dd": {
+      "title": "Drawdown from peak",
+      "max": "Maximum drawdown: {amount} ({percent})",
+      "none": "Not enough data to calculate drawdown."
+    },
+    "months": {
+      "title": "Result by month"
+    },
+    "rules": {
+      "title": "What each rule costs",
+      "subtitle": "Result of trades where the rule was broken. Most costly first.",
+      "rule": "Rule",
+      "count": "Violations",
+      "pnl": "Total of trades",
+      "avg": "Average",
+      "none": "No rule violations in this period."
+    },
+    "risk": {
+      "title": "Risk consistency",
+      "avg": "Average risk",
+      "min": "Smallest",
+      "max": "Largest",
+      "variation": "Spread",
+      "hint": "The smaller the spread, the more evenly you risk. A large spread means your risk size changes a lot from trade to trade.",
+      "none": "No trades with a known risk amount."
+    },
+    "instruments": {
+      "title": "Instruments",
+      "instrument": "Instrument",
+      "trades": "Trades",
+      "winRate": "Winners",
+      "pnl": "Result",
+      "avgR": "Average R"
+    }
   }
 }

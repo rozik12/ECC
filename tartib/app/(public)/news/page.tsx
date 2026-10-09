@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui";
+import { NewsImage } from "@/components/news/NewsImage";
 import { cn } from "@/lib/cn";
 import { getTranslator } from "@/lib/i18n/server";
 import { fetchNews, filterNews, NEWS_SOURCES, type NewsCategory, type NewsLang } from "@/lib/news";
@@ -11,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("news.title"), description: t("news.subtitle") };
 }
 
-const CATEGORIES = ["all", "crypto", "markets", "uzbekistan"] as const;
+const CATEGORIES = ["all", "crypto", "markets", "forex", "uzbekistan"] as const;
 const LANGS = ["all", "ru", "en", "uz"] as const;
 const LOCALES = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" } as const;
 
@@ -61,21 +62,44 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
         <Card className="text-center text-muted">{failed.length >= NEWS_SOURCES.length ? t("news.unavailable") : t("news.empty")}</Card>
       ) : (
         <ul className="space-y-3">
-          {shown.map((n) => (
-            <li key={n.link}>
-              <a href={n.link} target="_blank" rel="noopener noreferrer nofollow" className="group block rounded-xl border border-border bg-surface p-4 transition-colors hover:border-primary/50">
-                <p className="font-medium leading-snug group-hover:text-primary">{n.title}</p>
-                <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
-                  <span className="font-semibold text-foreground/80">{n.source}</span>
-                  <span aria-hidden>·</span>
-                  <span>{n.lang.toUpperCase()}</span>
-                  <span aria-hidden>·</span>
-                  <time dateTime={new Date(n.at).toISOString()}>{ago(n.at, locale)}</time>
-                  <ExternalLink className="ml-auto h-3.5 w-3.5 opacity-60" aria-hidden />
-                </p>
-              </a>
-            </li>
-          ))}
+          {shown.map((n, i) => {
+            const featured = i === 0 && !!n.image;
+            const meta = (
+              <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+                <span className="font-semibold text-foreground/80">{n.source}</span>
+                <span aria-hidden>·</span>
+                <span>{n.lang.toUpperCase()}</span>
+                <span aria-hidden>·</span>
+                <time dateTime={new Date(n.at).toISOString()}>{ago(n.at, locale)}</time>
+                <ExternalLink className="ml-auto h-3.5 w-3.5 opacity-60" aria-hidden />
+              </p>
+            );
+            return (
+              <li key={n.link}>
+                <a
+                  href={n.link}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className={cn("group overflow-hidden rounded-xl border border-border bg-surface transition-colors hover:border-primary/50", featured ? "block" : "flex gap-3 p-3 sm:gap-4 sm:p-4")}
+                >
+                  {n.image && featured && (
+                    <div className="aspect-video w-full bg-surface-muted">
+                      <NewsImage src={n.image} className="h-full w-full object-cover" />
+                    </div>
+                  )}
+                  <div className={cn("min-w-0 flex-1", featured && "p-4")}>
+                    <p className={cn("font-medium leading-snug group-hover:text-primary", featured && "text-lg")}>{n.title}</p>
+                    {meta}
+                  </div>
+                  {n.image && !featured && (
+                    <div className="h-20 w-28 shrink-0 overflow-hidden rounded-lg bg-surface-muted sm:h-24 sm:w-36">
+                      <NewsImage src={n.image} className="h-full w-full object-cover" />
+                    </div>
+                  )}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       )}
 

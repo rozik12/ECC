@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { cleanLink, decodeEntities, filterNews, mergeNews, parseDate, parseFeed, type NewsItem } from "../lib/news.ts";
+import { cleanImage, cleanLink, decodeEntities, filterNews, imageOf, isTradingRelated, mergeNews, parseDate, parseFeed, type NewsItem } from "../lib/news.ts";
 
 const NOW = Date.parse("2026-10-09T12:00:00Z");
 
@@ -58,4 +58,38 @@ test("фильтры по категории и языку", () => {
   assert.deepEqual(filterNews(items, "markets", "all").map((i) => i.title), ["T2"]);
   assert.deepEqual(filterNews(items, "all", "uz").map((i) => i.title), ["T3"]);
   assert.equal(filterNews(items, "crypto", "ru").length, 0);
+});
+
+const rssItem = (inner: string) => `<item><title>T</title><link>https://e.com/x</link><pubDate>Fri, 09 Oct 2026 10:00:00 GMT</pubDate>${inner}</item>`;
+
+test("картинка: media:content, enclosure, thumbnail и <img> в тексте", () => {
+  assert.equal(parseFeed(rssItem(`<media:content url="https://i.e.com/a.jpg" medium="image"/>`), NOW)[0].image, "https://i.e.com/a.jpg");
+  assert.equal(parseFeed(rssItem(`<enclosure url="https://i.e.com/b.png" length="1" type="image/png"/>`), NOW)[0].image, "https://i.e.com/b.png");
+  assert.equal(parseFeed(rssItem(`<media:thumbnail url="https://i.e.com/c"/>`), NOW)[0].image, "https://i.e.com/c");
+  assert.equal(parseFeed(rssItem(`<description><![CDATA[<p><img src="https://i.e.com/d.webp" width="10"></p>]]></description>`), NOW)[0].image, "https://i.e.com/d.webp");
+  assert.equal(parseFeed(rssItem(`<description>&lt;img src=&quot;https://i.e.com/e.jpg&quot;&gt;</description>`), NOW)[0].image, "https://i.e.com/e.jpg");
+});
+
+test("картинка: видео и аудио не берутся, http поднимается до https, мусор отбрасывается", () => {
+  assert.equal(imageOf(`<enclosure url="https://e.com/v.mp4" type="video/mp4"/>`), null);
+  assert.equal(imageOf(`<media:content url="https://e.com/a.mp3" type="audio/mpeg"/>`), null);
+  assert.equal(cleanImage("http://i.e.com/a.jpg"), "https://i.e.com/a.jpg");
+  assert.equal(cleanImage("javascript:alert(1)"), null);
+  assert.equal(cleanImage("data:image/png;base64,AAAA"), null);
+  assert.equal(cleanImage("https://e.com/pixel.gif"), null);
+  assert.equal(cleanImage("https://e.com/logo.svg"), null);
+  assert.equal(parseFeed(rssItem(""), NOW)[0].image, undefined);
+});
+
+test("слияние сохраняет картинку из дубля", () => {
+  const merged = mergeNews([mk(1), mk(1, { link: "http://e.com/1/", image: "https://i.e.com/z.jpg", at: NOW - 5000 })]);
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].image, "https://i.e.com/z.jpg");
+});
+
+test("тема трейдинга: нужные заголовки проходят, посторонние нет", () => {
+  for (const ok of ["Bitcoin climbs above $70,000", "Stocks fall as Fed signals higher rates", "Gold hits record high", "Курс доллара вырос на бирже", "Нефть дешевеет второй день", "Markaziy bank valyuta kursini belgiladi", "Oltin narxi oshdi", "BTC and ETH rally", "Рубль укрепился к юаню"])
+    assert.equal(isTradingRelated(ok), true, ok);
+  for (const no of ["В Ташкенте открылся новый парк", "Футболисты сборной вышли в финал", "Ob-havo ertaga o'zgaradi", "Celebrity chef opens new restaurant", "Weather forecast for the weekend"])
+    assert.equal(isTradingRelated(no), false, no);
 });

@@ -971,12 +971,13 @@
   },
   "news": {
     "title": "Bozor yangiliklari",
-    "subtitle": "Ochiq manbalardan so'nggi sarlavhalar: kripto, moliya bozorlari va O'zbekiston iqtisodiyoti. Maqolani manba saytida o'qish uchun sarlavhani bosing.",
+    "subtitle": "Treyding haqida ochiq manbalardan so'nggi yangiliklar: kripto, fond va tovar bozorlari, Forex va valyuta kurslari. Maqolani manba saytida o'qish uchun sarlavhani bosing.",
     "cats": {
       "all": "Barchasi",
       "crypto": "Kripto",
       "markets": "Bozorlar",
-      "uzbekistan": "O'zbekiston"
+      "forex": "Forex",
+      "uzbekistan": "O'zbekiston: kurslar va bozor"
     },
     "langLabel": "Til",
     "langs": {
@@ -987,6 +988,6 @@
     },
     "empty": "Bu filtr bo'yicha hozircha yangilik yo'q.",
     "unavailable": "Manbalar hozir mavjud emas. Keyinroq qayta urinib ko'ring.",
-    "note": "Sarlavhalar va havolalar mualliflariga tegishli, maqolalar manba saytlarida ochiladi. Manbalar:"
+    "note": "Sarlavhalar, rasmlar va havolalar mualliflarga tegishli; maqolalar manba saytlarida ochiladi. Manbalar:"
   }
 }

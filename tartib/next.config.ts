@@ -15,7 +15,8 @@ const csp = [
   // 'unsafe-inline' нужен Next.js и скрипту выбора темы; в разработке ещё eval для горячей перезагрузки
   `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob:${supabaseHost ? ` https://${supabaseHost}` : ""}`,
+  // https: — превью картинок к новостям приходят с сайтов самих источников
+  `img-src 'self' data: blob: https:`,
   "font-src 'self' data:",
   `connect-src 'self'${supabaseHost ? ` https://${supabaseHost} wss://${supabaseHost}` : ""}`,
   "worker-src 'self'",

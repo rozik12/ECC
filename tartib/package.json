@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test tests/*.test.ts"
+    "test": "node --test tests/*.test.ts",
+    "cf:build": "NEXT_PUBLIC_SITE_URL=https://tartib.uk NEXT_PUBLIC_SUPABASE_URL=https://rwmhsjznrlgsxqgclbbl.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_jh5WAX1UFt9dmosOZXm6EQ_Pm70T0gd NEXT_PUBLIC_GOOGLE_AUTH=false opennextjs-cloudflare build",
+    "cf:deploy": "wrangler deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
@@ -22,6 +24,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.10",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -29,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.149.0"
   }
 }

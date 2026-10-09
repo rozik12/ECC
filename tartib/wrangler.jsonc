@@ -1,0 +1,16 @@
+{
+  "name": "tartib",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  // Сервер сайта ставим во Франкфурт, рядом с базой данных Supabase (eu-central-1)
+  "placement": { "region": "aws:eu-central-1" },
+  "observability": { "enabled": true },
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://tartib.uk",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://rwmhsjznrlgsxqgclbbl.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_jh5WAX1UFt9dmosOZXm6EQ_Pm70T0gd",
+    "NEXT_PUBLIC_GOOGLE_AUTH": "false"
+  }
+}

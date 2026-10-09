@@ -67,6 +67,10 @@ type StatRow = {
   rules_followed: boolean;
   risk_amount: number | null;
   strategy: string;
+  tags: string[] | null;
+  grade: string | null;
+  mistakes: string[] | null;
+  closed_at: string | null;
   trade_rule_violations: { rule: { id: string; name: string } | null }[];
 };
 
@@ -79,7 +83,7 @@ export async function fetchStatTrades(supabase: SupabaseClient): Promise<StatTra
     const { data, error } = await supabase
       .from("trades")
       .select(
-        "id, traded_at, instrument, direction, entry_price, exit_price, pnl, emotion, rules_followed, risk_amount, strategy, trade_rule_violations(rule:rules(id, name))",
+        "id, traded_at, instrument, direction, entry_price, exit_price, pnl, emotion, rules_followed, risk_amount, strategy, tags, grade, mistakes, closed_at, trade_rule_violations(rule:rules(id, name))",
       )
       .order("traded_at", { ascending: false })
       .order("id")
@@ -99,6 +103,10 @@ export async function fetchStatTrades(supabase: SupabaseClient): Promise<StatTra
         rulesFollowed: r.rules_followed,
         riskAmount: r.risk_amount === null ? null : Number(r.risk_amount),
         strategy: r.strategy ?? "",
+        tags: r.tags ?? [],
+        grade: r.grade,
+        mistakes: r.mistakes ?? [],
+        closedAt: r.closed_at,
         violations: r.trade_rule_violations.flatMap((v) => (v.rule ? [v.rule] : [])),
       });
     }
@@ -167,4 +175,12 @@ export async function getTransactions(supabase: SupabaseClient, limit = 1000): P
 export async function getLastTrade(supabase: SupabaseClient): Promise<{ tradedAt: string; pnl: number } | null> {
   const { data } = await supabase.from("trades").select("traded_at, pnl").order("traded_at", { ascending: false }).limit(1).maybeSingle();
   return data ? { tradedAt: String(data.traded_at), pnl: Number(data.pnl) } : null;
+}
+
+/** Теги, которые пользователь уже использовал (для подсказок в поле), самые частые первыми. */
+export async function getKnownTags(supabase: SupabaseClient): Promise<string[]> {
+  const { data } = await supabase.from("trades").select("tags").neq("tags", "{}").order("traded_at", { ascending: false }).limit(500);
+  const counts = new Map<string, number>();
+  for (const r of (data ?? []) as { tags: string[] | null }[]) for (const tag of r.tags ?? []) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30).map(([tag]) => tag);
 }

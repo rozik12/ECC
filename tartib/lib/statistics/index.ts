@@ -15,6 +15,11 @@ export type StatTrade = {
   riskAmount: number | null;
   strategy: string;
   violations: Violation[];
+  /** Журнал: теги, оценка исполнения, категории ошибок, время закрытия (необязательные поля) */
+  tags?: string[];
+  grade?: string | null;
+  mistakes?: string[];
+  closedAt?: string | null;
 };
 
 export type Period = "7d" | "30d" | "all";

@@ -904,7 +904,11 @@
       "violated_rules": "Buzilgan qoidalar",
       "reason": "Kirish sababi",
       "plan": "Savdo rejasi",
-      "comment": "Izoh"
+      "comment": "Izoh",
+      "tags": "Teglar",
+      "grade": "Baho",
+      "mistakes": "Xatolar",
+      "closed_at": "Yopilish vaqti"
     },
     "detected": "{platform} hisoboti aniqlandi: bitimlar {used}, o'tkazib yuborildi {skipped}",
     "mtNotice": "Yopilgan buy va sell bitimlar olindi. Depozitlar, kutilayotgan buyurtmalar va yopilmagan pozitsiyalar o'tkazib yuborildi. Natija = foyda + komissiya + svop. Bitim vaqti broker serveri soati bo'yicha olindi. Hajm lotdan birlikka o'tkazildi (valyuta juftliklari ×100 000, oltin ×100).",
@@ -1383,5 +1387,81 @@
         "holiday": "Dam olish kuni"
       }
     }
+  },
+  "journal": {
+    "title": "Bitim jurnali",
+    "tags": "Teglar",
+    "tagsHint": "Vergul bilan, 10 tagacha. Masalan: breakout, yangilik",
+    "grade": "Bajarilish bahosi",
+    "gradeHint": "A — hammasi rejaga ko'ra, D — ko'p chetlanish. Foydani emas, rejaga amal qilishni baholang.",
+    "gradeShort": "Baho {g}",
+    "mistakes": "Bitimdagi xatolar",
+    "mistake": "Xato",
+    "mistakesHint": "",
+    "duration": "Davomiyligi",
+    "units": {
+      "d": "{n} k",
+      "h": "{n} soat",
+      "m": "{n} daq"
+    },
+    "closedAt": "Yopilish vaqti",
+    "closedAtHint": "Bo'sh bo'lsa, davomiylik hisoblanmaydi",
+    "close": "Bitimni yopish",
+    "closeTitle": "Bitimni yopish",
+    "closeText": "Chiqish narxini kiriting — natija o'zi hisoblanadi.",
+    "closeConfirm": "Yopish",
+    "closeTimeHint": "Bo'sh bo'lsa, hozirgi vaqt olinadi",
+    "alreadyClosed": "Bitim allaqachon yopilgan",
+    "errClosedBefore": "Yopilish ochilishdan oldin bo'lishi mumkin emas",
+    "clone": "Nusxa olish",
+    "fromClone": "Bu bitim nusxasi: saqlashdan oldin narx va vaqtni tekshiring.",
+    "saveTemplate": "Shablon sifatida saqlash",
+    "templateName": "Shablon nomi",
+    "templateText": "Instrument, yo'nalish, strategiya, teglar va reja saqlanadi — narx va vaqtsiz.",
+    "templateSaved": "Shablon saqlandi. U yangi bitim yaratishda paydo bo'ladi.",
+    "template": "Shablon",
+    "templateNone": "Shablonsiz",
+    "limitTemplates": "20 tadan ortiq shablon saqlab bo'lmaydi",
+    "search": "Matn bo'yicha qidiruv",
+    "searchHint": "Instrument, izoh, sabab…",
+    "tag": "Teg",
+    "mistakeNames": {
+      "fomo_entry": "Qo'ldan boy berish qo'rquvidan kirish",
+      "moved_stop": "Stopni siljitdim",
+      "oversize": "Hajm juda katta",
+      "early_exit": "Erta chiqish",
+      "late_exit": "Kech chiqish",
+      "no_plan": "Rejasiz",
+      "revenge": "Bozordan o'ch olish",
+      "overtrading": "Bitimlar juda ko'p",
+      "chased": "Narxning ortidan quvdim",
+      "no_stop": "Stopsiz"
+    },
+    "an": {
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "avg": "O'rtacha",
+      "mistakes": "Xatolar nimaga tushadi",
+      "mistakesHint": "Siz ushbu xatoni belgilagan bitimlar natijasi. Bitim bir nechta qatorga tushishi mumkin.",
+      "noMistakes": "Hozircha xato belgilangan bitimlar yo'q. Ularni bitim shaklida belgilang.",
+      "grades": "Bajarilish bahosi bo'yicha",
+      "gradesHint": "Reja bo'yicha qilingan bitimlar natija berayotganini ko'rishga yordam beradi.",
+      "noGrades": "Hozircha baholangan bitimlar yo'q.",
+      "tags": "Teglar bo'yicha",
+      "noTags": "Hozircha teg qo'yilgan bitimlar yo'q.",
+      "duration": "Bitim davomiyligi bo'yicha",
+      "avgDuration": "O'rtacha davomiylik: foydali — {win}, zararli — {loss}.",
+      "noDuration": "Yopilish vaqti kerak: u bitim yopilganda qo'yiladi."
+    },
+    "buckets": {
+      "lt5": "5 daqiqagacha",
+      "m5_30": "5–30 daqiqa",
+      "m30_120": "30 daqiqa – 2 soat",
+      "h2_8": "2–8 soat",
+      "h8_24": "8–24 soat",
+      "gt24": "bir kundan ortiq"
+    },
+    "deleteTemplate": "Shablonni o'chirish"
   }
 }

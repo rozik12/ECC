@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { GRADES, MISTAKES } from "@/lib/journal";
 import { directions, emotions, markets } from "@/lib/trading";
 
 const optionalPositive = z.number({ error: "errors.number" }).positive("errors.positive").nullable();
@@ -25,6 +26,11 @@ export const tradeSchema = z.object({
   plan: z.string().trim().max(2000, "errors.textMax").default(""),
   comment: z.string().trim().max(2000, "errors.textMax").default(""),
   tradedAt: z.iso.datetime({ offset: true, error: "errors.required" }),
-});
+  tags: z.array(z.string().trim().min(1).max(30, "errors.nameMax")).max(10, "errors.tooLarge").default([]),
+  grade: z.enum(GRADES).nullable().default(null),
+  mistakes: z.array(z.enum(MISTAKES)).max(10).default([]),
+  /** Время закрытия; без цены выхода не сохраняется */
+  closedAt: z.iso.datetime({ offset: true, error: "errors.required" }).nullable().default(null),
+}).refine((v) => !v.closedAt || Date.parse(v.closedAt) >= Date.parse(v.tradedAt), { path: ["closedAt"], message: "journal.errClosedBefore" });
 
 export type TradeInput = z.input<typeof tradeSchema>;

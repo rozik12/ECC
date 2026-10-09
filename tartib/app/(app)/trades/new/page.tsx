@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Zap } from "lucide-react";
 import { Alert } from "@/components/ui";
-import { TradeForm, type TradeFormValues } from "@/components/trades/TradeForm";
+import { TradeForm, type TemplateView, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
-import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getLastTrade, getRules, getStrategies } from "@/lib/data";
+import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getKnownTags, getLastTrade, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { lossCooldown } from "@/lib/statistics";
 import { dayBounds, safeTimeZone } from "@/lib/time";
-import { directions, markets, type DirectionKey, type MarketKey } from "@/lib/trading";
+import { directions, emotions, markets, type DirectionKey, type EmotionKey, type MarketKey } from "@/lib/trading";
+import { templateDataSchema } from "@/lib/validations/templates";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -23,14 +24,22 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
   const { t } = await getTranslator();
   const { supabase, profile } = await requireUser();
   const { start, end } = dayBounds(safeTimeZone(profile?.timezone));
-  const [accounts, rules, tradesToday, day, strategies, last] = await Promise.all([
+  const cloneId = /^[0-9a-f-]{36}$/i.test(one(sp.clone)) ? one(sp.clone) : null;
+  const [accounts, rules, tradesToday, day, strategies, last, knownTags, tpl, cloned] = await Promise.all([
     getAccounts(supabase),
     getRules(supabase),
     countTradesBetween(supabase, start, end),
     getDayContext(supabase, start, end),
     getStrategies(supabase),
     getLastTrade(supabase),
+    getKnownTags(supabase),
+    supabase.from("trade_templates").select("id, name, data").order("created_at", { ascending: false }).limit(20),
+    cloneId ? supabase.from("trades").select("*").eq("id", cloneId).maybeSingle() : Promise.resolve({ data: null }),
   ]);
+  const templates: TemplateView[] = (tpl.data ?? []).flatMap((r) => {
+    const parsed = templateDataSchema.safeParse(r.data);
+    return parsed.success ? [{ id: String(r.id), name: String(r.name), data: parsed.data }] : [];
+  });
 
   if (accounts.length === 0) return <Alert tone="warning">{t("trades.noAccount")}</Alert>;
 
@@ -60,7 +69,32 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     plan: "",
     comment: "",
     tradedAt: "",
+    tags: "",
+    grade: "",
+    mistakes: [],
+    closedAt: "",
   };
+
+  // «Клонировать»: берём настройки сделки как основу новой (без результата, выхода, времени и заметок)
+  const src = cloned.data as Record<string, unknown> | null;
+  if (src) {
+    const s = (v: unknown) => (v === null || v === undefined ? "" : String(Number(v)));
+    initial.accountId = accounts.some((a) => a.id === src.account_id) ? String(src.account_id) : initial.accountId;
+    initial.instrument = String(src.instrument ?? "");
+    if ((markets as readonly string[]).includes(String(src.market))) initial.market = src.market as MarketKey;
+    if ((directions as readonly string[]).includes(String(src.direction))) initial.direction = src.direction as DirectionKey;
+    if ((emotions as readonly string[]).includes(String(src.emotion))) initial.emotion = src.emotion as EmotionKey;
+    initial.entry = s(src.entry_price);
+    initial.stop = s(src.stop_loss);
+    initial.takeProfit = s(src.take_profit);
+    initial.size = s(src.position_size);
+    initial.leverage = s(src.leverage) || "1";
+    initial.risk = s(src.risk_percent);
+    initial.strategy = String(src.strategy ?? "");
+    initial.reason = String(src.reason ?? "");
+    initial.plan = String(src.plan ?? "");
+    initial.tags = ((src.tags as string[] | null) ?? []).join(", ");
+  }
 
   return (
     <>
@@ -76,8 +110,11 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
       tradesOthersToday={tradesToday}
       dayLossPercent={dayLossBefore(day, new Date())}
       strategies={strategies}
+      templates={templates}
+      knownTags={knownTags}
       initial={initial}
       fromCalculator={!!one(sp.entry)}
+      fromClone={!!src}
     />
     </>
   );

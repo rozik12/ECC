@@ -10,6 +10,7 @@ type Row = {
   traded_at: string; instrument: string; market: string; direction: string; entry_price: number; exit_price: number | null;
   stop_loss: number | null; take_profit: number | null; position_size: number; leverage: number; risk_percent: number | null;
   pnl: number; fees: number; emotion: string; strategy: string; reason: string; plan: string; comment: string;
+  tags: string[] | null; grade: string | null; mistakes: string[] | null; closed_at: string | null;
   account: { name: string } | null; trade_rule_violations: { rule: { name: string } | null }[];
 };
 
@@ -29,7 +30,7 @@ export async function GET(request: Request) {
   const isTemplate = new URL(request.url).searchParams.get("template") === "1";
 
   if (isTemplate) {
-    rows.push(["2026-10-01 10:30", "BTC/USDT", "crypto", "long", decimal(65000), decimal(65500), decimal(64500), decimal(66000), decimal(0.1), "5", "", "", "", "calm", "Пробой", "", "Причина входа", "", "", ""]);
+    rows.push(["2026-10-01 10:30", "BTC/USDT", "crypto", "long", decimal(65000), decimal(65500), decimal(64500), decimal(66000), decimal(0.1), "5", "", "", "", "calm", "Пробой", "", "Причина входа", "", "", "", "breakout, news", "A", "", ""]);
   } else {
     const PAGE = 1000;
     for (let from = 0; from < 50000; from += PAGE) {
@@ -49,6 +50,7 @@ export async function GET(request: Request) {
           decimal(r.risk_percent === null ? null : Number(r.risk_percent)), decimal(Number(r.fees ?? 0)), decimal(Number(r.pnl)), r.emotion, safeText(r.strategy ?? ""),
           r.trade_rule_violations.flatMap((v) => (v.rule ? [safeText(v.rule.name)] : [])).join("|"),
           safeText(r.reason), safeText(r.plan), safeText(r.comment), safeText(r.account?.name ?? ""),
+          safeText((r.tags ?? []).join(", ")), r.grade ?? "", (r.mistakes ?? []).join("|"), r.closed_at ?? "",
         ]);
       }
       if (page.length < PAGE) break;

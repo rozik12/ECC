@@ -8,6 +8,7 @@ import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { formatDateTime, formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
+import { GRADES, MISTAKES, sanitizeSearch } from "@/lib/journal";
 import { dateInputToStart, safeTimeZone } from "@/lib/time";
 import { directions, emotions, type EmotionKey } from "@/lib/trading";
 
@@ -25,6 +26,7 @@ type Row = {
   entry_price: number; exit_price: number | null; position_size: number; pnl: number;
   emotion: EmotionKey; rules_followed: boolean; account: { currency: string } | null;
   trade_rule_violations: { rule: { name: string } | null }[];
+  tags: string[] | null; grade: string | null;
 };
 
 export default async function TradesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
@@ -39,6 +41,10 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
     result: ["profit", "loss"].includes(one(sp.result)) ? one(sp.result) : "",
     emotion: (emotions as readonly string[]).includes(one(sp.emotion)) ? one(sp.emotion) : "",
     rules: ["followed", "violated"].includes(one(sp.rules)) ? one(sp.rules) : "",
+    q: sanitizeSearch(one(sp.q)),
+    tag: one(sp.tag).replace(/[\\,"%]/g, ""),
+    grade: (GRADES as readonly string[]).includes(one(sp.grade)) ? one(sp.grade) : "",
+    mistake: (MISTAKES as readonly string[]).includes(one(sp.mistake)) ? one(sp.mistake) : "",
   };
   const hasFilters = Object.values(filters).some(Boolean);
   const page = Math.max(1, parseInt(one(sp.page), 10) || 1);
@@ -46,7 +52,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
   let query = supabase
     .from("trades")
     .select(
-      "id, traded_at, instrument, direction, entry_price, exit_price, position_size, pnl, emotion, rules_followed, account:trading_accounts(currency), trade_rule_violations(rule:rules(name))",
+      "id, traded_at, instrument, direction, entry_price, exit_price, position_size, pnl, emotion, rules_followed, tags, grade, account:trading_accounts(currency), trade_rule_violations(rule:rules(name))",
       { count: "exact" },
     )
     .order("traded_at", { ascending: false });
@@ -61,6 +67,11 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
   if (filters.result === "loss") query = query.lt("pnl", 0);
   if (filters.emotion) query = query.eq("emotion", filters.emotion);
   if (filters.rules) query = query.eq("rules_followed", filters.rules === "followed");
+  if (filters.grade) query = query.eq("grade", filters.grade);
+  if (filters.tag) query = query.contains("tags", [filters.tag]);
+  if (filters.mistake) query = query.contains("mistakes", [filters.mistake]);
+  // Строка поиска очищена в sanitizeSearch от знаков, меняющих условие PostgREST.
+  if (filters.q) query = query.or(["instrument", "strategy", "comment", "reason", "plan"].map((c) => `${c}.ilike.%${filters.q}%`).join(","));
 
   const { data, count } = await query.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
   const rows = (data ?? []) as unknown as Row[];
@@ -120,6 +131,12 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                       <Td label={t("trades.cols.date")} className="whitespace-nowrap text-muted">{formatDateTime(r.traded_at, locale, tz)}</Td>
                       <Td label={t("trades.cols.instrument")}>
                         <Link href={`/trades/${r.id}`} className="font-semibold text-primary hover:underline">{r.instrument}</Link>
+                        {((r.tags ?? []).length > 0 || r.grade) && (
+                          <span className="mt-1 flex flex-wrap gap-1">
+                            {r.grade && <span className="rounded bg-primary-soft px-1.5 text-xs font-semibold text-primary">{r.grade}</span>}
+                            {(r.tags ?? []).slice(0, 3).map((tag) => <span key={tag} className="rounded bg-surface-muted px-1.5 text-xs text-muted">#{tag}</span>)}
+                          </span>
+                        )}
                       </Td>
                       <Td label={t("trades.cols.direction")}>
                         <Badge tone={r.direction === "long" ? "success" : "danger"}>{t(`directions.${r.direction}`)}</Badge>

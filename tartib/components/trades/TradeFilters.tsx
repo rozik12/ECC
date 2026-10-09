@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, Card, Input, Select } from "@/components/ui";
 import { useI18n } from "@/lib/i18n/provider";
+import { GRADES, MISTAKES } from "@/lib/journal";
 import { directions, emotions } from "@/lib/trading";
 
 export type TradeFilterValues = {
   from: string; to: string; instrument: string; direction: string; result: string; emotion: string; rules: string;
+  q: string; tag: string; grade: string; mistake: string;
 };
 
 export function TradeFilters({ initial }: { initial: TradeFilterValues }) {
@@ -28,7 +30,7 @@ export function TradeFilters({ initial }: { initial: TradeFilterValues }) {
   }
 
   function reset() {
-    setF({ from: "", to: "", instrument: "", direction: "", result: "", emotion: "", rules: "" });
+    setF({ from: "", to: "", instrument: "", direction: "", result: "", emotion: "", rules: "", q: "", tag: "", grade: "", mistake: "" });
     router.push("/trades");
   }
 
@@ -56,6 +58,16 @@ export function TradeFilters({ initial }: { initial: TradeFilterValues }) {
           {all}
           <option value="followed">{t("trades.rulesFollowed")}</option>
           <option value="violated">{t("trades.rulesViolated")}</option>
+        </Select>
+        <Input id="f-q" label={t("journal.search")} placeholder={t("journal.searchHint")} className="col-span-2" {...bind("q")} />
+        <Input id="f-tag" label={t("journal.tag")} {...bind("tag")} />
+        <Select id="f-grade" label={t("journal.grade")} {...bind("grade")}>
+          {all}
+          {GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
+        </Select>
+        <Select id="f-mistake" label={t("journal.mistake")} {...bind("mistake")}>
+          {all}
+          {MISTAKES.map((m) => <option key={m} value={m}>{t(`journal.mistakeNames.${m}`)}</option>)}
         </Select>
         <div className="col-span-2 flex items-end gap-2 lg:col-span-1">
           <Button type="submit" className="flex-1">{t("trades.filters.apply")}</Button>

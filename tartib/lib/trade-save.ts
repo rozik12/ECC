@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { evaluateRules } from "@/lib/calculations/rules";
 import { calculatePnl, tradeMetrics } from "@/lib/calculations/trade";
 import { computeAchievements, monthDiscipline } from "@/lib/achievements";
+import { parseTags } from "@/lib/journal";
 import { buildTradeNotifications } from "@/lib/notifications";
 import { dayBounds } from "@/lib/time";
 import { dayLossBefore, getDayContext, getRules } from "@/lib/data";
@@ -23,7 +24,11 @@ type Ctx = {
   notify?: { goal: number };
 };
 
-type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees"> & {
+type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees" | "tags" | "grade" | "mistakes" | "closedAt"> & {
+  tags: string[];
+  grade: "A" | "B" | "C" | "D" | null;
+  mistakes: string[];
+  closedAt: string | null;
   fees?: number;
   reason: string;
   plan: string;
@@ -113,6 +118,11 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
     plan: t.plan,
     comment: t.comment,
     traded_at: t.tradedAt,
+    tags: parseTags(t.tags.join(", ")),
+    grade: t.grade,
+    mistakes: [...new Set(t.mistakes)],
+    // Время закрытия имеет смысл только у закрытой сделки
+    closed_at: t.exitPrice === null ? null : t.closedAt,
   };
 
   const miniBefore = ctx.notify && !tradeId ? await loadMini(supabase) : null;

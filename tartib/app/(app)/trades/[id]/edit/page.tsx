@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { TradeForm, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
 import { calculatePnl } from "@/lib/calculations/trade";
-import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getRules, getStrategies } from "@/lib/data";
+import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getKnownTags, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import type { Trade } from "@/types";
@@ -29,12 +29,13 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
   const trade = data as unknown as Trade & { trade_rule_violations: { rule_id: string }[] };
 
   const { start, end } = dayBounds(safeTimeZone(profile?.timezone), new Date(trade.traded_at));
-  const [accounts, rules, others, day, strategies] = await Promise.all([
+  const [accounts, rules, others, day, strategies, knownTags] = await Promise.all([
     getAccounts(supabase),
     getRules(supabase),
     countTradesBetween(supabase, start, end, id),
     getDayContext(supabase, start, end),
     getStrategies(supabase),
+    getKnownTags(supabase),
   ]);
 
   // Если сохранённый P&L отличается от расчётного, значит он правился вручную
@@ -65,6 +66,10 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
     plan: trade.plan,
     comment: trade.comment,
     tradedAt: trade.traded_at,
+    tags: (trade.tags ?? []).join(", "),
+    grade: trade.grade ?? "",
+    mistakes: trade.mistakes ?? [],
+    closedAt: trade.closed_at ?? "",
   };
 
   return (
@@ -75,6 +80,7 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
       tradesOthersToday={others}
       dayLossPercent={dayLossBefore(day, new Date(trade.traded_at), id)}
       strategies={strategies}
+      knownTags={knownTags}
       initial={initial}
       pnlIsManual={Math.abs(autoPnl - pnl) > 0.005}
       initialViolationIds={trade.trade_rule_violations.map((x) => x.rule_id)}

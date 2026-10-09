@@ -4,6 +4,7 @@
 export const IMPORT_FIELDS = [
   "date_time", "instrument", "market", "direction", "entry", "exit", "stop_loss", "take_profit", "size", "leverage",
   "risk_percent", "fees", "pnl", "emotion", "strategy", "violated_rules", "reason", "plan", "comment",
+  "tags", "grade", "mistakes", "closed_at",
 ] as const;
 export type ImportField = (typeof IMPORT_FIELDS)[number];
 
@@ -36,12 +37,17 @@ const ALIASES: Record<ImportField, string[]> = {
   reason: ["reason", "entry_reason", "причина"],
   plan: ["plan", "trading_plan", "план"],
   comment: ["comment", "comments", "notes", "note", "комментарий", "заметки"],
+  tags: ["tags", "labels", "теги", "метки"],
+  grade: ["grade", "execution_grade", "оценка"],
+  mistakes: ["mistakes", "errors", "ошибки"],
+  closed_at: ["closed_at", "close_date_time", "closed", "время_закрытия"],
 };
 
 /** Порядок присвоения: важные поля выбирают столбцы первыми, чтобы один столбец не достался двум полям. */
 const PRIORITY: ImportField[] = [
   "instrument", "direction", "entry", "exit", "size", "pnl", "fees", "stop_loss", "take_profit", "leverage", "risk_percent",
   "market", "emotion", "strategy", "violated_rules", "reason", "plan", "comment", "date_time",
+  "tags", "grade", "mistakes", "closed_at",
 ];
 
 export function autoMapColumns(header: string[]): ColumnMapping {

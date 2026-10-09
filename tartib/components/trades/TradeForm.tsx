@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { saveTradeAction } from "@/app/actions/trades";
+import { deleteTemplateAction } from "@/app/actions/templates";
 import { Alert, Badge, Button, Card, Input, Select, Textarea } from "@/components/ui";
 import { evaluateRules, type RuleLike } from "@/lib/calculations/rules";
 import { calculatePnl, tradeMetrics } from "@/lib/calculations/trade";
 import { cn } from "@/lib/cn";
+import { GRADES, MISTAKES, parseTags } from "@/lib/journal";
 import { parseNumber, toLocalInput } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
 import { emotions, markets, type DirectionKey, type EmotionKey, type MarketKey } from "@/lib/trading";
@@ -34,7 +36,16 @@ export type TradeFormValues = {
   comment: string;
   /** Дата сделки в формате ISO. В поле она подставляется уже в браузере, в часовом поясе пользователя. */
   tradedAt: string;
+  /** Теги одной строкой через запятую */
+  tags: string;
+  /** "A"–"D" или пустая строка */
+  grade: string;
+  mistakes: string[];
+  /** Время закрытия в формате ISO или пустая строка */
+  closedAt: string;
 };
+
+export type TemplateView = { id: string; name: string; data: Partial<Pick<TradeFormValues, "instrument" | "market" | "direction" | "leverage" | "risk" | "strategy" | "emotion" | "tags">> };
 
 type Props = {
   accounts: AccountWithBalance[];
@@ -46,11 +57,16 @@ type Props = {
   /** Ранее использованные стратегии — подсказки в поле */
   strategies?: string[];
   initial: TradeFormValues;
+  /** Шаблоны сделок (только для новой сделки) */
+  templates?: TemplateView[];
+  /** Ранее использованные теги: подсказки в поле */
+  knownTags?: string[];
   /** pnl уже сохранён вручную (при редактировании) */
   pnlIsManual?: boolean;
   initialViolationIds?: string[];
   tradeId?: string | null;
   fromCalculator?: boolean;
+  fromClone?: boolean;
 };
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
@@ -61,21 +77,24 @@ export function TradeForm({
   tradesOthersToday,
   dayLossPercent = null,
   strategies = [],
+  templates = [],
+  knownTags = [],
   initial,
   pnlIsManual = false,
   initialViolationIds = [],
   tradeId = null,
   fromCalculator = false,
+  fromClone = false,
 }: Props) {
   const { t } = useI18n();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [v, setV] = useState<TradeFormValues>({ ...initial, tradedAt: "" });
+  const [v, setV] = useState<TradeFormValues>({ ...initial, tradedAt: "", closedAt: "" });
   useEffect(() => {
     const date = initial.tradedAt ? new Date(initial.tradedAt) : new Date();
     // Время зависит от часового пояса браузера, поэтому подставляем его только после загрузки страницы
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setV((prev) => (prev.tradedAt ? prev : { ...prev, tradedAt: toLocalInput(date) }));
+    setV((prev) => (prev.tradedAt ? prev : { ...prev, tradedAt: toLocalInput(date), closedAt: initial.closedAt ? toLocalInput(new Date(initial.closedAt)) : "" }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [pnlTouched, setPnlTouched] = useState(pnlIsManual);
@@ -84,6 +103,7 @@ export function TradeForm({
     () => new Set(initialViolationIds.filter((id) => rules.find((r) => r.id === id)?.rule_type === "custom")),
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [tplId, setTplId] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
 
   const set = <K extends keyof TradeFormValues>(key: K, value: TradeFormValues[K]) => setV((prev) => ({ ...prev, [key]: value }));
@@ -142,10 +162,20 @@ export function TradeForm({
     });
   }
 
+  function applyTemplate(id: string) {
+    const tpl = templates.find((x) => x.id === id);
+    if (tpl) setV((prev) => ({ ...prev, ...tpl.data }));
+  }
+
+  function toggleMistake(id: string) {
+    setV((prev) => ({ ...prev, mistakes: prev.mistakes.includes(id) ? prev.mistakes.filter((m) => m !== id) : [...prev.mistakes, id] }));
+  }
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
     setFormError(null);
     const tradedDate = new Date(v.tradedAt);
+    const closedDate = v.closedAt ? new Date(v.closedAt) : null;
     const payload = {
       accountId: v.accountId,
       instrument: v.instrument,
@@ -167,6 +197,10 @@ export function TradeForm({
       plan: v.plan,
       comment: v.comment,
       tradedAt: isNaN(tradedDate.getTime()) ? "" : tradedDate.toISOString(),
+      tags: parseTags(v.tags),
+      grade: v.grade ? v.grade : null,
+      mistakes: v.mistakes,
+      closedAt: n.exit !== null && closedDate && !isNaN(closedDate.getTime()) ? closedDate.toISOString() : null,
     };
     const parsed = tradeSchema.safeParse(payload);
     if (!parsed.success) {
@@ -206,7 +240,24 @@ export function TradeForm({
     <form onSubmit={submit} noValidate className="mx-auto max-w-3xl space-y-6">
       <h1 className="text-2xl font-bold sm:text-3xl">{tradeId ? t("trades.form.editTitle") : t("trades.form.newTitle")}</h1>
       {fromCalculator && <Alert tone="info">{t("trades.form.fromCalculator")}</Alert>}
+      {fromClone && <Alert tone="info">{t("journal.fromClone")}</Alert>}
       {formError && <Alert tone="danger">{t(formError)}</Alert>}
+
+      {!tradeId && templates.length > 0 && (
+        <Card>
+          <div className="flex items-end gap-2">
+            <div className="flex-1"><Select id="t-template" label={t("journal.template")} value={tplId} onChange={(e) => { setTplId(e.target.value); applyTemplate(e.target.value); }}>
+              <option value="">{t("journal.templateNone")}</option>
+              {templates.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+            </Select></div>
+            {tplId && (
+              <Button type="button" variant="secondary" onClick={() => { const id = tplId; setTplId(""); void deleteTemplateAction(id).then(() => router.refresh()); }}>
+                {t("journal.deleteTemplate")}
+              </Button>
+            )}
+          </div>
+        </Card>
+      )}
 
       <Card className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
@@ -290,6 +341,38 @@ export function TradeForm({
               })}
             </ul>
           )}
+        </fieldset>
+      </Card>
+
+      <Card className="space-y-5">
+        <h2 className="font-semibold">{t("journal.title")}</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input id="t-tags" list="known-tags" label={t("journal.tags")} hint={t("journal.tagsHint")} error={err("tags")} {...bind("tags")} />
+          <datalist id="known-tags">{knownTags.map((x) => <option key={x} value={x} />)}</datalist>
+          {n.exit !== null && <Input id="t-closed" type="datetime-local" label={t("journal.closedAt")} hint={t("journal.closedAtHint")} error={err("closedAt")} {...bind("closedAt")} />}
+        </div>
+        <div>
+          <p className="mb-1.5 text-sm font-medium">{t("journal.grade")}</p>
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t("journal.grade")}>
+            {["", ...GRADES].map((g) => (
+              <button key={g || "none"} type="button" aria-pressed={v.grade === g} onClick={() => set("grade", g)} className={cn("h-10 min-w-12 rounded-xl border px-3 text-sm font-semibold transition-colors", v.grade === g ? "border-primary bg-primary-soft text-primary" : "border-border bg-surface text-muted hover:bg-surface-muted")}>
+                {g || "—"}
+              </button>
+            ))}
+          </div>
+          <p className="mt-1.5 text-xs text-muted">{t("journal.gradeHint")}</p>
+        </div>
+        <fieldset>
+          <legend className="text-sm font-medium">{t("journal.mistakes")}</legend>
+          <p className="mt-1 text-xs text-muted">{t("journal.mistakesHint")}</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {MISTAKES.map((m) => (
+              <label key={m} className="flex cursor-pointer items-center gap-2 rounded-xl border border-border px-3 py-2 text-sm has-[:checked]:border-warning has-[:checked]:bg-warning-soft">
+                <input type="checkbox" className="h-4 w-4 accent-[var(--primary)]" checked={v.mistakes.includes(m)} onChange={() => toggleMistake(m)} />
+                {t(`journal.mistakeNames.${m}`)}
+              </label>
+            ))}
+          </div>
         </fieldset>
       </Card>
 

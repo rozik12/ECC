@@ -3,6 +3,7 @@ import {
   autoMapColumns, inferMarket, normalizeDirection, parseDateTime, parseLooseNumber, REQUIRED_FIELDS,
   type ColumnMapping, type ImportField,
 } from "@/lib/import-map";
+import { GRADES, MISTAKES, parseTags } from "@/lib/journal";
 import { emotions, markets } from "@/lib/trading";
 import { tradeSchema } from "@/lib/validations/trades";
 
@@ -10,6 +11,7 @@ import { tradeSchema } from "@/lib/validations/trades";
 export const TRADE_COLUMNS = [
   "date_time", "instrument", "market", "direction", "entry", "exit", "stop_loss", "take_profit", "size", "leverage",
   "risk_percent", "fees", "pnl", "emotion", "strategy", "violated_rules", "reason", "plan", "comment", "account",
+  "tags", "grade", "mistakes", "closed_at",
 ] as const;
 
 const PLACEHOLDER_UUID = "00000000-0000-4000-8000-000000000000";
@@ -52,6 +54,9 @@ export function mapCsvRows(rows: string[][], mappingOverride?: ColumnMapping): M
     const dateRaw = cell(row, "date_time");
     const date = dateRaw ? parseDateTime(dateRaw) : new Date();
     const instrument = text(row, "instrument");
+    const closedRaw = cell(row, "closed_at");
+    const closed = closedRaw ? parseDateTime(closedRaw) : null;
+    const gradeRaw = cell(row, "grade").toUpperCase();
     const marketRaw = cell(row, "market").toLowerCase();
     const emotionRaw = cell(row, "emotion").toLowerCase();
 
@@ -74,6 +79,10 @@ export function mapCsvRows(rows: string[][], mappingOverride?: ColumnMapping): M
       plan: text(row, "plan"),
       comment: text(row, "comment"),
       tradedAt: date ? date.toISOString() : "",
+      tags: parseTags(unsafeText(cell(row, "tags"))),
+      grade: (GRADES as readonly string[]).includes(gradeRaw) ? gradeRaw : null,
+      mistakes: cell(row, "mistakes").split("|").map((s) => s.trim().toLowerCase()).filter((s) => (MISTAKES as readonly string[]).includes(s)),
+      closedAt: closed && date && closed.getTime() >= date.getTime() ? closed.toISOString() : null,
     };
 
     let error: string | null = null;

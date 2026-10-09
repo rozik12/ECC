@@ -11,7 +11,7 @@ import { fetchStatTrades, getAccounts, getPlan, getTransactions } from "@/lib/da
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
-  bySession, bySide, coreStats, drawdownSeries, heatmap, instrumentTable, monthly, rHistogram, riskConsistency, rMultiples, ruleCost, SESSION_IDS, winLossStreaks,
+  avgDuration, byDuration, byGrade, bySession, bySide, byTag, mistakeCost, type GroupRow, coreStats, drawdownSeries, heatmap, instrumentTable, monthly, rHistogram, riskConsistency, rMultiples, ruleCost, SESSION_IDS, winLossStreaks,
 } from "@/lib/analytics";
 import { equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, type Period } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
@@ -56,6 +56,40 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
   const risk = riskConsistency(trades);
   const rules = ruleCost(trades);
   const instruments = instrumentTable(trades);
+  const tagRows = byTag(trades);
+  const gradeRows = byGrade(trades);
+  const mistakeRows = mistakeCost(trades);
+  const durationRows = byDuration(trades);
+  const avgDur = avgDuration(trades);
+  const minText = (m: number | null) => (m === null ? none : m >= 1440 ? t("journal.units.d", { n: formatNumber(m / 1440, locale, 1) }) : m >= 60 ? t("journal.units.h", { n: formatNumber(m / 60, locale, 1) }) : t("journal.units.m", { n: Math.round(m) }));
+  const groupCard = (title: string, rows: (GroupRow & { label: string })[], emptyText: string, subtitle?: string) => (
+    <Card className="space-y-3">
+      <div>
+        <h2 className="text-lg font-semibold">{title}</h2>
+        {subtitle && <p className="mt-1 text-sm text-muted">{subtitle}</p>}
+      </div>
+      {rows.length === 0 ? (
+        <p className="text-sm text-muted">{emptyText}</p>
+      ) : (
+        <Table>
+          <THead>
+            <Tr><Th /><Th>{t("journal.an.trades")}</Th><Th>{t("journal.an.winRate")}</Th><Th>{t("journal.an.pnl")}</Th><Th>{t("journal.an.avg")}</Th></Tr>
+          </THead>
+          <TBody>
+            {rows.map((r) => (
+              <Tr key={r.key}>
+                <Td label={title} className="font-medium">{r.label}</Td>
+                <Td label={t("journal.an.trades")}>{r.count}</Td>
+                <Td label={t("journal.an.winRate")}>{pctText(r.winRate)}</Td>
+                <Td label={t("journal.an.pnl")} className={cn("tabular-nums", pnlTone(r.pnl))}>{money(r.pnl, true)}</Td>
+                <Td label={t("journal.an.avg")} className="tabular-nums">{money(r.avgPnl, true)}</Td>
+              </Tr>
+            ))}
+          </TBody>
+        </Table>
+      )}
+    </Card>
+  );
   const months = monthly(all, tz);
   const monthName = (key: string) => new Intl.DateTimeFormat({ ru: "ru-RU", uz: "uz-UZ", en: "en-US" }[locale], { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(`${key}-01T00:00:00Z`));
 
@@ -237,6 +271,13 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
               </Table>
             )}
           </Card>
+
+          {groupCard(t("journal.an.mistakes"), mistakeRows.map((r) => ({ ...r, label: t(`journal.mistakeNames.${r.key}`) })), t("journal.an.noMistakes"), t("journal.an.mistakesHint"))}
+          <div className="grid gap-6 lg:grid-cols-2">
+            {groupCard(t("journal.an.grades"), gradeRows.map((r) => ({ ...r, label: t("journal.gradeShort", { g: r.key }) })), t("journal.an.noGrades"), t("journal.an.gradesHint"))}
+            {groupCard(t("journal.an.tags"), tagRows.slice(0, 12).map((r) => ({ ...r, label: `#${r.key}` })), t("journal.an.noTags"))}
+          </div>
+          {groupCard(t("journal.an.duration"), durationRows.map((r) => ({ ...r, label: t(`journal.buckets.${r.bucket}`) })), t("journal.an.noDuration"), avgDur.count ? t("journal.an.avgDuration", { win: minText(avgDur.win), loss: minText(avgDur.loss) }) : undefined)}
 
           <Card className="space-y-3">
             <h2 className="text-lg font-semibold">{t("adv.instruments.title")}</h2>

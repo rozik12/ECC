@@ -1,4 +1,5 @@
 // Расширенная аналитика журнала. Чистые функции без зависимостей от интерфейса, чтобы их можно было тестировать.
+import { DURATION_BUCKETS, durationBucket, durationMinutes, type DurationBucket } from "./journal.ts";
 import { localDay, localWeekdayAndHour, type EquityPoint, type StatTrade } from "./statistics/index.ts";
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
@@ -205,4 +206,59 @@ export function instrumentTable(trades: StatTrade[], limit = 10): InstrumentRow[
     })
     .sort((a, b) => b.count - a.count || b.pnl - a.pnl)
     .slice(0, limit);
+}
+
+// ---------- журнал: теги, оценка, ошибки, длительность ----------
+export type GroupRow = { key: string; count: number; winRate: number | null; pnl: number; avgPnl: number };
+
+function group(trades: StatTrade[], keysOf: (t: StatTrade) => string[]): GroupRow[] {
+  const map = new Map<string, StatTrade[]>();
+  for (const t of trades) for (const k of new Set(keysOf(t))) map.set(k, [...(map.get(k) ?? []), t]);
+  return [...map.entries()].map(([key, xs]) => ({
+    key,
+    count: xs.length,
+    winRate: pct(xs.filter((t) => t.pnl > 0).length, xs.length),
+    pnl: sum(xs.map((t) => t.pnl)),
+    avgPnl: sum(xs.map((t) => t.pnl)) / xs.length,
+  }));
+}
+
+/** Результат по тегам. Сделка с несколькими тегами учитывается в каждом. Лучшие по итогу сверху. */
+export function byTag(trades: StatTrade[]): GroupRow[] {
+  return group(trades, (t) => (t.tags ?? []).map((x) => x.toLowerCase())).sort((a, b) => b.pnl - a.pnl);
+}
+
+/** Результат по оценке исполнения (A, B, C, D). Сделки без оценки не учитываются. */
+export function byGrade(trades: StatTrade[]): GroupRow[] {
+  return group(trades, (t) => (t.grade ? [t.grade] : [])).sort((a, b) => a.key.localeCompare(b.key));
+}
+
+/** Во что обошлась каждая категория ошибок: итог сделок с этой ошибкой. Самые убыточные сверху. */
+export function mistakeCost(trades: StatTrade[]): GroupRow[] {
+  return group(trades, (t) => t.mistakes ?? []).sort((a, b) => a.pnl - b.pnl);
+}
+
+/** Результат по длительности сделки. Сделки без времени закрытия не учитываются. */
+export function byDuration(trades: StatTrade[]): (GroupRow & { bucket: DurationBucket })[] {
+  const rows = group(trades, (t) => {
+    const m = durationMinutes(t.tradedAt, t.closedAt);
+    return m === null ? [] : [durationBucket(m)];
+  });
+  return DURATION_BUCKETS.flatMap((bucket) => {
+    const r = rows.find((x) => x.key === bucket);
+    return r ? [{ ...r, bucket }] : [];
+  });
+}
+
+/** Средняя длительность сделок в минутах: прибыльных и убыточных отдельно. */
+export function avgDuration(trades: StatTrade[]): { win: number | null; loss: number | null; count: number } {
+  const w: number[] = [];
+  const l: number[] = [];
+  for (const t of trades) {
+    const m = durationMinutes(t.tradedAt, t.closedAt);
+    if (m === null) continue;
+    if (t.pnl > 0) w.push(m);
+    else if (t.pnl < 0) l.push(m);
+  }
+  return { win: w.length ? sum(w) / w.length : null, loss: l.length ? sum(l) / l.length : null, count: w.length + l.length };
 }

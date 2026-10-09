@@ -904,7 +904,11 @@
       "violated_rules": "Rules broken",
       "reason": "Reason for entry",
       "plan": "Trading plan",
-      "comment": "Comment"
+      "comment": "Comment",
+      "tags": "Tags",
+      "grade": "Grade",
+      "mistakes": "Mistakes",
+      "closed_at": "Closed at"
     },
     "detected": "{platform} report detected: {used} trades, {skipped} skipped",
     "mtNotice": "Closed buy and sell trades were taken. Deposits, pending orders and open positions were skipped. Result = profit + commission + swap. Trade time is taken from the broker server clock. Size is converted from lots to units (currency pairs ×100,000, gold ×100).",
@@ -1383,5 +1387,81 @@
         "holiday": "Holiday"
       }
     }
+  },
+  "journal": {
+    "title": "Trade journal",
+    "tags": "Tags",
+    "tagsHint": "Comma-separated, up to 10. E.g. breakout, news",
+    "grade": "Execution grade",
+    "gradeHint": "A — followed the plan, D — many deviations. Grade how you stuck to the plan, not the profit.",
+    "gradeShort": "Grade {g}",
+    "mistakes": "Mistakes in this trade",
+    "mistake": "Mistake",
+    "mistakesHint": "",
+    "duration": "Duration",
+    "units": {
+      "d": "{n} d",
+      "h": "{n} h",
+      "m": "{n} min"
+    },
+    "closedAt": "Closed at",
+    "closedAtHint": "If empty, duration is not calculated",
+    "close": "Close trade",
+    "closeTitle": "Close trade",
+    "closeText": "Enter the exit price — the result is calculated for you.",
+    "closeConfirm": "Close",
+    "closeTimeHint": "If empty, the current time is used",
+    "alreadyClosed": "This trade is already closed",
+    "errClosedBefore": "Close time cannot be before the open time",
+    "clone": "Clone",
+    "fromClone": "This is a copy of a trade: check prices and time before saving.",
+    "saveTemplate": "Save as template",
+    "templateName": "Template name",
+    "templateText": "Saves instrument, direction, strategy, tags and plan — without prices and time.",
+    "templateSaved": "Template saved. It will appear when you create a new trade.",
+    "template": "Template",
+    "templateNone": "No template",
+    "limitTemplates": "You can keep at most 20 templates",
+    "search": "Text search",
+    "searchHint": "Instrument, comment, reason…",
+    "tag": "Tag",
+    "mistakeNames": {
+      "fomo_entry": "Entered out of FOMO",
+      "moved_stop": "Moved the stop",
+      "oversize": "Position too large",
+      "early_exit": "Exited too early",
+      "late_exit": "Exited too late",
+      "no_plan": "No plan",
+      "revenge": "Revenge trade",
+      "overtrading": "Overtrading",
+      "chased": "Chased the price",
+      "no_stop": "No stop"
+    },
+    "an": {
+      "trades": "Trades",
+      "winRate": "Win rate",
+      "pnl": "Result",
+      "avg": "Average",
+      "mistakes": "What mistakes cost you",
+      "mistakesHint": "Result of trades where you marked this mistake. One trade can appear in several rows.",
+      "noMistakes": "No trades with marked mistakes yet. Mark them in the trade form.",
+      "grades": "By execution grade",
+      "gradesHint": "Shows whether trades made by the plan actually pay off.",
+      "noGrades": "No graded trades yet.",
+      "tags": "By tags",
+      "noTags": "No tagged trades yet.",
+      "duration": "By trade duration",
+      "avgDuration": "Average duration: winners — {win}, losers — {loss}.",
+      "noDuration": "Needs a close time, which is set when you close a trade."
+    },
+    "buckets": {
+      "lt5": "under 5 min",
+      "m5_30": "5–30 min",
+      "m30_120": "30 min – 2 h",
+      "h2_8": "2–8 hours",
+      "h8_24": "8–24 hours",
+      "gt24": "over a day"
+    },
+    "deleteTemplate": "Delete template"
   }
 }

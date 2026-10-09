@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, CheckCircle2, Pencil } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CheckCircle2, Copy, Pencil } from "lucide-react";
 import { TradeChart } from "@/components/trades/TradeChart";
+import { CloseTradeButton } from "@/components/trades/CloseTradeButton";
+import { SaveTemplateButton } from "@/components/trades/SaveTemplateButton";
 import { ScreenshotCard } from "@/components/trades/ScreenshotCard";
 import { DeleteTradeButton } from "@/components/trades/DeleteTradeButton";
 import { EmotionBadge } from "@/components/trades/EmotionBadge";
 import { Badge, buttonStyles, Card } from "@/components/ui";
+import { durationMinutes, splitDuration } from "@/lib/journal";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { formatDateTime, formatMoney, formatNumber, pnlTone } from "@/lib/format";
@@ -52,6 +55,14 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
       ? Number(trade.potential_profit) / Number(trade.potential_loss)
       : null;
 
+  const minutes = durationMinutes(trade.traded_at, trade.closed_at);
+  const duration = (() => {
+    if (minutes === null) return null;
+    const { d, h, m } = splitDuration(minutes);
+    return [d ? t("journal.units.d", { n: d }) : "", h ? t("journal.units.h", { n: h }) : "", !d && (m || !h) ? t("journal.units.m", { n: m }) : ""].filter(Boolean).join(" ");
+  })();
+  const gradeTone = { A: "success", B: "primary", C: "warning", D: "danger" } as const;
+
   const fact = (label: string, value: string) => (
     <div className="flex items-baseline justify-between gap-4 py-2">
       <dt className="text-sm text-muted">{label}</dt>
@@ -87,6 +98,14 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
         <p className={cn("text-3xl font-bold tabular-nums", pnlTone(pnl))}>{money(pnl, true)}</p>
       </div>
 
+      {((trade.tags ?? []).length > 0 || trade.grade || (trade.mistakes ?? []).length > 0) && (
+        <div className="flex flex-wrap items-center gap-2" aria-label={t("journal.title")}>
+          {trade.grade && <Badge tone={gradeTone[trade.grade as keyof typeof gradeTone]}>{t("journal.gradeShort", { g: trade.grade })}</Badge>}
+          {(trade.tags ?? []).map((tag: string) => <Link key={tag} href={`/trades?tag=${encodeURIComponent(tag)}`}><Badge tone="neutral">#{tag}</Badge></Link>)}
+          {(trade.mistakes ?? []).map((m: string) => <Badge key={m} tone="warning">{t(`journal.mistakeNames.${m}`)}</Badge>)}
+        </div>
+      )}
+
       <Card>
         <h2 className="font-semibold">{t("trades.detail.discipline")}</h2>
         {trade.rules_followed ? (
@@ -111,6 +130,7 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
         <dl className="divide-y divide-border">
           {fact(t("trades.form.entry"), num(trade.entry_price))}
           {fact(t("trades.form.exit"), num(trade.exit_price))}
+          {duration && fact(t("journal.duration"), duration)}
           {fact(t("trades.form.stop"), num(trade.stop_loss))}
           {fact(t("trades.form.takeProfit"), num(trade.take_profit))}
           {fact(t("trades.form.size"), num(trade.position_size, 6))}
@@ -147,6 +167,11 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
         <Link href={`/trades/${id}/edit`} className={buttonStyles()}>
           <Pencil className="h-4 w-4" aria-hidden /> {t("common.edit")}
         </Link>
+        {trade.exit_price === null && <CloseTradeButton tradeId={id} />}
+        <Link href={`/trades/new?clone=${id}`} className={buttonStyles({ variant: "secondary" })}>
+          <Copy className="h-4 w-4" aria-hidden /> {t("journal.clone")}
+        </Link>
+        <SaveTemplateButton tradeId={id} defaultName={`${trade.instrument} ${t(`directions.${trade.direction}`)}`} />
         <DeleteTradeButton tradeId={id} />
       </div>
     </div>

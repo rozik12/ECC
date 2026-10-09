@@ -116,7 +116,7 @@ export async function updateTradeFields(userId: string, id: string, patch: Recor
 
 export async function closeTrade(userId: string, t: TradeRow, exit: number): Promise<TradeRow | null> {
   const pnl = round(calculatePnl(t.direction, t.entry, exit, t.size) - t.fees);
-  const ok = await updateTradeFields(userId, t.id, { exit_price: exit, pnl });
+  const ok = await updateTradeFields(userId, t.id, { exit_price: exit, pnl, closed_at: new Date().toISOString() });
   return ok ? { ...t, exit, pnl } : null;
 }
 

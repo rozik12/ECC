@@ -45,4 +45,8 @@ export type Trade = {
   plan: string;
   comment: string;
   traded_at: string;
+  tags: string[];
+  grade: "A" | "B" | "C" | "D" | null;
+  mistakes: string[];
+  closed_at: string | null;
 };

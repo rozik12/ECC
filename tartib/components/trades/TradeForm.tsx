@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { saveTradeAction } from "@/app/actions/trades";
 import { deleteTemplateAction } from "@/app/actions/templates";
@@ -71,6 +71,8 @@ type Props = {
   fromClone?: boolean;
   /** Часовой пояс профиля: в нём вводится и показывается время сделки (так же, как во всех списках) */
   timeZone?: string;
+  /** Инструменты из прошлых сделок: подсказки в поле */
+  instruments?: string[];
 };
 
 // Режим формы («только главное» / «все поля») помнится в браузере. Это удобство, а не данные: без хранилища форма просто простая.
@@ -108,6 +110,7 @@ export function TradeForm({
   fromCalculator = false,
   fromClone = false,
   timeZone = "UTC",
+  instruments = [],
 }: Props) {
   const { t } = useI18n();
   const router = useRouter();
@@ -127,6 +130,21 @@ export function TradeForm({
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [tplId, setTplId] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const again = useRef(false);
+  // Направление подставляется само по стопу и входу, пока человек не выбрал его вручную
+  const dirTouched = useRef(!!tradeId || !!initial.entry);
+  function setPrice(key: "entry" | "stop", value: string) {
+    setV((prev) => {
+      const next = { ...prev, [key]: value };
+      if (!dirTouched.current) {
+        const e = parseNumber(next.entry);
+        const s = parseNumber(next.stop);
+        if (e !== null && s !== null && e > 0 && s > 0 && e !== s) next.direction = s < e ? "long" : "short";
+      }
+      return next;
+    });
+  }
   const mode = useFormMode();
   const ADVANCED_FIELDS = ["leverage", "riskPercent", "takeProfit", "fees", "strategy", "tags", "grade", "closedAt", "reason", "plan", "comment"];
   // Поля из «дополнительных» нельзя прятать, если в них уже что-то есть или в них ошибка
@@ -252,7 +270,10 @@ export function TradeForm({
     startTransition(async () => {
       const result = await saveTradeAction(tradeId, payload);
       if (!result.ok) return setFormError(result.error);
-      router.push(result.id ? `/trades/${result.id}` : "/trades");
+      if (again.current && !tradeId) {
+        // «Сохранить и добавить ещё»: сразу новая форма с тем же счётом и рынком
+        router.push(`/trades/new?account=${v.accountId}&market=${v.market}&saved=${Date.now()}`);
+      } else router.push(result.id ? `/trades/${result.id}` : "/trades");
       router.refresh();
     });
   }
@@ -262,7 +283,7 @@ export function TradeForm({
       key={value}
       type="button"
       aria-pressed={v.direction === value}
-      onClick={() => set("direction", value)}
+      onClick={() => { dirTouched.current = true; set("direction", value); }}
       className={cn(
         "h-11 flex-1 rounded-xl border text-sm font-semibold transition-colors",
         v.direction === value ? tone : "border-border bg-surface text-muted hover:bg-surface-muted",
@@ -273,7 +294,7 @@ export function TradeForm({
   );
 
   return (
-    <form onSubmit={submit} noValidate className="mx-auto max-w-3xl space-y-6">
+    <form ref={formRef} onSubmit={submit} noValidate className="mx-auto max-w-3xl space-y-6" onKeyDown={(e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); again.current = false; formRef.current?.requestSubmit(); } }}>
       <h1 className="text-2xl font-bold sm:text-3xl">{tradeId ? t("trades.form.editTitle") : t("trades.form.newTitle")}</h1>
       {!tradeId && !hasExtra && tplId === "" && (
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border bg-surface-muted px-4 py-3 text-sm">
@@ -308,7 +329,8 @@ export function TradeForm({
           <Select id="t-account" label={t("trades.form.account")} error={err("accountId")} {...bind("accountId")}>
             {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
           </Select>
-          <Input id="t-instrument" label={t("trades.form.instrument")} placeholder="BTC/USDT" error={err("instrument")} {...bind("instrument")} />
+          <Input id="t-instrument" list="known-instruments" autoComplete="off" label={t("trades.form.instrument")} placeholder="BTC/USDT" error={err("instrument")} {...bind("instrument")} />
+          <datalist id="known-instruments">{instruments.map((x) => <option key={x} value={x} />)}</datalist>
           <Select id="t-market" label={t("trades.form.market")} {...bind("market")}>
             {markets.map((m) => <option key={m} value={m}>{t(`markets.${m}`)}</option>)}
           </Select>
@@ -325,7 +347,7 @@ export function TradeForm({
 
       <Card className="space-y-4">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          <Input id="t-entry" inputMode="decimal" label={t("trades.form.entry")} error={err("entryPrice")} {...bind("entry")} />
+          <Input id="t-entry" inputMode="decimal" label={t("trades.form.entry")} error={err("entryPrice")} value={v.entry} onChange={(e) => setPrice("entry", e.target.value)} />
           <Input id="t-exit" inputMode="decimal" label={t("trades.form.exit")} error={err("exitPrice")} {...bind("exit")} />
           <div>
             <Input id="t-size" inputMode="decimal" label={t("trades.form.size")} error={err("positionSize")} {...bind("size")} />
@@ -335,7 +357,7 @@ export function TradeForm({
               </button>
             )}
           </div>
-          <Input id="t-stop" inputMode="decimal" label={t("trades.form.stop")} error={err("stopLoss")} {...bind("stop")} />
+          <Input id="t-stop" inputMode="decimal" label={t("trades.form.stop")} error={err("stopLoss")} value={v.stop} onChange={(e) => setPrice("stop", e.target.value)} />
           <div className={adv}><Input id="t-tp" inputMode="decimal" label={t("trades.form.takeProfit")} error={err("takeProfit")} {...bind("takeProfit")} /></div>
           <div className={adv}><Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} /></div>
           <div className={adv}><Input id="t-risk" inputMode="decimal" label={t("trades.form.riskPercent")} error={err("riskPercent")} {...bind("risk")} /></div>
@@ -435,8 +457,10 @@ export function TradeForm({
 
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
         <Button variant="secondary" size="lg" onClick={() => router.back()}>{t("common.cancel")}</Button>
-        <Button type="submit" size="lg" disabled={pending || !account}>{t("trades.form.save")}</Button>
+        {!tradeId && <Button type="submit" variant="secondary" size="lg" disabled={pending || !account} onClick={() => { again.current = true; }}>{t("trades.form.saveAgain")}</Button>}
+        <Button type="submit" size="lg" disabled={pending || !account} onClick={() => { again.current = false; }}>{t("trades.form.save")}</Button>
       </div>
+      <p className="hidden text-right text-xs text-muted sm:block">{t("trades.form.saveTip")}</p>
     </form>
   );
 }

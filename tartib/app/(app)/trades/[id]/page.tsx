@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, CheckCircle2, Copy, Pencil } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CheckCircle2, ChevronLeft, ChevronRight, Copy, Pencil } from "lucide-react";
 import { TradeChart } from "@/components/trades/TradeChart";
 import { CloseTradeButton } from "@/components/trades/CloseTradeButton";
 import { SaveTemplateButton } from "@/components/trades/SaveTemplateButton";
@@ -40,6 +40,11 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
     .maybeSingle();
   if (!data) notFound();
   const trade = data as unknown as Detail;
+  // Соседние сделки по времени: можно листать журнал, не возвращаясь к списку
+  const [{ data: prevRow }, { data: nextRow }] = await Promise.all([
+    supabase.from("trades").select("id").lt("traded_at", trade.traded_at).order("traded_at", { ascending: false }).limit(1).maybeSingle(),
+    supabase.from("trades").select("id").gt("traded_at", trade.traded_at).order("traded_at", { ascending: true }).limit(1).maybeSingle(),
+  ]);
   const signed = trade.screenshot_path
     ? await supabase.storage.from("trade-screenshots").createSignedUrl(trade.screenshot_path, 3600)
     : null;
@@ -82,6 +87,10 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
       <Link href="/trades" className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground">
         <ArrowLeft className="h-4 w-4" aria-hidden /> {t("trades.detail.back")}
       </Link>
+      <nav aria-label={t("trades.detail.neighbors")} className="flex items-center justify-between gap-2 text-sm">
+        {prevRow ? <Link href={`/trades/${prevRow.id}`} rel="prev" className="inline-flex min-h-10 items-center gap-1 text-primary hover:underline"><ChevronLeft className="h-4 w-4" aria-hidden /> {t("trades.detail.prev")}</Link> : <span />}
+        {nextRow ? <Link href={`/trades/${nextRow.id}`} rel="next" className="inline-flex min-h-10 items-center gap-1 text-primary hover:underline">{t("trades.detail.next")} <ChevronRight className="h-4 w-4" aria-hidden /></Link> : <span />}
+      </nav>
 
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>

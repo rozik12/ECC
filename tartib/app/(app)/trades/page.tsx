@@ -9,6 +9,7 @@ import { cn } from "@/lib/cn";
 import { formatDateTime, formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { GRADES, MISTAKES, sanitizeSearch } from "@/lib/journal";
+import { localDay, shiftDay } from "@/lib/diary";
 import { dateInputToStart, safeTimeZone } from "@/lib/time";
 import { directions, emotions, type EmotionKey } from "@/lib/trading";
 
@@ -48,40 +49,79 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
   };
   const hasFilters = Object.values(filters).some(Boolean);
   const page = Math.max(1, parseInt(one(sp.page), 10) || 1);
+  const SORTS = ["new", "old", "best", "worst"] as const;
+  type Sort = (typeof SORTS)[number];
+  const sort: Sort = (SORTS as readonly string[]).includes(one(sp.sort)) ? (one(sp.sort) as Sort) : "new";
 
-  let query = supabase
-    .from("trades")
-    .select(
-      "id, traded_at, instrument, direction, entry_price, exit_price, position_size, pnl, emotion, rules_followed, tags, grade, account:trading_accounts(currency), trade_rule_violations(rule:rules(name))",
-      { count: "exact" },
-    )
-    .order("traded_at", { ascending: false });
+  // Одни и те же фильтры нужны и для страницы списка, и для итоговой строки по всем найденным сделкам
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const withFilters = (select: string, opts?: { count: "exact" }): any => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let q: any = supabase.from("trades").select(select, opts);
+    const from = dateInputToStart(tz, filters.from);
+    if (from) q = q.gte("traded_at", from.toISOString());
+    const to = dateInputToStart(tz, filters.to);
+    if (to) q = q.lt("traded_at", new Date(to.getTime() + 24 * 3600 * 1000).toISOString());
+    if (filters.instrument) q = q.ilike("instrument", `%${filters.instrument.replace(/[%_,()]/g, "")}%`);
+    if (filters.direction) q = q.eq("direction", filters.direction);
+    if (filters.result === "profit") q = q.gt("pnl", 0);
+    if (filters.result === "loss") q = q.lt("pnl", 0);
+    if (filters.emotion) q = q.eq("emotion", filters.emotion);
+    if (filters.rules) q = q.eq("rules_followed", filters.rules === "followed");
+    if (filters.grade) q = q.eq("grade", filters.grade);
+    if (filters.tag) q = q.contains("tags", [filters.tag]);
+    if (filters.mistake) q = q.contains("mistakes", [filters.mistake]);
+    // Строка поиска очищена в sanitizeSearch от знаков, меняющих условие PostgREST.
+    if (filters.q) q = q.or(["instrument", "strategy", "comment", "reason", "plan"].map((c) => `${c}.ilike.%${filters.q}%`).join(","));
+    return q;
+  };
 
-  const from = dateInputToStart(tz, filters.from);
-  if (from) query = query.gte("traded_at", from.toISOString());
-  const to = dateInputToStart(tz, filters.to);
-  if (to) query = query.lt("traded_at", new Date(to.getTime() + 24 * 3600 * 1000).toISOString());
-  if (filters.instrument) query = query.ilike("instrument", `%${filters.instrument.replace(/[%_,()]/g, "")}%`);
-  if (filters.direction) query = query.eq("direction", filters.direction);
-  if (filters.result === "profit") query = query.gt("pnl", 0);
-  if (filters.result === "loss") query = query.lt("pnl", 0);
-  if (filters.emotion) query = query.eq("emotion", filters.emotion);
-  if (filters.rules) query = query.eq("rules_followed", filters.rules === "followed");
-  if (filters.grade) query = query.eq("grade", filters.grade);
-  if (filters.tag) query = query.contains("tags", [filters.tag]);
-  if (filters.mistake) query = query.contains("mistakes", [filters.mistake]);
-  // Строка поиска очищена в sanitizeSearch от знаков, меняющих условие PostgREST.
-  if (filters.q) query = query.or(["instrument", "strategy", "comment", "reason", "plan"].map((c) => `${c}.ilike.%${filters.q}%`).join(","));
+  let query = withFilters(
+    "id, traded_at, instrument, direction, entry_price, exit_price, position_size, pnl, emotion, rules_followed, tags, grade, account:trading_accounts(currency), trade_rule_violations(rule:rules(name))",
+    { count: "exact" },
+  );
+  query = sort === "old" ? query.order("traded_at", { ascending: true }) : sort === "best" ? query.order("pnl", { ascending: false }).order("traded_at", { ascending: false }) : sort === "worst" ? query.order("pnl", { ascending: true }).order("traded_at", { ascending: false }) : query.order("traded_at", { ascending: false });
+  query = query.order("id");
 
-  const { data, count } = await query.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
+  const SUMMARY_MAX = 5000;
+  const [{ data, count }, { data: sumRows }] = await Promise.all([
+    query.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1),
+    withFilters("pnl").limit(SUMMARY_MAX),
+  ]);
+  const pnls = ((sumRows ?? []) as { pnl: number }[]).map((r) => Number(r.pnl));
+  const sumNet = pnls.reduce((a, b) => a + b, 0);
+  const sumWins = pnls.filter((x) => x > 0).length;
   const rows = (data ?? []) as unknown as Row[];
   const total = count ?? 0;
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const today = localDay(new Date(), tz);
+  const periodHref = (fromDay: string, toDay: string) => {
+    const params = new URLSearchParams();
+    for (const [k, v] of Object.entries({ ...filters, from: fromDay, to: toDay })) if (v) params.set(k, v);
+    if (sort !== "new") params.set("sort", sort);
+    const qs = params.toString();
+    return qs ? `/trades?${qs}` : "/trades";
+  };
+  const periods = [
+    { key: "all", from: "", to: "" },
+    { key: "today", from: today, to: today },
+    { key: "d7", from: shiftDay(today, -6), to: today },
+    { key: "d30", from: shiftDay(today, -29), to: today },
+    { key: "month", from: `${today.slice(0, 7)}-01`, to: today },
+  ];
+  const sortHref = (v: Sort) => {
+    const params = new URLSearchParams();
+    for (const [k, val] of Object.entries(filters)) if (val) params.set(k, val);
+    if (v !== "new") params.set("sort", v);
+    const qs = params.toString();
+    return qs ? `/trades?${qs}` : "/trades";
+  };
   const currencyOf = (r: Row) => r.account?.currency ?? profile?.currency ?? "USD";
 
   const pageHref = (p: number) => {
     const params = new URLSearchParams();
     for (const [k, v] of Object.entries(filters)) if (v) params.set(k, v);
+    if (sort !== "new") params.set("sort", sort);
     if (p > 1) params.set("page", String(p));
     const qs = params.toString();
     return qs ? `/trades?${qs}` : "/trades";
@@ -111,7 +151,36 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
         </Card>
       ) : (
         <>
+          <nav aria-label={t("trades.period.title")} className="flex gap-2 overflow-x-auto pb-1">
+            {periods.map((p) => {
+              const active = filters.from === p.from && filters.to === p.to;
+              return (
+                <Link key={p.key} href={periodHref(p.from, p.to)} aria-current={active ? "page" : undefined}
+                  className={cn("flex min-h-10 shrink-0 items-center rounded-xl border px-3 text-sm", active ? "border-primary bg-primary-soft font-semibold text-primary" : "border-border text-muted hover:text-foreground")}>
+                  {t(`trades.period.${p.key}`)}
+                </Link>
+              );
+            })}
+          </nav>
           <TradeFilters initial={filters} />
+          {total > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm">
+              <p className="flex flex-wrap gap-x-5 gap-y-1">
+                <span><span className="text-muted">{t("trades.summary.found")}</span> <b>{total}</b></span>
+                <span><span className="text-muted">{t("trades.summary.net")}</span> <b className={pnlTone(sumNet)}>{formatMoney(sumNet, profile?.currency ?? "USD", locale, true)}</b></span>
+                <span><span className="text-muted">{t("trades.summary.winRate")}</span> <b>{pnls.length ? `${formatNumber((sumWins / pnls.length) * 100, locale, 0)}%` : "—"}</b></span>
+                {total > SUMMARY_MAX && <span className="text-xs text-muted">{t("trades.summary.limited", { n: SUMMARY_MAX })}</span>}
+              </p>
+              <nav aria-label={t("trades.sort.title")} className="flex flex-wrap items-center gap-1">
+                <span className="text-muted">{t("trades.sort.title")}:</span>
+                {SORTS.map((v) => (
+                  <Link key={v} href={sortHref(v)} aria-current={v === sort ? "page" : undefined} className={cn("inline-flex min-h-9 items-center rounded-lg px-2.5", v === sort ? "bg-primary-soft font-semibold text-primary" : "text-muted hover:text-foreground")}>
+                    {t(`trades.sort.${v}`)}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          )}
           {rows.length === 0 ? (
             <Card className="py-10 text-center text-muted">{t("trades.noResults")}</Card>
           ) : (

@@ -4,7 +4,7 @@ import { Zap } from "lucide-react";
 import { Alert } from "@/components/ui";
 import { TradeForm, type TemplateView, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
-import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getKnownTags, getLastTrade, getRules, getStrategies } from "@/lib/data";
+import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getInstruments, getKnownTags, getLastTrade, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { losingRun } from "@/lib/risk-stats";
 import { lossCooldown } from "@/lib/statistics";
@@ -26,7 +26,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
   const { supabase, profile } = await requireUser();
   const { start, end } = dayBounds(safeTimeZone(profile?.timezone));
   const cloneId = /^[0-9a-f-]{36}$/i.test(one(sp.clone)) ? one(sp.clone) : null;
-  const [accounts, rules, tradesToday, day, strategies, last, knownTags, tpl, cloned] = await Promise.all([
+  const [accounts, rules, tradesToday, day, strategies, last, knownTags, instruments, tpl, cloned] = await Promise.all([
     getAccounts(supabase),
     getRules(supabase),
     countTradesBetween(supabase, start, end),
@@ -34,6 +34,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     getStrategies(supabase),
     getLastTrade(supabase),
     getKnownTags(supabase),
+    getInstruments(supabase),
     supabase.from("trade_templates").select("id, name, data").order("created_at", { ascending: false }).limit(20),
     cloneId ? supabase.from("trades").select("*").eq("id", cloneId).maybeSingle() : Promise.resolve({ data: null }),
   ]);
@@ -101,6 +102,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
 
   return (
     <>
+    {one(sp.saved) !== "" && <Alert tone="success" className="mb-4">{t("trades.form.savedAgain")}</Alert>}
     {run.count >= 3 && <Alert tone="warning" className="mb-4">{t("hero.pauseBanner", { n: run.count, m: run.minutesSince })}</Alert>}
     {cooldown && run.count < 3 && <Alert tone="warning" className="mb-4">{t("trades.cooldown", { m: cooldown.minutesAgo })}</Alert>}
     <div className="mb-4 flex justify-end">
@@ -109,6 +111,8 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
       </Link>
     </div>
     <TradeForm
+      key={one(sp.saved) || one(sp.clone) || "new"}
+      instruments={instruments}
       timeZone={safeTimeZone(profile?.timezone)}
       accounts={accounts}
       rules={rules}

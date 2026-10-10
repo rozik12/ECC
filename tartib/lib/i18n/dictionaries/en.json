@@ -572,7 +572,10 @@
       "strategyHint": "For example “Breakout” or “Pullback”. Statistics are built from it.",
       "fees": "Commission and swap",
       "feesHint": "What you paid the broker or exchange. P&L is calculated after fees.",
-      "tzHint": "Time is entered in the time zone from your settings: {tz}"
+      "tzHint": "Time is entered in the time zone from your settings: {tz}",
+      "saveAgain": "Save and add another",
+      "savedAgain": "Trade saved. You can record the next one.",
+      "saveTip": "Tip: Ctrl+Enter saves the trade"
     },
     "detail": {
       "risk": "Risk",
@@ -585,7 +588,10 @@
       "back": "Back to trades",
       "deleteTitle": "Delete this trade?",
       "deleteText": "The trade will be deleted permanently.",
-      "none": "—"
+      "none": "—",
+      "neighbors": "Adjacent trades",
+      "prev": "Earlier",
+      "next": "Later"
     },
     "account": "Account",
     "noAccount": "Couldn't find the trading account.",
@@ -594,7 +600,28 @@
     "deleteFailed": "Couldn't delete the trade. Please try again.",
     "export": "Download CSV",
     "import": "Import",
-    "cooldown": "Your last trade closed at a loss {m} min ago. Take a pause and go through your checklist before opening a new one."
+    "cooldown": "Your last trade closed at a loss {m} min ago. Take a pause and go through your checklist before opening a new one.",
+    "period": {
+      "title": "Period",
+      "all": "All",
+      "today": "Today",
+      "d7": "7 days",
+      "d30": "30 days",
+      "month": "This month"
+    },
+    "summary": {
+      "found": "Found:",
+      "net": "Net:",
+      "winRate": "Win rate:",
+      "limited": "over the first {n} trades"
+    },
+    "sort": {
+      "title": "Sort",
+      "new": "newest",
+      "old": "oldest",
+      "best": "best",
+      "worst": "worst"
+    }
   },
   "stats": {
     "title": "Statistics",

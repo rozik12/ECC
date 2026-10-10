@@ -145,6 +145,12 @@ export async function getStrategies(supabase: SupabaseClient): Promise<string[]>
   return [...new Set((data ?? []).map((r) => r.strategy as string))].slice(0, 30);
 }
 
+/** Инструменты, в которых пользователь уже торговал (свежие сверху): подсказки в форме сделки. */
+export async function getInstruments(supabase: SupabaseClient): Promise<string[]> {
+  const { data } = await supabase.from("trades").select("instrument").order("traded_at", { ascending: false }).limit(400);
+  return [...new Set((data ?? []).map((r) => String(r.instrument)))].slice(0, 40);
+}
+
 export type Transaction = {
   id: string;
   accountId: string;

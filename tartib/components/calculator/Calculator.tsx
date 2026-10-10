@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AlertTriangle, Check, Info } from "lucide-react";
@@ -42,6 +42,24 @@ export function Calculator({ accounts, rules, tradesToday, dayLossPercent, check
   const [warningOpen, setWarningOpen] = useState(false);
   const [checklistOpen, setChecklistOpen] = useState(false);
   const [checked, setChecked] = useState<Set<number>>(new Set());
+
+  // Калькулятор помнит последние риск, рынок и плечо этого браузера: не вводить одно и то же перед каждой сделкой
+  const [prefsLoaded, setPrefsLoaded] = useState(false);
+  useEffect(() => {
+    try {
+      const p = JSON.parse(localStorage.getItem("tartib.calcPrefs") ?? "null") as { risk?: string; market?: string; leverage?: string } | null;
+      /* eslint-disable react-hooks/set-state-in-effect */
+      if (p && typeof p.risk === "string" && p.risk.length <= 8) setRiskPercent(p.risk);
+      if (p && (markets as readonly string[]).includes(String(p.market))) setMarket(p.market as Market);
+      if (p && typeof p.leverage === "string" && p.leverage.length <= 6) setLeverage(p.leverage);
+      /* eslint-enable react-hooks/set-state-in-effect */
+    } catch { /* память браузера недоступна: калькулятор просто начнёт с обычных значений */ }
+    setPrefsLoaded(true);
+  }, []);
+  useEffect(() => {
+    if (!prefsLoaded) return;
+    try { localStorage.setItem("tartib.calcPrefs", JSON.stringify({ risk: riskPercent, market, leverage })); } catch { /* ничего страшного */ }
+  }, [prefsLoaded, riskPercent, market, leverage]);
 
   const account = accounts.find((a) => a.id === accountId);
   const currency = account?.currency ?? "USD";

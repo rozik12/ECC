@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { TradeForm, type TradeFormValues } from "@/components/trades/TradeForm";
 import { requireUser } from "@/lib/auth";
 import { calculatePnl } from "@/lib/calculations/trade";
-import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getKnownTags, getRules, getStrategies } from "@/lib/data";
+import { countTradesBetween, dayLossBefore, getAccounts, getDayContext, getInstruments, getKnownTags, getRules, getStrategies } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import type { Trade } from "@/types";
@@ -29,13 +29,14 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
   const trade = data as unknown as Trade & { trade_rule_violations: { rule_id: string }[] };
 
   const { start, end } = dayBounds(safeTimeZone(profile?.timezone), new Date(trade.traded_at));
-  const [accounts, rules, others, day, strategies, knownTags] = await Promise.all([
+  const [accounts, rules, others, day, strategies, knownTags, instruments] = await Promise.all([
     getAccounts(supabase),
     getRules(supabase),
     countTradesBetween(supabase, start, end, id),
     getDayContext(supabase, start, end),
     getStrategies(supabase),
     getKnownTags(supabase),
+    getInstruments(supabase),
   ]);
 
   // Если сохранённый P&L отличается от расчётного, значит он правился вручную
@@ -74,6 +75,7 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
 
   return (
     <TradeForm
+      instruments={instruments}
       timeZone={safeTimeZone(profile?.timezone)}
       tradeId={id}
       accounts={accounts}

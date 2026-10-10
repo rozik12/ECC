@@ -571,7 +571,8 @@
       "strategy": "Strategiya",
       "strategyHint": "Masalan: «Breakout» yoki «Pullback». Statistika shu bo'yicha hisoblanadi.",
       "fees": "Komissiya va svop",
-      "feesHint": "Brokerga yoki birjaga to'langan summa. P&L komissiyani ayirib hisoblanadi."
+      "feesHint": "Brokerga yoki birjaga to'langan summa. P&L komissiyani ayirib hisoblanadi.",
+      "tzHint": "Vaqt sozlamalardagi vaqt mintaqasida kiritiladi: {tz}"
     },
     "detail": {
       "risk": "Xavf",

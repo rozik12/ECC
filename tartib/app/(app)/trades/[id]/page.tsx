@@ -167,7 +167,7 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
         <Link href={`/trades/${id}/edit`} className={buttonStyles()}>
           <Pencil className="h-4 w-4" aria-hidden /> {t("common.edit")}
         </Link>
-        {trade.exit_price === null && <CloseTradeButton tradeId={id} />}
+        {trade.exit_price === null && <CloseTradeButton tradeId={id} timeZone={safeTimeZone(profile?.timezone)} />}
         <Link href={`/trades/new?clone=${id}`} className={buttonStyles({ variant: "secondary" })}>
           <Copy className="h-4 w-4" aria-hidden /> {t("journal.clone")}
         </Link>

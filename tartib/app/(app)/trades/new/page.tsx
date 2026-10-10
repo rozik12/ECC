@@ -109,6 +109,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
       </Link>
     </div>
     <TradeForm
+      timeZone={safeTimeZone(profile?.timezone)}
       accounts={accounts}
       rules={rules}
       tradesOthersToday={tradesToday}

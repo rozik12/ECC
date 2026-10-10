@@ -10,7 +10,8 @@ import { calculatePnl, tradeMetrics } from "@/lib/calculations/trade";
 import { positionSize } from "@/lib/tools";
 import { cn } from "@/lib/cn";
 import { GRADES, MISTAKES, parseTags } from "@/lib/journal";
-import { parseNumber, toLocalInput } from "@/lib/format";
+import { parseNumber } from "@/lib/format";
+import { dateToZonedInput, zonedInputToDate } from "@/lib/time";
 import { useI18n } from "@/lib/i18n/provider";
 import { emotions, markets, type DirectionKey, type EmotionKey, type MarketKey } from "@/lib/trading";
 import { tradeSchema } from "@/lib/validations/trades";
@@ -68,6 +69,8 @@ type Props = {
   tradeId?: string | null;
   fromCalculator?: boolean;
   fromClone?: boolean;
+  /** Часовой пояс профиля: в нём вводится и показывается время сделки (так же, как во всех списках) */
+  timeZone?: string;
 };
 
 // Режим формы («только главное» / «все поля») помнится в браузере. Это удобство, а не данные: без хранилища форма просто простая.
@@ -104,6 +107,7 @@ export function TradeForm({
   tradeId = null,
   fromCalculator = false,
   fromClone = false,
+  timeZone = "UTC",
 }: Props) {
   const { t } = useI18n();
   const router = useRouter();
@@ -111,9 +115,9 @@ export function TradeForm({
   const [v, setV] = useState<TradeFormValues>({ ...initial, tradedAt: "", closedAt: "" });
   useEffect(() => {
     const date = initial.tradedAt ? new Date(initial.tradedAt) : new Date();
-    // Время зависит от часового пояса браузера, поэтому подставляем его только после загрузки страницы
+    // «Сейчас» известно только в браузере, поэтому подставляем время после загрузки страницы (в часовом поясе профиля)
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setV((prev) => (prev.tradedAt ? prev : { ...prev, tradedAt: toLocalInput(date), closedAt: initial.closedAt ? toLocalInput(new Date(initial.closedAt)) : "" }));
+    setV((prev) => (prev.tradedAt ? prev : { ...prev, tradedAt: dateToZonedInput(timeZone, date), closedAt: initial.closedAt ? dateToZonedInput(timeZone, new Date(initial.closedAt)) : "" }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [pnlTouched, setPnlTouched] = useState(pnlIsManual);
@@ -206,8 +210,8 @@ export function TradeForm({
   function submit(e: React.FormEvent) {
     e.preventDefault();
     setFormError(null);
-    const tradedDate = new Date(v.tradedAt);
-    const closedDate = v.closedAt ? new Date(v.closedAt) : null;
+    const tradedDate = zonedInputToDate(timeZone, v.tradedAt);
+    const closedDate = v.closedAt ? zonedInputToDate(timeZone, v.closedAt) : null;
     const payload = {
       accountId: v.accountId,
       instrument: v.instrument,
@@ -228,11 +232,11 @@ export function TradeForm({
       reason: v.reason,
       plan: v.plan,
       comment: v.comment,
-      tradedAt: isNaN(tradedDate.getTime()) ? "" : tradedDate.toISOString(),
+      tradedAt: tradedDate ? tradedDate.toISOString() : "",
       tags: parseTags(v.tags),
       grade: v.grade ? v.grade : null,
       mistakes: v.mistakes,
-      closedAt: n.exit !== null && closedDate && !isNaN(closedDate.getTime()) ? closedDate.toISOString() : null,
+      closedAt: n.exit !== null && closedDate ? closedDate.toISOString() : null,
     };
     const parsed = tradeSchema.safeParse(payload);
     if (!parsed.success) {
@@ -316,7 +320,7 @@ export function TradeForm({
             </div>
           </div>
         </div>
-        <Input id="t-date" type="datetime-local" label={t("trades.form.tradedAt")} error={err("tradedAt")} {...bind("tradedAt")} />
+        <Input id="t-date" type="datetime-local" label={t("trades.form.tradedAt")} hint={t("trades.form.tzHint", { tz: timeZone })} error={err("tradedAt")} {...bind("tradedAt")} />
       </Card>
 
       <Card className="space-y-4">

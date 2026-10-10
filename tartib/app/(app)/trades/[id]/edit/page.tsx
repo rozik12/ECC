@@ -74,6 +74,7 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
 
   return (
     <TradeForm
+      timeZone={safeTimeZone(profile?.timezone)}
       tradeId={id}
       accounts={accounts}
       rules={rules}

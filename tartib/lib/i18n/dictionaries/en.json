@@ -571,7 +571,8 @@
       "strategy": "Strategy",
       "strategyHint": "For example “Breakout” or “Pullback”. Statistics are built from it.",
       "fees": "Commission and swap",
-      "feesHint": "What you paid the broker or exchange. P&L is calculated after fees."
+      "feesHint": "What you paid the broker or exchange. P&L is calculated after fees.",
+      "tzHint": "Time is entered in the time zone from your settings: {tz}"
     },
     "detail": {
       "risk": "Risk",

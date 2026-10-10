@@ -7,9 +7,10 @@ import { closeTradeAction } from "@/app/actions/templates";
 import { Alert, Button, Input, Modal } from "@/components/ui";
 import { parseNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
+import { zonedInputToDate } from "@/lib/time";
 
 /** Закрытие открытой сделки: цена выхода и (необязательно) время. Результат считается сам. */
-export function CloseTradeButton({ tradeId }: { tradeId: string }) {
+export function CloseTradeButton({ tradeId, timeZone = "UTC" }: { tradeId: string; timeZone?: string }) {
   const { t } = useI18n();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -22,9 +23,9 @@ export function CloseTradeButton({ tradeId }: { tradeId: string }) {
   function submit() {
     if (value === null || value <= 0) return setError("errors.number");
     setError(null);
-    const when = time ? new Date(time) : null;
+    const when = time ? zonedInputToDate(timeZone, time) : null;
     startTransition(async () => {
-      const r = await closeTradeAction({ tradeId, exitPrice: value, closedAt: when && !isNaN(when.getTime()) ? when.toISOString() : null });
+      const r = await closeTradeAction({ tradeId, exitPrice: value, closedAt: when ? when.toISOString() : null });
       if (!r.ok) return setError(r.error);
       setOpen(false);
       router.refresh();

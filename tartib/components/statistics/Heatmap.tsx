@@ -1,16 +1,15 @@
 import { cn } from "@/lib/cn";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { HEAT_BLOCK_HOURS, type HeatCell } from "@/lib/analytics";
 
-const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" } as const;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /** Тепловая карта «день недели × время суток». Цвет — итог в деньгах, число — количество сделок. */
 export async function Heatmap({ cells, currency }: { cells: HeatCell[]; currency: string }) {
   const { t, locale } = await getTranslator();
   const blocks = 24 / HEAT_BLOCK_HOURS;
-  const weekday = new Intl.DateTimeFormat(intl[locale], { weekday: "short", timeZone: "UTC" });
+  const weekday = dateFormat(locale, { weekday: "short", timeZone: "UTC" });
   const dayName = (i: number) => weekday.format(new Date(Date.UTC(2024, 0, 1 + i)));
   const max = Math.max(0, ...cells.map((c) => Math.abs(c.pnl)));
 

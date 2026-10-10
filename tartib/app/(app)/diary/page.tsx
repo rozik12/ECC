@@ -6,7 +6,7 @@ import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { fetchStatTrades } from "@/lib/data";
 import { diaryStreak, isDay, isFilled, localDay, moodVsResult, planVsResult, shiftDay, type DiaryEntry } from "@/lib/diary";
-import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
+import { formatMoney, formatNumber, pnlTone, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { safeTimeZone } from "@/lib/time";
 
@@ -38,7 +38,7 @@ export default async function DiaryPage({ searchParams }: { searchParams: Promis
   const plans = planVsResult(entries, trades, tz);
   const currency = profile?.currency ?? "USD";
   const money = (v: number) => formatMoney(v, currency, locale, true);
-  const dateText = (d: string) => new Intl.DateTimeFormat({ ru: "ru-RU", uz: "uz-UZ", en: "en-US" }[locale], { day: "numeric", month: "long", weekday: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
+  const dateText = (d: string) => dateFormat(locale, { day: "numeric", month: "long", weekday: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
   const recent = Array.from({ length: 7 }, (_, i) => shiftDay(today, -i));
   const history = entries.filter(isFilled).slice(0, 20);
 

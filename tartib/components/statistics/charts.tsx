@@ -3,7 +3,7 @@
 import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
-import { formatCompact, formatMoney, formatNumber } from "@/lib/format";
+import { formatCompact, formatMoney, formatNumber, dateFormat } from "@/lib/format";
 import type { Locale } from "@/lib/i18n/config";
 import { useI18n } from "@/lib/i18n/provider";
 
@@ -36,8 +36,8 @@ export type EquityPointView = { ts: number; balance: number };
 export function EquityChart({ data, currency }: { data: EquityPointView[]; currency: string }) {
   const { t, locale } = useI18n();
   if (data.length === 0) return <EmptyChart />;
-  const dateFmt = new Intl.DateTimeFormat(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US", { day: "2-digit", month: "2-digit" });
-  const dateTimeFmt = new Intl.DateTimeFormat(locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US", { dateStyle: "medium", timeStyle: "short" });
+  const dateFmt = dateFormat(locale, { day: "2-digit", month: "2-digit" });
+  const dateTimeFmt = dateFormat(locale, { dateStyle: "medium", timeStyle: "short" });
   return (
     <div className="h-64 w-full" role="img" aria-label={t("stats.charts.equity")}>
       <ResponsiveContainer width="100%" height="100%">
@@ -153,9 +153,8 @@ export type DrawdownView = { ts: number; drawdown: number; percent: number };
 export function DrawdownChart({ data, currency, label }: { data: DrawdownView[]; currency: string; label: string }) {
   const { locale } = useI18n();
   if (data.length < 2) return <EmptyChart />;
-  const intl = locale === "uz" ? "uz-UZ" : locale === "ru" ? "ru-RU" : "en-US";
-  const dateFmt = new Intl.DateTimeFormat(intl, { day: "2-digit", month: "2-digit" });
-  const dateTimeFmt = new Intl.DateTimeFormat(intl, { dateStyle: "medium", timeStyle: "short" });
+  const dateFmt = dateFormat(locale, { day: "2-digit", month: "2-digit" });
+  const dateTimeFmt = dateFormat(locale, { dateStyle: "medium", timeStyle: "short" });
   return (
     <div className="h-56 w-full" role="img" aria-label={label}>
       <ResponsiveContainer width="100%" height="100%">

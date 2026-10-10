@@ -8,7 +8,7 @@ import { buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/component
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts, getPlan, getTransactions } from "@/lib/data";
-import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
+import { formatMoney, formatNumber, pnlTone, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
   avgDuration, byDuration, byGrade, bySession, bySide, byTag, mistakeCost, type GroupRow, coreStats, drawdownSeries, heatmap, instrumentTable, monthly, rHistogram, riskConsistency, rMultiples, ruleCost, SESSION_IDS, winLossStreaks,
@@ -97,7 +97,7 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
     </Card>
   );
   const months = monthly(all, tz);
-  const monthName = (key: string) => new Intl.DateTimeFormat({ ru: "ru-RU", uz: "uz-UZ", en: "en-US" }[locale], { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(`${key}-01T00:00:00Z`));
+  const monthName = (key: string) => dateFormat(locale, { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(`${key}-01T00:00:00Z`));
 
   const kpis: { label: string; hint?: string; value: string; tone?: string }[] = [
     { label: t("adv.kpi.expectancy"), hint: t("adv.kpiHint.expectancy"), value: core.expectancy === null ? none : money(core.expectancy, true), tone: core.expectancy === null ? "" : pnlTone(core.expectancy) },

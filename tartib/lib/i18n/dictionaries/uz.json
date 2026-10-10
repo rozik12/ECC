@@ -1521,7 +1521,7 @@
     "gradeShort": "Baho {g}",
     "mistakes": "Bitimdagi xatolar",
     "mistake": "Xato",
-    "mistakesHint": "",
+    "mistakesHint": "Rejadan chetga chiqqan narsani belgilang. Bu tahlil uchun ma'lumot, o'zingizga baho emas.",
     "duration": "Davomiyligi",
     "units": {
       "d": "{n} k",

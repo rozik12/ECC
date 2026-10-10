@@ -1,18 +1,17 @@
 import Link from "next/link";
 import { Card } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { bestWorst, type StatTrade } from "@/lib/statistics";
 
-const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" } as const;
 
 /** Три лучшие и три худшие сделки периода со ссылкой на каждую. */
 export async function BestWorstCard({ trades, currency, timeZone }: { trades: StatTrade[]; currency: string; timeZone: string }) {
   const { t, locale } = await getTranslator();
   const { best, worst } = bestWorst(trades, 3);
   if (best.length === 0 && worst.length === 0) return null;
-  const date = (iso: string) => new Intl.DateTimeFormat(intl[locale], { day: "2-digit", month: "2-digit", timeZone }).format(new Date(iso));
+  const date = (iso: string) => dateFormat(locale, { day: "2-digit", month: "2-digit", timeZone }).format(new Date(iso));
 
   const column = (title: string, list: StatTrade[], tone: string) => (
     <div>

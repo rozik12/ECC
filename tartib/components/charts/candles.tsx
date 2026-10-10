@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Bar, CartesianGrid, ComposedChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { formatNumber } from "@/lib/format";
+import { dateFormat, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
 import { TIMEFRAMES, type Timeframe } from "@/lib/market-data";
 
@@ -80,7 +80,6 @@ type ViewProps = { candles: Datum[]; tf: Timeframe; levels?: Level[]; markAt?: n
 /** Свечной график. Уровни (вход, стоп, цель, выход) далеко от рынка не растягивают график: о них сообщает onOff через число скрытых. */
 export function CandleView({ candles, tf, levels = [], markAt, height = "h-72", label, onHidden }: ViewProps & { onHidden?: (n: number) => void }) {
   const { t, locale } = useI18n();
-  const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" }[locale];
   const view = useMemo(() => {
     const lo = Math.min(...candles.map((c) => c.l));
     const hi = Math.max(...candles.map((c) => c.h));
@@ -97,7 +96,7 @@ export function CandleView({ candles, tf, levels = [], markAt, height = "h-72", 
 
   const markCandle = markAt === undefined ? undefined : candles.find((c) => c.t <= markAt && markAt < c.t + TIMEFRAMES[tf])?.t;
   const fmtTime = (ts: number) =>
-    new Intl.DateTimeFormat(intl, tf === "1d" ? { day: "2-digit", month: "2-digit" } : { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(ts));
+    dateFormat(locale, tf === "1d" ? { day: "2-digit", month: "2-digit" } : { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(ts));
 
   return (
     <div className={`${height} w-full`} role="img" aria-label={label}>

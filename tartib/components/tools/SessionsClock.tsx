@@ -1,5 +1,6 @@
 "use client";
 
+import { dateFormat } from "@/lib/format";
 import { useSyncExternalStore } from "react";
 import { Card } from "@/components/ui";
 import { cn } from "@/lib/cn";
@@ -20,7 +21,6 @@ export function SessionsClock() {
 
   const now = new Date(minute * 60_000);
   const tz = new Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" }[locale];
   const dur = (mins: number) => {
     const d = Math.floor(mins / 1440);
     const h = Math.floor((mins % 1440) / 60);
@@ -33,7 +33,7 @@ export function SessionsClock() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted">
-        {t("tools.sessions.yourTime", { tz })}: <span className="font-medium text-foreground tabular-nums">{new Intl.DateTimeFormat(intl, { hour: "2-digit", minute: "2-digit" }).format(now)}</span>
+        {t("tools.sessions.yourTime", { tz })}: <span className="font-medium text-foreground tabular-nums">{dateFormat(locale, { hour: "2-digit", minute: "2-digit" }).format(now)}</span>
       </p>
       <ul className="grid gap-3 sm:grid-cols-2">
         {rows.map(({ s, st }) => (

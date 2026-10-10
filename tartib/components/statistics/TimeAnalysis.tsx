@@ -1,10 +1,9 @@
 import { Card } from "@/components/ui";
 import { getTranslator } from "@/lib/i18n/server";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, dateFormat } from "@/lib/format";
 import { byHourBlock, byWeekday, worstViolationBucket, type StatTrade } from "@/lib/statistics";
 import { PnlBars } from "./charts";
 
-const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" } as const;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /** Когда ты торгуешь лучше и когда чаще нарушаешь правила. Только факты из твоего журнала. */
@@ -12,7 +11,7 @@ export async function TimeAnalysis({ trades, timeZone, currency }: { trades: Sta
   const { t, locale } = await getTranslator();
   if (trades.length === 0) return null;
 
-  const weekdayFmt = new Intl.DateTimeFormat(intl[locale], { weekday: "short", timeZone: "UTC" });
+  const weekdayFmt = dateFormat(locale, { weekday: "short", timeZone: "UTC" });
   const weekdayName = (i: number) => weekdayFmt.format(new Date(Date.UTC(2024, 0, 1 + i)));
   const hourName = (i: number) => `${pad(i * 3)}–${pad(i * 3 + 3)}`;
   const round = (n: number) => Math.round(n * 100) / 100;

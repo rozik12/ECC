@@ -2,11 +2,10 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { formatMoney, formatNumber } from "@/lib/format";
+import { formatMoney, formatNumber, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import type { Bucket } from "@/lib/statistics";
 
-const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" } as const;
 
 /** Календарь месяца: каждый день окрашен по результату. Чем больше |P&L|, тем насыщеннее цвет. */
 export async function PnlCalendar({
@@ -34,9 +33,9 @@ export async function PnlCalendar({
   const total = monthDays.reduce((s, d) => s + (d?.pnl ?? 0), 0);
   const tradesTotal = monthDays.reduce((s, d) => s + (d?.count ?? 0), 0);
 
-  const weekday = new Intl.DateTimeFormat(intl[locale], { weekday: "short", timeZone: "UTC" });
+  const weekday = dateFormat(locale, { weekday: "short", timeZone: "UTC" });
   const heads = Array.from({ length: 7 }, (_, i) => weekday.format(new Date(Date.UTC(2024, 0, 1 + i))));
-  const title = new Intl.DateTimeFormat(intl[locale], { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, 1)));
+  const title = dateFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, 1)));
 
   return (
     <Card>

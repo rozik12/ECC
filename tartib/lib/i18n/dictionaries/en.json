@@ -1521,7 +1521,7 @@
     "gradeShort": "Grade {g}",
     "mistakes": "Mistakes in this trade",
     "mistake": "Mistake",
-    "mistakesHint": "",
+    "mistakesHint": "Mark what went off plan. This is data for review, not a judgement of you.",
     "duration": "Duration",
     "units": {
       "d": "{n} d",

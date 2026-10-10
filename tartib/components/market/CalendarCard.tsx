@@ -1,10 +1,10 @@
+import { dateFormat } from "@/lib/format";
 import Link from "next/link";
 import { Card } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { getTranslator } from "@/lib/i18n/server";
 import { upcomingEvents, type CalendarEvent } from "@/lib/market-feed";
 
-const intl = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" } as const;
 
 /** Экономический календарь недели: ближайшие важные события в часовом поясе пользователя. Данные: ForexFactory. */
 export async function CalendarCard({ events, timeZone, all, now }: { events: CalendarEvent[]; timeZone: string; all: boolean; now: number }) {
@@ -14,9 +14,9 @@ export async function CalendarCard({ events, timeZone, all, now }: { events: Cal
   const dayLabel = (ms: number) => {
     if (dayKey(ms) === dayKey(now)) return t("market.calendar.today");
     if (dayKey(ms) === dayKey(now + 86_400_000)) return t("market.calendar.tomorrow");
-    return new Intl.DateTimeFormat(intl[locale], { weekday: "long", day: "numeric", month: "long", timeZone }).format(new Date(ms));
+    return dateFormat(locale, { weekday: "long", day: "numeric", month: "long", timeZone }).format(new Date(ms));
   };
-  const time = (ms: number) => new Intl.DateTimeFormat(intl[locale], { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone }).format(new Date(ms));
+  const time = (ms: number) => dateFormat(locale, { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone }).format(new Date(ms));
   const groups: { key: string; label: string; items: CalendarEvent[] }[] = [];
   for (const e of shown) {
     const key = dayKey(e.at);

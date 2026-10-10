@@ -5,7 +5,7 @@ import { buttonStyles, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts } from "@/lib/data";
-import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
+import { formatMoney, formatNumber, pnlTone, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { safeTimeZone } from "@/lib/time";
 import { weekReview, type DayResult } from "@/lib/weekly";
@@ -28,7 +28,7 @@ export default async function WeekPage() {
   const none = t("stats.none");
   const pct = (v: number | null) => (v === null ? none : `${formatNumber(v, locale, 0)}%`);
   const dayText = (d: DayResult) =>
-    `${new Intl.DateTimeFormat({ ru: "ru-RU", uz: "uz-UZ", en: "en-US" }[locale], { day: "numeric", month: "short", weekday: "short", timeZone: "UTC" }).format(new Date(`${d.day}T00:00:00Z`))} · ${money(d.pnl, true)}`;
+    `${dateFormat(locale, { day: "numeric", month: "short", weekday: "short", timeZone: "UTC" }).format(new Date(`${d.day}T00:00:00Z`))} · ${money(d.pnl, true)}`;
 
   const delta = (cur: number | null, prev: number | null, fmt: (v: number) => string) =>
     cur === null || prev === null ? null : cur - prev === 0 ? t("week.same") : `${cur - prev > 0 ? "+" : "−"}${fmt(Math.abs(cur - prev))} ${t("week.vsPrev")}`;

@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buttonStyles, Card } from "@/components/ui";
+import { Card } from "@/components/ui";
 import { getTranslator } from "@/lib/i18n/server";
 import { TRADER_GROUPS } from "@/lib/trader-types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
-  return { title: t("tradertypes.title"), description: t("tradertypes.subtitle"), alternates: { canonical: "/trader-types" } };
+  return { title: t("tradertypes.title") };
 }
 
-/** Виды трейдеров по группам: справочная страница для всех (без входа). */
+/** Виды трейдеров по группам. Страница только для зарегистрированных пользователей. */
 export default async function TraderTypesPage() {
   const { t } = await getTranslator();
   return (
-    <div className="mx-auto max-w-5xl space-y-8 px-4 py-10 sm:px-6">
+    <div className="mx-auto max-w-5xl space-y-8">
       <div>
         <h1 className="text-2xl font-bold sm:text-3xl">{t("tradertypes.title")}</h1>
         <p className="mt-2 max-w-3xl text-muted">{t("tradertypes.subtitle")}</p>
@@ -43,10 +42,6 @@ export default async function TraderTypesPage() {
         </section>
       ))}
 
-      <Card className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-medium">{t("tradertypes.cta")}</p>
-        <Link href="/register" className={buttonStyles()}>{t("tools.ctaBtn")}</Link>
-      </Card>
       <p className="text-xs leading-relaxed text-muted">{t("tradertypes.note")} {t("common.disclaimer")}</p>
     </div>
   );

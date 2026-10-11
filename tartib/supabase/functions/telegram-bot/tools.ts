@@ -360,3 +360,22 @@ export function forexLot(i: { balance: number; riskPct: number; stopPips: number
     direction: null,
   };
 }
+
+// ---------- усреднение: новая средняя цена после докупки ----------
+export type AveragePriceResult = { ok: true; newAmount: number; newAvg: number; totalCost: number; avgChangePct: number; riseToBreakevenPct: number } | Fail;
+
+/** Новая средняя цена, если докупить buyAmount по buyPrice к имеющимся amount по средней avgPrice. Комиссии не учитываются. */
+export function averagePrice(i: { amount: number; avgPrice: number; buyAmount: number; buyPrice: number }): AveragePriceResult {
+  if (!fin(i.amount, i.avgPrice, i.buyAmount, i.buyPrice) || i.amount < 0 || i.avgPrice < 0 || i.buyAmount <= 0 || i.buyPrice <= 0) return FAIL;
+  const newAmount = i.amount + i.buyAmount;
+  const totalCost = i.amount * i.avgPrice + i.buyAmount * i.buyPrice;
+  const newAvg = totalCost / newAmount;
+  return {
+    ok: true,
+    newAmount,
+    newAvg,
+    totalCost,
+    avgChangePct: i.avgPrice > 0 ? ((newAvg - i.avgPrice) / i.avgPrice) * 100 : 0,
+    riseToBreakevenPct: ((newAvg - i.buyPrice) / i.buyPrice) * 100,
+  };
+}

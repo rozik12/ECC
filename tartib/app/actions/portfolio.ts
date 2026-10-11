@@ -6,12 +6,13 @@ import { requireUser } from "@/lib/auth";
 import type { ActionResult } from "./auth";
 
 const lotSchema = z.object({
-  symbol: z.string().trim().min(2).max(24).transform((s) => {
-    // BTC, btc/usdt, BTC-USDT, BTCUSDT → BTC
-    const u = s.toUpperCase().replace(/[^A-Z0-9/-]/g, "");
-    const base = u.split(/[/-]/)[0];
+  symbol: z.string().trim().min(1).max(24).transform((s) => {
+    // BTC, btc/usdt, BTC-USDT, BTCUSDT → BTC; акции и золото остаются как есть: AAPL, BRK-B, GC=F
+    const u = s.toUpperCase().replace(/\s+/g, "");
+    const slash = u.split("/")[0];
+    const base = /^[A-Z0-9]+-USDT$/.test(u) ? u.slice(0, -5) : slash;
     return base.length > 5 && base.endsWith("USDT") ? base.slice(0, -4) : base;
-  }).pipe(z.string().regex(/^[A-Z0-9]{2,20}$/)),
+  }).pipe(z.string().regex(/^[A-Z0-9.^=-]{1,20}$/)),
   side: z.enum(["buy", "sell"]),
   amount: z.number().positive().lt(1e12),
   price: z.number().min(0).lt(1e12),

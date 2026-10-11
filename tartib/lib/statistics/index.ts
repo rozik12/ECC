@@ -21,6 +21,10 @@ export type StatTrade = {
   grade?: string | null;
   mistakes?: string[];
   closedAt?: string | null;
+  /** Комиссия сделки (результат pnl уже после неё) */
+  fees?: number;
+  /** Счёт, на котором записана сделка */
+  accountId?: string;
   /** Рынок сделки: crypto, forex, stocks, futures (нужен для разбора по сессиям США и счётчика дей-трейдов) */
   market?: string;
 };

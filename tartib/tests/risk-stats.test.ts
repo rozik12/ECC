@@ -60,3 +60,30 @@ test("личный Келли и риск разорения: порог 20 сд
   assert.equal(bad.ruinPct, 100);
   assert.equal(bad.kellyPct, 0);
 });
+
+import { performanceRatios } from "../lib/risk-stats.ts";
+
+const dayTrade = (d: number, pnl: number) => ({ tradedAt: `2026-09-${String(d).padStart(2, "0")}T10:00:00Z`, pnl });
+
+test("коэффициенты: мало дней — нет данных, ровный рост — нет Шарпа", () => {
+  assert.equal(performanceRatios([dayTrade(1, 10)], "UTC", 1000), null);
+  assert.equal(performanceRatios(Array.from({ length: 12 }, (_, i) => dayTrade(i + 1, 10)), "UTC", 0), null);
+  const steady = performanceRatios(Array.from({ length: 12 }, (_, i) => dayTrade(i + 1, 10)), "UTC", 1000);
+  assert.ok(steady && steady.days === 12 && steady.maxDrawdownPct === 0 && steady.calmar === null && steady.sortino === null);
+  assert.ok(steady && steady.totalReturnPct > 11 && steady.cagrPct === null); // 12 дней: годовая доходность не считается
+});
+
+test("коэффициенты: смешанные дни и просадка", () => {
+  const pnls = [20, -10, 15, -5, 10, 25, -30, 10, 5, 12, -8, 18];
+  const r = performanceRatios(pnls.map((p, i) => dayTrade(i + 1, p)), "UTC", 1000);
+  assert.ok(r);
+  if (r) {
+    assert.equal(r.days, 12);
+    assert.ok(r.sharpe !== null && r.sharpe > 0 && r.sortino !== null && r.sortino > r.sharpe);
+    assert.ok(r.maxDrawdownPct > 2.5 && r.maxDrawdownPct < 3.2, String(r.maxDrawdownPct)); // −30 после пика около 1060
+    assert.ok(Math.abs(r.totalReturnPct - 6.2) < 0.01, String(r.totalReturnPct)); // 62 / 1000
+  }
+  // длинный ряд даёт годовую доходность и Калмара
+  const long = performanceRatios(Array.from({ length: 40 }, (_, i) => ({ tradedAt: new Date(Date.UTC(2026, 0, 1 + i)).toISOString(), pnl: i % 5 === 4 ? -12 : 8 })), "UTC", 1000);
+  assert.ok(long && long.cagrPct !== null && long.calmar !== null && long.calmar > 0);
+});

@@ -174,3 +174,15 @@ test("форекс: округление вниз, без плеча и ошиб
   assert.equal(forexLot({ balance: 1000, riskPct: 1, stopPips: 0, pairClass: 1, price: 1.1, quoteToUsd: null, spreadPips: 0, leverage: 30 }).ok, false);
   assert.equal(forexLot({ balance: 1000, riskPct: 1, stopPips: 10, pairClass: 9, price: 1.1, quoteToUsd: null, spreadPips: 0, leverage: 30 }).ok, false);
 });
+
+import { averagePrice } from "../lib/tools.ts";
+
+test("усреднение: новая средняя цена", () => {
+  const r = averagePrice({ amount: 10, avgPrice: 100, buyAmount: 10, buyPrice: 80 });
+  assert.ok(r.ok);
+  if (r.ok) { assert.equal(r.newAvg, 90); assert.equal(r.newAmount, 20); assert.equal(r.totalCost, 1800); near(r.avgChangePct, -10); near(r.riseToBreakevenPct, 12.5); }
+  const first = averagePrice({ amount: 0, avgPrice: 0, buyAmount: 5, buyPrice: 20 });
+  assert.ok(first.ok && first.newAvg === 20 && first.avgChangePct === 0);
+  assert.equal(averagePrice({ amount: 1, avgPrice: 1, buyAmount: 0, buyPrice: 1 }).ok, false);
+  assert.equal(averagePrice({ amount: -1, avgPrice: 1, buyAmount: 1, buyPrice: 1 }).ok, false);
+});

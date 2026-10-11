@@ -76,3 +76,16 @@ export function valuate(ps: Position[], prices: Record<string, number>): { rows:
     totalRealized: rows.reduce((s, r) => s + r.realized, 0),
   };
 }
+
+export type PriceSource = { kind: "okx"; pair: string } | { kind: "yahoo"; ticker: string } | { kind: "none" };
+
+/**
+ * Откуда брать цену актива: монета с парой к USDT на OKX; иначе акция, ETF, золото или индекс через Yahoo (если символ распознан); иначе цены нет.
+ * Стейблкоины не оцениваются (их цена 1).
+ */
+export function classify(symbol: string, okxBases: Set<string>, toTicker: (s: string) => string | null): PriceSource {
+  if (isStable(symbol)) return { kind: "none" };
+  if (okxBases.has(symbol)) return { kind: "okx", pair: `${symbol}USDT` };
+  const ticker = toTicker(symbol);
+  return ticker ? { kind: "yahoo", ticker } : { kind: "none" };
+}

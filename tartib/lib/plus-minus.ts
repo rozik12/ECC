@@ -54,3 +54,16 @@ export function byYear(trades: StatTrade[], tz: string): (PlusMinus & { year: st
   }
   return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([year, xs]) => ({ year, ...plusMinus(xs) }));
 }
+
+export type FeeCost = { count: number; fees: number; net: number; gross: number; avgPerTrade: number; sharePct: number | null };
+
+/**
+ * Во что обходятся комиссии: сколько заплачено, результат до комиссий (брутто) и после (нетто) и доля комиссий в брутто-результате.
+ * Доля считается только при положительном брутто-результате. Особенно важно скальперам: много мелких сделок съедают заметную часть прибыли.
+ */
+export function feeCost(trades: Pick<StatTrade, "pnl" | "fees">[]): FeeCost {
+  const fees = trades.reduce((s, t) => s + (t.fees ?? 0), 0);
+  const net = trades.reduce((s, t) => s + t.pnl, 0);
+  const gross = net + fees;
+  return { count: trades.length, fees, net, gross, avgPerTrade: trades.length ? fees / trades.length : 0, sharePct: gross > 0 ? (fees / gross) * 100 : null };
+}

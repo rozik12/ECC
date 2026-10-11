@@ -1,12 +1,12 @@
 // Описание публичных калькуляторов: поля, значения по умолчанию и функция расчёта.
-import { compound, futuresRisk, optionPayoff, forexLot, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
+import { compound, futuresRisk, optionPayoff, forexLot, averagePrice, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
 
-export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot";
-export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot"];
+export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot" | "average-price";
+export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot", "average-price"];
 export const TOOL_SLUGS = [...CALC_SLUGS, "sessions"] as const;
 
 /** Ключ в словаре tools.<key> для адреса страницы */
-export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures" | "options" | "forexlot"> = {
+export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures" | "options" | "forexlot" | "avgprice"> = {
   "position-size": "size",
   "risk-reward": "rr",
   "loss-streak": "streak",
@@ -24,6 +24,7 @@ export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "c
   "futures-risk": "futures",
   options: "options",
   "forex-lot": "forexlot",
+  "average-price": "avgprice",
 };
 
 export type Fmt = "num" | "money" | "pct" | "ratio" | "text" | "int";
@@ -252,6 +253,20 @@ export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
       ];
       if (r.margin !== null) rows.push({ key: "margin", value: r.margin, fmt: "num" });
       return rows;
+    },
+  },
+  "average-price": {
+    fields: [{ id: "amount", def: "10" }, { id: "avgPrice", def: "100" }, { id: "buyAmount", def: "10" }, { id: "buyPrice", def: "80" }],
+    compute: (v) => {
+      const r = averagePrice({ amount: n(v.amount), avgPrice: n(v.avgPrice), buyAmount: n(v.buyAmount), buyPrice: n(v.buyPrice) });
+      if (!r.ok) return null;
+      return [
+        { key: "newAvg", value: r.newAvg, fmt: "num" },
+        { key: "avgChange", value: r.avgChangePct, fmt: "pct" },
+        { key: "newAmount", value: r.newAmount, fmt: "num" },
+        { key: "totalCost", value: r.totalCost, fmt: "num" },
+        { key: "riseToBreakeven", value: r.riseToBreakevenPct, fmt: "pct" },
+      ];
     },
   },
 };

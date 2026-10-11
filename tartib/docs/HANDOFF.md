@@ -21,7 +21,7 @@ Tartib (https://tartib.uk) — сайт для дисциплины трейде
 
 ## Где что живёт
 - Хостинг: Cloudflare Workers через OpenNext. Домены tartib.uk и www. Старый Netlify больше не используется (кредиты закончились).
-- База и вход: Supabase, проект `rwmhsjznrlgsxqgclbbl`. Миграции в `supabase/migrations/` (все применены, последняя 20260117, дневник дня).
+- База и вход: Supabase, проект `rwmhsjznrlgsxqgclbbl`. Миграции в `supabase/migrations/` (все применены, последняя 20260125, API-ключи).
 - Бот: Edge Function `telegram-bot` (`supabase/functions/telegram-bot/`), webhook настроен, почасовой cron `telegram-reminders`.
 - Инструменты: `lib/tools.ts` (копия в боте `supabase/functions/telegram-bot/tools.ts`, должны быть идентичны), `lib/tool-defs.ts`, `components/tools/`.
 - Новости: `lib/news.ts`, страница `app/(public)/news/page.tsx`, тесты `tests/news.test.ts`.

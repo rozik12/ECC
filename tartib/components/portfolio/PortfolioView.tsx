@@ -5,19 +5,21 @@ import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
 import { addLotAction, deleteLotAction } from "@/app/actions/portfolio";
 import { LiveBadge } from "@/components/market/LiveBadge";
-import { useLiveCrypto } from "@/components/market/useLive";
+import { useLiveCrypto, useLiveQuotes } from "@/components/market/useLive";
 import { Alert, Button, Card, Input, Select, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { dateFormat, formatNumber, parseNumber, pnlTone } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
-import { isStable, positions, valuate } from "@/lib/portfolio";
+import { positions, valuate, type PriceSource } from "@/lib/portfolio";
 
 export type LotView = { id: string; symbol: string; side: "buy" | "sell"; amount: number; price: number; fee: number; note: string; occurredAt: string };
 
 const digits = (v: number) => (v >= 1000 ? 2 : v >= 1 ? 4 : 6);
 
 /** Портфель: позиции с живыми ценами, итоги, форма записи покупки или продажи и история. */
-export function PortfolioView({ lots, initialPrices }: { lots: LotView[]; initialPrices: Record<string, { last: number; change: number }> }) {
+export type QuoteInit = { symbol: string; price: number; changePct: number };
+
+export function PortfolioView({ lots, sources, initialPrices, initialQuotes }: { lots: LotView[]; sources: Record<string, PriceSource>; initialPrices: Record<string, { last: number; change: number }>; initialQuotes: QuoteInit[] }) {
   const { t, locale } = useI18n();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -25,9 +27,21 @@ export function PortfolioView({ lots, initialPrices }: { lots: LotView[]; initia
   const [form, setForm] = useState({ symbol: "", side: "buy", amount: "", price: "", fee: "", note: "" });
 
   const pos = useMemo(() => positions(lots), [lots]);
-  const pairs = useMemo(() => pos.filter((p) => p.amount > 0 && !isStable(p.symbol)).map((p) => `${p.symbol}USDT`), [pos]);
-  const { prices: live, mode } = useLiveCrypto(pairs, initialPrices);
-  const priceBySymbol = useMemo(() => Object.fromEntries(Object.entries(live).map(([k, v]) => [k.replace(/USDT$/, ""), v.last])), [live]);
+  // Монеты идут потоком OKX (раз в секунду), акции, ETF и золото запрашиваются раз в 15 секунд
+  const open_ = useMemo(() => new Set(pos.filter((p) => p.amount > 0).map((p) => p.symbol)), [pos]);
+  const okxPairs = useMemo(() => [...open_].flatMap((s) => (sources[s]?.kind === "okx" ? [(sources[s] as { pair: string }).pair] : [])), [open_, sources]);
+  const yahooTickers = useMemo(() => [...new Set([...open_].flatMap((s) => (sources[s]?.kind === "yahoo" ? [(sources[s] as { ticker: string }).ticker] : [])))], [open_, sources]);
+  const { prices: live, mode } = useLiveCrypto(okxPairs, initialPrices);
+  const { quotes } = useLiveQuotes(yahooTickers, Object.fromEntries(initialQuotes.map((q) => [q.symbol, q])));
+  const priceBySymbol = useMemo(() => {
+    const out: Record<string, number> = {};
+    for (const s of open_) {
+      const src = sources[s];
+      if (src?.kind === "okx" && live[src.pair]) out[s] = live[src.pair].last;
+      else if (src?.kind === "yahoo" && quotes[src.ticker]) out[s] = quotes[src.ticker].price;
+    }
+    return out;
+  }, [open_, sources, live, quotes]);
   const v = useMemo(() => valuate(pos, priceBySymbol), [pos, priceBySymbol]);
   const num = (x: number, d = 2) => formatNumber(x, locale, d);
   const signed = (x: number, d = 2) => `${x > 0 ? "+" : ""}${num(x, d)}`;
@@ -64,7 +78,7 @@ export function PortfolioView({ lots, initialPrices }: { lots: LotView[]; initia
       <Card className="space-y-3">
         <div className="flex items-baseline justify-between gap-3">
           <h2 className="font-semibold">{t("portfolio.positions")}</h2>
-          {pairs.length > 0 && <LiveBadge mode={mode} />}
+          {okxPairs.length > 0 && <LiveBadge mode={mode} />}
         </div>
         {open.length === 0 ? (
           <p className="text-sm text-muted">{t("portfolio.empty")}</p>
@@ -94,7 +108,7 @@ export function PortfolioView({ lots, initialPrices }: { lots: LotView[]; initia
         <h2 className="font-semibold">{t("portfolio.add")}</h2>
         {error && <Alert tone="danger">{t(error)}</Alert>}
         <form onSubmit={submit} className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          <Input id="pf-symbol" label={t("portfolio.coin")} placeholder="BTC" value={form.symbol} maxLength={24} autoCapitalize="characters" autoComplete="off" onChange={(e) => setForm({ ...form, symbol: e.target.value })} />
+          <Input id="pf-symbol" label={t("portfolio.coin")} placeholder="BTC" hint={t("portfolio.symbolHint")} value={form.symbol} maxLength={24} autoCapitalize="characters" autoComplete="off" onChange={(e) => setForm({ ...form, symbol: e.target.value })} />
           <Select id="pf-side" label={t("portfolio.side")} value={form.side} onChange={(e) => setForm({ ...form, side: e.target.value })}>
             <option value="buy">{t("portfolio.buy")}</option>
             <option value="sell">{t("portfolio.sell")}</option>

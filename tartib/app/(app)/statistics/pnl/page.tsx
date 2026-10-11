@@ -5,9 +5,9 @@ import { buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/component
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts, getTransactions } from "@/lib/data";
-import { dateFormat, formatMoney, pnlTone } from "@/lib/format";
+import { dateFormat, formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
-import { byDay, byMonth, byYear, inPeriod, plusMinus, type PeriodKey } from "@/lib/plus-minus";
+import { byDay, byMonth, byYear, feeCost, inPeriod, plusMinus, type PeriodKey } from "@/lib/plus-minus";
 import { safeTimeZone } from "@/lib/time";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -33,6 +33,8 @@ export default async function PlusMinusPage() {
   const days = byDay(all, tz, 31);
   const months = byMonth(all, tz, 12);
   const years = byYear(all, tz);
+  const fee = feeCost(inPeriod(all, "month", tz, now));
+  const feeAll = feeCost(all);
   const dayName = (d: string) => dateFormat(locale, { day: "numeric", month: "short", weekday: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
   const monthName = (m: string) => dateFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${m}-01T00:00:00Z`));
 
@@ -77,6 +79,19 @@ export default async function PlusMinusPage() {
         </dl>
         <p className="text-xs text-muted">{t("pm.accountNote")}</p>
       </Card>
+
+      {feeAll.count > 0 && (
+        <Card className="space-y-3">
+          <h2 className="font-semibold">{t("pm.feesTitle")}</h2>
+          <dl className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+            <div><dt className="text-muted">{t("pm.feesMonth")}</dt><dd className="text-lg font-semibold tabular-nums">{money(fee.fees)}</dd></div>
+            <div><dt className="text-muted">{t("pm.feesAll")}</dt><dd className="text-lg font-semibold tabular-nums">{money(feeAll.fees)}</dd></div>
+            <div><dt className="text-muted">{t("pm.feesAvg")}</dt><dd className="text-lg font-semibold tabular-nums">{money(feeAll.avgPerTrade)}</dd></div>
+            <div><dt className="text-muted">{t("pm.feesShare")}</dt><dd className="text-lg font-semibold tabular-nums">{feeAll.sharePct === null ? "—" : `${formatNumber(feeAll.sharePct, locale, 1)}%`}</dd></div>
+          </dl>
+          <p className="text-xs text-muted">{t("pm.feesNote", { gross: money(feeAll.gross, true), net: money(feeAll.net, true) })}</p>
+        </Card>
+      )}
 
       {all.length === 0 ? (
         <Card className="text-center"><p className="mb-4 text-muted">{t("trades.empty.title")}</p><Link href="/trades/new" className={buttonStyles()}>{t("trades.empty.cta")}</Link></Card>

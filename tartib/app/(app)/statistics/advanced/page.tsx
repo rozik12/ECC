@@ -13,7 +13,7 @@ import { getTranslator } from "@/lib/i18n/server";
 import {
   avgDuration, byDuration, byGrade, bySession, bySide, byTag, mistakeCost, type GroupRow, coreStats, drawdownSeries, heatmap, instrumentTable, monthly, rHistogram, riskConsistency, rMultiples, ruleCost, SESSION_IDS, winLossStreaks,
 } from "@/lib/analytics";
-import { byWeekday, personalRiskMath, recoveryFactor, sqn, underwater } from "@/lib/risk-stats";
+import { byWeekday, performanceRatios, personalRiskMath, recoveryFactor, sqn, underwater } from "@/lib/risk-stats";
 import { equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, type Period } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
 import { byUsBucket } from "@/lib/us-session-stats";
@@ -64,6 +64,8 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
   const recovery = recoveryFactor(trades.reduce((s, x) => s + x.pnl, 0), dd.amount);
   const water = underwater(curve);
   const mathRow = personalRiskMath(trades);
+  // Коэффициенты считаются по всей истории: стартовый баланс счетов и дневные результаты (без учёта пополнений и выводов)
+  const ratios = performanceRatios(all, tz, accounts.reduce((s, a) => s + a.starting_balance, 0));
   const tagRows = byTag(trades);
   const gradeRows = byGrade(trades);
   const mistakeRows = mistakeCost(trades);
@@ -307,6 +309,29 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
             ) : (
               <p className="text-sm text-muted">{t("risk.mathNone")}</p>
             )}
+          </Card>
+
+          <Card className="space-y-3">
+            <div>
+              <h2 className="text-lg font-semibold">{t("ratios.title")}</h2>
+              <p className="mt-1 text-sm text-muted">{t("ratios.hint")}</p>
+            </div>
+            {ratios ? (
+              <dl className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+                {([
+                  ["sharpe", ratios.sharpe, 2], ["sortino", ratios.sortino, 2], ["calmar", ratios.calmar, 2],
+                  ["cagr", ratios.cagrPct, 1], ["maxdd", ratios.maxDrawdownPct, 1], ["total", ratios.totalReturnPct, 1],
+                ] as [string, number | null, number][]).map(([k, v, d]) => (
+                  <div key={k} className="rounded-xl bg-surface-muted/60 px-3 py-2.5">
+                    <dt className="text-muted">{t(`ratios.${k}`)}</dt>
+                    <dd className="mt-0.5 text-lg font-semibold tabular-nums">{v === null ? none : `${formatNumber(v, locale, d)}${["cagr", "maxdd", "total"].includes(k) ? "%" : ""}`}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : (
+              <p className="text-sm text-muted">{t("ratios.none")}</p>
+            )}
+            <p className="text-xs leading-relaxed text-muted">{t("ratios.note")}</p>
           </Card>
 
           {groupCard(t("risk.weekday"), weekdayRows.map((r) => ({ ...r, label: t(`risk.days7.${r.day}`) })), t("risk.weekdayNone"), t("risk.weekdayHint"))}

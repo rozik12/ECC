@@ -64,3 +64,12 @@ export function detectBehavior(trades: Pick<StatTrade, "emotion" | "mistakes" | 
   const followed = trades.filter((t) => t.rulesFollowed).length / trades.length;
   return followed >= 0.85 ? { behavior: "systematic", share: followed, count: trades.length } : null;
 }
+
+/** Куда ведёт совет по типу поведения. */
+export const BEHAVIOR_LINK: Record<Behavior, string> = {
+  systematic: "/statistics/week",
+  impulsive: "/settings",
+  revenge: "/rules",
+  overtrader: "/statistics/pnl",
+  cautious: "/statistics/mistakes",
+};

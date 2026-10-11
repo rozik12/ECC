@@ -42,7 +42,8 @@
     "mistakes": "Mistakes",
     "plusMinus": "Gains and losses",
     "traderTypes": "Types of traders",
-    "portfolio": "Portfolio"
+    "portfolio": "Portfolio",
+    "prop": "Prop challenge"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1424,6 +1425,24 @@
         "margin": "Margin needed, $"
       },
       "note": "Dollar account, standard lot of 100,000 units, size rounded down to 0.01 lot. For cross pairs enter the rate of the last currency of the pair to the dollar (for EUR/GBP that is GBP/USD). Gold is in the “Futures and gold risk” calculator (XAUUSD lot). Not investment advice."
+    },
+    "avgprice": {
+      "title": "Averaging: new average price",
+      "desc": "What the average price becomes if you buy more cheaper or higher, and how far the price must rise to break even.",
+      "f": {
+        "amount": "How much you hold",
+        "avgPrice": "Current average price",
+        "buyAmount": "How much to buy",
+        "buyPrice": "Buy price"
+      },
+      "o": {
+        "newAvg": "New average price",
+        "avgChange": "Change of average price",
+        "newAmount": "Total after buying",
+        "totalCost": "Total invested",
+        "riseToBreakeven": "Rise from the buy price to break-even"
+      },
+      "note": "Calculated without fees. Averaging lowers the average price but raises the amount invested and the risk: price may keep falling. This is arithmetic, not advice to buy more."
     }
   },
   "shortcuts": {
@@ -2010,7 +2029,13 @@
     "note": "Trade results are after fees. This is record keeping, not a forecast.",
     "byYear": "By year",
     "year": "Year",
-    "yearNote": "A reference summary of your records, not a tax calculation: tax rules depend on the country."
+    "yearNote": "A reference summary of your records, not a tax calculation: tax rules depend on the country.",
+    "feesTitle": "Fees",
+    "feesMonth": "This month",
+    "feesAll": "All time",
+    "feesAvg": "Average per trade",
+    "feesShare": "Share of the pre-fee result",
+    "feesNote": "Result before fees: {gross}, after: {net}. Many small trades can give fees a noticeable part of the profit: check that your style can bear it."
   },
   "worldmarkets": {
     "title": "World markets",
@@ -2241,6 +2266,28 @@
         "name": "Cautious",
         "text": "More often closes a trade earlier than planned or enters with doubt and fear. It helps to check what early exits cost."
       }
+    },
+    "advice": {
+      "systematic": {
+        "text": "You mostly follow your rules. Stay the course: look at the weekly review and make sure discipline does not slip after a run of winners.",
+        "label": "Week review"
+      },
+      "impulsive": {
+        "text": "Frequent entries from fear of missing out or greed. A pre-trade checklist and a pause help: write the plan before entering and do not chase.",
+        "label": "Pre-trade checklist"
+      },
+      "revenge": {
+        "text": "After losses there are entries without a plan to win it back. A daily loss limit rule and a compulsory pause after a losing run help.",
+        "label": "Rules and limits"
+      },
+      "overtrader": {
+        "text": "Too many trades a day. A rule on the maximum trades per day helps, and so does checking what the extra entries cost with fees.",
+        "label": "Fees and result"
+      },
+      "cautious": {
+        "text": "You often close before the plan or enter with doubt. See what early exits cost and describe the reasons in the mistake review.",
+        "label": "Mistake review"
+      }
     }
   },
   "crypto": {
@@ -2274,7 +2321,7 @@
   "portfolio": {
     "title": "Portfolio",
     "subtitle": "Which coins you bought, at what average price, what they are worth now and what you locked in by selling.",
-    "note": "Average-cost accounting, in USDT. These are your own records, not exchange data: the site does not connect to your accounts. Prices come from OKX; coins without a USDT pair have no valuation.",
+    "note": "Average-cost accounting. These are your own records, not exchange data: the site does not connect to your accounts. Coin prices come from OKX (USDT pairs), stocks, ETFs and gold from Yahoo Finance in dollars and may be delayed. If there is no price, no valuation is shown.",
     "value": "Value now",
     "invested": "Invested",
     "unrealized": "Unrealised",
@@ -2299,7 +2346,8 @@
     "save": "Record",
     "history": "History of records",
     "invalid": "Check the fields: coin, amount and price must be filled in with numbers.",
-    "limit": "Portfolio record limit reached (3000)."
+    "limit": "Portfolio record limit reached (3000).",
+    "symbolHint": "Coin or asset: BTC, AAPL, GOLD"
   },
   "derivatives": {
     "title": "Perpetual contracts (crypto futures)",
@@ -2356,7 +2404,74 @@
       "futuresRisk": "Futures risk",
       "chartNq": "Nasdaq-100 chart",
       "optionsCalc": "Options payoff",
-      "forexLot": "Lot and pip value"
+      "forexLot": "Lot and pip value",
+      "avgPrice": "Averaging"
     }
+  },
+  "prop": {
+    "title": "Prop challenge",
+    "subtitle": "Track a prop firm's rules: profit target, daily loss limit and overall drawdown. Everything is calculated from your journal.",
+    "empty": "No challenges yet. Create the first one below and copy your firm's rules.",
+    "add": "New challenge",
+    "name": "Name",
+    "account": "Account",
+    "allAccounts": "All accounts",
+    "balance": "Starting balance",
+    "target": "Profit target, %",
+    "daily": "Daily loss limit, %",
+    "total": "Overall loss limit, %",
+    "minDays": "Minimum trading days",
+    "start": "Start",
+    "end": "End (optional)",
+    "trailing": "Drawdown from the balance peak (trailing)",
+    "trailingShort": "trailing drawdown",
+    "create": "Create",
+    "formNote": "Copy the rules from your contract with the firm. The daily limit is counted from the starting balance for a calendar day in your time zone, but some firms define the day and the calculation differently: double-check.",
+    "invalid": "Check the fields: name, balance and percentages must be filled in.",
+    "limit": "Limit reached: no more than 20 challenges.",
+    "rules": "Balance {bal} · target {t}% · daily {d}% · overall {l}%",
+    "status": {
+      "active": "In progress",
+      "passed": "Passed",
+      "breached": "Failed"
+    },
+    "breachDaily": "The daily loss limit was exceeded on {day}. Under the rules of such a challenge this is a fail.",
+    "breachTotal": "The overall drawdown limit was exceeded on {day}. Under the rules of such a challenge this is a fail.",
+    "passedText": "Target reached, minimum trading days met, no rule broken.",
+    "barTarget": "Profit target",
+    "barDaily": "Daily limit (today)",
+    "barTotal": "Overall drawdown",
+    "bufferText": "room before the limit: {buffer}",
+    "equity": "Balance now",
+    "result": "Result",
+    "days": "Trading days",
+    "left": "Left",
+    "daysLeft": "{n} d",
+    "note": "This is bookkeeping from your records, not the firm's data: the final decision is always the prop firm's. It does not promise a pass and is not advice."
+  },
+  "ratios": {
+    "title": "Ratios (Sharpe, Sortino, Calmar)",
+    "hint": "Measures familiar to algorithmic traders, based on the daily results of your journal over all time.",
+    "sharpe": "Sharpe ratio",
+    "sortino": "Sortino ratio",
+    "calmar": "Calmar ratio",
+    "cagr": "Annual return",
+    "maxdd": "Maximum drawdown",
+    "total": "Total return",
+    "none": "Needs at least 10 trading days with trades and a positive starting account balance.",
+    "note": "Daily return = the day's result over the balance at the start of the day, annualised over 252 trading days, risk-free rate 0, deposits and withdrawals ignored. Annual return and Calmar need at least 30 days of history. This is arithmetic of past trades, not a forecast or a verdict on a strategy."
+  },
+  "apitoken": {
+    "title": "API key for bots and scripts",
+    "text": "A bot or script can write trades into your journal by itself, without connecting to your exchange. The key can only write trades.",
+    "once": "Copy the key now: it will not be shown again.",
+    "name": "Key name",
+    "create": "Create key",
+    "lastUsed": "last used: {d}",
+    "never": "not used yet",
+    "how": "How to send a trade",
+    "fields": "Required fields: instrument, direction (long or short), entry_price, position_size. Optional: exit_price, market (crypto, forex, stocks, futures, options), fees, funding, leverage, pnl, traded_at and closed_at (ISO format), strategy, comment, account (account name). Your trading rules are not checked for such trades, and they are tagged “api”. Do not share the key: delete it here if it leaks.",
+    "invalid": "Enter a key name.",
+    "limit": "Limit reached: no more than 5 keys."
   }
 }

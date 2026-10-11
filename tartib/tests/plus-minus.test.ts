@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { byDay, byMonth, byYear, inPeriod, plusMinus } from "../lib/plus-minus.ts";
+import { byDay, byMonth, byYear, feeCost, inPeriod, plusMinus } from "../lib/plus-minus.ts";
 import type { StatTrade } from "../lib/statistics/index.ts";
 
 const tr = (tradedAt: string, pnl: number) => ({ id: tradedAt + pnl, tradedAt, pnl, instrument: "X", direction: "long", entryPrice: 1, exitPrice: 1, emotion: "calm", rulesFollowed: true, riskAmount: null, strategy: "", violations: [] }) as StatTrade;
@@ -30,4 +30,13 @@ test("итоги по годам", () => {
   assert.deepEqual(byYear(xs, "UTC").map((y) => [y.year, y.plus, y.minus, y.net]), [["2026", 10, 0, 10], ["2025", 6, -4, 2]]);
   // 23:30 UTC 31 декабря в Ташкенте уже 2026 год
   assert.deepEqual(byYear(xs, "Asia/Tashkent").map((y) => [y.year, y.net]), [["2026", 6], ["2025", 6]]);
+});
+
+test("комиссии: доля в брутто-результате", () => {
+  const f = feeCost([{ pnl: 90, fees: 10 }, { pnl: -20, fees: 5 }, { pnl: 30, fees: 5 }]);
+  assert.equal(f.fees, 20); assert.equal(f.net, 100); assert.equal(f.gross, 120); assert.equal(f.count, 3);
+  assert.ok(Math.abs((f.sharePct as number) - (20 / 120) * 100) < 1e-9 && Math.abs(f.avgPerTrade - 20 / 3) < 1e-9);
+  assert.equal(feeCost([{ pnl: -50, fees: 5 }]).sharePct, null); // брутто-результат отрицательный
+  assert.equal(feeCost([]).avgPerTrade, 0);
+  assert.equal(feeCost([{ pnl: 5 }]).fees, 0); // нет данных о комиссии
 });

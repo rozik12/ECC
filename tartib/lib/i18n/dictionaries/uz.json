@@ -42,7 +42,8 @@
     "mistakes": "Xatolar",
     "plusMinus": "Foyda va zarar",
     "traderTypes": "Treyder turlari",
-    "portfolio": "Portfel"
+    "portfolio": "Portfel",
+    "prop": "Prop-chellenj"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1424,6 +1425,24 @@
         "margin": "Kerakli marja, $"
       },
       "note": "Dollar hisobi, standart lot 100 000 birlik, hajm 0,01 lotgacha pastga yaxlitlanadi. Kross juftliklar uchun juftlik oxiridagi valyutaning dollarga kursini kiriting (EUR/GBP uchun bu GBP/USD). Oltin «Fyuchers va oltin riski» kalkulyatorida hisoblanadi (XAUUSD lot). Investitsiya maslahati emas."
+    },
+    "avgprice": {
+      "title": "O'rtachalash: yangi o'rtacha narx",
+      "desc": "Aktivni arzonroq yoki qimmatroq narxda qo'shimcha sotib olsangiz o'rtacha narx qanday bo'lishi va zararsizlik uchun narx qancha o'sishi kerak.",
+      "f": {
+        "amount": "Hozir qancha bor",
+        "avgPrice": "Hozirgi o'rtacha narx",
+        "buyAmount": "Qancha qo'shimcha olinadi",
+        "buyPrice": "Xarid narxi"
+      },
+      "o": {
+        "newAvg": "Yangi o'rtacha narx",
+        "avgChange": "O'rtacha narx o'zgarishi",
+        "newAmount": "Jami bo'ladi",
+        "totalCost": "Jami kiritilgan",
+        "riseToBreakeven": "Xarid narxidan zararsizlikkacha o'sish"
+      },
+      "note": "Komissiyasiz hisob. O'rtachalash o'rtacha narxni pasaytiradi, lekin kiritilgan summa va riskni oshiradi: narx tushishda davom etishi mumkin. Bu arifmetika, ko'proq sotib olish maslahati emas."
     }
   },
   "shortcuts": {
@@ -2010,7 +2029,13 @@
     "note": "Bitim natijalari komissiyadan keyin ko'rsatilgan. Bu hisob, prognoz emas.",
     "byYear": "Yillar bo'yicha",
     "year": "Yil",
-    "yearNote": "Yozuvlaringiz bo'yicha ma'lumot uchun jamlanma, soliq hisobi emas: soliq qoidalari davlatga bog'liq."
+    "yearNote": "Yozuvlaringiz bo'yicha ma'lumot uchun jamlanma, soliq hisobi emas: soliq qoidalari davlatga bog'liq.",
+    "feesTitle": "Komissiyalar",
+    "feesMonth": "Shu oy",
+    "feesAll": "Butun vaqt",
+    "feesAvg": "Bitimga o'rtacha",
+    "feesShare": "Komissiyagacha natijadagi ulushi",
+    "feesNote": "Komissiyagacha natija: {gross}, keyin: {net}. Ko'p mayda bitimlar foydaning sezilarli qismini komissiyaga berishi mumkin: uslubingiz buni ko'tarishini tekshiring."
   },
   "worldmarkets": {
     "title": "Dunyo bozorlari",
@@ -2241,6 +2266,28 @@
         "name": "Ehtiyotkor",
         "text": "Ko'proq bitimni rejadan oldin yopadi yoki ikkilanib, qo'rquv bilan kiradi. Erta chiqishlar qancha turishini tekshirish foydali."
       }
+    },
+    "advice": {
+      "systematic": {
+        "text": "Siz asosan qoidalarga amal qilasiz. Yo'lingizda davom eting: haftalik tahlilni ko'ring va foydali bitimlar qatoridan keyin intizom pasayib ketmasligini kuzating.",
+        "label": "Hafta tahlili"
+      },
+      "impulsive": {
+        "text": "O'tkazib yuborish qo'rquvi yoki ochko'zlikdan tez-tez kirish. Bitimdan oldingi cheklist va pauza yordam beradi: kirishdan oldin rejani yozing va quvib bormang.",
+        "label": "Bitimdan oldingi cheklist"
+      },
+      "revenge": {
+        "text": "Zarardan keyin rejasiz, o'chni qaytarish uchun kirishlar bo'ladi. Kunlik zarar limiti qoidasi va ketma-ket zarardan keyingi majburiy pauza yordam beradi.",
+        "label": "Qoidalar va limitlar"
+      },
+      "overtrader": {
+        "text": "Kuniga juda ko'p bitim. Kuniga bitimlar soni qoidasi va ortiqcha kirishlar komissiya bilan qancha turishini tekshirish yordam beradi.",
+        "label": "Komissiya va natija"
+      },
+      "cautious": {
+        "text": "Ko'pincha rejadan oldin yopasiz yoki ikkilanib kirasiz. Erta chiqishlar qancha turishini ko'ring va sabablarini xatolar tahlilida yozing.",
+        "label": "Xatolar tahlili"
+      }
     }
   },
   "crypto": {
@@ -2274,7 +2321,7 @@
   "portfolio": {
     "title": "Portfel",
     "subtitle": "Qaysi tangalarni sotib olgansiz, o'rtacha narxi qancha, hozir qancha turadi va sotuvlar bilan qancha foyda yoki zarar qayd etgansiz.",
-    "note": "O'rtacha narx usulida hisob, USDT da. Bu sizning yozuvlaringiz, birja ma'lumoti emas: sayt hisoblaringizga ulanmaydi. Narxlar OKX dan, USDT juftligi yo'q tangalar baholanmaydi.",
+    "note": "O'rtacha narx usulida hisob. Bu sizning yozuvlaringiz, birja ma'lumoti emas: sayt hisoblaringizga ulanmaydi. Tanga narxlari OKX dan (USDT juftliklari), aksiya, ETF va oltin narxlari Yahoo Finance dan dollarda olinadi va kechikishi mumkin. Narx bo'lmasa, baholash ko'rsatilmaydi.",
     "value": "Hozirgi qiymat",
     "invested": "Kiritilgan",
     "unrealized": "Qayd etilmagan",
@@ -2299,7 +2346,8 @@
     "save": "Yozish",
     "history": "Yozuvlar tarixi",
     "invalid": "Maydonlarni tekshiring: tanga, miqdor va narx raqamlar bilan to'ldirilishi kerak.",
-    "limit": "Portfeldagi yozuvlar chegarasiga yetildi (3000)."
+    "limit": "Portfeldagi yozuvlar chegarasiga yetildi (3000).",
+    "symbolHint": "Tanga yoki aktiv: BTC, AAPL, GOLD"
   },
   "derivatives": {
     "title": "Muddatsiz kontraktlar (kripto fyucherslari)",
@@ -2356,7 +2404,74 @@
       "futuresRisk": "Fyuchers riski",
       "chartNq": "Nasdaq-100 grafigi",
       "optionsCalc": "Opsionlar: to'lov",
-      "forexLot": "Lot va punkt qiymati"
+      "forexLot": "Lot va punkt qiymati",
+      "avgPrice": "O'rtachalash"
     }
+  },
+  "prop": {
+    "title": "Prop-chellenj",
+    "subtitle": "Prop-kompaniya qoidalarini kuzating: foyda maqsadi, kunlik zarar limiti va umumiy tushish. Hammasi jurnalingiz bo'yicha hisoblanadi.",
+    "empty": "Hozircha chellenjlar yo'q. Quyida birinchisini yarating va kompaniyangiz qoidalarini ko'chiring.",
+    "add": "Yangi chellenj",
+    "name": "Nomi",
+    "account": "Hisob",
+    "allAccounts": "Barcha hisoblar",
+    "balance": "Boshlang'ich balans",
+    "target": "Foyda maqsadi, %",
+    "daily": "Kunlik zarar limiti, %",
+    "total": "Umumiy zarar limiti, %",
+    "minDays": "Minimal savdo kunlari",
+    "start": "Boshlanishi",
+    "end": "Tugashi (ixtiyoriy)",
+    "trailing": "Balans cho'qqisidan tushish (suriluvchi)",
+    "trailingShort": "suriluvchi tushish",
+    "create": "Yaratish",
+    "formNote": "Qoidalarni kompaniya bilan shartnomadan ko'chiring. Kunlik limit boshlang'ich balansdan sizning vaqt mintaqangizdagi kalendar kun uchun hisoblanadi, ba'zi kompaniyalarda kun va hisob boshqacha: tekshiring.",
+    "invalid": "Maydonlarni tekshiring: nom, balans va foizlar to'ldirilishi kerak.",
+    "limit": "Chegaraga yetildi: 20 tadan ko'p chellenj bo'lmaydi.",
+    "rules": "Balans {bal} · maqsad {t}% · kun {d}% · jami {l}%",
+    "status": {
+      "active": "Davom etmoqda",
+      "passed": "O'tilgan",
+      "breached": "Muvaffaqiyatsiz"
+    },
+    "breachDaily": "Kunlik zarar limiti {day} kuni oshib ketdi. Bunday chellenj qoidalariga ko'ra bu muvaffaqiyatsizlik.",
+    "breachTotal": "Umumiy tushish limiti {day} kuni oshib ketdi. Bunday chellenj qoidalariga ko'ra bu muvaffaqiyatsizlik.",
+    "passedText": "Maqsadga erishildi, minimal savdo kunlari yig'ildi, qoidalar buzilmagan.",
+    "barTarget": "Foyda maqsadi",
+    "barDaily": "Kunlik limit (bugun)",
+    "barTotal": "Umumiy tushish",
+    "bufferText": "chegaragacha zaxira: {buffer}",
+    "equity": "Hozirgi balans",
+    "result": "Natija",
+    "days": "Savdo kunlari",
+    "left": "Qoldi",
+    "daysLeft": "{n} kun",
+    "note": "Bu yozuvlaringiz bo'yicha hisob, kompaniya ma'lumoti emas: yakuniy qarorni doim prop-kompaniya qabul qiladi. O'tishni va'da qilmaydi va maslahat emas."
+  },
+  "ratios": {
+    "title": "Koeffitsiyentlar (Sharp, Sortino, Kalmar)",
+    "hint": "Algoritmik treyderlar o'rgangan ko'rsatkichlar, jurnalingizning butun davr kunlik natijalari bo'yicha.",
+    "sharpe": "Sharp koeffitsiyenti",
+    "sortino": "Sortino koeffitsiyenti",
+    "calmar": "Kalmar koeffitsiyenti",
+    "cagr": "Yillik daromad",
+    "maxdd": "Eng katta tushish",
+    "total": "Umumiy daromad",
+    "none": "Bitimlar bo'lgan kamida 10 savdo kuni va hisoblarning musbat boshlang'ich balansi kerak.",
+    "note": "Kunlik daromad = kun natijasining kun boshidagi balansga nisbati, yilga 252 savdo kuni bo'yicha o'tkazilgan, tavakkalsiz stavka 0, to'ldirish va yechib olish hisobga olinmaydi. Yillik daromad va Kalmar kamida 30 kunlik tarix bo'lganda hisoblanadi. Bu o'tgan bitimlar arifmetikasi, prognoz yoki strategiya bahosi emas."
+  },
+  "apitoken": {
+    "title": "Robotlar va skriptlar uchun API-kalit",
+    "text": "Robot yoki skript birjangizga ulanmasdan, bitimlarni jurnalingizga o'zi yoza oladi. Kalit faqat bitimlarni yozishga ishlaydi.",
+    "once": "Kalitni hozir nusxalang: u boshqa ko'rsatilmaydi.",
+    "name": "Kalit nomi",
+    "create": "Kalit yaratish",
+    "lastUsed": "oxirgi marta ishlatilgan: {d}",
+    "never": "hali ishlatilmagan",
+    "how": "Bitimni qanday yuborish",
+    "fields": "Majburiy maydonlar: instrument, direction (long yoki short), entry_price, position_size. Ixtiyoriy: exit_price, market (crypto, forex, stocks, futures, options), fees, funding, leverage, pnl, traded_at va closed_at (ISO formatda), strategy, comment, account (hisob nomi). Bunday bitimlar uchun savdo qoidalaringiz tekshirilmaydi, ular «api» tegi bilan belgilanadi. Kalitni begonalarga bermang: sizib chiqsa, shu yerda o'chiring.",
+    "invalid": "Kalit nomini kiriting.",
+    "limit": "Chegaraga yetildi: 5 tadan ko'p kalit bo'lmaydi."
   }
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card } from "@/components/ui";
 import { getTranslator } from "@/lib/i18n/server";
-import { detectBehavior, detectMarket, detectStyle, MIN_TRADES_FOR_PROFILE } from "@/lib/trader-types";
+import { BEHAVIOR_LINK, detectBehavior, detectMarket, detectStyle, MIN_TRADES_FOR_PROFILE } from "@/lib/trader-types";
 import type { StatTrade } from "@/lib/statistics";
 
 /** «Ваш профиль трейдера»: стиль, основной рынок и поведение, определённые по журналу. Только подсказка по записям пользователя. */
@@ -37,6 +37,12 @@ export async function TraderProfileCard({ trades }: { trades: StatTrade[] }) {
           {row(t("tradertypes.you.market"), market ? t(`tradertypes.types.${market.market}.name`) : null, market ? t("tradertypes.you.share", { p: Math.round(market.share * 100) }) : null, market?.market ?? null)}
           {row(t("tradertypes.you.behavior"), behavior ? t(`tradertypes.types.${behavior.behavior}.name`) : null, behavior ? t("tradertypes.you.share", { p: Math.round(behavior.share * 100) }) : null, behavior?.behavior ?? null)}
         </dl>
+      )}
+      {behavior && enough && (
+        <div className="rounded-xl bg-surface-muted/70 px-4 py-3 text-sm">
+          <p>{t(`tradertypes.advice.${behavior.behavior}.text`)}</p>
+          <Link href={BEHAVIOR_LINK[behavior.behavior]} className="mt-1 inline-block font-medium text-primary hover:underline">{t(`tradertypes.advice.${behavior.behavior}.label`)} →</Link>
+        </div>
       )}
       <Link href="/trader-types" className="inline-block text-sm font-medium text-primary hover:underline">{t("tradertypes.you.all")} →</Link>
     </Card>

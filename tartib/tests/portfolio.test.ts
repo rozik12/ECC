@@ -40,3 +40,17 @@ test("оценка по ценам, стейблкоины и монеты бе�
   near(btc.share!, 75);
   assert.ok(isStable("USDT") && !isStable("BTC"));
 });
+
+import { classify } from "../lib/portfolio.ts";
+import { normalizeTicker } from "../lib/stock-data.ts";
+
+test("источник цены: OKX, Yahoo или нет цены", () => {
+  const okx = new Set(["BTC", "ETH", "ARB"]);
+  const toTicker = (s: string) => normalizeTicker(s, "auto");
+  assert.deepEqual(classify("BTC", okx, toTicker), { kind: "okx", pair: "BTCUSDT" });
+  assert.deepEqual(classify("AAPL", okx, toTicker), { kind: "yahoo", ticker: "AAPL" });
+  assert.deepEqual(classify("GOLD", okx, toTicker), { kind: "yahoo", ticker: "GC=F" });
+  assert.deepEqual(classify("ARB", okx, toTicker), { kind: "okx", pair: "ARBUSDT" }); // монета важнее одноимённой акции
+  assert.deepEqual(classify("USDT", okx, toTicker), { kind: "none" });
+  assert.deepEqual(classify("???", okx, toTicker), { kind: "none" });
+});

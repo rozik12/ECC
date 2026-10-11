@@ -1,6 +1,6 @@
 // Показатели риска и качества системы по сделкам пользователя. Чистые функции без зависимостей от браузера и базы.
 import { coreStats, rMultiples, type GroupRow } from "./analytics.ts";
-import type { EquityPoint, StatTrade } from "./statistics/index.ts";
+import { localDay, type EquityPoint, type StatTrade } from "./statistics/index.ts";
 import { kelly, riskOfRuin } from "./tools.ts";
 import { dtf } from "./intl-cache.ts";
 
@@ -108,4 +108,64 @@ export function losingRun(trades: { tradedAt: string; pnl: number }[], now: Date
     else break;
   }
   return { count, minutesSince: count ? Math.max(0, Math.round((now.getTime() - recent[0].ts) / 60000)) : 0 };
+}
+
+export type Ratios = {
+  days: number;
+  /** Среднедневная доходность, % от баланса на начало дня */
+  meanDailyPct: number;
+  sharpe: number | null;
+  sortino: number | null;
+  calmar: number | null;
+  cagrPct: number | null;
+  maxDrawdownPct: number;
+  totalReturnPct: number;
+};
+
+export const MIN_RATIO_DAYS = 10;
+
+/**
+ * Коэффициенты, к которым привыкли алгоритмические трейдеры: Шарп, Сортино и Калмар по дневным доходностям журнала.
+ * Доходность дня = результат дня / баланс на начало дня; годовой пересчёт на 252 торговых дня, безрисковая ставка 0.
+ * Нужно не меньше 10 торговых дней. Это арифметика прошлых сделок, а не прогноз.
+ */
+export function performanceRatios(trades: Pick<StatTrade, "tradedAt" | "pnl">[], timeZone: string, startBalance: number): Ratios | null {
+  if (!(startBalance > 0)) return null;
+  const perDay = new Map<string, number>();
+  for (const t of trades) {
+    const d = localDay(t.tradedAt, timeZone);
+    perDay.set(d, (perDay.get(d) ?? 0) + t.pnl);
+  }
+  const days = [...perDay.keys()].sort();
+  if (days.length < MIN_RATIO_DAYS) return null;
+  let equity = startBalance;
+  let peak = startBalance;
+  let maxDd = 0;
+  const returns: number[] = [];
+  for (const d of days) {
+    const r = (perDay.get(d) as number) / equity;
+    returns.push(r);
+    equity += perDay.get(d) as number;
+    if (equity <= 0) return null; // баланс обнулён: коэффициенты теряют смысл
+    peak = Math.max(peak, equity);
+    maxDd = Math.max(maxDd, (peak - equity) / peak);
+  }
+  const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
+  const variance = returns.reduce((a, b) => a + (b - mean) ** 2, 0) / (returns.length - 1);
+  const std = Math.sqrt(variance);
+  const downside = Math.sqrt(returns.reduce((a, b) => a + Math.min(b, 0) ** 2, 0) / returns.length);
+  const span = (Date.parse(`${days[days.length - 1]}T00:00:00Z`) - Date.parse(`${days[0]}T00:00:00Z`)) / 86_400_000 + 1;
+  const years = span / 365;
+  const total = equity / startBalance - 1;
+  const cagr = span >= 30 ? Math.pow(equity / startBalance, 1 / years) - 1 : null;
+  return {
+    days: days.length,
+    meanDailyPct: mean * 100,
+    sharpe: std > 0 ? (mean / std) * Math.sqrt(252) : null,
+    sortino: downside > 0 ? (mean / downside) * Math.sqrt(252) : null,
+    calmar: cagr !== null && maxDd > 0 ? cagr / maxDd : null,
+    cagrPct: cagr === null ? null : cagr * 100,
+    maxDrawdownPct: maxDd * 100,
+    totalReturnPct: total * 100,
+  };
 }

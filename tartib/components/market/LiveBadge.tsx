@@ -10,7 +10,7 @@ export function LiveBadge({ mode }: { mode: LiveMode }) {
   return (
     <span className="flex items-center gap-1.5 text-xs text-muted" role="status">
       <span className={cn("inline-block h-2 w-2 rounded-full", mode === "ws" ? "bg-success" : mode === "poll" ? "bg-warning" : "bg-muted")} aria-hidden />
-      {mode === "ws" ? t("live.realtime") : mode === "poll" ? t("live.every5") : t("live.connecting")}
+      {mode === "ws" ? t("live.realtime") : mode === "poll" ? t("live.every15") : t("live.connecting")}
     </span>
   );
 }

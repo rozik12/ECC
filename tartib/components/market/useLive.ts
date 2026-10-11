@@ -3,6 +3,16 @@
 import { useEffect, useState } from "react";
 import { OkxLive, type LiveTick } from "@/lib/live-feed";
 
+/** Как часто опрашиваются цены, которые идут через наш сервер (крипто идёт отдельным потоком, раз в секунду) */
+export const POLL_MS = 15_000;
+/** Если пользователь 10 минут ничего не трогал, опрос приостанавливается до первого действия */
+const IDLE_MS = 10 * 60_000;
+let lastActive = Date.now();
+if (typeof window !== "undefined") {
+  for (const ev of ["pointerdown", "keydown", "scroll", "touchstart", "mousemove"]) window.addEventListener(ev, () => { lastActive = Date.now(); }, { passive: true });
+}
+const active = () => document.visibilityState === "visible" && Date.now() - lastActive < IDLE_MS;
+
 export type LivePrice = { last: number; change: number; dir: -1 | 0 | 1 };
 export type LiveMode = "connecting" | "ws" | "poll";
 
@@ -20,7 +30,7 @@ const toLive = (initial: Record<string, { last: number; change: number }>) =>
 
 /**
  * Криптоцены в реальном времени: поток OKX прямо в браузере, экран обновляется раз в секунду.
- * Если поток не подключился за 6 секунд (например, закрыт у провайдера), цены берутся запросом раз в 5 секунд.
+ * Если поток не подключился за 6 секунд (например, закрыт у провайдера), цены берутся запросом раз в 15 секунд.
  */
 export function useLiveCrypto(symbols: string[], initial: Record<string, { last: number; change: number }> = {}) {
   const key = symbols.join(",");
@@ -36,7 +46,7 @@ export function useLiveCrypto(symbols: string[], initial: Record<string, { last:
     const ctrl = new AbortController();
 
     const loadPoll = () => {
-      if (document.visibilityState !== "visible") return;
+      if (!active()) return;
       fetch(`/api/market/prices?symbols=${key}`, { signal: ctrl.signal })
         .then(async (r) => {
           if (!r.ok || live) return;
@@ -69,7 +79,7 @@ export function useLiveCrypto(symbols: string[], initial: Record<string, { last:
       if (live) return;
       setMode("poll");
       loadPoll();
-      poll = setInterval(loadPoll, 5000);
+      poll = setInterval(loadPoll, POLL_MS);
     }, 6000);
 
     return () => {
@@ -86,8 +96,8 @@ export function useLiveCrypto(symbols: string[], initial: Record<string, { last:
 
 export type LiveQuote = { price: number; changePct: number; dir: -1 | 0 | 1 };
 
-/** Котировки золота, индексов, валют и акций: запрос каждые 5 секунд, пока вкладка открыта на экране. */
-export function useLiveQuotes(symbols: string[], initial: Record<string, { price: number; changePct: number }> = {}, intervalMs = 5000) {
+/** Котировки золота, индексов, валют и акций: запрос каждые 15 секунд, пока вкладка на экране и пользователь не бездействует дольше 10 минут. */
+export function useLiveQuotes(symbols: string[], initial: Record<string, { price: number; changePct: number }> = {}, intervalMs = POLL_MS) {
   const key = symbols.join(",");
   const [quotes, setQuotes] = useState<Record<string, LiveQuote>>(() => Object.fromEntries(Object.entries(initial).map(([k, v]) => [k, { ...v, dir: 0 as const }])));
   const [ok, setOk] = useState(true);
@@ -97,7 +107,7 @@ export function useLiveQuotes(symbols: string[], initial: Record<string, { price
     const ctrl = new AbortController();
     let busy = false;
     const load = () => {
-      if (busy || document.visibilityState !== "visible") return;
+      if (busy || !active()) return;
       busy = true;
       fetch(`/api/market/quotes?symbols=${encodeURIComponent(key)}`, { signal: ctrl.signal })
         .then(async (r) => {

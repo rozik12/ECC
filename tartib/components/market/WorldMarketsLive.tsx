@@ -21,7 +21,7 @@ export function WorldMarketsLive({ groups, initial }: { groups: WorldGroupView[]
     <>
       <p className="flex items-center gap-2 text-xs text-muted" role="status">
         <span className={cn("inline-block h-2 w-2 rounded-full", ok ? "bg-success" : "bg-warning")} aria-hidden />
-        {ok ? t("live.every5") : t("live.paused")}
+        {ok ? t("live.every15") : t("live.paused")}
       </p>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {groups.map((g) => (

@@ -28,7 +28,7 @@
     "statistics": "Statistika",
     "settings": "Sozlamalar",
     "profile": "Profil",
-    "pricing": "Tariflar",
+    "pricing": "Hammasi bepul",
     "login": "Kirish",
     "register": "Ro'yxatdan o'tish",
     "main": "Asosiy navigatsiya",
@@ -105,7 +105,7 @@
     },
     "pricing": {
       "title": "Bepul boshla",
-      "subtitle": "Farqni sezish uchun bepul tarif yetarli."
+      "subtitle": "Butun xizmat bepul: pullik tariflar yo'q, bitim va qoidalar soniga cheklov yo'q."
     },
     "cta": {
       "title": "Ongli savdoga tayyormisan?",
@@ -123,31 +123,20 @@
     }
   },
   "pricing": {
-    "title": "Tariflar",
-    "subtitle": "O'zingga mosini tanla. To'lov hozircha ulanmagan.",
+    "title": "Hammasi bepul",
+    "subtitle": "Pullik tariflar yo'q. Barcha imkoniyatlar hamma uchun ochiq.",
     "free": {
-      "name": "FREE",
+      "name": "Tartib",
       "price": "$0",
-      "period": "doimiy",
+      "period": "abadiy",
       "features": [
-        "Xavf kalkulyatori",
-        "Jurnalda 30 tagacha bitim",
-        "5 tagacha savdo qoidasi",
-        "Asosiy statistika"
+        "Cheklovsiz bitimlar jurnali",
+        "Istalgan miqdordagi savdo qoidalari",
+        "Butun davr, strategiyalar bo'yicha statistika va kengaytirilgan tahlil",
+        "Xatolar tahlili, foyda va zarar, haftalik hisobotlar",
+        "Dunyo bozorlari, grafiklar, kalkulyatorlar va Telegram-bot"
       ],
       "cta": "Bepul boshlash"
-    },
-    "pro": {
-      "name": "PRO",
-      "price": "Tez orada",
-      "period": "",
-      "features": [
-        "Bitim va qoidalar soniga cheklov yo'q",
-        "Butun davr va strategiyalar bo'yicha statistika",
-        "Haftalik hisobotlar va xatti-harakatlaringning AI tahlili",
-        "Kelajakdagi integratsiyalar"
-      ],
-      "cta": "Tez orada"
     }
   },
   "auth": {
@@ -242,8 +231,8 @@
         "text": "Parolingning xavfsizligi va kiritgan ma'lumotlaringning to'g'riligi uchun o'zing javobgarsan. Bir odam — bitta akkaunt."
       },
       "s4": {
-        "title": "Tariflar",
-        "text": "FREE tarif bepul va cheklovlarga ega: 30 tagacha bitim va 5 tagacha qoida. PRO tarif hozircha mavjud emas, to'lov ulanmagan. Pullik o'zgarishlar haqida oldindan xabar beramiz."
+        "title": "Narxi",
+        "text": "Xizmat bepul: pullik tariflar yo'q, bitim va qoidalar soniga cheklov yo'q. Har qanday o'zgarish haqida oldindan xabar beramiz."
       },
       "s5": {
         "title": "Ruxsat etilgan foydalanish",
@@ -301,8 +290,6 @@
     "tooLarge": "Qiymat juda katta",
     "textMax": "Matn juda uzun",
     "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas",
-    "limitRules": "FREE tarif chegarasiga yetildi: 5 tagacha qoida. PRO tarif cheklovlarni olib tashlaydi.",
-    "limitTrades": "FREE tarif chegarasiga yetildi: 30 tagacha bitim. PRO tarif cheklovlarni olib tashlaydi.",
     "nonNegative": "Son noldan kam bo'lishi mumkin emas",
     "passwordWeak": "Parol juda oddiy. Takrorlanmas narsa o'ylab top, yaxshisi bir necha so'zdan"
   },
@@ -695,7 +682,6 @@
       "note": "Bu umumiy qoida emas, sening ma'lumotlaringga ko'ra kuzatuv."
     },
     "emptyPeriod": "Bu davrda bitimlar yo'q.",
-    "proOnly": "Bu funksiya PRO tarifida mavjud.",
     "time": {
       "title": "Sen qachon savdo qilasan",
       "subtitle": "Vaqt sening vaqt mintaqang ({tz}) bo'yicha hisoblanadi.",
@@ -778,7 +764,6 @@
   },
   "profile": {
     "name": "Ism",
-    "plan": "Tarif",
     "dangerTitle": "Akkauntni o'chirish",
     "dangerText": "Akkaunt va barcha ma'lumotlar (hisoblar, qoidalar, bitimlar, hisobotlar) butunlay o'chiriladi. Buni bekor qilib bo'lmaydi.",
     "deleteAccount": "Akkauntni o'chirish",
@@ -806,7 +791,9 @@
       "confirm": "Tasdiqlash va yoqish",
       "failed": "Amalni bajarib bo'lmadi. Qayta urinib ko'r.",
       "lostHint": "Telefonni yo'qotsang, xizmat egasining yordamisiz kirish mumkin bo'lmaydi. Maxfiy kalitni xavfsiz joyda saqla."
-    }
+    },
+    "usage": "Foydalanish",
+    "allFree": "Hammasi bepul va cheklovsiz."
   },
   "states": {
     "errorTitle": "Nimadir noto'g'ri ketdi",
@@ -838,8 +825,6 @@
       "ai": "AI yordamida tuzilgan"
     },
     "note": "Hisobot jurnaling ma'lumotlari asosida xatti-harakatlaringni tasvirlaydi. Bu prognoz yoki savdo tavsiyasi emas.",
-    "proOnly": "Haftalik hisobotlar PRO tarifida mavjud.",
-    "proSoon": "PRO tez orada paydo bo'ladi.",
     "failed": "Hisobotni tuzib bo'lmadi. Qayta urinib ko'r."
   },
   "screenshot": {
@@ -893,13 +878,11 @@
     "users7d": "7 kunda yangi",
     "onboarded": "Onboardingdan o'tgan",
     "active7d": "7 kunda faol",
-    "pro": "PRO da",
     "trades": "Jami bitimlar",
     "trades7d": "7 kunda bitimlar",
     "rules": "Jami qoidalar",
     "recent": "So'nggi ro'yxatdan o'tganlar",
     "registered": "Ro'yxatdan o'tgan",
-    "setPlan": "PRO berish yoki olib tashlash",
     "notFound": "Bunday pochtali foydalanuvchi topilmadi.",
     "resetMfa": "Ikki bosqichli himoyani bekor qilish",
     "resetMfaText": "Telefonini yo'qotgan foydalanuvchi uchun. U parol bilan kirib, himoyani qaytadan yoqa oladi.",

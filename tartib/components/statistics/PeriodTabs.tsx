@@ -1,24 +1,13 @@
 import Link from "next/link";
-import { Lock } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { periods, type Period } from "@/lib/statistics";
 import { getTranslator } from "@/lib/i18n/server";
-import type { Plan } from "@/lib/plans";
 
-export async function PeriodTabs({ current, plan, basePath = "/statistics", hideAll = false }: { current: Period; plan: Plan; basePath?: string; hideAll?: boolean }) {
+export async function PeriodTabs({ current, basePath = "/statistics", hideAll = false }: { current: Period; basePath?: string; hideAll?: boolean }) {
   const { t } = await getTranslator();
   return (
     <nav className="inline-flex rounded-xl border border-border bg-surface p-1" aria-label={t("stats.title")}>
-      {periods.filter((p) => !(hideAll && p === "all")).map((p) =>
-        p === "all" && plan !== "pro" ? (
-          <span
-            key={p}
-            title={t("stats.proOnly")}
-            className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-muted/60"
-          >
-            <Lock className="h-3.5 w-3.5" aria-hidden /> {t(`stats.period.${p}`)} · PRO
-          </span>
-        ) : (
+      {periods.filter((p) => !(hideAll && p === "all")).map((p) => (
         <Link
           key={p}
           href={p === "30d" ? basePath : `${basePath}?period=${p}`}
@@ -30,8 +19,7 @@ export async function PeriodTabs({ current, plan, basePath = "/statistics", hide
         >
           {t(`stats.period.${p}`)}
         </Link>
-        ),
-      )}
+      ))}
     </nav>
   );
 }

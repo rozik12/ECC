@@ -9,11 +9,10 @@ import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
 import { PnlCalendar } from "@/components/statistics/PnlCalendar";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { EquityChart, PnlBars } from "@/components/statistics/charts";
-import { Badge, buttonStyles, Card } from "@/components/ui";
-import { Lock } from "lucide-react";
+import { buttonStyles, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts, getPlan, getTransactions } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getTransactions } from "@/lib/data";
 import { getLatestWeeklyReport } from "@/services/reports";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
@@ -32,19 +31,17 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function StatisticsPage({ searchParams }: { searchParams: Promise<{ period?: string; month?: string }> }) {
   const sp = await searchParams;
   const { t, locale } = await getTranslator();
-  const { supabase, user, profile } = await requireUser();
+  const { supabase, profile } = await requireUser();
   const tz = safeTimeZone(profile?.timezone);
 
-  const [accounts, all, plan, latest, txs] = await Promise.all([
+  const [accounts, all, latest, txs] = await Promise.all([
     getAccounts(supabase),
     fetchStatTrades(supabase),
-    getPlan(supabase, user.id),
     getLatestWeeklyReport(supabase),
     getTransactions(supabase),
   ]);
-  // «Всё время» — функция PRO
   const requested: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
-  const period: Period = requested === "all" && plan !== "pro" ? "30d" : requested;
+  const period: Period = requested;
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
 
@@ -111,7 +108,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           <h1 className="text-2xl font-bold sm:text-3xl">{t("stats.title")}</h1>
           <p className="mt-1 text-muted">{t("stats.subtitle")}</p>
         </div>
-        <PeriodTabs current={period} plan={plan} />
+        <PeriodTabs current={period} />
       </div>
       {all.length > 0 && (
         <div className="flex flex-wrap gap-3">
@@ -195,11 +192,8 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           <Card>
             <div className="mb-3 flex items-center gap-2">
               <h2 className="font-semibold">{t("stats.charts.byStrategy")}</h2>
-              {plan !== "pro" && <Badge tone="primary">PRO</Badge>}
             </div>
-            {plan !== "pro" ? (
-              <p className="flex items-start gap-2 text-sm text-muted"><Lock className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />{t("stats.proOnly")}</p>
-            ) : strategies.length === 0 ? (
+            {strategies.length === 0 ? (
               <p className="text-sm text-muted">{t("stats.charts.noStrategy")}</p>
             ) : (
               <PnlBars label={t("stats.charts.byStrategy")} currency={currency} layout="rows"
@@ -211,7 +205,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           <TimeAnalysis trades={trades} timeZone={tz} currency={currency} />
           <TiltCard trades={all} currency={currency} />
           <BestWorstCard trades={trades} currency={currency} timeZone={tz} />
-          <WeeklyReportCard plan={plan} report={latest?.content ?? null} currency={currency} />
+          <WeeklyReportCard report={latest?.content ?? null} currency={currency} />
         </>
       )}
     </div>

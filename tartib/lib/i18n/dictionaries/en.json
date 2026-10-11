@@ -28,7 +28,7 @@
     "statistics": "Statistics",
     "settings": "Settings",
     "profile": "Profile",
-    "pricing": "Pricing",
+    "pricing": "All free",
     "login": "Log in",
     "register": "Sign up",
     "main": "Main navigation",
@@ -105,7 +105,7 @@
     },
     "pricing": {
       "title": "Start for free",
-      "subtitle": "The free plan is enough to feel the difference."
+      "subtitle": "The whole service is free: no paid plans and no limits on trades or rules."
     },
     "cta": {
       "title": "Ready to trade with awareness?",
@@ -123,31 +123,20 @@
     }
   },
   "pricing": {
-    "title": "Pricing",
-    "subtitle": "Pick what suits you. Payments are not connected yet.",
+    "title": "Everything is free",
+    "subtitle": "There are no paid plans. Every feature is open to everyone.",
     "free": {
-      "name": "FREE",
+      "name": "Tartib",
       "price": "$0",
       "period": "forever",
       "features": [
-        "Risk calculator",
-        "Up to 30 trades in the journal",
-        "Up to 5 trading rules",
-        "Basic statistics"
+        "Trade journal with no limits",
+        "Any number of trading rules",
+        "All-time statistics, by strategy and advanced analytics",
+        "Mistakes review, gains and losses, weekly reports",
+        "World markets, charts, calculators and the Telegram bot"
       ],
       "cta": "Start for free"
-    },
-    "pro": {
-      "name": "PRO",
-      "price": "Soon",
-      "period": "",
-      "features": [
-        "No limits on trades and rules",
-        "All-time statistics and by strategy",
-        "Weekly reports and AI review of your behaviour",
-        "Future integrations"
-      ],
-      "cta": "Soon"
     }
   },
   "auth": {
@@ -242,8 +231,8 @@
         "text": "You are responsible for keeping your password safe and for the accuracy of the data you enter. One person, one account."
       },
       "s4": {
-        "title": "Plans",
-        "text": "The FREE plan is free and has limits: up to 30 trades and 5 rules. The PRO plan is not available yet and payments are not connected. We will announce any paid changes in advance."
+        "title": "Cost",
+        "text": "The service is free: there are no paid plans and no limits on the number of trades or rules. We will tell you in advance about any changes."
       },
       "s5": {
         "title": "Acceptable use",
@@ -301,8 +290,6 @@
     "tooLarge": "Value is too large",
     "textMax": "Text is too long",
     "leverageMin": "Leverage cannot be below 1",
-    "limitRules": "FREE plan limit reached: up to 5 rules. The PRO plan removes limits.",
-    "limitTrades": "FREE plan limit reached: up to 30 trades. The PRO plan removes limits.",
     "nonNegative": "The number cannot be below zero",
     "passwordWeak": "This password is too easy to guess. Choose something unique, ideally a few words"
   },
@@ -695,7 +682,6 @@
       "note": "This is an observation from your data, not a general rule."
     },
     "emptyPeriod": "No trades in this period.",
-    "proOnly": "This feature is available on the PRO plan.",
     "time": {
       "title": "When you trade",
       "subtitle": "Time is counted in your time zone ({tz}).",
@@ -778,7 +764,6 @@
   },
   "profile": {
     "name": "Name",
-    "plan": "Plan",
     "dangerTitle": "Delete account",
     "dangerText": "Your account and all data (accounts, rules, trades, reports) will be deleted permanently. This cannot be undone.",
     "deleteAccount": "Delete account",
@@ -806,7 +791,9 @@
       "confirm": "Confirm and turn on",
       "failed": "Couldn't complete the action. Please try again.",
       "lostHint": "If you lose your phone, signing in is impossible without help from the service owner. Keep the secret key in a safe place."
-    }
+    },
+    "usage": "Usage",
+    "allFree": "Everything is free and unlimited."
   },
   "states": {
     "errorTitle": "Something went wrong",
@@ -838,8 +825,6 @@
       "ai": "Built with AI"
     },
     "note": "The report describes your behaviour based on your journal. It is not a forecast or a trading recommendation.",
-    "proOnly": "Weekly reports are available on the PRO plan.",
-    "proSoon": "PRO is coming soon.",
     "failed": "Couldn't build the report. Please try again."
   },
   "screenshot": {
@@ -893,13 +878,11 @@
     "users7d": "New in 7 days",
     "onboarded": "Finished onboarding",
     "active7d": "Active in 7 days",
-    "pro": "On PRO",
     "trades": "Total trades",
     "trades7d": "Trades in 7 days",
     "rules": "Total rules",
     "recent": "Recent sign-ups",
     "registered": "Registered",
-    "setPlan": "Grant or remove PRO",
     "notFound": "No user with this email.",
     "resetMfa": "Reset two-factor authentication",
     "resetMfaText": "For a user who lost their phone. They can sign in with a password and turn protection on again.",

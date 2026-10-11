@@ -1,38 +1,19 @@
-import { Lock } from "lucide-react";
-import { Badge, Card } from "@/components/ui";
+import { Card } from "@/components/ui";
 import { formatMoney } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
-import type { Plan } from "@/lib/plans";
 import type { WeeklyReportContent } from "@/services/ai";
 import { GenerateReportButton } from "./GenerateReportButton";
 
 /** Недельный отчёт: тексты собираются из цифр на языке пользователя. */
 export async function WeeklyReportCard({
-  plan,
   report,
   currency,
 }: {
-  plan: Plan;
   report: WeeklyReportContent | null;
   currency: string;
 }) {
   const { t, locale } = await getTranslator();
   const money = (v: number) => formatMoney(v, currency, locale, true);
-
-  if (plan !== "pro") {
-    return (
-      <Card>
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">{t("reports.title")}</h2>
-          <Badge tone="primary">PRO</Badge>
-        </div>
-        <p className="mt-3 flex items-start gap-2 text-sm text-muted">
-          <Lock className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          {t("reports.proOnly")} {t("reports.proSoon")}
-        </p>
-      </Card>
-    );
-  }
 
   return (
     <Card>

@@ -15,7 +15,7 @@ import { computeAchievements, daysSinceLastTrade, monthDiscipline } from "@/lib/
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
 import { pdtApplies, pdtState } from "@/lib/pdt";
-import { fetchStatTrades, getAccounts, getPlan, getRules } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getRules } from "@/lib/data";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { dailyLimit, losingRun } from "@/lib/risk-stats";
@@ -33,7 +33,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const { supabase, user, profile } = await requireUser();
   const sp = await searchParams;
   const period: "7d" | "30d" = sp.period === "7d" ? "7d" : "30d";
-  const [accounts, all, plan, rules] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getPlan(supabase, user.id), getRules(supabase)]);
+  const [accounts, all, rules] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getRules(supabase)]);
 
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
@@ -107,7 +107,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <PeriodTabs current={period} plan={plan} basePath="/dashboard" hideAll />
+        <PeriodTabs current={period} basePath="/dashboard" hideAll />
       </div>
       <DisciplineCostCard data={discipline} currency={currency} subtitle={t(period === "7d" ? "dashboard.discipline.period7d" : "dashboard.discipline.period")} moreHref="/statistics" />
 

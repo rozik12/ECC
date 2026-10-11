@@ -5,7 +5,7 @@ import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { PrintButton } from "@/components/statistics/PrintButton";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts, getPlan } from "@/lib/data";
+import { fetchStatTrades, getAccounts } from "@/lib/data";
 import { formatDateTime, formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import { coreStats, instrumentTable, mistakeCost, ruleCost } from "@/lib/analytics";
@@ -21,11 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ReportPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
   const sp = await searchParams;
   const { t, locale } = await getTranslator();
-  const { supabase, user, profile } = await requireUser();
+  const { supabase, profile } = await requireUser();
   const tz = safeTimeZone(profile?.timezone);
-  const [accounts, all, plan] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getPlan(supabase, user.id)]);
+  const [accounts, all] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase)]);
   const requested: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
-  const period: Period = requested === "all" && plan !== "pro" ? "30d" : requested;
+  const period: Period = requested;
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
   const none = t("stats.none");
@@ -80,7 +80,7 @@ export default async function ReportPage({ searchParams }: { searchParams: Promi
           <ArrowLeft className="h-4 w-4" aria-hidden /> {t("adv.back")}
         </Link>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <PeriodTabs current={period} plan={plan} basePath="/statistics/report" />
+          <PeriodTabs current={period} basePath="/statistics/report" />
           <PrintButton />
         </div>
         <p className="text-sm text-muted">{t("report.hint")}</p>

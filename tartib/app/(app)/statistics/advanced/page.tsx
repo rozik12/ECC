@@ -7,7 +7,7 @@ import { CountBars, DrawdownChart, PnlBars } from "@/components/statistics/chart
 import { buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
-import { fetchStatTrades, getAccounts, getPlan, getTransactions } from "@/lib/data";
+import { fetchStatTrades, getAccounts, getTransactions } from "@/lib/data";
 import { formatMoney, formatNumber, pnlTone, dateFormat } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
@@ -26,12 +26,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AdvancedStatisticsPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
   const sp = await searchParams;
   const { t, locale } = await getTranslator();
-  const { supabase, user, profile } = await requireUser();
+  const { supabase, profile } = await requireUser();
   const tz = safeTimeZone(profile?.timezone);
 
-  const [accounts, all, plan, txs] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getPlan(supabase, user.id), getTransactions(supabase)]);
+  const [accounts, all, txs] = await Promise.all([getAccounts(supabase), fetchStatTrades(supabase), getTransactions(supabase)]);
   const requested: Period = periods.includes(sp.period as Period) ? (sp.period as Period) : "30d";
-  const period: Period = requested === "all" && plan !== "pro" ? "30d" : requested;
+  const period: Period = requested;
   const currency = accounts[0]?.currency ?? profile?.currency ?? "USD";
   const money = (v: number, signed = false) => formatMoney(v, currency, locale, signed);
   const none = t("stats.none");
@@ -137,7 +137,7 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
           <h1 className="text-2xl font-bold sm:text-3xl">{t("adv.title")}</h1>
           <p className="mt-1 max-w-2xl text-muted">{t("adv.subtitle")}</p>
         </div>
-        <PeriodTabs current={period} plan={plan} basePath="/statistics/advanced" />
+        <PeriodTabs current={period} basePath="/statistics/advanced" />
       </div>
 
       {all.length === 0 || trades.length === 0 ? (

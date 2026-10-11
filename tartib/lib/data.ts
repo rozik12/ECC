@@ -1,5 +1,4 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Plan } from "@/lib/plans";
 import type { StatTrade } from "@/lib/statistics";
 import type { AccountWithBalance, Rule } from "@/types";
 
@@ -42,17 +41,6 @@ export async function countTradesBetween(
   if (excludeId) query = query.neq("id", excludeId);
   const { count } = await query;
   return count ?? 0;
-}
-
-export async function getPlan(supabase: SupabaseClient, userId: string): Promise<Plan> {
-  const { data } = await supabase
-    .from("subscriptions")
-    .select("plan, status, expires_at")
-    .eq("user_id", userId)
-    .maybeSingle();
-  if (!data || data.plan !== "pro" || data.status !== "active") return "free";
-  if (data.expires_at && new Date(data.expires_at) < new Date()) return "free";
-  return "pro";
 }
 
 type StatRow = {

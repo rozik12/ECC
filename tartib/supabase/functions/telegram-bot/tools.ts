@@ -239,12 +239,26 @@ export function stockSize(i: { balance: number; riskPct: number; entry: number; 
 }
 
 // ---------- фьючерсы: контракты ----------
-/** Стоимость одного пункта цены в долларах для популярных фьючерсов. Значения справочные: сверяй со спецификацией контракта на бирже. */
+/**
+ * Стоимость одного пункта цены в долларах для популярных контрактов: индексы, золото, серебро, нефть и золото у форекс-брокеров.
+ * Значения справочные: сверяйте со спецификацией контракта у биржи или брокера.
+ * point = сколько долларов стоит движение цены на 1,00 для одного контракта (или одного лота).
+ */
 export const FUTURES_POINT_VALUE: Record<number, { name: string; point: number }> = {
   1: { name: "NQ", point: 20 },
   2: { name: "MNQ", point: 2 },
   3: { name: "ES", point: 50 },
   4: { name: "MES", point: 5 },
+  5: { name: "GC", point: 100 },
+  6: { name: "MGC", point: 10 },
+  7: { name: "SI", point: 5000 },
+  8: { name: "CL", point: 1000 },
+  9: { name: "MCL", point: 100 },
+  10: { name: "YM", point: 5 },
+  11: { name: "MYM", point: 0.5 },
+  12: { name: "RTY", point: 50 },
+  13: { name: "M2K", point: 5 },
+  14: { name: "XAUUSD", point: 100 }, // 1 лот золота у брокера = 100 унций
 };
 
 export type FuturesResult = { ok: true; contracts: number; riskPerContract: number; riskAmount: number; plannedRisk: number; points: number; pointValue: number; formSize: number; direction: "long" | "short"; commission: number } | Fail;

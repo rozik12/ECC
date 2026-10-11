@@ -50,7 +50,7 @@ export function useCandles(instrument: string, tf: Timeframe, at: string | "live
     if (!enabled) return;
     const ctrl = new AbortController();
     const when = at === "live" ? new Date(Date.now() - 80 * TIMEFRAMES[tf]).toISOString() : at;
-    fetch(`/api/market/candles?${new URLSearchParams({ instrument, tf, at: when, market })}`, { signal: ctrl.signal })
+    fetch(`/api/market/candles?${new URLSearchParams({ instrument, tf, at: when, market, ...(at === "live" ? { live: "1" } : {}) })}`, { signal: ctrl.signal })
       .then(async (res) => {
         if (res.ok) {
           const body = (await res.json()) as { source: string; candles: number[][] };

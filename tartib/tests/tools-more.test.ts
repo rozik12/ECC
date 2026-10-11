@@ -110,5 +110,17 @@ test("futuresRisk: MNQ и NQ, размер для формы", () => {
   if (m.ok) { assert.equal(m.contracts, 6); assert.equal(m.formSize, 12); assert.equal(m.riskAmount, 240); }
   const n = futuresRisk({ balance: 25000, riskPct: 1, entry: 20000, stop: 19980, contract: 1, feePerContract: 0 });
   assert.ok(n.ok && n.contracts === 0);
-  assert.equal(futuresRisk({ balance: 25000, riskPct: 1, entry: 1, stop: 2, contract: 9, feePerContract: 0 }).ok, false);
+  assert.equal(futuresRisk({ balance: 25000, riskPct: 1, entry: 1, stop: 2, contract: 99, feePerContract: 0 }).ok, false);
+});
+
+test("золото: GC, MGC и лот XAUUSD", () => {
+  // стоп 10 долларов: GC = $1000 на контракт, MGC = $100, лот XAUUSD = $1000
+  const gc = futuresRisk({ balance: 50000, riskPct: 1, entry: 4200, stop: 4190, contract: 5, feePerContract: 0 });
+  assert.ok(gc.ok && gc.contracts === 0 && gc.riskPerContract === 1000 && gc.pointValue === 100);
+  const mgc = futuresRisk({ balance: 50000, riskPct: 1, entry: 4200, stop: 4190, contract: 6, feePerContract: 0 });
+  assert.ok(mgc.ok && mgc.contracts === 5 && mgc.riskAmount === 500 && mgc.formSize === 50);
+  const lot = futuresRisk({ balance: 50000, riskPct: 2, entry: 4200, stop: 4190, contract: 14, feePerContract: 0 });
+  assert.ok(lot.ok && lot.contracts === 1 && lot.formSize === 100 && lot.direction === "long");
+  const oil = futuresRisk({ balance: 100000, riskPct: 1, entry: 90, stop: 91, contract: 8, feePerContract: 0 });
+  assert.ok(oil.ok && oil.contracts === 1 && oil.direction === "short");
 });

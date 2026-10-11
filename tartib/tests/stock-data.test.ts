@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { aggregate, fetchQuote, fetchStockCandles, normalizeTicker, parseQuote, parseYahoo } from "../lib/stock-data.ts";
+import { aggregate, fetchStockCandles, normalizeTicker, fetchQuotes, parseSpark, parseYahoo } from "../lib/stock-data.ts";
 
 test("тикеры: акции, индексы, фьючерсы", () => {
   assert.equal(normalizeTicker("aapl", "stocks"), "AAPL");
@@ -31,18 +31,49 @@ test("aggregate: 1ч → 4ч", () => {
   assert.deepEqual(a[0], { t: 0, o: 1, h: 5, l: 1, c: 4, v: 2 });
 });
 
-test("котировка и сбои", async () => {
-  const q = parseQuote("QQQ", body);
-  assert.ok(q && Math.abs(q.changePct - 10) < 1e-9);
-  assert.equal(parseQuote("X", {}), null);
-  const ok = async () => new Response(JSON.stringify(body));
+const spark = { "GC=F": { close: [4100, 4157, 4216.3], fulldayPrice: 4216.3, fulldayChange: 59.3 }, "SI=F": { close: [60, 61, null] }, "BAD": { close: [] } };
+
+test("золото, металлы, валюты и индексы: символы", () => {
+  assert.equal(normalizeTicker("XAUUSD", "forex"), "GC=F");
+  assert.equal(normalizeTicker("gold", "auto"), "GC=F");
+  assert.equal(normalizeTicker("XAG/USD", "forex"), "SI=F");
+  assert.equal(normalizeTicker("GC", "futures"), "GC=F");
+  assert.equal(normalizeTicker("MGCZ6", "futures"), "GC=F");
+  assert.equal(normalizeTicker("USOIL", "forex"), "CL=F");
+  assert.equal(normalizeTicker("EUR/USD", "forex"), "EURUSD=X");
+  assert.equal(normalizeTicker("USDUZS", "forex"), "USDUZS=X");
+  assert.equal(normalizeTicker("US100", "forex"), "^NDX");
+  assert.equal(normalizeTicker("GER40", "forex"), "^GDAXI");
+  assert.equal(normalizeTicker("DXY", "forex"), "DX-Y.NYB");
+  assert.equal(normalizeTicker("^GSPC", "auto"), "^GSPC");
+  assert.equal(normalizeTicker("EURUSD=X", "auto"), "EURUSD=X");
+  assert.equal(normalizeTicker("AAPL", "auto"), "AAPL");
+  assert.equal(normalizeTicker("XYZABC", "forex"), null);
+  assert.equal(normalizeTicker("BTC/USDT", "crypto"), null);
+  assert.equal(normalizeTicker("ZZZ", "forex"), null);
+});
+
+test("котировки: дневное изменение, пропуск пустых, сбои", async () => {
+  const q = parseSpark(spark);
+  assert.equal(q.length, 2);
+  const gold = q.find((x) => x.symbol === "GC=F");
+  assert.ok(gold && Math.abs(gold.changePct - (59.3 / (4216.3 - 59.3)) * 100) < 1e-9);
+  const silver = q.find((x) => x.symbol === "SI=F"); // последнее закрытие пустое: берём два последних числовых
+  assert.ok(silver && silver.price === 61 && Math.abs(silver.changePct - (1 / 60) * 100) < 1e-9);
+  assert.deepEqual(parseSpark(null), []);
+  const ok = async () => new Response(JSON.stringify(spark));
   const bad = async () => new Response("no", { status: 500 });
   const boom = async () => { throw new Error("net"); };
-  assert.ok((await fetchQuote("QQQ", ok as never)) !== null);
-  assert.equal(await fetchQuote("QQQ", bad as never), null);
-  assert.equal(await fetchQuote("QQQ", boom as never), null);
+  assert.equal((await fetchQuotes(["GC=F"], ok as never)).length, 2);
+  assert.deepEqual(await fetchQuotes(["GC=F"], bad as never), []);
+  assert.deepEqual(await fetchQuotes(["GC=F"], boom as never), []);
+  let calls = 0;
+  const count = async () => { calls++; return new Response("{}"); };
+  await fetchQuotes(Array.from({ length: 45 }, (_, i) => `S${i}`), count as never);
+  assert.equal(calls, 3); // не больше 20 символов за запрос
   const now = Date.now();
-  assert.equal((await fetchStockCandles("AAPL", "5m", now - 400 * 86_400_000, now - 399 * 86_400_000, ok as never, now)).candles?.length, 0); // слишком давно
+  const okc = async () => new Response(JSON.stringify(body));
+  assert.equal((await fetchStockCandles("AAPL", "5m", now - 400 * 86_400_000, now - 399 * 86_400_000, okc as never, now)).candles?.length, 0); // слишком давно
   assert.equal((await fetchStockCandles("AAPL", "1h", now - 86_400_000, now, bad as never, now)).candles, null);
-  assert.equal((await fetchStockCandles("AAPL", "1h", now - 86_400_000, now, ok as never, now)).candles?.length, 2);
+  assert.equal((await fetchStockCandles("AAPL", "1h", now - 86_400_000, now, okc as never, now)).candles?.length, 2);
 });

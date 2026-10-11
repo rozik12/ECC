@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MarketChart } from "@/components/charts/MarketChart";
 import { getTranslator } from "@/lib/i18n/server";
 import { normalizePair } from "@/lib/market-data";
+import { normalizeTicker } from "@/lib/stock-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -11,7 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ChartsPage({ searchParams }: { searchParams: Promise<{ pair?: string }> }) {
   const sp = await searchParams;
   const { t } = await getTranslator();
-  const initial = normalizePair((sp.pair ?? "").slice(0, 24))?.symbol ?? "BTCUSDT";
+  const wanted = (sp.pair ?? "").slice(0, 24);
+  const initial = normalizePair(wanted)?.symbol ?? normalizeTicker(wanted, "auto") ?? "BTCUSDT";
   return (
     <div className="mx-auto max-w-4xl space-y-5">
       <div>

@@ -583,7 +583,7 @@
       "futuresHint": "For example, 2 MNQ contracts at $2 per point = 4. The Futures risk calculator works this out for you.",
       "ph": {
         "crypto": "BTC/USDT",
-        "forex": "EUR/USD",
+        "forex": "XAUUSD",
         "stocks": "AAPL",
         "futures": "MNQ"
       },
@@ -1345,21 +1345,31 @@
       "note": "Shares trade in whole units, so the result is rounded down. If the share of balance is above 100%, you need broker leverage or a smaller size. Not investment advice."
     },
     "futures": {
-      "title": "Futures risk (NQ, MNQ, ES, MES)",
-      "desc": "How many contracts fit your risk when the stop hits. The point value is filled in from the contract.",
+      "title": "Futures and gold risk (NQ, ES, GC, CL, XAUUSD)",
+      "desc": "How many contracts or lots fit your risk when the stop hits. Gold, silver, oil and indices: the point value is filled in from the contract.",
       "f": {
         "balance": "Account balance, $",
         "riskPct": "Risk per trade, %",
-        "entry": "Entry price (points)",
-        "stop": "Stop price (points)",
+        "entry": "Entry price",
+        "stop": "Stop price",
         "contract": "Contract",
         "feePerContract": "Commission per contract (per side), $"
       },
       "c": {
-        "1": "NQ — $20 per point",
-        "2": "MNQ — $2 per point",
-        "3": "ES — $50 per point",
-        "4": "MES — $5 per point"
+        "1": "NQ — Nasdaq-100, $20 per point",
+        "2": "MNQ — micro Nasdaq, $2 per point",
+        "3": "ES — S&P 500, $50 per point",
+        "4": "MES — micro S&P, $5 per point",
+        "5": "GC — gold, 100 oz, $100 per $1",
+        "6": "MGC — micro gold, 10 oz, $10 per $1",
+        "7": "SI — silver, 5,000 oz, $5,000 per $1",
+        "8": "CL — WTI crude, 1,000 barrels, $1,000 per $1",
+        "9": "MCL — micro crude, $100 per $1",
+        "10": "YM — Dow Jones, $5 per point",
+        "11": "MYM — micro Dow, $0.5 per point",
+        "12": "RTY — Russell 2000, $50 per point",
+        "13": "M2K — micro Russell, $5 per point",
+        "14": "XAUUSD — gold at a broker, 1 lot = 100 oz, $100 per $1"
       },
       "o": {
         "direction": "Direction",
@@ -1501,7 +1511,7 @@
     "title": "Price chart",
     "timeframe": "Candle timeframe",
     "loading": "Loading chart…",
-    "unsupported": "Charts work for crypto pairs (BTCUSDT), US stocks and indices (AAPL, ^NDX) and NQ, MNQ, ES, MES futures. There is no free keyless data for anything else.",
+    "unsupported": "Charts work for crypto pairs (BTCUSDT), gold and metals (XAUUSD), oil, currency pairs (EURUSD), US stocks and indices (AAPL, ^NDX) and futures. There is no free keyless data for anything else.",
     "no_data": "No candles for that time: the pair may not have traded yet.",
     "unavailable": "Could not load data from the exchange. Try again later.",
     "entry": "Entry",
@@ -1523,14 +1533,29 @@
   },
   "charts": {
     "title": "Charts",
-    "subtitle": "Fresh candles for any crypto pair: pick the pair and timeframe. Data is free and keyless, refreshed with a button.",
+    "subtitle": "Fresh candles: crypto pairs, gold, silver, oil, currencies, indices and US stocks. Pick an instrument and a timeframe. Data is free, needs no keys and refreshes on the button.",
     "quick": "Popular pairs",
     "pair": "Pair",
-    "pairHint": "For example BTCUSDT or ETH/USDT",
+    "pairHint": "For example BTCUSDT, XAUUSD, EURUSD, AAPL, US100",
     "show": "Show",
     "refresh": "Refresh",
-    "unsupported": "I can't find that crypto pair. Enter, for example, BTCUSDT, ETH/USDT or SOLUSDT. Charts are available for crypto only.",
-    "note": "Data: {source} (spot), the last 120 candles. This is a reference chart, not trading advice."
+    "unsupported": "I can't find that instrument. Try BTCUSDT, XAUUSD (gold), USOIL, EURUSD, US100, ^GSPC or AAPL.",
+    "note": "Data: {source} (spot), the last 120 candles. This is a reference chart, not trading advice.",
+    "quickOther": "Gold, indices, currencies, stocks",
+    "noteOther": "Data: {source}, last 120 candles. The source is unofficial: delays are possible and prices may differ from your broker. Gold and silver are shown as COMEX futures. A reference chart, not a trading recommendation.",
+    "short": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "oil": "Crude WTI",
+      "eurusd": "EUR/USD",
+      "usdjpy": "USD/JPY",
+      "ndx": "Nasdaq-100",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "aapl": "Apple",
+      "nvda": "Nvidia",
+      "tsla": "Tesla"
+    }
   },
   "market": {
     "title": "Market",
@@ -1893,18 +1918,6 @@
     "notApplies": "Your USD account equity is at least ${limit}, so this rule normally does not limit you.",
     "note": "The counter is for reference and only counts trades in your journal: confirm the rule with your broker."
   },
-  "usindices": {
-    "title": "US indices",
-    "none": "no data",
-    "names": {
-      "QQQ": "Nasdaq-100 ETF",
-      "SPY": "S&P 500 ETF",
-      "NDX": "Nasdaq-100 index",
-      "VIX": "volatility index",
-      "NQ": "Nasdaq-100 futures"
-    },
-    "note": "Change versus the previous close. The source is unofficial (Yahoo Finance) and data may be delayed. VIX has no colour: rising fear is neither good nor bad. Not investment advice."
-  },
   "mistakes": {
     "title": "My mistakes",
     "subtitle": "Trades with mistakes and broken rules are collected here. Mark what the mistake was, write why it happened and attach a screenshot.",
@@ -1950,5 +1963,56 @@
     "day": "Day",
     "month": "Month",
     "note": "Trade results are after fees. This is record keeping, not a forecast."
+  },
+  "worldmarkets": {
+    "title": "World markets",
+    "subtitle": "Gold and metals, oil and gas, currencies, indices, bonds and crypto. Tap a name to open its chart.",
+    "none": "no data",
+    "groups": {
+      "metals": "Gold and metals",
+      "energy": "Oil and gas",
+      "forex": "Currencies",
+      "usindices": "US: indices, ETFs and futures",
+      "world": "World indices",
+      "rates": "Bonds and fear",
+      "crypto": "Crypto"
+    },
+    "note": "Change versus the previous close. The source is unofficial (Yahoo Finance): data may be delayed and differ from your broker. Gold and silver are shown as COMEX futures, not the XAU/USD spot price. Rises in VIX, yields and the dollar have no colour: they are neither good nor bad. Not investment advice.",
+    "names": {
+      "gold": "Gold (XAU, COMEX futures)",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "copper": "Copper",
+      "wti": "Crude oil WTI",
+      "brent": "Crude oil Brent",
+      "gas": "Natural gas",
+      "eurusd": "EUR/USD",
+      "gbpusd": "GBP/USD",
+      "usdjpy": "USD/JPY",
+      "usdchf": "USD/CHF",
+      "audusd": "AUD/USD",
+      "usdcad": "USD/CAD",
+      "usduzs": "USD/UZS (sum)",
+      "dxy": "US dollar index (DXY)",
+      "ndx": "Nasdaq-100",
+      "ixic": "Nasdaq Composite",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "rut": "Russell 2000",
+      "qqq": "QQQ (Nasdaq-100 ETF)",
+      "spy": "SPY (S&P 500 ETF)",
+      "nqf": "Nasdaq-100 futures (NQ)",
+      "esf": "S&P 500 futures (ES)",
+      "ymf": "Dow futures (YM)",
+      "dax": "DAX (Germany)",
+      "ftse": "FTSE 100 (UK)",
+      "cac": "CAC 40 (France)",
+      "nikkei": "Nikkei 225 (Japan)",
+      "hsi": "Hang Seng (Hong Kong)",
+      "tnx": "US 10-year yield, %",
+      "vix": "VIX (fear index)",
+      "btc": "Bitcoin",
+      "eth": "Ethereum"
+    }
   }
 }

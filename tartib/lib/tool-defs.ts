@@ -206,7 +206,7 @@ export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
     },
   },
   "futures-risk": {
-    fields: [{ id: "balance", def: "25000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "20000" }, { id: "stop", def: "19980" }, { id: "contract", def: "2", choices: [1, 2, 3, 4] }, { id: "feePerContract", def: "0.62" }],
+    fields: [{ id: "balance", def: "25000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "20000" }, { id: "stop", def: "19980" }, { id: "contract", def: "2", choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }, { id: "feePerContract", def: "0.62" }],
     compute: (v) => {
       const r = futuresRisk({ balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), contract: n(v.contract), feePerContract: n(v.feePerContract) });
       if (!r.ok) return null;

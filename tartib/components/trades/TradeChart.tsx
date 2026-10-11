@@ -12,7 +12,7 @@ type Props = { instrument: string; market?: string; tradedAt: string; direction:
 /** График цены вокруг сделки со входом, стопом, целью и выходом. Данные: OKX, Kraken, Coinbase или Binance, без ключей. */
 export function TradeChart({ instrument, market = "crypto", tradedAt, entry, exit, stop, takeProfit }: Props) {
   const { t } = useI18n();
-  const ticker = market === "stocks" || market === "futures" ? normalizeTicker(instrument, market) : null;
+  const ticker = normalizeTicker(instrument, market);
   const supported = ticker !== null || normalizePair(instrument) !== null;
   const [tf, setTf] = useState<Timeframe>("1h");
   const [attempt, setAttempt] = useState(0);

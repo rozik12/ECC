@@ -9,7 +9,13 @@ import { cn } from "@/lib/cn";
 import { formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
 import { normalizePair, type Timeframe } from "@/lib/market-data";
+import { normalizeTicker } from "@/lib/stock-data";
 
+/** Золото, металлы, нефть, валюты, индексы и акции: символ Yahoo и ключ короткого названия в словаре */
+const OTHER = [
+  { symbol: "GC=F", key: "gold" }, { symbol: "SI=F", key: "silver" }, { symbol: "CL=F", key: "oil" }, { symbol: "EURUSD=X", key: "eurusd" }, { symbol: "USDJPY=X", key: "usdjpy" },
+  { symbol: "^NDX", key: "ndx" }, { symbol: "^GSPC", key: "gspc" }, { symbol: "^DJI", key: "dji" }, { symbol: "AAPL", key: "aapl" }, { symbol: "NVDA", key: "nvda" }, { symbol: "TSLA", key: "tsla" },
+];
 const QUICK = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "BNBUSDT", "DOGEUSDT", "ADAUSDT", "TONUSDT"];
 
 /** Раздел «Графики»: свежие свечи любой криптопары, без привязки к сделке. */
@@ -19,11 +25,14 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
   const [input, setInput] = useState(initialPair);
   const [tf, setTf] = useState<Timeframe>("15m");
   const [refresh, setRefresh] = useState(0);
-  const normalized = normalizePair(pair);
+  const cryptoPair = normalizePair(pair);
+  const ticker = cryptoPair ? null : normalizeTicker(pair, "auto");
+  const normalized = cryptoPair;
+  const supported = cryptoPair !== null || ticker !== null;
 
   // «live»: последние 120 свечей; «сейчас» берётся в момент запроса, а кнопка «Обновить» повторяет его
-  const { candles, error: loadError, source } = useCandles(pair, tf, "live", normalized !== null, refresh);
-  const error = loadError ?? (normalized === null ? "unsupported" : null);
+  const { candles, error: loadError, source } = useCandles(pair, tf, "live", supported, refresh, "auto");
+  const error = loadError ?? (!supported ? "unsupported" : null);
 
   const last = candles?.[candles.length - 1];
   const first = candles?.[0];
@@ -50,6 +59,19 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
             </button>
           ))}
         </div>
+        <div className="flex flex-wrap gap-2" role="group" aria-label={t("charts.quickOther")}>
+          {OTHER.map((o) => (
+            <button
+              key={o.symbol}
+              type="button"
+              aria-pressed={ticker === o.symbol}
+              onClick={() => apply(o.symbol)}
+              className={cn("rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors", ticker === o.symbol ? "border-primary bg-primary-soft text-primary" : "border-border text-muted hover:text-foreground")}
+            >
+              {t(`charts.short.${o.key}`)}
+            </button>
+          ))}
+        </div>
         <form
           className="flex items-end gap-2"
           onSubmit={(e) => {
@@ -58,7 +80,7 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
           }}
         >
           <div className="flex-1">
-            <Input id="chart-pair" label={t("charts.pair")} value={input} maxLength={20} autoComplete="off" autoCapitalize="characters" onChange={(e) => setInput(e.target.value)} hint={t("charts.pairHint")} />
+            <Input id="chart-pair" label={t("charts.pair")} value={input} maxLength={14} autoComplete="off" autoCapitalize="characters" onChange={(e) => setInput(e.target.value)} hint={t("charts.pairHint")} />
           </div>
           <Button type="submit" variant="secondary" className="mb-[1.375rem]">{t("charts.show")}</Button>
         </form>
@@ -67,7 +89,7 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
       <Card className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="text-xl font-bold">{normalized ? `${normalized.base}/${normalized.quote}` : pair || "—"}</h2>
+            <h2 className="text-xl font-bold">{normalized ? `${normalized.base}/${normalized.quote}` : ticker ?? (pair || "—")}</h2>
             {last && (
               <p className="mt-0.5 flex items-baseline gap-2 tabular-nums">
                 <span className="text-lg font-semibold">{formatNumber(last.c, locale, priceDigits(last.c) + 2)}</span>
@@ -93,7 +115,7 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
         ) : (
           <>
             <CandleView candles={candles} tf={tf} height="h-80" label={t("charts.title")} />
-            <p className="text-xs text-muted">{t("charts.note", { source })}</p>
+            <p className="text-xs text-muted">{t(ticker ? "charts.noteOther" : "charts.note", { source })}</p>
           </>
         )}
       </Card>

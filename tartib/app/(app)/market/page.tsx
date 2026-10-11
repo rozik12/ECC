@@ -3,7 +3,7 @@ import { AlertsCard, type AlertView } from "@/components/market/AlertsCard";
 import { CalendarCard } from "@/components/market/CalendarCard";
 import { FearGreedCard } from "@/components/market/FearGreedCard";
 import { MoversCard } from "@/components/market/MoversCard";
-import { UsIndicesCard } from "@/components/market/UsIndicesCard";
+import { WorldMarketsCard } from "@/components/market/WorldMarketsCard";
 import { UsMarketCard } from "@/components/market/UsMarketCard";
 import { WatchlistCard } from "@/components/market/WatchlistCard";
 import { requireUser } from "@/lib/auth";
@@ -44,10 +44,8 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
         <FearGreedCard data={extras.fear} dominance={extras.dominance} />
         <WatchlistCard symbols={(watch.data ?? []).map((r) => String(r.symbol))} />
       </div>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <UsMarketCard timeZone={safeTimeZone(profile?.timezone)} />
-        <UsIndicesCard />
-      </div>
+      <WorldMarketsCard />
+      <UsMarketCard timeZone={safeTimeZone(profile?.timezone)} />
       <AlertsCard alerts={alertViews} />
       <MoversCard gainers={movers.gainers} losers={movers.losers} />
       <CalendarCard events={extras.calendar} timeZone={safeTimeZone(profile?.timezone)} all={sp.events === "all"} now={new Date().getTime()} />

@@ -583,7 +583,7 @@
       "futuresHint": "Masalan, punkti $2 bo'lgan 2 ta MNQ kontrakti = 4. «Fyuchers riski» kalkulyatori buni o'zi hisoblaydi.",
       "ph": {
         "crypto": "BTC/USDT",
-        "forex": "EUR/USD",
+        "forex": "XAUUSD",
         "stocks": "AAPL",
         "futures": "MNQ"
       },
@@ -1345,21 +1345,31 @@
       "note": "Aksiyalar butun donada savdo qilinadi, shuning uchun natija pastga yaxlitlanadi. Balansdagi ulush 100% dan oshsa, broker yelkasi yoki kichikroq hajm kerak. Investitsiya maslahati emas."
     },
     "futures": {
-      "title": "Fyuchers riski (NQ, MNQ, ES, MES)",
-      "desc": "Stop ishlaganda zarar riskka sig'ishi uchun nechta kontrakt olish mumkin. Punkt qiymati kontraktga qarab qo'yiladi.",
+      "title": "Fyuchers va oltin riski (NQ, ES, GC, CL, XAUUSD)",
+      "desc": "Stop ishlaganda zarar riskka sig'ishi uchun nechta kontrakt yoki lot olish mumkin. Oltin, kumush, neft va indekslar: punkt qiymati kontraktga qarab qo'yiladi.",
       "f": {
         "balance": "Hisob balansi, $",
         "riskPct": "Bitimga risk, %",
-        "entry": "Kirish narxi (punkt)",
-        "stop": "Stop narxi (punkt)",
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi",
         "contract": "Kontrakt",
         "feePerContract": "Bir kontrakt uchun komissiya (bir tomon), $"
       },
       "c": {
-        "1": "NQ — punkti $20",
-        "2": "MNQ — punkti $2",
-        "3": "ES — punkti $50",
-        "4": "MES — punkti $5"
+        "1": "NQ — Nasdaq-100, punkti $20",
+        "2": "MNQ — mikro Nasdaq, punkti $2",
+        "3": "ES — S&P 500, punkti $50",
+        "4": "MES — mikro S&P, punkti $5",
+        "5": "GC — oltin, 100 untsiya, $1 uchun $100",
+        "6": "MGC — mikro oltin, 10 untsiya, $1 uchun $10",
+        "7": "SI — kumush, 5000 untsiya, $1 uchun $5000",
+        "8": "CL — WTI neft, 1000 barrel, $1 uchun $1000",
+        "9": "MCL — mikro neft, $1 uchun $100",
+        "10": "YM — Dow Jones, punkti $5",
+        "11": "MYM — mikro Dow, punkti $0,5",
+        "12": "RTY — Russell 2000, punkti $50",
+        "13": "M2K — mikro Russell, punkti $5",
+        "14": "XAUUSD — brokerda oltin, 1 lot = 100 untsiya, $1 uchun $100"
       },
       "o": {
         "direction": "Yo'nalish",
@@ -1501,7 +1511,7 @@
     "title": "Narx grafigi",
     "timeframe": "Shamlar masshtabi",
     "loading": "Grafik yuklanmoqda…",
-    "unsupported": "Grafik kripto juftliklar (BTCUSDT), AQSh aksiyalari va indekslari (AAPL, ^NDX) hamda NQ, MNQ, ES, MES fyucherslari uchun ishlaydi. Boshqalari uchun kalitsiz bepul ma'lumot yo'q.",
+    "unsupported": "Grafik kripto juftliklar (BTCUSDT), oltin va metallar (XAUUSD), neft, valyuta juftliklari (EURUSD), AQSh aksiya va indekslari (AAPL, ^NDX) hamda fyucherslar uchun ishlaydi. Boshqalari uchun kalitsiz bepul ma'lumot yo'q.",
     "no_data": "Bu vaqtda shamlar yo'q: ehtimol, juftlik o'sha paytda hali savdo qilinmagan.",
     "unavailable": "Birjadan ma'lumot yuklab bo'lmadi. Keyinroq urinib ko'ring.",
     "entry": "Kirish",
@@ -1523,14 +1533,29 @@
   },
   "charts": {
     "title": "Grafiklar",
-    "subtitle": "Istalgan kripto juftlikning yangi shamlari: juftlik va masshtabni tanlang. Ma'lumotlar bepul va kalitsiz, tugma bilan yangilanadi.",
+    "subtitle": "Yangi shamlar: kripto juftliklar, oltin, kumush, neft, valyutalar, indekslar va AQSh aksiyalari. Asbob va masshtabni tanlang. Ma'lumot bepul, kalitsiz, tugma bilan yangilanadi.",
     "quick": "Mashhur juftliklar",
     "pair": "Juftlik",
-    "pairHint": "Masalan, BTCUSDT yoki ETH/USDT",
+    "pairHint": "Masalan, BTCUSDT, XAUUSD, EURUSD, AAPL, US100",
     "show": "Ko'rsatish",
     "refresh": "Yangilash",
-    "unsupported": "Bunday kripto juftlikni ko'rmayapman. Masalan, BTCUSDT, ETH/USDT yoki SOLUSDT kiriting. Grafiklar faqat kriptovalyutalar uchun.",
-    "note": "Ma'lumot: {source} (spot), oxirgi 120 sham. Bu ma'lumot uchun grafik, savdo tavsiyasi emas."
+    "unsupported": "Bunday asbobni topa olmadim. Masalan, BTCUSDT, XAUUSD (oltin), USOIL, EURUSD, US100, ^GSPC yoki AAPL kiriting.",
+    "note": "Ma'lumot: {source} (spot), oxirgi 120 sham. Bu ma'lumot uchun grafik, savdo tavsiyasi emas.",
+    "quickOther": "Oltin, indekslar, valyutalar, aksiyalar",
+    "noteOther": "Ma'lumot: {source}, oxirgi 120 sham. Manba norasmiy: kechikish bo'lishi va narxlar broker narxidan farq qilishi mumkin. Oltin va kumush COMEX fyucherslari bo'yicha ko'rsatilgan. Ma'lumot uchun grafik, savdo tavsiyasi emas.",
+    "short": {
+      "gold": "Oltin",
+      "silver": "Kumush",
+      "oil": "Neft WTI",
+      "eurusd": "EUR/USD",
+      "usdjpy": "USD/JPY",
+      "ndx": "Nasdaq-100",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "aapl": "Apple",
+      "nvda": "Nvidia",
+      "tsla": "Tesla"
+    }
   },
   "market": {
     "title": "Bozor",
@@ -1893,18 +1918,6 @@
     "notApplies": "Dollar hisobingizdagi kapital ${limit} dan kam emas, shuning uchun bu qoida odatda sizni cheklamaydi.",
     "note": "Hisoblagich ma'lumot uchun va faqat jurnaldagi bitimlarni sanaydi: qoidani brokerdan aniqlang."
   },
-  "usindices": {
-    "title": "AQSh indekslari",
-    "none": "ma'lumot yo'q",
-    "names": {
-      "QQQ": "Nasdaq-100 ETF",
-      "SPY": "S&P 500 ETF",
-      "NDX": "Nasdaq-100 indeksi",
-      "VIX": "o'zgaruvchanlik indeksi",
-      "NQ": "Nasdaq-100 fyuchersi"
-    },
-    "note": "O'zgarish avvalgi yopilishga nisbatan. Manba norasmiy (Yahoo Finance), ma'lumot kechikishi mumkin. VIX rangsiz: qo'rquv o'sishi na yaxshi, na yomon. Investitsiya maslahati emas."
-  },
   "mistakes": {
     "title": "Mening xatolarim",
     "subtitle": "Bu yerda xatoli va qoidalar buzilgan bitimlar yig'ilgan. Xato nima ekanini belgilang, nima sababdan bo'lganini yozing va ekran rasmini qo'shing.",
@@ -1950,5 +1963,56 @@
     "day": "Kun",
     "month": "Oy",
     "note": "Bitim natijalari komissiyadan keyin ko'rsatilgan. Bu hisob, prognoz emas."
+  },
+  "worldmarkets": {
+    "title": "Dunyo bozorlari",
+    "subtitle": "Oltin va metallar, neft va gaz, valyutalar, indekslar, obligatsiyalar va kripto. Grafikni ochish uchun nomga bosing.",
+    "none": "ma'lumot yo'q",
+    "groups": {
+      "metals": "Oltin va metallar",
+      "energy": "Neft va gaz",
+      "forex": "Valyutalar",
+      "usindices": "AQSh: indekslar, ETF va fyucherslar",
+      "world": "Dunyo indekslari",
+      "rates": "Obligatsiyalar va qo'rquv",
+      "crypto": "Kripto"
+    },
+    "note": "O'zgarish avvalgi yopilishga nisbatan. Manba norasmiy (Yahoo Finance): ma'lumot kechikishi va broker narxidan farq qilishi mumkin. Oltin va kumush XAU/USD spot narxi emas, COMEX fyucherslari bo'yicha ko'rsatilgan. VIX, daromad va dollar o'sishi rangsiz: ular na yaxshi, na yomon. Investitsiya maslahati emas.",
+    "names": {
+      "gold": "Oltin (XAU, COMEX fyuchersi)",
+      "silver": "Kumush",
+      "platinum": "Platina",
+      "copper": "Mis",
+      "wti": "Neft WTI",
+      "brent": "Neft Brent",
+      "gas": "Tabiiy gaz",
+      "eurusd": "EUR/USD",
+      "gbpusd": "GBP/USD",
+      "usdjpy": "USD/JPY",
+      "usdchf": "USD/CHF",
+      "audusd": "AUD/USD",
+      "usdcad": "USD/CAD",
+      "usduzs": "USD/UZS (so'm)",
+      "dxy": "Dollar indeksi (DXY)",
+      "ndx": "Nasdaq-100",
+      "ixic": "Nasdaq Composite",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "rut": "Russell 2000",
+      "qqq": "QQQ (Nasdaq-100 ETF)",
+      "spy": "SPY (S&P 500 ETF)",
+      "nqf": "Nasdaq-100 fyuchersi (NQ)",
+      "esf": "S&P 500 fyuchersi (ES)",
+      "ymf": "Dow fyuchersi (YM)",
+      "dax": "DAX (Germaniya)",
+      "ftse": "FTSE 100 (Buyuk Britaniya)",
+      "cac": "CAC 40 (Fransiya)",
+      "nikkei": "Nikkei 225 (Yaponiya)",
+      "hsi": "Hang Seng (Gonkong)",
+      "tnx": "AQSh 10 yillik obligatsiya daromadi, %",
+      "vix": "VIX (qo'rquv indeksi)",
+      "btc": "Bitcoin",
+      "eth": "Ethereum"
+    }
   }
 }

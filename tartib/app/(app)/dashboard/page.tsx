@@ -6,6 +6,7 @@ import { GoalCard } from "@/components/statistics/GoalCard";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { DayHero } from "@/components/dashboard/DayHero";
 import { PdtCard } from "@/components/dashboard/PdtCard";
+import { MyToolsCard } from "@/components/dashboard/MyToolsCard";
 import { GettingStarted } from "@/components/dashboard/GettingStarted";
 import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
@@ -95,6 +96,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       />
 
       {tradesStocks && <PdtCard state={pdtState(all, new Date())} applies={usEquity === null ? null : pdtApplies(usEquity)} />}
+
+      <MyToolsCard horizon={profile?.trader_horizon ?? null} markets={profile?.trader_markets ?? null} />
 
       <GettingStarted steps={startSteps} />
 

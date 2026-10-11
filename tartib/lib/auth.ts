@@ -14,6 +14,8 @@ export type Profile = {
   checklist: string[] | null;
   discipline_goal: number;
   share_token: string | null;
+  trader_horizon: string | null;
+  trader_markets: string[] | null;
 };
 
 /**
@@ -33,7 +35,7 @@ export const requireUser = cache(async () => {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, name, language, currency, timezone, onboarded, is_admin, checklist_enabled, checklist, discipline_goal, share_token")
+    .select("id, name, language, currency, timezone, onboarded, is_admin, checklist_enabled, checklist, discipline_goal, share_token, trader_horizon, trader_markets")
     .eq("id", user.id)
     .single<Profile>();
 

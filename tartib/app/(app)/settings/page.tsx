@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { TransactionsManager } from "@/components/settings/TransactionsManager";
 import { ChecklistSettings } from "@/components/settings/ChecklistSettings";
 import { AccountsManager } from "@/components/settings/AccountsManager";
+import { TraderProfileSettings } from "@/components/settings/TraderProfileSettings";
 import { SettingsForm } from "@/components/settings/SettingsForm";
 import { requireUser } from "@/lib/auth";
 import { getAccounts, getTransactions } from "@/lib/data";
 import { getTranslator } from "@/lib/i18n/server";
 import { DEFAULT_CHECKLIST_KEYS } from "@/lib/constants";
 import { safeTimeZone } from "@/lib/time";
+import { isHorizon, isTraderMarket } from "@/lib/trader-profile";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -22,6 +24,9 @@ export default async function SettingsPage() {
     <div className="mx-auto max-w-2xl space-y-6">
       <h1 className="text-2xl font-bold sm:text-3xl">{t("pages.settings")}</h1>
       <SettingsForm language={locale} currency={profile?.currency ?? "USD"} timezone={safeTimeZone(profile?.timezone)} />
+      <div id="trader-profile" className="scroll-mt-24">
+        <TraderProfileSettings horizon={isHorizon(profile?.trader_horizon) ? profile.trader_horizon : null} markets={(profile?.trader_markets ?? []).filter(isTraderMarket)} />
+      </div>
       <AccountsManager accounts={accounts} />
       <TransactionsManager
         accounts={accounts.map((a) => ({ id: a.id, name: a.name, currency: a.currency }))}

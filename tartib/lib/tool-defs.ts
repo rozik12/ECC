@@ -1,12 +1,12 @@
 // Описание публичных калькуляторов: поля, значения по умолчанию и функция расчёта.
-import { compound, futuresRisk, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
+import { compound, futuresRisk, optionPayoff, forexLot, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
 
-export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk";
-export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk"];
+export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot";
+export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot"];
 export const TOOL_SLUGS = [...CALC_SLUGS, "sessions"] as const;
 
 /** Ключ в словаре tools.<key> для адреса страницы */
-export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures"> = {
+export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures" | "options" | "forexlot"> = {
   "position-size": "size",
   "risk-reward": "rr",
   "loss-streak": "streak",
@@ -22,6 +22,8 @@ export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "c
   margin: "margin",
   "stock-size": "stock",
   "futures-risk": "futures",
+  options: "options",
+  "forex-lot": "forexlot",
 };
 
 export type Fmt = "num" | "money" | "pct" | "ratio" | "text" | "int";
@@ -218,6 +220,38 @@ export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
         { key: "riskAmount", value: r.riskAmount, fmt: "num" },
         { key: "formSize", value: r.formSize, fmt: "int" },
       ];
+    },
+  },
+  options: {
+    fields: [{ id: "kind", def: "1", choices: [1, 2] }, { id: "side", def: "1", choices: [1, 2] }, { id: "strike", def: "200" }, { id: "premium", def: "5" }, { id: "contracts", def: "1" }, { id: "multiplier", def: "100" }, { id: "underlying", def: "210", optional: true }],
+    compute: (v) => {
+      const r = optionPayoff({ kind: n(v.kind), side: n(v.side), strike: n(v.strike), premium: n(v.premium), contracts: n(v.contracts), multiplier: n(v.multiplier), underlying: v.underlying });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "premiumTotal", value: r.premiumTotal, fmt: "num" },
+        { key: "breakeven", value: r.breakeven, fmt: "num" },
+        { key: "maxProfit", value: r.maxProfit === null ? "unlimited" : r.maxProfit, fmt: r.maxProfit === null ? "text" : "num", tone: "good" },
+        { key: "maxLoss", value: r.maxLoss === null ? "unlimited" : -r.maxLoss, fmt: r.maxLoss === null ? "text" : "num", tone: "bad" },
+      ];
+      if (r.moveToBreakevenPct !== null) rows.push({ key: "moveToBreakeven", value: r.moveToBreakevenPct, fmt: "pct" });
+      if (r.pnlAtExpiry !== null) rows.push({ key: "pnlAtExpiry", value: r.pnlAtExpiry, fmt: "num", tone: r.pnlAtExpiry >= 0 ? "good" : "bad" });
+      return rows;
+    },
+  },
+  "forex-lot": {
+    fields: [{ id: "balance", def: "5000" }, { id: "riskPct", def: "1" }, { id: "stopPips", def: "25" }, { id: "pairClass", def: "1", choices: [1, 2, 3, 4] }, { id: "price", def: "1.1200" }, { id: "quoteToUsd", def: "1.25", optional: true }, { id: "spreadPips", def: "1.2" }, { id: "leverage", def: "30", optional: true }],
+    compute: (v) => {
+      const r = forexLot({ balance: n(v.balance), riskPct: n(v.riskPct), stopPips: n(v.stopPips), pairClass: n(v.pairClass), price: n(v.price), quoteToUsd: v.quoteToUsd, spreadPips: n(v.spreadPips), leverage: v.leverage });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "pipValue", value: r.pipValue, fmt: "num" },
+        { key: "lots", value: r.lots, fmt: "num" },
+        { key: "units", value: r.units, fmt: "int" },
+        { key: "riskAmount", value: r.actualRisk, fmt: "num" },
+        { key: "spreadCost", value: r.spreadCost, fmt: "num" },
+      ];
+      if (r.margin !== null) rows.push({ key: "margin", value: r.margin, fmt: "num" });
+      return rows;
     },
   },
 };

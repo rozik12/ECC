@@ -285,3 +285,78 @@ export function futuresRisk(i: { balance: number; riskPct: number; entry: number
     commission: contracts * 2 * i.feePerContract,
   };
 }
+
+// ---------- опционы: выплата на дату экспирации ----------
+export type OptionResult =
+  | { ok: true; breakeven: number; premiumTotal: number; maxProfit: number | null; maxLoss: number | null; pnlAtExpiry: number | null; moveToBreakevenPct: number | null; kind: "call" | "put"; side: "long" | "short" }
+  | Fail;
+
+/**
+ * Результат опциона на дату экспирации. long — купленный опцион, short — проданный.
+ * Премия указывается за единицу актива, множитель обычно 100 (одна акция × 100 на контракт).
+ * Максимум null означает «не ограничен» (купленный колл вверх, проданный колл вниз).
+ */
+export function optionPayoff(i: { kind: number; side: number; strike: number; premium: number; contracts: number; multiplier: number; underlying: number | null }): OptionResult {
+  const kind = i.kind === 1 ? "call" : i.kind === 2 ? "put" : null;
+  const side = i.side === 1 ? "long" : i.side === 2 ? "short" : null;
+  if (!kind || !side || !fin(i.strike, i.premium, i.contracts, i.multiplier)) return FAIL;
+  if (i.strike <= 0 || i.premium < 0 || i.contracts <= 0 || i.multiplier <= 0) return FAIL;
+  if (i.underlying !== null && (!Number.isFinite(i.underlying) || i.underlying < 0)) return FAIL;
+  const q = i.contracts * i.multiplier;
+  const premiumTotal = i.premium * q;
+  const breakeven = kind === "call" ? i.strike + i.premium : i.strike - i.premium;
+  // Самая большая выплата у пута: цена актива падает до нуля
+  const putCap = Math.max(0, (i.strike - i.premium) * q);
+  let maxProfit: number | null;
+  let maxLoss: number | null;
+  if (side === "long") { maxLoss = premiumTotal; maxProfit = kind === "call" ? null : putCap; }
+  else { maxProfit = premiumTotal; maxLoss = kind === "call" ? null : putCap; }
+  let pnlAtExpiry: number | null = null;
+  let moveToBreakevenPct: number | null = null;
+  if (i.underlying !== null) {
+    const intrinsic = kind === "call" ? Math.max(i.underlying - i.strike, 0) : Math.max(i.strike - i.underlying, 0);
+    pnlAtExpiry = (side === "long" ? intrinsic - i.premium : i.premium - intrinsic) * q;
+    if (i.underlying > 0) moveToBreakevenPct = ((breakeven - i.underlying) / i.underlying) * 100;
+  }
+  return { ok: true, breakeven, premiumTotal, maxProfit, maxLoss, pnlAtExpiry, moveToBreakevenPct, kind, side };
+}
+
+// ---------- форекс: стоимость пункта, размер лота, маржа и спред ----------
+export type ForexLotResult =
+  | { ok: true; pipValue: number; riskAmount: number; lots: number; units: number; actualRisk: number; spreadCost: number; margin: number | null; direction: null }
+  | Fail;
+
+/**
+ * Лот форекс по риску и стопу в пунктах для счёта в долларах. Стандартный лот = 100 000 единиц базовой валюты.
+ * pairClass: 1 — доллар в конце пары (EUR/USD, GBP/USD), 2 — доллар в начале (USD/CHF, USD/CAD), 3 — иена в конце (USD/JPY), 4 — кросс без доллара (EUR/GBP): нужен курс котируемой валюты к доллару.
+ * Размер округляется вниз до 0,01 лота, чтобы убыток по стопу не превысил выбранный риск.
+ */
+export function forexLot(i: { balance: number; riskPct: number; stopPips: number; pairClass: number; price: number; quoteToUsd: number | null; spreadPips: number; leverage: number | null }): ForexLotResult {
+  if (!fin(i.balance, i.riskPct, i.stopPips, i.price, i.spreadPips) || i.balance <= 0 || i.riskPct <= 0 || i.riskPct > 100 || i.stopPips <= 0 || i.price <= 0 || i.spreadPips < 0) return FAIL;
+  if (![1, 2, 3, 4].includes(i.pairClass)) return FAIL;
+  if (i.leverage !== null && (!Number.isFinite(i.leverage) || i.leverage < 1 || i.leverage > 3000)) return FAIL;
+  let pipValue: number;
+  let baseToUsd: number;
+  if (i.pairClass === 1) { pipValue = 10; baseToUsd = i.price; }
+  else if (i.pairClass === 2) { pipValue = 10 / i.price; baseToUsd = 1; }
+  else if (i.pairClass === 3) { pipValue = 1000 / i.price; baseToUsd = 1; }
+  else {
+    if (i.quoteToUsd === null || !Number.isFinite(i.quoteToUsd) || i.quoteToUsd <= 0) return FAIL;
+    pipValue = 10 * i.quoteToUsd;
+    baseToUsd = i.price * i.quoteToUsd;
+  }
+  const riskAmount = (i.balance * i.riskPct) / 100;
+  const lots = Math.floor((riskAmount / (i.stopPips * pipValue)) * 100) / 100;
+  const units = lots * 100_000;
+  return {
+    ok: true,
+    pipValue,
+    riskAmount,
+    lots,
+    units,
+    actualRisk: lots * i.stopPips * pipValue,
+    spreadCost: lots * i.spreadPips * pipValue,
+    margin: i.leverage === null ? null : (units * baseToUsd) / i.leverage,
+    direction: null,
+  };
+}

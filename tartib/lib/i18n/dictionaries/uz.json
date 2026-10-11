@@ -315,7 +315,8 @@
     "crypto": "Kripto",
     "forex": "Forex",
     "stocks": "Aksiyalar",
-    "futures": "Fyucherslar"
+    "futures": "Fyucherslar",
+    "options": "Opsionlar"
   },
   "emotions": {
     "calm": "Xotirjamlik",
@@ -574,14 +575,16 @@
         "crypto": "BTC/USDT",
         "forex": "XAUUSD",
         "stocks": "AAPL",
-        "futures": "MNQ"
+        "futures": "MNQ",
+        "options": "AAPL 200C 2026-12-18"
       },
       "closedPdtHint": "Yopilish vaqti bosh sahifadagi day-trade (PDT) hisoblagichi uchun kerak.",
       "contractMode": "Kontraktlar bilan savdo qilaman",
       "contracts": "Kontraktlar soni",
       "contractSize": "Bitta kontrakt hajmi",
       "contractSizeHint": "Bitta kontraktda aktivning nechta birligi bor (masalan, 100)",
-      "contractTotal": "Pozitsiya hajmi (kontraktlar × kontrakt hajmi)"
+      "contractTotal": "Pozitsiya hajmi (kontraktlar × kontrakt hajmi)",
+      "optionsHint": "Opsion: kirish va chiqish narxi maydonlariga bitta aksiya uchun premiyani kiriting, kontraktlar sotib olingan miqdorda, kontrakt hajmi odatda 100. Opsionni sotib olish «long», sotish «short»."
     },
     "detail": {
       "risk": "Xavf",
@@ -1365,6 +1368,62 @@
         "formSize": "Bitim formasi uchun hajm"
       },
       "note": "Forma hajmi = kontraktlar × punkt qiymati: shunda Tartibda foyda va zarar dollarda to'g'ri hisoblanadi. Punkt qiymatlari ma'lumot uchun, birja spetsifikatsiyasi bilan solishtiring. Investitsiya maslahati emas."
+    },
+    "options": {
+      "title": "Opsionlar: ekspiratsiyadagi to'lov",
+      "desc": "Ekspiratsiya sanasida sotib olingan yoki sotilgan kol va putning zararsizlik nuqtasi, eng katta foyda va zarar hamda natijasi.",
+      "f": {
+        "kind": "Opsion turi",
+        "side": "Pozitsiya",
+        "strike": "Strayk",
+        "premium": "1 aksiya uchun premiya",
+        "contracts": "Kontraktlar",
+        "multiplier": "Kontraktdagi aksiyalar",
+        "underlying": "Ekspiratsiyadagi aktiv narxi (ixtiyoriy)"
+      },
+      "c": {
+        "1": "Kol (sotib olish huquqi)",
+        "2": "Put (sotish huquqi)"
+      },
+      "o": {
+        "premiumTotal": "Jami premiya (to'langan yoki olingan)",
+        "breakeven": "Zararsizlik narxi",
+        "maxProfit": "Eng katta foyda",
+        "maxLoss": "Eng katta zarar",
+        "moveToBreakeven": "Zararsizlikkacha kerakli narx harakati",
+        "pnlAtExpiry": "Shu narxdagi natija"
+      },
+      "note": "Ekspiratsiya sanasi uchun hisob, komissiyalar va muddatidan oldin yopishsiz. Long — sotib olingan opsion, short — sotilgan (yozilgan). Sotilgan opsionlar katta xavf tashiydi. Investitsiya maslahati emas."
+    },
+    "unlimited": "Cheklanmagan",
+    "forexlot": {
+      "title": "Forex: lot, punkt qiymati, marja va spred",
+      "desc": "Punktlardagi stop bo'yicha zarar riskdan oshmasligi uchun nechta lot olish kerak. Shuningdek punkt qiymati, marja va spred qancha turishi.",
+      "f": {
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimga risk, %",
+        "stopPips": "Stop punktlarda",
+        "pairClass": "Qaysi juftlik",
+        "price": "Juftlikning hozirgi narxi",
+        "quoteToUsd": "Kotirovka valyutasining dollarga kursi (kross juftliklar uchun)",
+        "spreadPips": "Spred punktlarda",
+        "leverage": "Yelka (ixtiyoriy)"
+      },
+      "c": {
+        "1": "Dollar oxirida: EUR/USD, GBP/USD, AUD/USD",
+        "2": "Dollar boshida: USD/CHF, USD/CAD",
+        "3": "Iyena bilan: USD/JPY",
+        "4": "Dollarsiz kross: EUR/GBP, EUR/JPY"
+      },
+      "o": {
+        "pipValue": "1 lot uchun punkt qiymati, $",
+        "lots": "Pozitsiya hajmi, lot",
+        "units": "Bazaviy valyuta birligi",
+        "riskAmount": "Stop ishlasa zarar, $",
+        "spreadCost": "Spred qiymati, $",
+        "margin": "Kerakli marja, $"
+      },
+      "note": "Dollar hisobi, standart lot 100 000 birlik, hajm 0,01 lotgacha pastga yaxlitlanadi. Kross juftliklar uchun juftlik oxiridagi valyutaning dollarga kursini kiriting (EUR/GBP uchun bu GBP/USD). Oltin «Fyuchers va oltin riski» kalkulyatorida hisoblanadi (XAUUSD lot). Investitsiya maslahati emas."
     }
   },
   "shortcuts": {
@@ -2252,5 +2311,52 @@
     "ls": "Long/short",
     "hours": "{n} soat",
     "note": "Funding: musbat bo'lsa, long egalari short egalariga to'laydi, manfiy bo'lsa, aksincha. Ochiq interes ochiq pozitsiyalar hajmini ko'rsatadi, nisbat 1 dan katta bo'lsa, longdagi hisoblar shortdagidan ko'p. Bu ma'lumot uchun, signal emas: ko'rsatkichlarning o'sishi ham, tushishi ham «yaxshi» yoki «yomon» degani emas."
+  },
+  "traderprofile": {
+    "title": "Siz qanday treydersiz",
+    "text": "Bitimlarni qancha ushlab turishingiz va qaysi bozorlarda savdo qilishingizni tanlang. Bosh sahifa kerakli yorliqlarni ko'rsatadi, yangi bitim formasi esa bozoringizni qo'yib beradi.",
+    "horizon": "Bitimni qancha ushlaysiz",
+    "markets": "Qaysi bozorlarda savdo qilasiz",
+    "horizons": {
+      "scalper": "Skalping (daqiqalar)",
+      "day": "Kun davomida",
+      "swing": "Sving (kunlar va haftalar)",
+      "position": "Pozitsion (oylar va yillar)"
+    },
+    "marketNames": {
+      "crypto": "Kripto",
+      "forex": "Forex",
+      "stocks": "Aksiyalar",
+      "futures": "Fyucherslar",
+      "options": "Opsionlar",
+      "commodities": "Oltin va xomashyo"
+    }
+  },
+  "mytools": {
+    "title": "Mening vositalarim",
+    "change": "O'zgartirish",
+    "empty": "Qanday savdo qilishingizni ko'rsating, bosh sahifa kerakli vositalarni ko'rsatadi.",
+    "set": "Sozlash",
+    "links": {
+      "quick": "Tez yozish",
+      "feeBreakeven": "Komissiya bilan zararsizlik",
+      "sessions": "Savdo sessiyalari",
+      "advanced": "Kengaytirilgan tahlil",
+      "portfolio": "Portfel",
+      "goal": "Maqsad rejasi",
+      "week": "Hafta tahlili",
+      "compound": "Murakkab foiz",
+      "market": "Bozor",
+      "liquidation": "Likvidatsiya narxi",
+      "chartBtc": "BTC grafigi",
+      "positionSize": "Pozitsiya hajmi",
+      "chartGold": "Oltin grafigi",
+      "stockSize": "Aksiyada pozitsiya hajmi",
+      "chartAapl": "AAPL grafigi",
+      "futuresRisk": "Fyuchers riski",
+      "chartNq": "Nasdaq-100 grafigi",
+      "optionsCalc": "Opsionlar: to'lov",
+      "forexLot": "Lot va punkt qiymati"
+    }
   }
 }

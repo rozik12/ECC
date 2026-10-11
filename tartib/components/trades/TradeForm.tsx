@@ -353,7 +353,12 @@ export function TradeForm({
           </Select>
           <Input id="t-instrument" list="known-instruments" autoComplete="off" label={t("trades.form.instrument")} placeholder={t(`trades.form.ph.${v.market}`)} error={err("instrument")} {...bind("instrument")} />
           <datalist id="known-instruments">{instruments.map((x) => <option key={x} value={x} />)}</datalist>
-          <Select id="t-market" label={t("trades.form.market")} {...bind("market")}>
+          <Select id="t-market" label={t("trades.form.market")} value={v.market} onChange={(e) => {
+            const m = e.target.value as MarketKey;
+            set("market", m);
+            // Опционы торгуются контрактами: включаем режим контрактов с множителем 100
+            if (m === "options") { setContractMode(true); if (!parseNumber(v.contractSize)) set("contractSize", "100"); }
+          }}>
             {markets.map((m) => <option key={m} value={m}>{t(`markets.${m}`)}</option>)}
           </Select>
           <div>
@@ -393,6 +398,7 @@ export function TradeForm({
               <input type="checkbox" className="h-4 w-4 accent-[var(--primary)]" checked={contractMode} onChange={(e) => setContractMode(e.target.checked)} />
               {t("trades.form.contractMode")}
             </label>
+            {contractMode && v.market === "options" && <p className="text-xs text-muted">{t("trades.form.optionsHint")}</p>}
             {contractMode && (
               <div className="grid grid-cols-2 gap-4">
                 <Input id="t-contracts" inputMode="decimal" label={t("trades.form.contracts")} error={err("contracts")} {...bind("contracts")} />

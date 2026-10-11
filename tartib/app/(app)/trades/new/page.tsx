@@ -11,6 +11,7 @@ import { lossCooldown } from "@/lib/statistics";
 import { dayBounds, safeTimeZone } from "@/lib/time";
 import { directions, emotions, markets, type DirectionKey, type EmotionKey, type MarketKey } from "@/lib/trading";
 import { templateDataSchema } from "@/lib/validations/templates";
+import { defaultFormMarket, isTraderMarket } from "@/lib/trader-profile";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -46,7 +47,9 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
   if (accounts.length === 0) return <Alert tone="warning">{t("trades.noAccount")}</Alert>;
 
   const account = accounts.find((a) => a.id === one(sp.account)) ?? accounts[0];
-  const market = (markets as readonly string[]).includes(one(sp.market)) ? (one(sp.market) as MarketKey) : "crypto";
+  // Рынок: из адреса, иначе первый рынок из профиля трейдера, иначе крипто
+  const profileMarket = defaultFormMarket((profile?.trader_markets ?? []).filter(isTraderMarket), markets);
+  const market = (markets as readonly string[]).includes(one(sp.market)) ? (one(sp.market) as MarketKey) : ((profileMarket ?? "crypto") as MarketKey);
   const direction = (directions as readonly string[]).includes(one(sp.direction)) ? (one(sp.direction) as DirectionKey) : "long";
 
   const cooldown = lossCooldown(last, new Date());

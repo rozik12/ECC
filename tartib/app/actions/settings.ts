@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
+import { HORIZONS, TRADER_MARKETS } from "@/lib/trader-profile";
 import { LOCALE_COOKIE } from "@/lib/i18n/config";
 import { accountSchema, checklistSchema, profileSchema, renameAccountSchema, settingsSchema, transactionSchema } from "@/lib/validations/settings";
 import type { ActionResult } from "./auth";
@@ -167,6 +168,27 @@ export async function setShareAction(mode: unknown): Promise<ActionResult> {
     const { error } = await supabase.from("profiles").update({ share_token: token }).eq("id", user.id);
     if (error) return FAIL;
     revalidatePath("/profile");
+    return { ok: true };
+  } catch (e) {
+    if (isNextControlFlow(e)) throw e;
+    return FAIL;
+  }
+}
+
+const traderProfileSchema = z.object({
+  horizon: z.enum(HORIZONS).nullable(),
+  markets: z.array(z.enum(TRADER_MARKETS)).max(6),
+});
+
+/** Сохраняет профиль трейдера: срок удержания сделок и рынки. По нему главная показывает нужные ярлыки. */
+export async function updateTraderProfileAction(input: unknown): Promise<ActionResult> {
+  const parsed = traderProfileSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "errors.generic" };
+  try {
+    const { supabase, user } = await requireUser();
+    const { error } = await supabase.from("profiles").update({ trader_horizon: parsed.data.horizon, trader_markets: [...new Set(parsed.data.markets)] }).eq("id", user.id);
+    if (error) return FAIL;
+    revalidatePath("/", "layout");
     return { ok: true };
   } catch (e) {
     if (isNextControlFlow(e)) throw e;

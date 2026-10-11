@@ -4,7 +4,7 @@ import type { StatTrade } from "./statistics/index.ts";
 
 export type BucketRow = { bucket: Bucket; count: number; winRate: number; pnl: number; avgPnl: number; violationRate: number };
 
-export const isUsMarket = (t: Pick<StatTrade, "market">) => t.market === "stocks" || t.market === "futures";
+export const isUsMarket = (t: Pick<StatTrade, "market">) => t.market === "stocks" || t.market === "futures" || t.market === "options";
 
 /** Результат по частям дня. Части без сделок пропускаются. */
 export function byUsBucket(trades: StatTrade[]): BucketRow[] {

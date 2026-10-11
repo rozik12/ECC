@@ -315,7 +315,8 @@
     "crypto": "Crypto",
     "forex": "Forex",
     "stocks": "Stocks",
-    "futures": "Futures"
+    "futures": "Futures",
+    "options": "Options"
   },
   "emotions": {
     "calm": "Calm",
@@ -574,14 +575,16 @@
         "crypto": "BTC/USDT",
         "forex": "XAUUSD",
         "stocks": "AAPL",
-        "futures": "MNQ"
+        "futures": "MNQ",
+        "options": "AAPL 200C 2026-12-18"
       },
       "closedPdtHint": "Closing time feeds the day-trade (PDT) counter on the dashboard.",
       "contractMode": "I trade contracts",
       "contracts": "Contracts",
       "contractSize": "Size of one contract",
       "contractSizeHint": "How many units of the asset one contract holds (for example, 100)",
-      "contractTotal": "Position size (contracts × contract size)"
+      "contractTotal": "Position size (contracts × contract size)",
+      "optionsHint": "Option: enter the premium per share in the entry and exit price fields, contracts as many as you bought, contract size is usually 100. Buying an option is “long”, selling is “short”."
     },
     "detail": {
       "risk": "Risk",
@@ -1365,6 +1368,62 @@
         "formSize": "Size for the trade form"
       },
       "note": "Form size = contracts × point value, so profit and loss in Tartib come out right in dollars. Point values are for reference: check the exchange contract specs. Not investment advice."
+    },
+    "options": {
+      "title": "Options: payoff at expiry",
+      "desc": "Break-even, maximum profit and loss and the result of a bought or sold call and put at expiry.",
+      "f": {
+        "kind": "Option type",
+        "side": "Position",
+        "strike": "Strike",
+        "premium": "Premium per share",
+        "contracts": "Contracts",
+        "multiplier": "Shares per contract",
+        "underlying": "Underlying price at expiry (optional)"
+      },
+      "c": {
+        "1": "Call (right to buy)",
+        "2": "Put (right to sell)"
+      },
+      "o": {
+        "premiumTotal": "Total premium (paid or received)",
+        "breakeven": "Break-even price",
+        "maxProfit": "Maximum profit",
+        "maxLoss": "Maximum loss",
+        "moveToBreakeven": "Price move needed to break even",
+        "pnlAtExpiry": "Result at this price"
+      },
+      "note": "Calculated at expiry, ignoring fees and early closing. Long is a bought option, short is a sold (written) one. Sold options carry large risk. Not investment advice."
+    },
+    "unlimited": "Unlimited",
+    "forexlot": {
+      "title": "Forex: lot size, pip value, margin and spread",
+      "desc": "How many lots keep the loss at your stop within your risk. Also the pip value, margin and what the spread costs.",
+      "f": {
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "stopPips": "Stop in pips",
+        "pairClass": "Which pair",
+        "price": "Current pair price",
+        "quoteToUsd": "Quote currency to USD rate (for cross pairs)",
+        "spreadPips": "Spread in pips",
+        "leverage": "Leverage (optional)"
+      },
+      "c": {
+        "1": "Dollar last: EUR/USD, GBP/USD, AUD/USD",
+        "2": "Dollar first: USD/CHF, USD/CAD",
+        "3": "With yen: USD/JPY",
+        "4": "Cross without dollar: EUR/GBP, EUR/JPY"
+      },
+      "o": {
+        "pipValue": "Pip value per 1 lot, $",
+        "lots": "Position size, lots",
+        "units": "Units of base currency",
+        "riskAmount": "Loss if the stop hits, $",
+        "spreadCost": "Spread cost, $",
+        "margin": "Margin needed, $"
+      },
+      "note": "Dollar account, standard lot of 100,000 units, size rounded down to 0.01 lot. For cross pairs enter the rate of the last currency of the pair to the dollar (for EUR/GBP that is GBP/USD). Gold is in the “Futures and gold risk” calculator (XAUUSD lot). Not investment advice."
     }
   },
   "shortcuts": {
@@ -2252,5 +2311,52 @@
     "ls": "Longs to shorts",
     "hours": "{n} h",
     "note": "Funding: when positive, long holders pay short holders; when negative, the other way round. Open interest shows the volume of open positions, and a ratio above 1 means more accounts are long than short. This is reference data, not a signal: no rise or fall in any of these means “good” or “bad”."
+  },
+  "traderprofile": {
+    "title": "What kind of trader you are",
+    "text": "Choose how long you hold trades and which markets you trade. The dashboard will show matching shortcuts and the new-trade form will pre-select your market.",
+    "horizon": "How long you hold trades",
+    "markets": "Markets you trade",
+    "horizons": {
+      "scalper": "Scalping (minutes)",
+      "day": "Within the day",
+      "swing": "Swing (days and weeks)",
+      "position": "Position (months and years)"
+    },
+    "marketNames": {
+      "crypto": "Crypto",
+      "forex": "Forex",
+      "stocks": "Stocks",
+      "futures": "Futures",
+      "options": "Options",
+      "commodities": "Gold and commodities"
+    }
+  },
+  "mytools": {
+    "title": "My tools",
+    "change": "Change",
+    "empty": "Tell us how you trade and the dashboard will show the tools you need.",
+    "set": "Set up",
+    "links": {
+      "quick": "Quick entry",
+      "feeBreakeven": "Break-even with fees",
+      "sessions": "Trading sessions",
+      "advanced": "Advanced analytics",
+      "portfolio": "Portfolio",
+      "goal": "Goal plan",
+      "week": "Week review",
+      "compound": "Compound interest",
+      "market": "Market",
+      "liquidation": "Liquidation price",
+      "chartBtc": "BTC chart",
+      "positionSize": "Position size",
+      "chartGold": "Gold chart",
+      "stockSize": "Stock position size",
+      "chartAapl": "AAPL chart",
+      "futuresRisk": "Futures risk",
+      "chartNq": "Nasdaq-100 chart",
+      "optionsCalc": "Options payoff",
+      "forexLot": "Lot and pip value"
+    }
   }
 }

@@ -124,3 +124,53 @@ test("золото: GC, MGC и лот XAUUSD", () => {
   const oil = futuresRisk({ balance: 100000, riskPct: 1, entry: 90, stop: 91, contract: 8, feePerContract: 0 });
   assert.ok(oil.ok && oil.contracts === 1 && oil.direction === "short");
 });
+
+import { optionPayoff } from "../lib/tools.ts";
+
+test("опционы: купленный колл", () => {
+  const r = optionPayoff({ kind: 1, side: 1, strike: 200, premium: 5, contracts: 2, multiplier: 100, underlying: 220 });
+  assert.ok(r.ok);
+  if (r.ok) { assert.equal(r.breakeven, 205); assert.equal(r.premiumTotal, 1000); assert.equal(r.maxLoss, 1000); assert.equal(r.maxProfit, null); assert.equal(r.pnlAtExpiry, 3000); near(r.moveToBreakevenPct as number, ((205 - 220) / 220) * 100); }
+  const out = optionPayoff({ kind: 1, side: 1, strike: 200, premium: 5, contracts: 1, multiplier: 100, underlying: 190 });
+  assert.ok(out.ok && out.pnlAtExpiry === -500); // истёк без выплаты: потеряна премия
+});
+
+test("опционы: пут, проданные опционы и ошибки", () => {
+  const lp = optionPayoff({ kind: 2, side: 1, strike: 100, premium: 4, contracts: 1, multiplier: 100, underlying: 80 });
+  assert.ok(lp.ok && lp.breakeven === 96 && lp.maxProfit === 9600 && lp.maxLoss === 400 && lp.pnlAtExpiry === 1600);
+  const sc = optionPayoff({ kind: 1, side: 2, strike: 100, premium: 3, contracts: 1, multiplier: 100, underlying: 130 });
+  assert.ok(sc.ok && sc.maxLoss === null && sc.maxProfit === 300 && sc.pnlAtExpiry === -2700 && sc.breakeven === 103);
+  const sp = optionPayoff({ kind: 2, side: 2, strike: 100, premium: 3, contracts: 2, multiplier: 100, underlying: null });
+  assert.ok(sp.ok && sp.maxProfit === 600 && sp.maxLoss === 19400 && sp.pnlAtExpiry === null);
+  assert.equal(optionPayoff({ kind: 3, side: 1, strike: 100, premium: 3, contracts: 1, multiplier: 100, underlying: null }).ok, false);
+  assert.equal(optionPayoff({ kind: 1, side: 1, strike: 0, premium: 3, contracts: 1, multiplier: 100, underlying: null }).ok, false);
+});
+
+import { forexLot } from "../lib/tools.ts";
+
+test("форекс: лот и стоимость пункта по классам пар", () => {
+  const base = { balance: 5000, riskPct: 1, stopPips: 25, quoteToUsd: null, spreadPips: 1, leverage: 30 };
+  // EUR/USD: пункт 10 $, риск 50 $ / (25 × 10) = 0,2 лота
+  const eur = forexLot({ ...base, pairClass: 1, price: 1.12 });
+  assert.ok(eur.ok && eur.pipValue === 10 && eur.lots === 0.2 && eur.units === 20000 && Math.abs(eur.actualRisk - 50) < 1e-9 && Math.abs(eur.spreadCost - 2) < 1e-9);
+  if (eur.ok) near(eur.margin as number, (20000 * 1.12) / 30);
+  // USD/CHF по 0,9: пункт 10 / 0,9 = 11,11 $
+  const chf = forexLot({ ...base, pairClass: 2, price: 0.9 });
+  assert.ok(chf.ok && Math.abs(chf.pipValue - 11.1111111) < 1e-6 && chf.lots === 0.18);
+  if (chf.ok) near(chf.margin as number, 18000 / 30);
+  // USD/JPY по 150: пункт 1000 / 150 = 6,67 $
+  const jpy = forexLot({ ...base, pairClass: 3, price: 150 });
+  assert.ok(jpy.ok && Math.abs(jpy.pipValue - 6.6666667) < 1e-6 && jpy.lots === 0.3);
+  // EUR/GBP по 0,85, фунт = 1,25 $: пункт 12,5 $
+  const cross = forexLot({ ...base, pairClass: 4, price: 0.85, quoteToUsd: 1.25 });
+  assert.ok(cross.ok && cross.pipValue === 12.5 && cross.lots === 0.16);
+  if (cross.ok) near(cross.margin as number, (16000 * 0.85 * 1.25) / 30);
+});
+
+test("форекс: округление вниз, без плеча и ошибки", () => {
+  const r = forexLot({ balance: 1000, riskPct: 1, stopPips: 33, pairClass: 1, price: 1.1, quoteToUsd: null, spreadPips: 0, leverage: null });
+  assert.ok(r.ok && r.lots === 0.03 && r.actualRisk <= r.riskAmount && r.margin === null); // 10 / (33×10) = 0,0303 → 0,03
+  assert.equal(forexLot({ balance: 1000, riskPct: 1, stopPips: 33, pairClass: 4, price: 1.1, quoteToUsd: null, spreadPips: 0, leverage: null }).ok, false); // кросс без курса
+  assert.equal(forexLot({ balance: 1000, riskPct: 1, stopPips: 0, pairClass: 1, price: 1.1, quoteToUsd: null, spreadPips: 0, leverage: 30 }).ok, false);
+  assert.equal(forexLot({ balance: 1000, riskPct: 1, stopPips: 10, pairClass: 9, price: 1.1, quoteToUsd: null, spreadPips: 0, leverage: 30 }).ok, false);
+});

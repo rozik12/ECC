@@ -459,6 +459,51 @@ export const ARTICLES: Article[] = [
       }
     }
   },
+  {
+    slug: "nasdaq-sessions-pdt-risk",
+    date: "2026-10-11",
+    text: {
+      ru: {
+        title: "Nasdaq для трейдера: сессии, правило PDT и риск на акциях и фьючерсах",
+        description: "Часы американской биржи, что такое дей-трейд и правило PDT, как считать размер позиции в акциях и контрактах.",
+        minutes: 6,
+        sections: [
+          { h: "Три части торгового дня", p: ["Американские акции торгуются по Нью-Йорку: премаркет с 4:00 до 9:30, основная сессия с 9:30 до 16:00, постмаркет с 16:00 до 20:00. В премаркете и постмаркете объёмов меньше, спреды шире, цены двигаются резче. Раз в год часы меняются из-за перехода на летнее время, поэтому в Tartib время показывается в вашем часовом поясе и пересчитывается само.", "В праздники биржа закрыта, а в некоторые дни, например на следующий день после Дня благодарения, основная сессия заканчивается в 13:00. Смотрите календарь биржи заранее."] },
+          { h: "Не все часы одинаково полезны именно вам", p: ["Первые 30 минут после открытия и последний час обычно самые подвижные, середина дня тише. У каждого трейдера свои сильные и слабые часы. Не угадывайте, а измерьте: в разделе расширенной статистики Tartib результат по сделкам на акциях и фьючерсах разложен по часам биржи вместе с долей нарушений правил. Может оказаться, что в первые полчаса вы чаще нарушаете правила, чем днём."] },
+          { h: "Что такое дей-трейд и правило PDT", p: ["Дей-трейд — сделка по акции, открытая и закрытая в один и тот же торговый день. По правилу FINRA, если на маржинальном счёте у вас меньше 25 000 долларов и вы сделали 4 или более дей-трейдов за 5 торговых дней, брокер может присвоить вам статус «шаблонного дей-трейдера» и ограничить торговлю. Правило относится к акциям; условия у разных брокеров и в разное время могут отличаться, поэтому всегда уточняйте их у своего брокера.", "Tartib ведёт справочный счётчик по вашим сделкам с рынком «Акции» и показывает, сколько дей-трейдов уже использовано. Он считает только то, что записано в журнале."] },
+          { h: "Размер позиции в акциях", p: ["Акции покупают целыми штуками. Формула простая: сколько вы готовы потерять на сделке, делим на расстояние от входа до стопа с учётом комиссии. Результат округляем вниз. Пример: баланс 10 000 долларов, риск 1%, вход 180, стоп 176: риск 100 долларов, 4 доллара на акцию, значит 25 акций.", "Если стоимость позиции получилась больше баланса, нужно плечо брокера. Это сигнал уменьшить размер, а не повод брать больше."] },
+          { h: "Фьючерсы: считайте в пунктах", p: ["У фьючерса на Nasdaq-100 один пункт стоит денег: у NQ 20 долларов, у микро-контракта MNQ 2 доллара; у ES 50 долларов, у MES 5. Стоп в 20 пунктов на одном MNQ равен 40 долларам, на одном NQ равен 400. Калькулятор «Риск по фьючерсам» считает число контрактов и подсказывает размер для формы сделки: контракты умножить на стоимость пункта.", "Для начала микро-контракты дают возможность рисковать малыми суммами и точнее дозировать риск."] },
+          { h: "Главное", p: ["Сессии, PDT и размер позиции нужны не для поиска идеальных входов, а для контроля риска. Заранее решите, в какие часы торгуете, сколько дей-трейдов себе разрешаете и какой размер подходит под стоп, а потом проверяйте себя по журналу. Tartib — инструмент учёта и дисциплины; он не даёт советов и не обещает прибыли."] },
+        ],
+      },
+      uz: {
+        title: "Nasdaq treyderi uchun: sessiyalar, PDT qoidasi va aksiya hamda fyucherslarda risk",
+        description: "AQSh birjasi soatlari, day-trade va PDT qoidasi nima, aksiya va kontraktlarda pozitsiya hajmini qanday hisoblash.",
+        minutes: 6,
+        sections: [
+          { h: "Savdo kunining uch qismi", p: ["AQSh aksiyalari Nyu-York vaqti bilan savdo qilinadi: premarket 4:00 dan 9:30 gacha, asosiy sessiya 9:30 dan 16:00 gacha, postmarket 16:00 dan 20:00 gacha. Premarket va postmarketda hajm kam, spred keng, narx keskinroq harakatlanadi. Yilda ikki marta yozgi vaqtga o'tish sababli soatlar o'zgaradi, shuning uchun Tartib vaqtni sizning mintaqangizda ko'rsatadi va o'zi qayta hisoblaydi.", "Bayramlarda birja yopiq, ba'zi kunlarda, masalan Minnatdorchilik kunidan keyingi kuni, asosiy sessiya 13:00 da tugaydi. Birja kalendariga oldindan qarang."] },
+          { h: "Barcha soatlar sizga bir xil foydali emas", p: ["Ochilishdan keyingi dastlabki 30 daqiqa va oxirgi soat odatda eng harakatchan, kun o'rtasi tinchroq. Har bir treyderning o'z kuchli va kuchsiz soatlari bor. Taxmin qilmang, o'lchang: Tartibning kengaytirilgan statistikasida aksiya va fyuchers bitimlari natijasi birja soatlari bo'yicha, qoidalar buzilishi ulushi bilan birga ko'rsatiladi. Dastlabki yarim soatda kunning o'rtasidagidan ko'ra tez-tez qoidani buzishingiz mumkin."] },
+          { h: "Day-trade va PDT qoidasi nima", p: ["Day-trade — aksiya bo'yicha bir savdo kunida ochilib yopilgan bitim. FINRA qoidasiga ko'ra, marja hisobingizda 25 000 dollardan kam bo'lsa va 5 savdo kuni ichida 4 yoki undan ko'p day-trade qilsangiz, broker sizga «pattern day trader» maqomini berib, savdoni cheklashi mumkin. Qoida aksiyalarga tegishli; brokerlarda va turli vaqtda shartlar farq qilishi mumkin, shuning uchun doim brokeringizdan aniqlang.", "Tartib «Aksiyalar» bozoridagi bitimlaringiz bo'yicha ma'lumot uchun hisoblagich yuritadi va nechta day-trade ishlatilganini ko'rsatadi. U faqat jurnalga yozilganlarni sanaydi."] },
+          { h: "Aksiyalarda pozitsiya hajmi", p: ["Aksiyalar butun donada olinadi. Formula oddiy: bitimda qancha yo'qotishga tayyorligingizni kirishdan stopgacha masofaga (komissiya bilan) bo'lamiz. Natijani pastga yaxlitlaymiz. Misol: balans 10 000 dollar, risk 1%, kirish 180, stop 176: risk 100 dollar, aksiyaga 4 dollar, demak 25 ta aksiya.", "Pozitsiya qiymati balansdan oshib ketsa, broker yelkasi kerak. Bu hajmni kamaytirish signali, ko'proq olish sababi emas."] },
+          { h: "Fyucherslar: punktlarda hisoblang", p: ["Nasdaq-100 fyuchersida bir punkt pul turadi: NQ da 20 dollar, mikro MNQ da 2 dollar; ES da 50 dollar, MES da 5. Bitta MNQ da 20 punktlik stop 40 dollar, bitta NQ da 400 dollar. «Fyuchers riski» kalkulyatori kontraktlar sonini hisoblaydi va bitim formasi uchun hajmni aytadi: kontraktlar ko'paytirilgan punkt qiymati.", "Boshlash uchun mikro-kontraktlar kichik summalar bilan risk qilish va riskni aniqroq o'lchash imkonini beradi."] },
+          { h: "Asosiysi", p: ["Sessiyalar, PDT va pozitsiya hajmi ideal kirishni qidirish uchun emas, riskni nazorat qilish uchun kerak. Qaysi soatlarda savdo qilishni, nechta day-trade ruxsat berishni va stopga qanday hajm mosligini oldindan hal qiling, keyin o'zingizni jurnal bo'yicha tekshiring. Tartib — hisob va intizom vositasi; maslahat bermaydi va foyda va'da qilmaydi."] },
+        ],
+      },
+      en: {
+        title: "Nasdaq for traders: sessions, the PDT rule and risk on stocks and futures",
+        description: "US market hours, what a day trade and the PDT rule are, and how to size positions in shares and contracts.",
+        minutes: 6,
+        sections: [
+          { h: "Three parts of the trading day", p: ["US stocks trade on New York time: pre-market from 4:00 to 9:30, the regular session from 9:30 to 16:00 and after-hours from 16:00 to 20:00. Pre-market and after-hours have thinner volume, wider spreads and sharper moves. The clocks shift with daylight saving, so Tartib shows times in your own time zone and recalculates them for you.", "The exchange is closed on holidays, and on a few days, such as the day after Thanksgiving, the regular session ends at 13:00. Check the exchange calendar ahead of time."] },
+          { h: "Not every hour suits you equally", p: ["The first 30 minutes after the open and the last hour are usually the most active, the middle of the day is quieter. Every trader has their own strong and weak hours. Do not guess, measure: in Tartib's advanced statistics, results for stock and futures trades are split by exchange hours together with the share of rule breaks. You may find you break rules more often in the first half hour than at midday."] },
+          { h: "What a day trade is and what PDT means", p: ["A day trade is a stock position opened and closed on the same trading day. Under the FINRA rule, if a margin account holds less than 25,000 dollars and makes 4 or more day trades within 5 trading days, the broker may label you a pattern day trader and restrict trading. The rule concerns stocks; terms can differ between brokers and change over time, so always confirm them with your broker.", "Tartib keeps a reference counter from your trades in the Stocks market and shows how many day trades you have used. It only counts what is recorded in your journal."] },
+          { h: "Position size in stocks", p: ["Shares are bought in whole units. The formula is simple: the amount you are willing to lose on the trade, divided by the distance from entry to stop including commission. Round the result down. Example: a 10,000 dollar balance, 1% risk, entry 180, stop 176: 100 dollars of risk, 4 dollars per share, so 25 shares.", "If the position value comes out larger than your balance, you would need broker leverage. That is a sign to cut the size, not a reason to take more."] },
+          { h: "Futures: count in points", p: ["On Nasdaq-100 futures one point is worth money: 20 dollars on NQ, 2 dollars on the micro MNQ; 50 dollars on ES, 5 on MES. A 20-point stop on one MNQ is 40 dollars, on one NQ it is 400. The Futures risk calculator works out the number of contracts and gives the size to enter in the trade form: contracts multiplied by the point value.", "To start, micro contracts let you risk small amounts and size risk more precisely."] },
+          { h: "The bottom line", p: ["Sessions, PDT and position size are for controlling risk, not for finding perfect entries. Decide in advance which hours you trade, how many day trades you allow yourself and what size fits your stop, then check yourself against your journal. Tartib is a tool for tracking and discipline; it gives no advice and promises no profit."] },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {

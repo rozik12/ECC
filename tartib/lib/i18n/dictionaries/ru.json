@@ -584,7 +584,8 @@
         "forex": "EUR/USD",
         "stocks": "AAPL",
         "futures": "MNQ"
-      }
+      },
+      "closedPdtHint": "Время закрытия нужно счётчику дей-трейдов (PDT) на главной."
     },
     "detail": {
       "risk": "Риск",

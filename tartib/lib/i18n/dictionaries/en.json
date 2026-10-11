@@ -584,7 +584,8 @@
         "forex": "EUR/USD",
         "stocks": "AAPL",
         "futures": "MNQ"
-      }
+      },
+      "closedPdtHint": "Closing time feeds the day-trade (PDT) counter on the dashboard."
     },
     "detail": {
       "risk": "Risk",

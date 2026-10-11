@@ -357,6 +357,11 @@ export function TradeForm({
               </button>
             )}
           </div>
+          {v.market === "stocks" && n.exit !== null && !full && (
+            <div className="col-span-2 sm:col-span-3">
+              <Input id="t-closed-pdt" type="datetime-local" label={t("journal.closedAt")} hint={t("trades.form.closedPdtHint")} error={err("closedAt")} {...bind("closedAt")} />
+            </div>
+          )}
           <Input id="t-stop" inputMode="decimal" label={t("trades.form.stop")} error={err("stopLoss")} value={v.stop} onChange={(e) => setPrice("stop", e.target.value)} />
           <div className={adv}><Input id="t-tp" inputMode="decimal" label={t("trades.form.takeProfit")} error={err("takeProfit")} {...bind("takeProfit")} /></div>
           <div className={adv}><Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} /></div>

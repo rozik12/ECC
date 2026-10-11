@@ -584,7 +584,8 @@
         "forex": "EUR/USD",
         "stocks": "AAPL",
         "futures": "MNQ"
-      }
+      },
+      "closedPdtHint": "Yopilish vaqti bosh sahifadagi day-trade (PDT) hisoblagichi uchun kerak."
     },
     "detail": {
       "risk": "Xavf",

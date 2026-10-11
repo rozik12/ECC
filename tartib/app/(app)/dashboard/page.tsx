@@ -5,6 +5,7 @@ import { AchievementsCard } from "@/components/statistics/AchievementsCard";
 import { GoalCard } from "@/components/statistics/GoalCard";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { DayHero } from "@/components/dashboard/DayHero";
+import { PdtCard } from "@/components/dashboard/PdtCard";
 import { GettingStarted } from "@/components/dashboard/GettingStarted";
 import { StreakCard } from "@/components/statistics/StreakCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
@@ -13,6 +14,7 @@ import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/co
 import { computeAchievements, daysSinceLastTrade, monthDiscipline } from "@/lib/achievements";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
+import { pdtApplies, pdtState } from "@/lib/pdt";
 import { fetchStatTrades, getAccounts, getPlan, getRules } from "@/lib/data";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
@@ -47,6 +49,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const limitRule = rules.find((r) => r.is_active && r.rule_type === "max_daily_loss_percent" && r.value !== null && r.value > 0);
   const limitState = limitRule ? dailyLimit(todaySummary.totalPnl, balance - todaySummary.totalPnl, limitRule.value as number) : null;
   const run = losingRun(all, new Date());
+  // Счётчик дей-трейдов нужен только тем, кто торгует акциями; капитал считаем по долларовым счетам
+  const tradesStocks = all.some((x) => x.market === "stocks");
+  const usdAccounts = accounts.filter((a) => a.currency === "USD");
+  const usEquity = usdAccounts.length ? usdAccounts.reduce((s, a) => s + a.balance, 0) : null;
 
   const inPeriod = filterByPeriod(all, period);
   const discipline = disciplineCost(inPeriod);
@@ -87,6 +93,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         limit={limitState && limitRule ? { pct: limitRule.value as number, lossPct: limitState.lossPct, usedPct: limitState.usedPct, level: limitState.level } : null}
         lossRun={run.count}
       />
+
+      {tradesStocks && <PdtCard state={pdtState(all, new Date())} applies={usEquity === null ? null : pdtApplies(usEquity)} />}
 
       <GettingStarted steps={startSteps} />
 

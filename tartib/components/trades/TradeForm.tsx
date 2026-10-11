@@ -329,7 +329,7 @@ export function TradeForm({
           <Select id="t-account" label={t("trades.form.account")} error={err("accountId")} {...bind("accountId")}>
             {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
           </Select>
-          <Input id="t-instrument" list="known-instruments" autoComplete="off" label={t("trades.form.instrument")} placeholder="BTC/USDT" error={err("instrument")} {...bind("instrument")} />
+          <Input id="t-instrument" list="known-instruments" autoComplete="off" label={t("trades.form.instrument")} placeholder={t(`trades.form.ph.${v.market}`)} error={err("instrument")} {...bind("instrument")} />
           <datalist id="known-instruments">{instruments.map((x) => <option key={x} value={x} />)}</datalist>
           <Select id="t-market" label={t("trades.form.market")} {...bind("market")}>
             {markets.map((m) => <option key={m} value={m}>{t(`markets.${m}`)}</option>)}
@@ -350,7 +350,7 @@ export function TradeForm({
           <Input id="t-entry" inputMode="decimal" label={t("trades.form.entry")} error={err("entryPrice")} value={v.entry} onChange={(e) => setPrice("entry", e.target.value)} />
           <Input id="t-exit" inputMode="decimal" label={t("trades.form.exit")} error={err("exitPrice")} {...bind("exit")} />
           <div>
-            <Input id="t-size" inputMode="decimal" label={t("trades.form.size")} error={err("positionSize")} {...bind("size")} />
+            <Input id="t-size" inputMode="decimal" label={v.market === "stocks" ? t("trades.form.sizeStocks") : v.market === "futures" ? t("trades.form.sizeFutures") : t("trades.form.size")} hint={v.market === "futures" ? t("trades.form.futuresHint") : undefined} error={err("positionSize")} {...bind("size")} />
             {suggestion && suggestion.ok && (
               <button type="button" onClick={() => set("size", String(Math.floor(suggestion.units * 1e6) / 1e6))} className="mt-1.5 min-h-10 text-left text-xs text-primary hover:underline">
                 {t("journal.sizeHint", { size: String(Math.floor(suggestion.units * 1e6) / 1e6), risk: riskForSize, amount: suggestion.riskAmount.toFixed(2) })}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { UsMarketCard } from "@/components/market/UsMarketCard";
 import { SessionsClock } from "@/components/tools/SessionsClock";
 import { ToolRunner } from "@/components/tools/ToolRunner";
 import { buttonStyles } from "@/components/ui";
@@ -34,7 +35,12 @@ export default async function ToolPage({ params }: Props) {
         <h1 className="text-2xl font-bold sm:text-3xl">{t(`tools.${key}.title`)}</h1>
         <p className="mt-2 text-muted">{t(`tools.${key}.desc`)}</p>
       </div>
-      {(CALC_SLUGS as readonly string[]).includes(slug) ? <ToolRunner slug={slug as ToolSlug} /> : <SessionsClock />}
+      {(CALC_SLUGS as readonly string[]).includes(slug) ? <ToolRunner slug={slug as ToolSlug} /> : (
+        <>
+          <SessionsClock />
+          <UsMarketCard />
+        </>
+      )}
       {extra && extra !== `tools.${key}.note` && <p className="text-sm text-muted">{extra}</p>}
       <div className="rounded-xl border border-border bg-surface p-5">
         <p className="font-medium">{t("tools.cta")}</p>

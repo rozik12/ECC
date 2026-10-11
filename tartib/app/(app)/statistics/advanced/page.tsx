@@ -16,6 +16,7 @@ import {
 import { byWeekday, personalRiskMath, recoveryFactor, sqn, underwater } from "@/lib/risk-stats";
 import { equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, type Period } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
+import { byUsBucket } from "@/lib/us-session-stats";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -58,6 +59,7 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
   const rules = ruleCost(trades);
   const instruments = instrumentTable(trades);
   const weekdayRows = byWeekday(trades, tz);
+  const usRows = byUsBucket(trades);
   const quality = sqn(trades);
   const recovery = recoveryFactor(trades.reduce((s, x) => s + x.pnl, 0), dd.amount);
   const water = underwater(curve);
@@ -308,6 +310,8 @@ export default async function AdvancedStatisticsPage({ searchParams }: { searchP
           </Card>
 
           {groupCard(t("risk.weekday"), weekdayRows.map((r) => ({ ...r, label: t(`risk.days7.${r.day}`) })), t("risk.weekdayNone"), t("risk.weekdayHint"))}
+
+          {usRows.length > 0 && groupCard(t("usstats.title"), usRows.map((r) => ({ key: r.bucket, count: r.count, winRate: r.winRate, pnl: r.pnl, avgPnl: r.avgPnl, label: t(`usstats.b.${r.bucket}`) })), t("usstats.none"), t("usstats.hint"))}
 
           {groupCard(t("journal.an.mistakes"), mistakeRows.map((r) => ({ ...r, label: t(`journal.mistakeNames.${r.key}`) })), t("journal.an.noMistakes"), t("journal.an.mistakesHint"))}
           <div className="grid gap-6 lg:grid-cols-2">

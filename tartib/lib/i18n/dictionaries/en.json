@@ -575,7 +575,16 @@
       "tzHint": "Time is entered in the time zone from your settings: {tz}",
       "saveAgain": "Save and add another",
       "savedAgain": "Trade saved. You can record the next one.",
-      "saveTip": "Tip: Ctrl+Enter saves the trade"
+      "saveTip": "Tip: Ctrl+Enter saves the trade",
+      "sizeStocks": "Number of shares",
+      "sizeFutures": "Size: contracts × point value",
+      "futuresHint": "For example, 2 MNQ contracts at $2 per point = 4. The Futures risk calculator works this out for you.",
+      "ph": {
+        "crypto": "BTC/USDT",
+        "forex": "EUR/USD",
+        "stocks": "AAPL",
+        "futures": "MNQ"
+      }
     },
     "detail": {
       "risk": "Risk",
@@ -1814,5 +1823,63 @@
     "takeSteady": "No serious leaks this week: rules were mostly followed. Keep up the journal and the diary.",
     "takeNone": "Not enough data yet.",
     "note": "The takeaway is built from your records by simple rules; it is not a forecast."
+  },
+  "usmarket": {
+    "title": "US market",
+    "phase": {
+      "pre": "Pre-market",
+      "regular": "Regular session",
+      "after": "After-hours",
+      "closed": "Closed"
+    },
+    "next": {
+      "pre": "Pre-market starts in {t}",
+      "regular": "Regular session starts in {t}",
+      "after": "Regular session ends in {t}",
+      "closed": "Trading ends in {t}"
+    },
+    "tz": "Times in your zone ({tz}), trading day: {day}.",
+    "closures": "Upcoming holidays and short days",
+    "early": "early close",
+    "note": "NYSE and Nasdaq hours: pre-market 4:00–9:30, regular session 9:30–16:00, after-hours 16:00–20:00 New York time. Daylight saving is handled. Holiday dates are for reference; check the exchange calendar. Futures trade almost around the clock with their own hours.",
+    "holiday": {
+      "newYear": "New Year's Day",
+      "mlk": "Martin Luther King Jr. Day",
+      "presidents": "Presidents' Day",
+      "goodFriday": "Good Friday",
+      "memorial": "Memorial Day",
+      "juneteenth": "Juneteenth",
+      "independence": "Independence Day (observed)",
+      "labor": "Labor Day",
+      "thanksgiving": "Thanksgiving",
+      "christmas": "Christmas",
+      "afterThanksgiving": "Day after Thanksgiving",
+      "christmasEve": "Christmas Eve"
+    }
+  },
+  "usstats": {
+    "title": "Results by US market hours",
+    "hint": "Stock and futures trades only. Times are New York time (daylight saving handled). Shows which hours you trade better and worse.",
+    "none": "Needs stock or futures trades: pick the market in the trade form.",
+    "b": {
+      "pre": "Pre-market (4:00–9:30)",
+      "open": "Open (9:30–10:00)",
+      "morning": "Morning (10:00–12:00)",
+      "midday": "Midday (12:00–14:00)",
+      "afternoon": "Afternoon (14:00–15:30)",
+      "power": "Power hour (15:30–16:00)",
+      "after": "After-hours (16:00–20:00)",
+      "off": "Outside sessions"
+    }
+  },
+  "pdt": {
+    "title": "Day trades (PDT)",
+    "window": "Stock trades opened and closed on the same day over the last {n} trading days (New York time).",
+    "ok": "Day trades left before the limit: {n}.",
+    "warn": "This is the maximum: the next day trade would be the fourth within 5 days.",
+    "flag": "More than three day trades in 5 days. Check your account terms with the broker.",
+    "rule": "For a margin account under ${limit}, 4 or more day trades in 5 trading days make you a pattern day trader.",
+    "notApplies": "Your USD account equity is at least ${limit}, so this rule normally does not limit you.",
+    "note": "The counter is for reference and only counts trades in your journal: confirm the rule with your broker."
   }
 }

@@ -575,7 +575,16 @@
       "tzHint": "Vaqt sozlamalardagi vaqt mintaqasida kiritiladi: {tz}",
       "saveAgain": "Saqlash va yana qo'shish",
       "savedAgain": "Bitim saqlandi. Keyingisini yozishingiz mumkin.",
-      "saveTip": "Maslahat: Ctrl+Enter bitimni saqlaydi"
+      "saveTip": "Maslahat: Ctrl+Enter bitimni saqlaydi",
+      "sizeStocks": "Aksiyalar soni",
+      "sizeFutures": "Hajm: kontraktlar × punkt qiymati",
+      "futuresHint": "Masalan, punkti $2 bo'lgan 2 ta MNQ kontrakti = 4. «Fyuchers riski» kalkulyatori buni o'zi hisoblaydi.",
+      "ph": {
+        "crypto": "BTC/USDT",
+        "forex": "EUR/USD",
+        "stocks": "AAPL",
+        "futures": "MNQ"
+      }
     },
     "detail": {
       "risk": "Xavf",
@@ -1814,5 +1823,63 @@
     "takeSteady": "Hafta davomida jiddiy yo'qotishlar ko'rinmaydi: qoidalar asosan bajarilgan. Jurnal va kundalikni yuritishda davom eting.",
     "takeNone": "Ma'lumot hali kam.",
     "note": "Xulosa yozuvlaringiz bo'yicha oddiy qoidalar asosida tuziladi, bu bashorat emas."
+  },
+  "usmarket": {
+    "title": "AQSh bozori",
+    "phase": {
+      "pre": "Premarket",
+      "regular": "Asosiy sessiya",
+      "after": "Postmarket",
+      "closed": "Yopiq"
+    },
+    "next": {
+      "pre": "Premarket {t} dan keyin boshlanadi",
+      "regular": "Asosiy sessiya {t} dan keyin boshlanadi",
+      "after": "Asosiy sessiya {t} dan keyin tugaydi",
+      "closed": "Savdo {t} dan keyin tugaydi"
+    },
+    "tz": "Sizning vaqtingizda ({tz}), savdo kuni: {day}.",
+    "closures": "Yaqin dam olish va qisqa kunlar",
+    "early": "qisqartirilgan kun",
+    "note": "NYSE va Nasdaq soatlari: premarket 4:00–9:30, asosiy sessiya 9:30–16:00, postmarket 16:00–20:00 Nyu-York vaqti bilan. Yozgi vaqtga o'tish hisobga olingan. Bayram sanalari ma'lumot uchun, birja kalendari bilan solishtiring. Fyucherslar deyarli sutkasiga savdo qilinadi, ularning soatlari alohida.",
+    "holiday": {
+      "newYear": "Yangi yil",
+      "mlk": "Martin Lyuter King kuni",
+      "presidents": "Prezidentlar kuni",
+      "goodFriday": "Xushxabar Juma",
+      "memorial": "Xotira kuni",
+      "juneteenth": "Juneteenth",
+      "independence": "Mustaqillik kuni (ko'chirilgan)",
+      "labor": "Mehnat kuni",
+      "thanksgiving": "Minnatdorchilik kuni",
+      "christmas": "Rojdestvo",
+      "afterThanksgiving": "Minnatdorchilik kunidan keyingi juma",
+      "christmasEve": "Rojdestvo arafasi"
+    }
+  },
+  "usstats": {
+    "title": "AQSh birjasi soatlari bo'yicha natija",
+    "hint": "Faqat aksiya va fyuchers bitimlari. Vaqt Nyu-York bo'yicha (yozgi vaqt hisobga olingan). Qaysi soatlarda yaxshi va yomon savdo qilishingizni ko'rsatadi.",
+    "none": "Aksiya yoki fyuchers bitimlari kerak: bitim formasida bozorni tanlang.",
+    "b": {
+      "pre": "Premarket (4:00–9:30)",
+      "open": "Ochilish (9:30–10:00)",
+      "morning": "Ertalab (10:00–12:00)",
+      "midday": "Kun o'rtasi (12:00–14:00)",
+      "afternoon": "Tushdan keyin (14:00–15:30)",
+      "power": "Oxirgi soat (15:30–16:00)",
+      "after": "Postmarket (16:00–20:00)",
+      "off": "Sessiyalardan tashqari"
+    }
+  },
+  "pdt": {
+    "title": "Day-trade'lar (PDT)",
+    "window": "Oxirgi {n} savdo kuni ichida (Nyu-York vaqti) bir kunda ochilib yopilgan aksiya bitimlari.",
+    "ok": "Chegaragacha yana day-trade qilish mumkin: {n}.",
+    "warn": "Bu maksimum: keyingi day-trade 5 kun ichida to'rtinchisi bo'ladi.",
+    "flag": "5 kunda uchtadan ko'p day-trade. Hisob shartlarini brokerdan aniqlang.",
+    "rule": "Kapitali ${limit} dan kam marja hisobida 5 savdo kuni ichida 4 va undan ko'p day-trade «pattern day trader» maqomini beradi.",
+    "notApplies": "Dollar hisobingizdagi kapital ${limit} dan kam emas, shuning uchun bu qoida odatda sizni cheklamaydi.",
+    "note": "Hisoblagich ma'lumot uchun va faqat jurnaldagi bitimlarni sanaydi: qoidani brokerdan aniqlang."
   }
 }

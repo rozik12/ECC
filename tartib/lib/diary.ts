@@ -1,11 +1,12 @@
 // Дневник дня: чистая логика (дни, серия, связь настроения с результатом). Без зависимостей от браузера и базы.
 import type { StatTrade } from "./statistics/index.ts";
+import { dtf } from "./intl-cache.ts";
 
 export type DiaryEntry = { day: string; mood: number | null; energy: number | null; plan: string; review: string; lesson: string; followedPlan: boolean | null };
 
 /** Календарный день «ГГГГ-ММ-ДД» в часовом поясе пользователя. */
 export function localDay(date: Date, tz: string): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
+  return dtf("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
 }
 
 /** Строка дня, сдвинутая на n дней (n может быть отрицательным). Работает по календарю, поэтому не зависит от часовых поясов. */

@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n/config";
+import { dtf, nfmt } from "./intl-cache.ts";
 
 const intlLocale: Record<Locale, string> = { ru: "ru-RU", uz: "uz-UZ", en: "en-US" };
 
@@ -13,11 +14,11 @@ export function parseNumber(value: string): number | null {
 /** Узбекский: у браузеров нет полных данных для uz-UZ и числа выглядят иначе, чем на сервере (из-за этого страница «моргает»).
  *  Поэтому форматируем по en-US и подставляем разделители сами: пробел между тысячами, запятая в дробной части. */
 function uzNumber(value: number, options: Intl.NumberFormatOptions): string {
-  return new Intl.NumberFormat("en-US", options).format(value).replace(/[,.]/g, (c) => (c === "," ? "\u00a0" : ","));
+  return nfmt("en-US", options).format(value).replace(/[,.]/g, (c) => (c === "," ? "\u00a0" : ","));
 }
 
 function decimal(value: number, locale: Locale, options: Intl.NumberFormatOptions): string {
-  return locale === "uz" ? uzNumber(value, options) : new Intl.NumberFormat(intlLocale[locale], options).format(value);
+  return locale === "uz" ? uzNumber(value, options) : nfmt(intlLocale[locale], options).format(value);
 }
 
 export function formatNumber(value: number, locale: Locale, maxFractionDigits = 4): string {
@@ -50,7 +51,7 @@ const UZ_MONTH_SHORT = ["Yan", "Fev", "Mar", "Apr", "May", "Iyn", "Iyl", "Avg", 
 
 /** Форматтер дат с тем же интерфейсом, что у Intl.DateTimeFormat (метод format). Для узбекского собирает строку сам по тем же параметрам. */
 export function dateFormat(locale: Locale, options: Intl.DateTimeFormatOptions): { format: (d: Date | number) => string } {
-  if (locale !== "uz") return new Intl.DateTimeFormat(intlLocale[locale], options);
+  if (locale !== "uz") return dtf(intlLocale[locale], options);
   return {
     format(input: Date | number) {
       const medium = options.dateStyle === "medium";
@@ -59,7 +60,7 @@ export function dateFormat(locale: Locale, options: Intl.DateTimeFormatOptions):
       const wantDay = !!options.day || medium;
       const wantTime = !!options.hour || !!options.minute || !!options.timeStyle;
       const parts = Object.fromEntries(
-        new Intl.DateTimeFormat("en-US", { timeZone: options.timeZone, year: "numeric", month: "numeric", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+        dtf("en-US", { timeZone: options.timeZone, year: "numeric", month: "numeric", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
           .formatToParts(new Date(input)).map((p) => [p.type, p.value]),
       ) as Record<string, string>;
       const dow = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(parts.weekday);
@@ -94,5 +95,5 @@ export function toLocalInput(date: Date): string {
 }
 
 export function formatCompact(value: number, locale: Locale): string {
-  return new Intl.NumberFormat(locale === "ru" ? "ru-RU" : "en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value);
+  return nfmt(locale === "ru" ? "ru-RU" : "en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value);
 }

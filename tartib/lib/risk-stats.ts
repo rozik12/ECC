@@ -2,12 +2,13 @@
 import { coreStats, rMultiples, type GroupRow } from "./analytics.ts";
 import type { EquityPoint, StatTrade } from "./statistics/index.ts";
 import { kelly, riskOfRuin } from "./tools.ts";
+import { dtf } from "./intl-cache.ts";
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 
 /** Результат по дням недели (понедельник — 0) в часовом поясе пользователя. Дни без сделок пропускаются. */
 export function byWeekday(trades: StatTrade[], tz: string): (GroupRow & { day: number })[] {
-  const fmt = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: tz });
+  const fmt = dtf("en-US", { weekday: "short", timeZone: tz });
   const index: Record<string, number> = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 5, Sun: 6 };
   const days: StatTrade[][] = Array.from({ length: 7 }, () => []);
   for (const t of trades) {

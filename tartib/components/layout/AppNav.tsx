@@ -21,7 +21,7 @@ export function Sidebar() {
   const extraActive = extraNav.some((n) => isActive(n.href));
 
   const item = (href: string, labelKey: string, Icon: React.ElementType) => (
-    <Link
+    <Link prefetch={false}
       key={href}
       href={href}
       aria-current={isActive(href) ? "page" : undefined}
@@ -66,7 +66,7 @@ export function BottomNav() {
   return (
     <>
     {showFab && (
-      <Link
+      <Link prefetch={false}
         href="/trades/quick"
         aria-label={t("quick.button")}
         title={t("quick.button")}
@@ -80,7 +80,7 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
       {mainNav.map(({ href, labelKey, icon: Icon }) => (
-        <Link
+        <Link prefetch={false}
           key={href}
           href={href}
           aria-current={isActive(href) ? "page" : undefined}
@@ -106,7 +106,7 @@ export function TopIcons() {
   return (
     <nav aria-label={t("nav.main")} className="flex gap-5 overflow-x-auto border-t border-border px-4 py-0.5 text-sm lg:hidden">
       {secondaryNav.map(({ href, labelKey, icon: Icon }) => (
-        <Link key={href} href={href} className={cn("flex min-h-10 shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
+        <Link prefetch={false} key={href} href={href} className={cn("flex min-h-10 shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
           <Icon className="h-4 w-4" aria-hidden />
           {t(labelKey)}
         </Link>

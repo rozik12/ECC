@@ -22,6 +22,7 @@ import {
   pnlByStrategy, summarize, type Period,
 } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
+import { dtf } from "@/lib/intl-cache";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -77,7 +78,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
     { label: t("stats.kpi.avgR"), value: summary.avgR === null ? none : `${formatNumber(summary.avgR, locale, 2)} R` },
   ];
 
-  const nowParts = new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit" }).format(new Date()).split("-");
+  const nowParts = dtf("en-CA", { timeZone: tz, year: "numeric", month: "2-digit" }).format(new Date()).split("-");
   const curYear = Number(nowParts[0]);
   const curMonth = Number(nowParts[1]);
   const m = /^(\d{4})-(\d{2})$/.exec(sp.month ?? "");

@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
 const PRIVATE_PREFIXES = [
-  "/dashboard", "/calculator", "/trades", "/rules", "/statistics", "/charts", "/market", "/profile", "/settings", "/notifications", "/onboarding", "/reset-password", "/admin",
+  "/dashboard", "/calculator", "/trades", "/rules", "/statistics", "/charts", "/market", "/profile", "/settings", "/notifications", "/onboarding", "/reset-password", "/admin", "/diary",
 ];
 const AUTH_PAGES = ["/login", "/register"];
 
@@ -45,6 +45,12 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
+// Обработчик нужен только там, где важен вход: закрытые разделы, страницы входа и API. Публичные страницы (главная, блог,
+// инструменты, новости, тарифы, условия) он не трогает: так на бесплатном тарифе Cloudflare тратится меньше процессорного времени.
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+  matcher: [
+    "/dashboard/:path*", "/calculator/:path*", "/trades/:path*", "/rules/:path*", "/statistics/:path*", "/charts/:path*",
+    "/market/:path*", "/profile/:path*", "/settings/:path*", "/notifications/:path*", "/onboarding/:path*",
+    "/reset-password/:path*", "/admin/:path*", "/diary/:path*", "/login", "/register", "/api/:path*",
+  ],
 };

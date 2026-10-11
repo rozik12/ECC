@@ -1,3 +1,4 @@
+import { dtf } from "./intl-cache.ts";
 /** Достижения и месячная цель по дисциплине. Всё считается из журнала, ничего не хранится отдельно. */
 
 export type AchievementTrade = { tradedAt: string; rulesFollowed: boolean };
@@ -56,7 +57,7 @@ export type MonthGoal = {
 
 function monthKey(date: Date, timeZone: string): string {
   const parts = Object.fromEntries(
-    new Intl.DateTimeFormat("en-US", { timeZone, year: "numeric", month: "2-digit" }).formatToParts(date).map((p) => [p.type, p.value]),
+    dtf("en-US", { timeZone, year: "numeric", month: "2-digit" }).formatToParts(date).map((p) => [p.type, p.value]),
   );
   return `${parts.year}-${parts.month}`;
 }

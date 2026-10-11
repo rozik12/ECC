@@ -4,13 +4,14 @@ import { Card } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { getTranslator } from "@/lib/i18n/server";
 import { upcomingEvents, type CalendarEvent } from "@/lib/market-feed";
+import { dtf } from "@/lib/intl-cache";
 
 
 /** Экономический календарь недели: ближайшие важные события в часовом поясе пользователя. Данные: ForexFactory. */
 export async function CalendarCard({ events, timeZone, all, now }: { events: CalendarEvent[]; timeZone: string; all: boolean; now: number }) {
   const { t, locale } = await getTranslator();
   const shown = upcomingEvents(events, now, { impacts: all ? ["high", "medium", "low"] : ["high"], limit: 14 });
-  const dayKey = (ms: number) => new Intl.DateTimeFormat("en-CA", { timeZone }).format(new Date(ms));
+  const dayKey = (ms: number) => dtf("en-CA", { timeZone }).format(new Date(ms));
   const dayLabel = (ms: number) => {
     if (dayKey(ms) === dayKey(now)) return t("market.calendar.today");
     if (dayKey(ms) === dayKey(now + 86_400_000)) return t("market.calendar.tomorrow");

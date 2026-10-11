@@ -1,8 +1,9 @@
 // Границы «сегодня» в часовом поясе пользователя.
 
+import { dtf } from "./intl-cache.ts";
 export function safeTimeZone(tz: string | null | undefined): string {
   try {
-    new Intl.DateTimeFormat("en-US", { timeZone: tz ?? "UTC" });
+    dtf("en-US", { timeZone: tz ?? "UTC" });
     return tz ?? "UTC";
   } catch {
     return "UTC";
@@ -11,7 +12,7 @@ export function safeTimeZone(tz: string | null | undefined): string {
 
 function offsetMs(tz: string, date: Date): number {
   const parts = Object.fromEntries(
-    new Intl.DateTimeFormat("en-US", {
+    dtf("en-US", {
       timeZone: tz,
       hourCycle: "h23",
       year: "numeric",
@@ -53,7 +54,7 @@ export function zonedInputToDate(tz: string, value: string): Date | null {
 /** Момент времени → значение для поля datetime-local в часовом поясе tz. */
 export function dateToZonedInput(tz: string, date: Date): string {
   const p = Object.fromEntries(
-    new Intl.DateTimeFormat("en-US", { timeZone: safeTimeZone(tz), hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })
+    dtf("en-US", { timeZone: safeTimeZone(tz), hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })
       .formatToParts(date)
       .map((x) => [x.type, x.value]),
   );
@@ -62,7 +63,7 @@ export function dateToZonedInput(tz: string, date: Date): string {
 
 function localYmd(tz: string, date: Date) {
   const parts = Object.fromEntries(
-    new Intl.DateTimeFormat("en-US", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" })
+    dtf("en-US", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" })
       .formatToParts(date)
       .map((p) => [p.type, p.value]),
   );

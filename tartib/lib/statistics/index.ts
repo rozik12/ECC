@@ -1,5 +1,6 @@
 // Расчёт статистики. Чистые функции без зависимостей, чтобы их можно было тестировать.
 
+import { dtf } from "../intl-cache.ts";
 export type Violation = { id: string; name: string };
 
 export type StatTrade = {
@@ -119,7 +120,7 @@ export function maxDrawdown(points: EquityPoint[]): { amount: number; percent: n
 export type Bucket = { key: string; pnl: number; count: number };
 
 export function localDay(iso: string, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
+  return dtf("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
 }
 
 export function groupBy(trades: StatTrade[], keyOf: (t: StatTrade) => string): Bucket[] {
@@ -220,7 +221,7 @@ const WEEKDAY_INDEX: Record<string, number> = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, 
 
 export function localWeekdayAndHour(iso: string, timeZone: string): { weekday: number; hour: number } {
   const parts = Object.fromEntries(
-    new Intl.DateTimeFormat("en-US", { timeZone, weekday: "short", hour: "2-digit", hourCycle: "h23" })
+    dtf("en-US", { timeZone, weekday: "short", hour: "2-digit", hourCycle: "h23" })
       .formatToParts(new Date(iso))
       .map((p) => [p.type, p.value]),
   );

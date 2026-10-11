@@ -7,7 +7,8 @@
   // Умное размещение: Cloudflare сам переносит сервер ближе к базе данных (Supabase, Франкфурт).
   // Принудительный регион (region) давал ошибки 503 при одновременных запросах, поэтому не используем.
   "placement": { "mode": "smart" },
-  "observability": { "enabled": true },
+  // Журнал запросов: пишем только малую долю, иначе логирование каждого запроса съедает процессорное время бесплатного тарифа
+  "observability": { "enabled": true, "head_sampling_rate": 0.02 },
   "vars": {
     "NEXT_PUBLIC_SITE_URL": "https://tartib.uk",
     "NEXT_PUBLIC_SUPABASE_URL": "https://rwmhsjznrlgsxqgclbbl.supabase.co",

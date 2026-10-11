@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
   const symbols = (new URL(request.url).searchParams.get("symbols") ?? "").split(",").map((s) => s.trim().toUpperCase()).filter((s) => /^[A-Z0-9]{4,24}$/.test(s)).slice(0, 30);
   if (symbols.length === 0) return NextResponse.json({ prices: {} }, { headers: { "cache-control": "no-store" } });
-  const tickers = await getTickers(fetch, 10);
+  const tickers = await getTickers(fetch, 5);
   if (tickers.length === 0) return NextResponse.json({ error: "unavailable" }, { status: 502, headers: { "cache-control": "no-store" } });
   return NextResponse.json({ prices: priceMap(tickers, symbols) }, { headers: { "cache-control": "private, max-age=5" } });
 }

@@ -18,7 +18,7 @@ const csp = [
   // https: — превью картинок к новостям приходят с сайтов самих источников
   `img-src 'self' data: blob: https:`,
   "font-src 'self' data:",
-  `connect-src 'self'${supabaseHost ? ` https://${supabaseHost} wss://${supabaseHost}` : ""}`,
+  `connect-src 'self'${supabaseHost ? ` https://${supabaseHost} wss://${supabaseHost}` : ""} wss://ws.okx.com:8443`,
   "worker-src 'self'",
   "manifest-src 'self'",
   "object-src 'none'",

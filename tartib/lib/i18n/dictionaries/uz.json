@@ -2014,5 +2014,11 @@
       "btc": "Bitcoin",
       "eth": "Ethereum"
     }
+  },
+  "live": {
+    "realtime": "Narxlar real vaqtda",
+    "every5": "Narxlar har 5 soniyada o'zi yangilanadi",
+    "paused": "Yangilanish to'xtatildi: manba bilan aloqa yo'q",
+    "connecting": "Narxlarga ulanmoqda…"
   }
 }

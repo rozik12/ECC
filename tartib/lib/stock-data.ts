@@ -123,7 +123,7 @@ export function parseSpark(body: unknown): Quote[] {
 }
 
 /** Котировки списка символов. Yahoo принимает не больше 20 символов за запрос, поэтому список режется на части. Если источник не ответил, часть пропускается. */
-export async function fetchQuotes(symbols: string[], fetchFn: Fetch = fetch): Promise<Quote[]> {
+export async function fetchQuotes(symbols: string[], fetchFn: Fetch = fetch, ttl = 120): Promise<Quote[]> {
   const chunks: string[][] = [];
   for (let i = 0; i < symbols.length; i += 20) chunks.push(symbols.slice(i, i + 20));
   const parts = await Promise.all(chunks.map(async (chunk) => {
@@ -131,7 +131,7 @@ export async function fetchQuotes(symbols: string[], fetchFn: Fetch = fetch): Pr
       const res = await fetchFn(`https://query1.finance.yahoo.com/v8/finance/spark?symbols=${chunk.map(encodeURIComponent).join(",")}&range=5d&interval=1d`, {
         headers: { "user-agent": "Mozilla/5.0 (compatible; Tartib/1.0; +https://tartib.uk)", accept: "application/json" },
         signal: AbortSignal.timeout(5000),
-        ...({ cf: { cacheTtl: 120, cacheEverything: true } } as object),
+        ...({ cf: { cacheTtl: ttl, cacheEverything: true } } as object),
       });
       return res.ok ? parseSpark(await res.json()) : [];
     } catch {

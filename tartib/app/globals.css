@@ -167,3 +167,10 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Живые цены: короткая подсветка при изменении. При «уменьшить анимацию» подсветка отключена. */
+@keyframes tick-up { from { background-color: color-mix(in srgb, var(--success) 28%, transparent); } to { background-color: transparent; } }
+@keyframes tick-down { from { background-color: color-mix(in srgb, var(--danger) 28%, transparent); } to { background-color: transparent; } }
+.tick-up { animation: tick-up 0.9s ease-out; border-radius: 4px; }
+.tick-down { animation: tick-down 0.9s ease-out; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { .tick-up, .tick-down { animation: none; } }

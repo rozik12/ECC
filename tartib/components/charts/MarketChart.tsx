@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { CandleView, TimeframeSwitch, useCandles } from "@/components/charts/candles";
 import { priceDigits } from "@/components/charts/candles";
@@ -10,6 +10,8 @@ import { formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
 import { normalizePair, type Timeframe } from "@/lib/market-data";
 import { normalizeTicker } from "@/lib/stock-data";
+import { LiveBadge } from "@/components/market/LiveBadge";
+import { useLiveCrypto, useLiveQuotes } from "@/components/market/useLive";
 
 /** Золото, металлы, нефть, валюты, индексы и акции: символ Yahoo и ключ короткого названия в словаре */
 const OTHER = [
@@ -34,8 +36,21 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
   const { candles, error: loadError, source } = useCandles(pair, tf, "live", supported, refresh, "auto");
   const error = loadError ?? (!supported ? "unsupported" : null);
 
-  const last = candles?.[candles.length - 1];
-  const first = candles?.[0];
+  // Живая цена: у криптопар поток OKX (раз в секунду), у остальных запрос каждые 5 секунд. Последняя свеча подтягивается к ней.
+  const crypto = useLiveCrypto(cryptoPair ? [cryptoPair.symbol] : []);
+  const other = useLiveQuotes(ticker ? [ticker] : []);
+  const livePrice = cryptoPair ? crypto.prices[cryptoPair.symbol]?.last : ticker ? other.quotes[ticker]?.price : undefined;
+  const liveDir = cryptoPair ? crypto.prices[cryptoPair.symbol]?.dir : ticker ? other.quotes[ticker]?.dir : 0;
+  const liveMode = cryptoPair ? crypto.mode : other.ok ? ("poll" as const) : ("connecting" as const);
+  const view = useMemo(() => {
+    if (!candles || candles.length === 0 || livePrice === undefined) return candles;
+    const tail = candles[candles.length - 1];
+    const updated = { ...tail, c: livePrice, h: Math.max(tail.h, livePrice), l: Math.min(tail.l, livePrice) };
+    updated.range = [updated.l, updated.h];
+    return [...candles.slice(0, -1), updated];
+  }, [candles, livePrice]);
+  const last = view?.[view.length - 1];
+  const first = view?.[0];
   const change = last && first && first.o > 0 ? ((last.c - first.o) / first.o) * 100 : null;
   const apply = (value: string) => {
     setPair(value);
@@ -92,12 +107,13 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
             <h2 className="text-xl font-bold">{normalized ? `${normalized.base}/${normalized.quote}` : ticker ?? (pair || "—")}</h2>
             {last && (
               <p className="mt-0.5 flex items-baseline gap-2 tabular-nums">
-                <span className="text-lg font-semibold">{formatNumber(last.c, locale, priceDigits(last.c) + 2)}</span>
+                <span key={last.c} className={cn("text-lg font-semibold", liveDir === 1 && "tick-up", liveDir === -1 && "tick-down")}>{formatNumber(last.c, locale, priceDigits(last.c) + 2)}</span>
                 {change !== null && <span className={cn("text-sm font-medium", change >= 0 ? "text-success" : "text-danger")}>{change >= 0 ? "+" : ""}{formatNumber(change, locale, 2)}%</span>}
               </p>
             )}
           </div>
           <div className="flex items-center gap-2">
+            {supported && <LiveBadge mode={liveMode} />}
             <TimeframeSwitch value={tf} onChange={setTf} label={t("chart.timeframe")} />
             <Button type="button" variant="ghost" size="sm" aria-label={t("charts.refresh")} title={t("charts.refresh")} onClick={() => setRefresh((n) => n + 1)}>
               <RefreshCw className="h-4 w-4" aria-hidden />
@@ -114,7 +130,7 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
           <div className="h-80 animate-pulse rounded-xl bg-surface-muted" aria-label={t("chart.loading")} />
         ) : (
           <>
-            <CandleView candles={candles} tf={tf} height="h-80" label={t("charts.title")} />
+            <CandleView candles={view ?? candles} tf={tf} height="h-80" label={t("charts.title")} />
             <p className="text-xs text-muted">{t(ticker ? "charts.noteOther" : "charts.note", { source })}</p>
           </>
         )}

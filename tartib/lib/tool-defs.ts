@@ -1,12 +1,12 @@
 // Описание публичных калькуляторов: поля, значения по умолчанию и функция расчёта.
-import { compound, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
+import { compound, futuresRisk, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
 
-export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin";
-export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin"];
+export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk";
+export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk"];
 export const TOOL_SLUGS = [...CALC_SLUGS, "sessions"] as const;
 
 /** Ключ в словаре tools.<key> для адреса страницы */
-export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin"> = {
+export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures"> = {
   "position-size": "size",
   "risk-reward": "rr",
   "loss-streak": "streak",
@@ -20,9 +20,11 @@ export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "c
   profit: "profit",
   goal: "goal",
   margin: "margin",
+  "stock-size": "stock",
+  "futures-risk": "futures",
 };
 
-export type Fmt = "num" | "money" | "pct" | "ratio" | "text";
+export type Fmt = "num" | "money" | "pct" | "ratio" | "text" | "int";
 /** Одна строка результата: ключ подписи в словаре, значение и как его показывать */
 export type Row = { key: string; value: number | string; fmt: Fmt; tone?: "good" | "bad" };
 
@@ -185,6 +187,37 @@ export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
       if (r.marginPctOfBalance !== null) rows.push({ key: "pctBalance", value: r.marginPctOfBalance, fmt: "pct" });
       if (r.maxPosition !== null) rows.push({ key: "maxPosition", value: r.maxPosition, fmt: "num" });
       return rows;
+    },
+  },
+  "stock-size": {
+    fields: [{ id: "balance", def: "10000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "180" }, { id: "stop", def: "176" }, { id: "feePerShare", def: "0.005" }],
+    compute: (v) => {
+      const r = stockSize({ balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), feePerShare: n(v.feePerShare) });
+      if (!r.ok) return null;
+      return [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "shares", value: r.shares, fmt: "int" },
+        { key: "riskAmount", value: r.riskAmount, fmt: "num" },
+        { key: "value", value: r.value, fmt: "num" },
+        { key: "pctBalance", value: r.pctOfBalance, fmt: "pct", tone: r.pctOfBalance > 100 ? "bad" : undefined },
+        { key: "commission", value: r.commission, fmt: "num" },
+        { key: "leverage", value: r.leverageNeeded, fmt: "ratio" },
+      ];
+    },
+  },
+  "futures-risk": {
+    fields: [{ id: "balance", def: "25000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "20000" }, { id: "stop", def: "19980" }, { id: "contract", def: "2", choices: [1, 2, 3, 4] }, { id: "feePerContract", def: "0.62" }],
+    compute: (v) => {
+      const r = futuresRisk({ balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), contract: n(v.contract), feePerContract: n(v.feePerContract) });
+      if (!r.ok) return null;
+      return [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "contracts", value: r.contracts, fmt: "int" },
+        { key: "points", value: r.points, fmt: "num" },
+        { key: "riskPerContract", value: r.riskPerContract, fmt: "num" },
+        { key: "riskAmount", value: r.riskAmount, fmt: "num" },
+        { key: "formSize", value: r.formSize, fmt: "int" },
+      ];
     },
   },
 };

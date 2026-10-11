@@ -210,3 +210,64 @@ export function margin(i: { positionValue: number; leverage: number; balance?: n
   const ok = b !== null && b !== undefined && Number.isFinite(b) && b > 0;
   return { ok: true, margin: m, marginPctOfBalance: ok ? (m / b) * 100 : null, maxPosition: ok ? b * i.leverage : null };
 }
+
+// ---------- акции: размер позиции в штуках ----------
+export type StockSizeResult = { ok: true; shares: number; riskAmount: number; plannedRisk: number; value: number; pctOfBalance: number; leverageNeeded: number; direction: "long" | "short"; commission: number } | Fail;
+
+/**
+ * Размер позиции по акциям: целое число штук, чтобы убыток на стопе не превысил выбранный риск.
+ * Комиссия считается за сторону на штуку и входит в риск (вход, выход по стопу).
+ */
+export function stockSize(i: { balance: number; riskPct: number; entry: number; stop: number; feePerShare: number }): StockSizeResult {
+  if (!fin(i.balance, i.riskPct, i.entry, i.stop, i.feePerShare)) return FAIL;
+  if (i.balance <= 0 || i.riskPct <= 0 || i.riskPct > 100 || i.entry <= 0 || i.stop <= 0 || i.entry === i.stop || i.feePerShare < 0) return FAIL;
+  const plannedRisk = (i.balance * i.riskPct) / 100;
+  const perShare = Math.abs(i.entry - i.stop) + 2 * i.feePerShare;
+  const shares = Math.floor(plannedRisk / perShare);
+  const value = shares * i.entry;
+  return {
+    ok: true,
+    shares,
+    riskAmount: shares * perShare,
+    plannedRisk,
+    value,
+    pctOfBalance: (value / i.balance) * 100,
+    leverageNeeded: value / i.balance,
+    direction: i.entry > i.stop ? "long" : "short",
+    commission: shares * 2 * i.feePerShare,
+  };
+}
+
+// ---------- фьючерсы: контракты ----------
+/** Стоимость одного пункта цены в долларах для популярных фьючерсов. Значения справочные: сверяй со спецификацией контракта на бирже. */
+export const FUTURES_POINT_VALUE: Record<number, { name: string; point: number }> = {
+  1: { name: "NQ", point: 20 },
+  2: { name: "MNQ", point: 2 },
+  3: { name: "ES", point: 50 },
+  4: { name: "MES", point: 5 },
+};
+
+export type FuturesResult = { ok: true; contracts: number; riskPerContract: number; riskAmount: number; plannedRisk: number; points: number; pointValue: number; formSize: number; direction: "long" | "short"; commission: number } | Fail;
+
+export function futuresRisk(i: { balance: number; riskPct: number; entry: number; stop: number; contract: number; feePerContract: number }): FuturesResult {
+  const spec = FUTURES_POINT_VALUE[i.contract];
+  if (!spec || !fin(i.balance, i.riskPct, i.entry, i.stop, i.feePerContract)) return FAIL;
+  if (i.balance <= 0 || i.riskPct <= 0 || i.riskPct > 100 || i.entry <= 0 || i.stop <= 0 || i.entry === i.stop || i.feePerContract < 0) return FAIL;
+  const points = Math.abs(i.entry - i.stop);
+  const riskPerContract = points * spec.point + 2 * i.feePerContract;
+  const plannedRisk = (i.balance * i.riskPct) / 100;
+  const contracts = Math.floor(plannedRisk / riskPerContract);
+  return {
+    ok: true,
+    contracts,
+    riskPerContract,
+    riskAmount: contracts * riskPerContract,
+    plannedRisk,
+    points,
+    pointValue: spec.point,
+    // В форме сделки размер = контракты × стоимость пункта: так прибыль и риск в Tartib считаются в долларах верно
+    formSize: contracts * spec.point,
+    direction: i.entry > i.stop ? "long" : "short",
+    commission: contracts * 2 * i.feePerContract,
+  };
+}

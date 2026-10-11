@@ -21,6 +21,8 @@ export type StatTrade = {
   grade?: string | null;
   mistakes?: string[];
   closedAt?: string | null;
+  /** Рынок сделки: crypto, forex, stocks, futures (нужен для разбора по сессиям США и счётчика дей-трейдов) */
+  market?: string;
 };
 
 export type Period = "7d" | "30d" | "all";

@@ -1305,6 +1305,54 @@
         "maxPosition": "Maximum position at this leverage"
       },
       "note": "Higher leverage puts liquidation closer. Leverage does not raise expectancy, it raises risk."
+    },
+    "stock": {
+      "title": "Stock position size (Nasdaq, NYSE)",
+      "desc": "How many whole shares to buy or short so the loss at your stop stays within the risk you chose. Includes per-share commission.",
+      "f": {
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price, $",
+        "stop": "Stop price, $",
+        "feePerShare": "Commission per share (per side), $"
+      },
+      "o": {
+        "direction": "Direction",
+        "shares": "Number of shares",
+        "riskAmount": "Loss if the stop hits",
+        "value": "Position value",
+        "pctBalance": "Share of balance",
+        "commission": "Round-trip commission",
+        "leverage": "Leverage needed (position / balance)"
+      },
+      "note": "Shares trade in whole units, so the result is rounded down. If the share of balance is above 100%, you need broker leverage or a smaller size. Not investment advice."
+    },
+    "futures": {
+      "title": "Futures risk (NQ, MNQ, ES, MES)",
+      "desc": "How many contracts fit your risk when the stop hits. The point value is filled in from the contract.",
+      "f": {
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price (points)",
+        "stop": "Stop price (points)",
+        "contract": "Contract",
+        "feePerContract": "Commission per contract (per side), $"
+      },
+      "c": {
+        "1": "NQ — $20 per point",
+        "2": "MNQ — $2 per point",
+        "3": "ES — $50 per point",
+        "4": "MES — $5 per point"
+      },
+      "o": {
+        "direction": "Direction",
+        "contracts": "Number of contracts",
+        "points": "Stop distance in points",
+        "riskPerContract": "Risk per contract",
+        "riskAmount": "Loss if the stop hits",
+        "formSize": "Size for the trade form"
+      },
+      "note": "Form size = contracts × point value, so profit and loss in Tartib come out right in dollars. Point values are for reference: check the exchange contract specs. Not investment advice."
     }
   },
   "shortcuts": {

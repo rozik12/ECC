@@ -1305,6 +1305,54 @@
         "maxPosition": "Shu yelkada maksimal pozitsiya"
       },
       "note": "Yelka qanchalik katta bo'lsa, likvidatsiya narxi shunchalik yaqin. Yelka kutilmani oshirmaydi, riskni oshiradi."
+    },
+    "stock": {
+      "title": "Aksiyalar bo'yicha pozitsiya hajmi (Nasdaq, NYSE)",
+      "desc": "Stop ishlaganda zarar tanlangan riskdan oshmasligi uchun nechta butun aksiya olish yoki shortga sotish kerak. Aksiya uchun komissiya hisobga olinadi.",
+      "f": {
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimga risk, %",
+        "entry": "Kirish narxi, $",
+        "stop": "Stop narxi, $",
+        "feePerShare": "Bir aksiya uchun komissiya (bir tomon), $"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "shares": "Aksiyalar soni",
+        "riskAmount": "Stop ishlasa zarar",
+        "value": "Pozitsiya qiymati",
+        "pctBalance": "Balansdagi ulushi",
+        "commission": "Kirish va chiqish komissiyasi",
+        "leverage": "Kerakli yelka (pozitsiya / balans)"
+      },
+      "note": "Aksiyalar butun donada savdo qilinadi, shuning uchun natija pastga yaxlitlanadi. Balansdagi ulush 100% dan oshsa, broker yelkasi yoki kichikroq hajm kerak. Investitsiya maslahati emas."
+    },
+    "futures": {
+      "title": "Fyuchers riski (NQ, MNQ, ES, MES)",
+      "desc": "Stop ishlaganda zarar riskka sig'ishi uchun nechta kontrakt olish mumkin. Punkt qiymati kontraktga qarab qo'yiladi.",
+      "f": {
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimga risk, %",
+        "entry": "Kirish narxi (punkt)",
+        "stop": "Stop narxi (punkt)",
+        "contract": "Kontrakt",
+        "feePerContract": "Bir kontrakt uchun komissiya (bir tomon), $"
+      },
+      "c": {
+        "1": "NQ — punkti $20",
+        "2": "MNQ — punkti $2",
+        "3": "ES — punkti $50",
+        "4": "MES — punkti $5"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "contracts": "Kontraktlar soni",
+        "points": "Stop punktlarda",
+        "riskPerContract": "Bir kontrakt riski",
+        "riskAmount": "Stop ishlasa zarar",
+        "formSize": "Bitim formasi uchun hajm"
+      },
+      "note": "Forma hajmi = kontraktlar × punkt qiymati: shunda Tartibda foyda va zarar dollarda to'g'ri hisoblanadi. Punkt qiymatlari ma'lumot uchun, birja spetsifikatsiyasi bilan solishtiring. Investitsiya maslahati emas."
     }
   },
   "shortcuts": {

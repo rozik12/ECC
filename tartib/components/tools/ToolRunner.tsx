@@ -30,6 +30,7 @@ export function ToolRunner({ slug }: { slug: ToolSlug }) {
       case "pct": return `${formatNumber(r.value as number, locale, 2)}%`;
       case "ratio": return `1 : ${formatNumber(r.value as number, locale, 2)}`;
       case "text": return t(`tools.${r.value}`);
+      case "int": return formatNumber(r.value as number, locale, 0);
       default: return formatNumber(r.value as number, locale, 4);
     }
   };
@@ -45,7 +46,7 @@ export function ToolRunner({ slug }: { slug: ToolSlug }) {
             value={values[f.id] ?? f.def}
             onChange={(e) => setValues((prev) => ({ ...prev, [f.id]: e.target.value }))}
           >
-            {f.choices.map((c) => <option key={c} value={String(c)}>{t(c === 2 ? "tools.short" : "tools.long")}</option>)}
+            {f.choices.map((c) => <option key={c} value={String(c)}>{f.id === "side" ? t(c === 2 ? "tools.short" : "tools.long") : t(`tools.${dict}.c.${c}`)}</option>)}
           </Select>
         ) : (
           <Input

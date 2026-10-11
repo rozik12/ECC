@@ -92,3 +92,23 @@ test("каждый калькулятор считает значения по �
     }
   }
 });
+
+import { futuresRisk, stockSize } from "../lib/tools.ts";
+
+test("stockSize: целые акции, риск не превышен", () => {
+  const r = stockSize({ balance: 10000, riskPct: 1, entry: 180, stop: 176, feePerShare: 0 });
+  assert.ok(r.ok);
+  if (r.ok) { assert.equal(r.shares, 25); assert.equal(r.direction, "long"); assert.ok(r.riskAmount <= r.plannedRisk); }
+  const s = stockSize({ balance: 10000, riskPct: 1, entry: 176, stop: 180, feePerShare: 0.005 });
+  assert.ok(s.ok && s.direction === "short" && s.riskAmount <= s.plannedRisk);
+  assert.equal(stockSize({ balance: 10000, riskPct: 1, entry: 100, stop: 100, feePerShare: 0 }).ok, false);
+});
+
+test("futuresRisk: MNQ и NQ, размер для формы", () => {
+  const m = futuresRisk({ balance: 25000, riskPct: 1, entry: 20000, stop: 19980, contract: 2, feePerContract: 0 });
+  assert.ok(m.ok);
+  if (m.ok) { assert.equal(m.contracts, 6); assert.equal(m.formSize, 12); assert.equal(m.riskAmount, 240); }
+  const n = futuresRisk({ balance: 25000, riskPct: 1, entry: 20000, stop: 19980, contract: 1, feePerContract: 0 });
+  assert.ok(n.ok && n.contracts === 0);
+  assert.equal(futuresRisk({ balance: 25000, riskPct: 1, entry: 1, stop: 2, contract: 9, feePerContract: 0 }).ok, false);
+});

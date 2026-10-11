@@ -59,6 +59,7 @@ type StatRow = {
   id: string;
   traded_at: string;
   instrument: string;
+  market: string;
   direction: "long" | "short";
   entry_price: number;
   exit_price: number | null;
@@ -83,7 +84,7 @@ export async function fetchStatTrades(supabase: SupabaseClient): Promise<StatTra
     const { data, error } = await supabase
       .from("trades")
       .select(
-        "id, traded_at, instrument, direction, entry_price, exit_price, pnl, emotion, rules_followed, risk_amount, strategy, tags, grade, mistakes, closed_at, trade_rule_violations(rule:rules(id, name))",
+        "id, traded_at, instrument, market, direction, entry_price, exit_price, pnl, emotion, rules_followed, risk_amount, strategy, tags, grade, mistakes, closed_at, trade_rule_violations(rule:rules(id, name))",
       )
       .order("traded_at", { ascending: false })
       .order("id")
@@ -95,6 +96,7 @@ export async function fetchStatTrades(supabase: SupabaseClient): Promise<StatTra
         id: r.id,
         tradedAt: r.traded_at,
         instrument: r.instrument,
+        market: r.market,
         direction: r.direction,
         entryPrice: Number(r.entry_price),
         exitPrice: r.exit_price === null ? null : Number(r.exit_price),

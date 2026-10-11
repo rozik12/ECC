@@ -150,6 +150,8 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
           {duration && fact(t("journal.duration"), duration)}
           {fact(t("trades.form.stop"), num(trade.stop_loss))}
           {fact(t("trades.form.takeProfit"), num(trade.take_profit))}
+          {trade.market === "crypto" && trade.crypto_kind ? fact(t("crypto.kind"), t(`crypto.${trade.crypto_kind}`)) : null}
+          {Number(trade.funding) !== 0 ? fact(t("crypto.funding"), money(Number(trade.funding))) : null}
           {fact(t("trades.form.size"), trade.contracts !== null ? `${num(trade.position_size, 6)} (${num(trade.contracts, 6)} × ${num(trade.contract_size, 6)})` : num(trade.position_size, 6))}
           {fact(t("trades.form.leverage"), num(trade.leverage, 2))}
           {Number(trade.fees) > 0 && fact(t("trades.form.fees"), money(Number(trade.fees)))}

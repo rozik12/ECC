@@ -41,7 +41,8 @@
     "diary": "Kundalik",
     "mistakes": "Xatolar",
     "plusMinus": "Foyda va zarar",
-    "traderTypes": "Treyder turlari"
+    "traderTypes": "Treyder turlari",
+    "portfolio": "Portfel"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1505,7 +1506,8 @@
     "note": "Juftlik {symbol}, ma'lumot: {source} (spot). Bu birjadagi narxlar brokeringiz yoki fyuchers narxlaridan biroz farq qilishi mumkin.",
     "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring.",
     "retry": "Qayta urinish",
-    "noteStocks": "Tiker {symbol}, ma'lumot: {source}. Manba norasmiy: narxlar kechikishi va broker narxidan farq qilishi mumkin. Fyucherslar uchun uzluksiz kontrakt ko'rsatiladi."
+    "noteStocks": "Tiker {symbol}, ma'lumot: {source}. Manba norasmiy: narxlar kechikishi va broker narxidan farq qilishi mumkin. Fyucherslar uchun uzluksiz kontrakt ko'rsatiladi.",
+    "indicators": "Indikatorlar"
   },
   "pwa": {
     "title": "Telefondagi ilova",
@@ -1946,7 +1948,10 @@
     "byMonth": "Oylar bo'yicha",
     "day": "Kun",
     "month": "Oy",
-    "note": "Bitim natijalari komissiyadan keyin ko'rsatilgan. Bu hisob, prognoz emas."
+    "note": "Bitim natijalari komissiyadan keyin ko'rsatilgan. Bu hisob, prognoz emas.",
+    "byYear": "Yillar bo'yicha",
+    "year": "Yil",
+    "yearNote": "Yozuvlaringiz bo'yicha ma'lumot uchun jamlanma, soliq hisobi emas: soliq qoidalari davlatga bog'liq."
   },
   "worldmarkets": {
     "title": "Dunyo bozorlari",
@@ -2178,5 +2183,74 @@
         "text": "Ko'proq bitimni rejadan oldin yopadi yoki ikkilanib, qo'rquv bilan kiradi. Erta chiqishlar qancha turishini tekshirish foydali."
       }
     }
+  },
+  "crypto": {
+    "title": "Kripto",
+    "kind": "Turi",
+    "kindAuto": "Yelka bo'yicha aniqlash",
+    "spot": "Spot",
+    "perp": "Muddatsiz kontrakt",
+    "funding": "Funding",
+    "fundingHint": "Bitim vaqtida qancha to'langan. Agar olingan bo'lsa, minus bilan kiriting. Natijadan ayriladi.",
+    "feeTitle": "Birja stavkasi bo'yicha komissiya",
+    "exchange": "Birja",
+    "order": "Order turi",
+    "taker": "Teyker (bozor bo'yicha)",
+    "maker": "Meyker (limitli)",
+    "rate": "Stavka: {p}%",
+    "calcFee": "Komissiyani hisoblash",
+    "feeNote": "Chegirmasiz bazaviy stavkalar, ma'lumot uchun: o'z stavkangizni birjada tekshiring. Komissiya kirish va chiqish uchun hisoblanadi.",
+    "liqPrice": "Likvidatsiya narxi taxminan {price} (kirishdan {pct}%).",
+    "liqBefore": "Likvidatsiya stopdan oldin sodir bo'ladi: stop ishlab ulgurmaydi. Yelkani kamaytiring yoki stopni yaqinroq qo'ying.",
+    "liqClose": "Stop likvidatsiyaga juda yaqin: narx uni sakrab o'tib ketishi mumkin.",
+    "liqNote": "Taxminiy, izolyatsiyalangan marja va 0,5% ushlab turish marjasi uchun. Aniq narxni birja ko'rsatadi.",
+    "exchanges": {
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "okx": "OKX",
+      "bitget": "Bitget",
+      "kucoin": "KuCoin"
+    }
+  },
+  "portfolio": {
+    "title": "Portfel",
+    "subtitle": "Qaysi tangalarni sotib olgansiz, o'rtacha narxi qancha, hozir qancha turadi va sotuvlar bilan qancha foyda yoki zarar qayd etgansiz.",
+    "note": "O'rtacha narx usulida hisob, USDT da. Bu sizning yozuvlaringiz, birja ma'lumoti emas: sayt hisoblaringizga ulanmaydi. Narxlar OKX dan, USDT juftligi yo'q tangalar baholanmaydi.",
+    "value": "Hozirgi qiymat",
+    "invested": "Kiritilgan",
+    "unrealized": "Qayd etilmagan",
+    "realized": "Qayd etilgan",
+    "positions": "Pozitsiyalar",
+    "empty": "Hozircha bo'sh. Birinchi xaridni quyida yozing.",
+    "coin": "Tanga",
+    "amount": "Miqdor",
+    "avg": "O'rtacha narx",
+    "price": "Hozirgi narx",
+    "valueCol": "Qiymat",
+    "pnl": "Natija",
+    "share": "Ulush",
+    "noPrice": "narx yo'q",
+    "oversold": "Sotilgani xariddan ko'p: yozuvlarni tekshiring",
+    "add": "Xarid yoki sotuvni yozish",
+    "side": "Amal",
+    "buy": "Xarid",
+    "sell": "Sotuv",
+    "priceUsdt": "Narx, USDT",
+    "fee": "Komissiya, USDT",
+    "save": "Yozish",
+    "history": "Yozuvlar tarixi",
+    "invalid": "Maydonlarni tekshiring: tanga, miqdor va narx raqamlar bilan to'ldirilishi kerak.",
+    "limit": "Portfeldagi yozuvlar chegarasiga yetildi (3000)."
+  },
+  "derivatives": {
+    "title": "Muddatsiz kontraktlar (kripto fyucherslari)",
+    "hint": "OKX ma'lumotlari: funding stavkasi, ochiq interes va long hamda short hisoblar nisbati. Daqiqada bir marta yangilanadi.",
+    "coin": "Tanga",
+    "funding": "Funding",
+    "annual": "Yiliga",
+    "oi": "Ochiq interes",
+    "ls": "Long/short",
+    "hours": "{n} soat",
+    "note": "Funding: musbat bo'lsa, long egalari short egalariga to'laydi, manfiy bo'lsa, aksincha. Ochiq interes ochiq pozitsiyalar hajmini ko'rsatadi, nisbat 1 dan katta bo'lsa, longdagi hisoblar shortdagidan ko'p. Bu ma'lumot uchun, signal emas: ko'rsatkichlarning o'sishi ham, tushishi ham «yaxshi» yoki «yomon» degani emas."
   }
 }

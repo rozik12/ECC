@@ -8,6 +8,7 @@ import { Alert, Badge, Button, Card, Input, Select, Textarea } from "@/component
 import { evaluateRules, type RuleLike } from "@/lib/calculations/rules";
 import { calculatePnl, tradeMetrics } from "@/lib/calculations/trade";
 import { positionSize } from "@/lib/tools";
+import { EXCHANGES, liquidationCheck, rateFor, roundTripFee, type CryptoKind, type Liquidity } from "@/lib/crypto";
 import { cn } from "@/lib/cn";
 import { GRADES, MISTAKES, parseTags } from "@/lib/journal";
 import { parseNumber } from "@/lib/format";
@@ -45,6 +46,9 @@ export type TradeFormValues = {
   mistakes: string[];
   /** Из-за чего случилась ошибка */
   mistakeNote: string;
+  /** Крипто: фандинг (положительный — заплачен) и вид: "spot", "perp" или пустая строка */
+  funding: string;
+  cryptoKind: string;
   /** Торговля контрактами: число контрактов и размер одного (пусто — не используется) */
   contracts: string;
   contractSize: string;
@@ -153,7 +157,7 @@ export function TradeForm({
   const mode = useFormMode();
   const ADVANCED_FIELDS = ["leverage", "riskPercent", "takeProfit", "fees", "strategy", "tags", "grade", "closedAt", "reason", "plan", "comment"];
   // Поля из «дополнительных» нельзя прятать, если в них уже что-то есть или в них ошибка
-  const hasExtra = !!(initial.takeProfit || initial.risk || initial.fees || initial.strategy || initial.tags || initial.grade || initial.mistakes.length || initial.mistakeNote || initial.reason || initial.plan || initial.comment || (initial.leverage && initial.leverage !== "1"));
+  const hasExtra = !!(initial.takeProfit || initial.risk || initial.fees || initial.strategy || initial.tags || initial.grade || initial.mistakes.length || initial.mistakeNote || initial.funding || initial.reason || initial.plan || initial.comment || (initial.leverage && initial.leverage !== "1"));
   const full = mode === "full" || !!tradeId || hasExtra || ADVANCED_FIELDS.some((k) => errors[k]) || tplId !== "";
   const adv = full ? "" : "hidden";
   const [formError, setFormError] = useState<string | null>(null);
@@ -187,8 +191,15 @@ export function TradeForm({
 
   // P&L считается сам, пока пользователь не изменил его вручную
   const feesNum = parseNumber(v.fees) ?? 0;
+  const fundingNum = v.market === "crypto" ? (parseNumber(v.funding) ?? 0) : 0;
   const autoPnl =
-    n.entry !== null && n.exit !== null && n.size !== null ? round2(calculatePnl(v.direction, n.entry, n.exit, n.size) - feesNum) : null;
+    n.entry !== null && n.exit !== null && n.size !== null ? round2(calculatePnl(v.direction, n.entry, n.exit, n.size) - feesNum - fundingNum) : null;
+  // Крипто: комиссия по ставке биржи и проверка ликвидации против стопа
+  const [feeExchange, setFeeExchange] = useState(EXCHANGES[0]);
+  const [feeLiquidity, setFeeLiquidity] = useState<Liquidity>("taker");
+  const kind: CryptoKind = v.cryptoKind === "spot" ? "spot" : v.cryptoKind === "perp" ? "perp" : (n.leverage ?? 1) > 1 ? "perp" : "spot";
+  const feeRate = rateFor(feeExchange, kind, feeLiquidity);
+  const liq = v.market === "crypto" && n.entry !== null && n.leverage !== null ? liquidationCheck({ entry: n.entry, stop: n.stop, leverage: n.leverage, direction: v.direction }) : null;
   const pnlShown = pnlTouched ? v.pnl : autoPnl === null ? "" : String(autoPnl);
 
   // Правила, нарушенные по цифрам
@@ -249,6 +260,8 @@ export function TradeForm({
       leverage: n.leverage ?? 1,
       riskPercent: n.risk,
       fees: feesNum,
+      funding: fundingNum,
+      cryptoKind: v.market === "crypto" && (v.cryptoKind === "spot" || v.cryptoKind === "perp") ? v.cryptoKind : null,
       pnl: parseNumber(pnlShown),
       emotion: v.emotion,
       strategy: v.strategy,
@@ -446,6 +459,56 @@ export function TradeForm({
           )}
         </fieldset>
       </Card>
+
+      {v.market === "crypto" && (
+        <Card className="space-y-4">
+          <h2 className="font-semibold">{t("crypto.title")}</h2>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+            <Select id="t-kind" label={t("crypto.kind")} value={v.cryptoKind} onChange={(e) => set("cryptoKind", e.target.value as never)}>
+              <option value="">{t("crypto.kindAuto")}</option>
+              <option value="spot">{t("crypto.spot")}</option>
+              <option value="perp">{t("crypto.perp")}</option>
+            </Select>
+            <Input id="t-leverage-crypto" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} />
+            <Input id="t-funding" inputMode="decimal" label={t("crypto.funding")} hint={t("crypto.fundingHint")} error={err("funding")} {...bind("funding")} />
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-medium">{t("crypto.feeTitle")}</p>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <Select id="t-fee-ex" label={t("crypto.exchange")} value={feeExchange} onChange={(e) => setFeeExchange(e.target.value)}>
+                {EXCHANGES.map((x) => <option key={x} value={x}>{t(`crypto.exchanges.${x}`)}</option>)}
+              </Select>
+              <Select id="t-fee-liq" label={t("crypto.order")} value={feeLiquidity} onChange={(e) => setFeeLiquidity(e.target.value as Liquidity)}>
+                <option value="taker">{t("crypto.taker")}</option>
+                <option value="maker">{t("crypto.maker")}</option>
+              </Select>
+              <div className="flex flex-col justify-end text-sm text-muted">{feeRate !== null && t("crypto.rate", { p: feeRate })}</div>
+              <div className="flex items-end">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  disabled={n.entry === null || n.size === null || feeRate === null}
+                  onClick={() => {
+                    const fee = n.entry !== null && n.size !== null && feeRate !== null ? roundTripFee({ entry: n.entry, exit: n.exit, size: n.size, ratePct: feeRate }) : null;
+                    if (fee !== null) set("fees", String(fee));
+                  }}
+                >
+                  {t("crypto.calcFee")}
+                </Button>
+              </div>
+            </div>
+            <p className="text-xs text-muted">{t("crypto.feeNote")}</p>
+          </div>
+          {liq && (
+            <div className={cn("rounded-xl px-4 py-3 text-sm", liq.danger === "before_stop" ? "bg-danger-soft text-danger" : liq.danger === "close" ? "bg-warning-soft" : "bg-surface-muted")} role="status">
+              <p>{t("crypto.liqPrice", { price: String(Math.round(liq.price * 1e6) / 1e6), pct: String(Math.round(liq.distancePct * 100) / 100) })}</p>
+              {liq.danger === "before_stop" && <p className="mt-1 font-medium">{t("crypto.liqBefore")}</p>}
+              {liq.danger === "close" && <p className="mt-1 font-medium">{t("crypto.liqClose")}</p>}
+              <p className="mt-1 text-xs opacity-80">{t("crypto.liqNote")}</p>
+            </div>
+          )}
+        </Card>
+      )}
 
       <Card className={cn("space-y-5", adv)}>
         <h2 className="font-semibold">{t("journal.title")}</h2>

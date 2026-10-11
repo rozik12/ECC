@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import { fetchStatTrades, getAccounts, getTransactions } from "@/lib/data";
 import { dateFormat, formatMoney, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
-import { byDay, byMonth, inPeriod, plusMinus, type PeriodKey } from "@/lib/plus-minus";
+import { byDay, byMonth, byYear, inPeriod, plusMinus, type PeriodKey } from "@/lib/plus-minus";
 import { safeTimeZone } from "@/lib/time";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,6 +32,7 @@ export default async function PlusMinusPage() {
   const balance = accounts.reduce((s, a) => s + a.balance, 0);
   const days = byDay(all, tz, 31);
   const months = byMonth(all, tz, 12);
+  const years = byYear(all, tz);
   const dayName = (d: string) => dateFormat(locale, { day: "numeric", month: "short", weekday: "short", timeZone: "UTC" }).format(new Date(`${d}T00:00:00Z`));
   const monthName = (m: string) => dateFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${m}-01T00:00:00Z`));
 
@@ -97,6 +98,25 @@ export default async function PlusMinusPage() {
               </TBody>
             </Table>
           </Card>
+          {years.length > 1 && (
+            <Card className="space-y-3">
+              <h2 className="font-semibold">{t("pm.byYear")}</h2>
+              <Table>
+                {cols(t("pm.year"))}
+                <TBody>
+                  {years.map((y) => (
+                    <Tr key={y.year}>
+                      <Td label={t("pm.year")} className="font-medium">{y.year}</Td>
+                      <Td label={t("pm.plus")} className="tabular-nums text-success">{money(y.plus, true)}</Td>
+                      <Td label={t("pm.minus")} className="tabular-nums text-danger">{money(y.minus, true)}</Td>
+                      <Td label={t("pm.net")} className={cn("font-semibold tabular-nums", pnlTone(y.net))}>{money(y.net, true)}</Td>
+                    </Tr>
+                  ))}
+                </TBody>
+              </Table>
+              <p className="text-xs text-muted">{t("pm.yearNote")}</p>
+            </Card>
+          )}
           <Card className="space-y-3">
             <h2 className="font-semibold">{t("pm.byMonth")}</h2>
             <Table>

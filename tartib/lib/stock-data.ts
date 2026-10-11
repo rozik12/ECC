@@ -44,9 +44,9 @@ export function normalizeTicker(instrument: string, market: string): string | nu
   return null;
 }
 
-const INTERVAL: Record<Timeframe, string> = { "5m": "5m", "15m": "15m", "1h": "60m", "4h": "60m", "1d": "1d" };
+const INTERVAL: Record<Timeframe, string> = { "5m": "5m", "15m": "15m", "1h": "60m", "4h": "60m", "1d": "1d", "1w": "1wk" };
 /** Насколько далеко назад Yahoo отдаёт данные такого масштаба, в днях. */
-const HISTORY_DAYS: Record<Timeframe, number> = { "5m": 59, "15m": 59, "1h": 729, "4h": 729, "1d": 36500 };
+const HISTORY_DAYS: Record<Timeframe, number> = { "5m": 59, "15m": 59, "1h": 729, "4h": 729, "1d": 36500, "1w": 36500 };
 
 type YahooBody = { chart?: { result?: { timestamp?: number[]; meta?: Record<string, unknown>; indicators?: { quote?: Record<string, (number | null)[]>[] } }[] } };
 

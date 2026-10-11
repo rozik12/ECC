@@ -24,7 +24,9 @@ type Ctx = {
   notify?: { goal: number };
 };
 
-type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees" | "tags" | "grade" | "mistakes" | "closedAt" | "mistakeNote" | "contracts" | "contractSize"> & {
+type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees" | "tags" | "grade" | "mistakes" | "closedAt" | "mistakeNote" | "contracts" | "contractSize" | "funding" | "cryptoKind"> & {
+  funding?: number;
+  cryptoKind?: "spot" | "perp" | null;
   mistakeNote?: string;
   contracts?: number | null;
   contractSize?: number | null;
@@ -90,12 +92,13 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
 
   // P&L хранится чистым (после комиссий). Если пользователь не ввёл его сам, считаем: результат по ценам минус комиссии.
   const fees = t.fees ?? 0;
+  const funding = t.funding ?? 0;
   const pnl =
     t.pnl !== null
       ? t.pnl
       : t.exitPrice !== null
-        ? calculatePnl(t.direction, t.entryPrice, t.exitPrice, t.positionSize) - fees
-        : -fees;
+        ? calculatePnl(t.direction, t.entryPrice, t.exitPrice, t.positionSize) - fees - funding
+        : -fees - funding;
 
   const row = {
     account_id: t.accountId,
@@ -114,6 +117,8 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
     potential_loss: metrics.potentialLoss === null ? null : round(metrics.potentialLoss),
     pnl: round(pnl),
     fees: round(fees),
+    funding: round(funding),
+    crypto_kind: t.market === "crypto" ? (t.cryptoKind ?? null) : null,
     emotion: t.emotion,
     strategy: t.strategy,
     rules_followed: violationIds.length === 0,

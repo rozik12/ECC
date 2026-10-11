@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AlertsCard, type AlertView } from "@/components/market/AlertsCard";
 import { CalendarCard } from "@/components/market/CalendarCard";
+import { DerivativesCard } from "@/components/market/DerivativesCard";
 import { FearGreedCard } from "@/components/market/FearGreedCard";
 import { MoversCard } from "@/components/market/MoversCard";
 import { WorldMarketsCard } from "@/components/market/WorldMarketsCard";
@@ -48,6 +49,7 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
       <UsMarketCard timeZone={safeTimeZone(profile?.timezone)} />
       <AlertsCard alerts={alertViews} />
       <MoversCard gainers={movers.gainers} losers={movers.losers} />
+      <DerivativesCard />
       <CalendarCard events={extras.calendar} timeZone={safeTimeZone(profile?.timezone)} all={sp.events === "all"} now={new Date().getTime()} />
       <p className="text-xs text-muted">{t("market.sources")} {t("common.disclaimer")}</p>
     </div>

@@ -50,6 +50,8 @@ export type Trade = {
   mistakes: string[];
   closed_at: string | null;
   mistake_note: string;
+  funding: number;
+  crypto_kind: "spot" | "perp" | null;
   contracts: number | null;
   contract_size: number | null;
 };

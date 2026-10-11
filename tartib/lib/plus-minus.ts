@@ -44,3 +44,13 @@ export function byMonth(trades: StatTrade[], tz: string, limit = 12): (PlusMinus
   }
   return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0])).slice(0, limit).map(([month, xs]) => ({ month, ...plusMinus(xs) }));
 }
+
+/** По годам, новые сверху. Для справки (например, при подготовке отчётов): не является налоговым расчётом. */
+export function byYear(trades: StatTrade[], tz: string): (PlusMinus & { year: string })[] {
+  const map = new Map<string, StatTrade[]>();
+  for (const t of trades) {
+    const k = localDay(t.tradedAt, tz).slice(0, 4);
+    map.set(k, [...(map.get(k) ?? []), t]);
+  }
+  return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([year, xs]) => ({ year, ...plusMinus(xs) }));
+}

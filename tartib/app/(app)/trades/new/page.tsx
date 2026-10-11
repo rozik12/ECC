@@ -77,6 +77,8 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     grade: "",
     mistakes: [],
     mistakeNote: "",
+    funding: "",
+    cryptoKind: "",
     contracts: "",
     contractSize: "",
     closedAt: "",
@@ -95,6 +97,7 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     initial.stop = s(src.stop_loss);
     initial.takeProfit = s(src.take_profit);
     initial.size = s(src.position_size);
+    initial.cryptoKind = src.crypto_kind === "spot" || src.crypto_kind === "perp" ? src.crypto_kind : "";
     initial.contracts = s(src.contracts);
     initial.contractSize = s(src.contract_size);
     initial.leverage = s(src.leverage) || "1";

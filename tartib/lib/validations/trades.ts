@@ -29,6 +29,9 @@ export const tradeSchema = z.object({
   tags: z.array(z.string().trim().min(1).max(30, "errors.nameMax")).max(10, "errors.tooLarge").default([]),
   grade: z.enum(GRADES).nullable().default(null),
   mistakes: z.array(z.enum(MISTAKES)).max(10).default([]),
+  /** Крипто: фандинг за время сделки (положительный — заплачен, отрицательный — получен) и вид: спот или бессрочный контракт */
+  funding: z.number({ error: "errors.number" }).min(-1_000_000_000, "errors.tooLarge").max(1_000_000_000, "errors.tooLarge").default(0),
+  cryptoKind: z.enum(["spot", "perp"]).nullable().default(null),
   /** Из-за чего случилась ошибка, своими словами */
   mistakeNote: z.string().trim().max(2000, "errors.textMax").default(""),
   /** Торговля контрактами: число контрактов и размер одного. Оба или ни одного; размер позиции тогда равен их произведению. */

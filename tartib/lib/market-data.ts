@@ -1,7 +1,7 @@
 // Свечи цены для графика сделки. Источники без ключа: Binance (зеркало рыночных данных), запасной OKX. Только криптопары.
 // Файл без зависимостей, чтобы его можно было тестировать.
 
-export const TIMEFRAMES = { "5m": 300_000, "15m": 900_000, "1h": 3_600_000, "4h": 14_400_000, "1d": 86_400_000 } as const;
+export const TIMEFRAMES = { "5m": 300_000, "15m": 900_000, "1h": 3_600_000, "4h": 14_400_000, "1d": 86_400_000, "1w": 604_800_000 } as const;
 export type Timeframe = keyof typeof TIMEFRAMES;
 export const isTimeframe = (v: unknown): v is Timeframe => typeof v === "string" && Object.hasOwn(TIMEFRAMES, v);
 
@@ -42,9 +42,9 @@ export function parseOkx(body: unknown): Candle[] {
   return data.map((r) => ({ t: num(r[0]), o: num(r[1]), h: num(r[2]), l: num(r[3]), c: num(r[4]), v: num(r[5]) })).filter(valid).sort((a, b) => a.t - b.t);
 }
 
-const OKX_BAR: Record<Timeframe, string> = { "5m": "5m", "15m": "15m", "1h": "1H", "4h": "4H", "1d": "1D" };
-const KRAKEN_INTERVAL: Record<Timeframe, number> = { "5m": 5, "15m": 15, "1h": 60, "4h": 240, "1d": 1440 };
-const COINBASE_GRANULARITY: Partial<Record<Timeframe, number>> = { "5m": 300, "15m": 900, "1h": 3600, "1d": 86400 }; // 4 часов у Coinbase нет
+const OKX_BAR: Record<Timeframe, string> = { "5m": "5m", "15m": "15m", "1h": "1H", "4h": "4H", "1d": "1D", "1w": "1W" };
+const KRAKEN_INTERVAL: Record<Timeframe, number> = { "5m": 5, "15m": 15, "1h": 60, "4h": 240, "1d": 1440, "1w": 10080 };
+const COINBASE_GRANULARITY: Partial<Record<Timeframe, number>> = { "5m": 300, "15m": 900, "1h": 3600, "1d": 86400 }; // 4 часов и недели у Coinbase нет
 
 export type CandleSource = "okx" | "kraken" | "coinbase" | "binance";
 type Fetch = (url: string, init?: RequestInit) => Promise<Response>;

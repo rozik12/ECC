@@ -41,7 +41,8 @@
     "diary": "Diary",
     "mistakes": "Mistakes",
     "plusMinus": "Gains and losses",
-    "traderTypes": "Types of traders"
+    "traderTypes": "Types of traders",
+    "portfolio": "Portfolio"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1505,7 +1506,8 @@
     "note": "Pair {symbol}, data: {source} (spot). Prices on this exchange can differ slightly from your broker or futures prices.",
     "offChart": "Some trade prices (entry, stop, target or exit) are far from the market at that time and are not drawn. Check the instrument, time and prices.",
     "retry": "Retry",
-    "noteStocks": "Ticker {symbol}, data: {source}. The source is unofficial: prices may be delayed and differ from your broker. Futures show the continuous contract."
+    "noteStocks": "Ticker {symbol}, data: {source}. The source is unofficial: prices may be delayed and differ from your broker. Futures show the continuous contract.",
+    "indicators": "Indicators"
   },
   "pwa": {
     "title": "Phone app",
@@ -1946,7 +1948,10 @@
     "byMonth": "By month",
     "day": "Day",
     "month": "Month",
-    "note": "Trade results are after fees. This is record keeping, not a forecast."
+    "note": "Trade results are after fees. This is record keeping, not a forecast.",
+    "byYear": "By year",
+    "year": "Year",
+    "yearNote": "A reference summary of your records, not a tax calculation: tax rules depend on the country."
   },
   "worldmarkets": {
     "title": "World markets",
@@ -2178,5 +2183,74 @@
         "text": "More often closes a trade earlier than planned or enters with doubt and fear. It helps to check what early exits cost."
       }
     }
+  },
+  "crypto": {
+    "title": "Crypto",
+    "kind": "Type",
+    "kindAuto": "Detect by leverage",
+    "spot": "Spot",
+    "perp": "Perpetual contract",
+    "funding": "Funding",
+    "fundingHint": "How much was paid during the trade. If received, enter it with a minus. It is deducted from the result.",
+    "feeTitle": "Fee at the exchange rate",
+    "exchange": "Exchange",
+    "order": "Order type",
+    "taker": "Taker (market)",
+    "maker": "Maker (limit)",
+    "rate": "Rate: {p}%",
+    "calcFee": "Calculate fee",
+    "feeNote": "Base rates without discounts, for reference: check your own rate on the exchange. The fee covers entry and exit.",
+    "liqPrice": "Liquidation price is about {price} ({pct}% from entry).",
+    "liqBefore": "Liquidation would happen before your stop, so the stop cannot trigger. Lower the leverage or put the stop closer.",
+    "liqClose": "The stop is very close to liquidation: price may jump past it.",
+    "liqNote": "Approximate, for isolated margin and 0.5% maintenance margin. The exchange shows the exact price.",
+    "exchanges": {
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "okx": "OKX",
+      "bitget": "Bitget",
+      "kucoin": "KuCoin"
+    }
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Which coins you bought, at what average price, what they are worth now and what you locked in by selling.",
+    "note": "Average-cost accounting, in USDT. These are your own records, not exchange data: the site does not connect to your accounts. Prices come from OKX; coins without a USDT pair have no valuation.",
+    "value": "Value now",
+    "invested": "Invested",
+    "unrealized": "Unrealised",
+    "realized": "Realised",
+    "positions": "Positions",
+    "empty": "Nothing yet. Record your first purchase below.",
+    "coin": "Coin",
+    "amount": "Amount",
+    "avg": "Average price",
+    "price": "Price now",
+    "valueCol": "Value",
+    "pnl": "Result",
+    "share": "Share",
+    "noPrice": "no price",
+    "oversold": "Sold more than bought: check your records",
+    "add": "Record a purchase or sale",
+    "side": "Action",
+    "buy": "Buy",
+    "sell": "Sell",
+    "priceUsdt": "Price, USDT",
+    "fee": "Fee, USDT",
+    "save": "Record",
+    "history": "History of records",
+    "invalid": "Check the fields: coin, amount and price must be filled in with numbers.",
+    "limit": "Portfolio record limit reached (3000)."
+  },
+  "derivatives": {
+    "title": "Perpetual contracts (crypto futures)",
+    "hint": "OKX data: funding rate, open interest and the ratio of long to short accounts. Refreshed once a minute.",
+    "coin": "Coin",
+    "funding": "Funding",
+    "annual": "Per year",
+    "oi": "Open interest",
+    "ls": "Longs to shorts",
+    "hours": "{n} h",
+    "note": "Funding: when positive, long holders pay short holders; when negative, the other way round. Open interest shows the volume of open positions, and a ratio above 1 means more accounts are long than short. This is reference data, not a signal: no rise or fall in any of these means “good” or “bad”."
   }
 }

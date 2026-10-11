@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { byDay, byMonth, inPeriod, plusMinus } from "../lib/plus-minus.ts";
+import { byDay, byMonth, byYear, inPeriod, plusMinus } from "../lib/plus-minus.ts";
 import type { StatTrade } from "../lib/statistics/index.ts";
 
 const tr = (tradedAt: string, pnl: number) => ({ id: tradedAt + pnl, tradedAt, pnl, instrument: "X", direction: "long", entryPrice: 1, exitPrice: 1, emotion: "calm", rulesFollowed: true, riskAmount: null, strategy: "", violations: [] }) as StatTrade;
@@ -23,4 +23,11 @@ test("периоды и группировки по часовому поясу"
   assert.deepEqual(byDay(xs, "UTC").map((d) => d.day), ["2026-10-11", "2026-10-08", "2026-10-01", "2026-09-30"]);
   const m = byMonth(xs, "UTC");
   assert.deepEqual(m.map((x) => [x.month, x.net]), [["2026-10", 25], ["2026-09", 7]]);
+});
+
+test("итоги по годам", () => {
+  const xs = [tr("2026-01-05T10:00:00Z", 10), tr("2025-12-31T23:30:00Z", -4), tr("2025-06-01T10:00:00Z", 6)];
+  assert.deepEqual(byYear(xs, "UTC").map((y) => [y.year, y.plus, y.minus, y.net]), [["2026", 10, 0, 10], ["2025", 6, -4, 2]]);
+  // 23:30 UTC 31 декабря в Ташкенте уже 2026 год
+  assert.deepEqual(byYear(xs, "Asia/Tashkent").map((y) => [y.year, y.net]), [["2026", 6], ["2025", 6]]);
 });

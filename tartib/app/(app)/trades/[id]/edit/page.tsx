@@ -71,6 +71,8 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
     grade: trade.grade ?? "",
     mistakes: trade.mistakes ?? [],
     mistakeNote: trade.mistake_note ?? "",
+    funding: Number(trade.funding) !== 0 ? String(Number(trade.funding)) : "",
+    cryptoKind: trade.crypto_kind ?? "",
     contracts: trade.contracts === null ? "" : String(Number(trade.contracts)),
     contractSize: trade.contract_size === null ? "" : String(Number(trade.contract_size)),
     closedAt: trade.closed_at ?? "",

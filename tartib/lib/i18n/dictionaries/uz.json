@@ -1493,7 +1493,7 @@
     "title": "Narx grafigi",
     "timeframe": "Shamlar masshtabi",
     "loading": "Grafik yuklanmoqda…",
-    "unsupported": "Grafik kripto juftliklar uchun mavjud (masalan, BTCUSDT). Valyuta, aksiya va fyuchers uchun kalitsiz bepul ma'lumot yo'q.",
+    "unsupported": "Grafik kripto juftliklar (BTCUSDT), AQSh aksiyalari va indekslari (AAPL, ^NDX) hamda NQ, MNQ, ES, MES fyucherslari uchun ishlaydi. Boshqalari uchun kalitsiz bepul ma'lumot yo'q.",
     "no_data": "Bu vaqtda shamlar yo'q: ehtimol, juftlik o'sha paytda hali savdo qilinmagan.",
     "unavailable": "Birjadan ma'lumot yuklab bo'lmadi. Keyinroq urinib ko'ring.",
     "entry": "Kirish",
@@ -1502,7 +1502,8 @@
     "exit": "Chiqish",
     "note": "Juftlik {symbol}, ma'lumot: {source} (spot). Bu birjadagi narxlar brokeringiz yoki fyuchers narxlaridan biroz farq qilishi mumkin.",
     "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring.",
-    "retry": "Qayta urinish"
+    "retry": "Qayta urinish",
+    "noteStocks": "Tiker {symbol}, ma'lumot: {source}. Manba norasmiy: narxlar kechikishi va broker narxidan farq qilishi mumkin. Fyucherslar uchun uzluksiz kontrakt ko'rsatiladi."
   },
   "pwa": {
     "title": "Telefondagi ilova",
@@ -1881,5 +1882,17 @@
     "rule": "Kapitali ${limit} dan kam marja hisobida 5 savdo kuni ichida 4 va undan ko'p day-trade «pattern day trader» maqomini beradi.",
     "notApplies": "Dollar hisobingizdagi kapital ${limit} dan kam emas, shuning uchun bu qoida odatda sizni cheklamaydi.",
     "note": "Hisoblagich ma'lumot uchun va faqat jurnaldagi bitimlarni sanaydi: qoidani brokerdan aniqlang."
+  },
+  "usindices": {
+    "title": "AQSh indekslari",
+    "none": "ma'lumot yo'q",
+    "names": {
+      "QQQ": "Nasdaq-100 ETF",
+      "SPY": "S&P 500 ETF",
+      "NDX": "Nasdaq-100 indeksi",
+      "VIX": "o'zgaruvchanlik indeksi",
+      "NQ": "Nasdaq-100 fyuchersi"
+    },
+    "note": "O'zgarish avvalgi yopilishga nisbatan. Manba norasmiy (Yahoo Finance), ma'lumot kechikishi mumkin. VIX rangsiz: qo'rquv o'sishi na yaxshi, na yomon. Investitsiya maslahati emas."
   }
 }

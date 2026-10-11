@@ -5,18 +5,20 @@ import { CandleView, TimeframeSwitch, useCandles, type Level } from "@/component
 import { Button, Card } from "@/components/ui";
 import { useI18n } from "@/lib/i18n/provider";
 import { normalizePair, type Timeframe } from "@/lib/market-data";
+import { normalizeTicker } from "@/lib/stock-data";
 
-type Props = { instrument: string; tradedAt: string; direction: "long" | "short"; entry: number; exit: number | null; stop: number | null; takeProfit: number | null };
+type Props = { instrument: string; market?: string; tradedAt: string; direction: "long" | "short"; entry: number; exit: number | null; stop: number | null; takeProfit: number | null };
 
 /** График цены вокруг сделки со входом, стопом, целью и выходом. Данные: OKX, Kraken, Coinbase или Binance, без ключей. */
-export function TradeChart({ instrument, tradedAt, entry, exit, stop, takeProfit }: Props) {
+export function TradeChart({ instrument, market = "crypto", tradedAt, entry, exit, stop, takeProfit }: Props) {
   const { t } = useI18n();
-  const supported = normalizePair(instrument) !== null;
+  const ticker = market === "stocks" || market === "futures" ? normalizeTicker(instrument, market) : null;
+  const supported = ticker !== null || normalizePair(instrument) !== null;
   const [tf, setTf] = useState<Timeframe>("1h");
   const [attempt, setAttempt] = useState(0);
   const [hidden, setHidden] = useState(0);
   const onHidden = useCallback((n: number) => setHidden(n), []);
-  const { candles, error: loadError, source } = useCandles(instrument, tf, tradedAt, supported, attempt);
+  const { candles, error: loadError, source } = useCandles(instrument, tf, tradedAt, supported, attempt, market);
   const error = loadError ?? (!supported ? "unsupported" : null);
 
   const levels: Level[] = [
@@ -44,7 +46,7 @@ export function TradeChart({ instrument, tradedAt, entry, exit, stop, takeProfit
         <>
           <CandleView candles={candles} tf={tf} levels={levels} markAt={new Date(tradedAt).getTime()} label={t("chart.title")} onHidden={onHidden} />
           {hidden > 0 && <p className="rounded-lg bg-warning-soft px-3 py-2 text-sm">{t("chart.offChart")}</p>}
-          <p className="text-xs text-muted">{t("chart.note", { symbol: normalizePair(instrument)?.symbol ?? instrument, source })}</p>
+          <p className="text-xs text-muted">{t(ticker ? "chart.noteStocks" : "chart.note", { symbol: ticker ?? normalizePair(instrument)?.symbol ?? instrument, source })}</p>
         </>
       )}
     </Card>

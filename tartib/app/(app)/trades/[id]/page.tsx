@@ -154,6 +154,7 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
 
       <TradeChart
         instrument={trade.instrument}
+        market={trade.market}
         tradedAt={trade.traded_at}
         direction={trade.direction}
         entry={Number(trade.entry_price)}

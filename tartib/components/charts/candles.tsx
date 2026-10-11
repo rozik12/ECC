@@ -12,7 +12,7 @@ export type Level = { id: "entry" | "stop" | "tp" | "exit"; price: number; color
 
 type Loaded = { key: string; candles: Datum[]; source: string } | { key: string; error: ChartError };
 
-export const SOURCE_NAME: Record<string, string> = { okx: "OKX", kraken: "Kraken", coinbase: "Coinbase", binance: "Binance" };
+export const SOURCE_NAME: Record<string, string> = { okx: "OKX", kraken: "Kraken", coinbase: "Coinbase", binance: "Binance", yahoo: "Yahoo Finance" };
 
 /** Сколько знаков после запятой показывать у цены: у дорогих активов меньше, у дешёвых больше. */
 export const priceDigits = (v: number) => (Math.abs(v) >= 1000 ? 0 : Math.abs(v) >= 10 ? 2 : Math.abs(v) >= 1 ? 3 : 6);
@@ -42,15 +42,15 @@ function Candle({ x = 0, y = 0, width = 0, height = 0, payload }: ShapeProps) {
  * "live" — последние 120 свечей до текущего момента (время берётся в момент запроса).
  * Результат относится к своему ключу, поэтому при смене пары или масштаба старые данные не показываются.
  */
-export function useCandles(instrument: string, tf: Timeframe, at: string | "live", enabled: boolean, attempt = 0) {
-  const key = `${instrument}|${at}|${tf}|${attempt}`;
+export function useCandles(instrument: string, tf: Timeframe, at: string | "live", enabled: boolean, attempt = 0, market = "crypto") {
+  const key = `${instrument}|${market}|${at}|${tf}|${attempt}`;
   const [loaded, setLoaded] = useState<Loaded | null>(null);
 
   useEffect(() => {
     if (!enabled) return;
     const ctrl = new AbortController();
     const when = at === "live" ? new Date(Date.now() - 80 * TIMEFRAMES[tf]).toISOString() : at;
-    fetch(`/api/market/candles?${new URLSearchParams({ instrument, tf, at: when })}`, { signal: ctrl.signal })
+    fetch(`/api/market/candles?${new URLSearchParams({ instrument, tf, at: when, market })}`, { signal: ctrl.signal })
       .then(async (res) => {
         if (res.ok) {
           const body = (await res.json()) as { source: string; candles: number[][] };
@@ -65,7 +65,7 @@ export function useCandles(instrument: string, tf: Timeframe, at: string | "live
         if (e?.name !== "AbortError") setLoaded({ key, error: "unavailable" });
       });
     return () => ctrl.abort();
-  }, [key, enabled, instrument, tf, at]);
+  }, [key, enabled, instrument, market, tf, at]);
 
   const ready = loaded && loaded.key === key ? loaded : null;
   return {

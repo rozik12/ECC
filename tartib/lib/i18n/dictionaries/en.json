@@ -38,7 +38,9 @@
     "charts": "Charts",
     "market": "Market",
     "more": "More: market and tools",
-    "diary": "Diary"
+    "diary": "Diary",
+    "mistakes": "Mistakes",
+    "plusMinus": "Gains and losses"
   },
   "footer": {
     "terms": "Terms of use",
@@ -585,7 +587,12 @@
         "stocks": "AAPL",
         "futures": "MNQ"
       },
-      "closedPdtHint": "Closing time feeds the day-trade (PDT) counter on the dashboard."
+      "closedPdtHint": "Closing time feeds the day-trade (PDT) counter on the dashboard.",
+      "contractMode": "I trade contracts",
+      "contracts": "Contracts",
+      "contractSize": "Size of one contract",
+      "contractSizeHint": "How many units of the asset one contract holds (for example, 100)",
+      "contractTotal": "Position size (contracts × contract size)"
     },
     "detail": {
       "risk": "Risk",
@@ -1678,7 +1685,9 @@
     "modeFullText": "Showing all fields.",
     "modeToFull": "Show all fields",
     "modeToSimple": "Main only",
-    "sizeHint": "By formula: size {size} (risk {risk}% = {amount}). Use it"
+    "sizeHint": "By formula: size {size} (risk {risk}% = {amount}). Use it",
+    "mistakeNote": "Why it happened",
+    "mistakeNoteHint": "In your own words: what you felt, what went wrong, what you will do differently. Only you can see this."
   },
   "risk": {
     "title": "System quality and risk",
@@ -1895,5 +1904,51 @@
       "NQ": "Nasdaq-100 futures"
     },
     "note": "Change versus the previous close. The source is unofficial (Yahoo Finance) and data may be delayed. VIX has no colour: rising fear is neither good nor bad. Not investment advice."
+  },
+  "mistakes": {
+    "title": "My mistakes",
+    "subtitle": "Trades with mistakes and broken rules are collected here. Mark what the mistake was, write why it happened and attach a screenshot.",
+    "link": "Mistakes: review and photos",
+    "whyTitle": "Why it happened",
+    "noNote": "No reason written yet.",
+    "open": "Review mistakes",
+    "save": "Save",
+    "saved": "Saved",
+    "pasteHint": "Paste a screenshot from the clipboard (Ctrl+V), drop it here or choose a file. Trades with broken rules appear here by themselves.",
+    "brokenRules": "Broken rules",
+    "marked": "Trades with a marked mistake",
+    "result": "Their result",
+    "worst": "The costliest mistake is “{name}”: {n} trades, result {amount}.",
+    "byKind": "What each mistake costs",
+    "log": "Mistake log",
+    "empty": "Nothing yet. Once you mark a mistake in a trade or break a rule, the trade shows up here.",
+    "more": "Show more",
+    "todo": "Losing trades not yet reviewed",
+    "todoHint": "Check whether there was a mistake: if so, mark it and write the reason."
+  },
+  "pm": {
+    "title": "Gains and losses",
+    "subtitle": "How much you made in winning trades, how much you lost in losing ones and where you end up.",
+    "link": "Gains and losses: income and spending",
+    "period": {
+      "today": "Today",
+      "week": "7 days",
+      "month": "This month",
+      "all": "All time"
+    },
+    "plus": "Gains",
+    "minus": "Losses",
+    "net": "Net",
+    "trades": "trades: {n}",
+    "account": "Money on the account",
+    "balance": "Balance now",
+    "deposited": "Deposited",
+    "withdrawn": "Withdrawn",
+    "accountNote": "Deposits and withdrawals are recorded in Settings, in the accounts section. They are not part of the trading result.",
+    "byDay": "By day",
+    "byMonth": "By month",
+    "day": "Day",
+    "month": "Month",
+    "note": "Trade results are after fees. This is record keeping, not a forecast."
   }
 }

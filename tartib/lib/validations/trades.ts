@@ -29,8 +29,14 @@ export const tradeSchema = z.object({
   tags: z.array(z.string().trim().min(1).max(30, "errors.nameMax")).max(10, "errors.tooLarge").default([]),
   grade: z.enum(GRADES).nullable().default(null),
   mistakes: z.array(z.enum(MISTAKES)).max(10).default([]),
+  /** Из-за чего случилась ошибка, своими словами */
+  mistakeNote: z.string().trim().max(2000, "errors.textMax").default(""),
+  /** Торговля контрактами: число контрактов и размер одного. Оба или ни одного; размер позиции тогда равен их произведению. */
+  contracts: z.number({ error: "errors.number" }).positive("errors.positive").nullable().default(null),
+  contractSize: z.number({ error: "errors.number" }).positive("errors.positive").nullable().default(null),
   /** Время закрытия; без цены выхода не сохраняется */
   closedAt: z.iso.datetime({ offset: true, error: "errors.required" }).nullable().default(null),
-}).refine((v) => !v.closedAt || Date.parse(v.closedAt) >= Date.parse(v.tradedAt), { path: ["closedAt"], message: "journal.errClosedBefore" });
+}).refine((v) => (v.contracts === null) === (v.contractSize === null), { path: ["contracts"], message: "errors.required" })
+  .refine((v) => !v.closedAt || Date.parse(v.closedAt) >= Date.parse(v.tradedAt), { path: ["closedAt"], message: "journal.errClosedBefore" });
 
 export type TradeInput = z.input<typeof tradeSchema>;

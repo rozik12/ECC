@@ -70,6 +70,9 @@ export default async function EditTradePage({ params }: { params: Promise<{ id: 
     tags: (trade.tags ?? []).join(", "),
     grade: trade.grade ?? "",
     mistakes: trade.mistakes ?? [],
+    mistakeNote: trade.mistake_note ?? "",
+    contracts: trade.contracts === null ? "" : String(Number(trade.contracts)),
+    contractSize: trade.contract_size === null ? "" : String(Number(trade.contract_size)),
     closedAt: trade.closed_at ?? "",
   };
 

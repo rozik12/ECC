@@ -76,6 +76,9 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     tags: "",
     grade: "",
     mistakes: [],
+    mistakeNote: "",
+    contracts: "",
+    contractSize: "",
     closedAt: "",
   };
 
@@ -92,6 +95,8 @@ export default async function NewTradePage({ searchParams }: { searchParams: Pro
     initial.stop = s(src.stop_loss);
     initial.takeProfit = s(src.take_profit);
     initial.size = s(src.position_size);
+    initial.contracts = s(src.contracts);
+    initial.contractSize = s(src.contract_size);
     initial.leverage = s(src.leverage) || "1";
     initial.risk = s(src.risk_percent);
     initial.strategy = String(src.strategy ?? "");

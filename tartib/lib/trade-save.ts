@@ -24,7 +24,10 @@ type Ctx = {
   notify?: { goal: number };
 };
 
-type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees" | "tags" | "grade" | "mistakes" | "closedAt"> & {
+type ParsedTrade = Omit<TradeInput, "reason" | "plan" | "comment" | "strategy" | "fees" | "tags" | "grade" | "mistakes" | "closedAt" | "mistakeNote" | "contracts" | "contractSize"> & {
+  mistakeNote?: string;
+  contracts?: number | null;
+  contractSize?: number | null;
   tags: string[];
   grade: "A" | "B" | "C" | "D" | null;
   mistakes: string[];
@@ -121,6 +124,9 @@ export async function saveTradeCore(ctx: Ctx, tradeId: string | null, t: ParsedT
     tags: parseTags(t.tags.join(", ")),
     grade: t.grade,
     mistakes: [...new Set(t.mistakes)],
+    mistake_note: t.mistakeNote ?? "",
+    contracts: t.contracts ?? null,
+    contract_size: t.contractSize ?? null,
     // Время закрытия имеет смысл только у закрытой сделки
     closed_at: t.exitPrice === null ? null : t.closedAt,
   };

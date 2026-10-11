@@ -38,7 +38,9 @@
     "charts": "Grafiklar",
     "market": "Bozor",
     "more": "Yana: bozor va asboblar",
-    "diary": "Kundalik"
+    "diary": "Kundalik",
+    "mistakes": "Xatolar",
+    "plusMinus": "Foyda va zarar"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -585,7 +587,12 @@
         "stocks": "AAPL",
         "futures": "MNQ"
       },
-      "closedPdtHint": "Yopilish vaqti bosh sahifadagi day-trade (PDT) hisoblagichi uchun kerak."
+      "closedPdtHint": "Yopilish vaqti bosh sahifadagi day-trade (PDT) hisoblagichi uchun kerak.",
+      "contractMode": "Kontraktlar bilan savdo qilaman",
+      "contracts": "Kontraktlar soni",
+      "contractSize": "Bitta kontrakt hajmi",
+      "contractSizeHint": "Bitta kontraktda aktivning nechta birligi bor (masalan, 100)",
+      "contractTotal": "Pozitsiya hajmi (kontraktlar × kontrakt hajmi)"
     },
     "detail": {
       "risk": "Xavf",
@@ -1678,7 +1685,9 @@
     "modeFullText": "Barcha maydonlar ko'rsatilgan.",
     "modeToFull": "Barcha maydonlarni ko'rsatish",
     "modeToSimple": "Faqat asosiy",
-    "sizeHint": "Formula bo'yicha: hajm {size} (risk {risk}% = {amount}). Qo'yish"
+    "sizeHint": "Formula bo'yicha: hajm {size} (risk {risk}% = {amount}). Qo'yish",
+    "mistakeNote": "Bu nima sababdan bo'ldi",
+    "mistakeNoteHint": "O'z so'zlaringiz bilan: nima his qildingiz, nima noto'g'ri ketdi, keyingi safar nima qilasiz. Buni faqat siz ko'rasiz."
   },
   "risk": {
     "title": "Tizim sifati va risk",
@@ -1895,5 +1904,51 @@
       "NQ": "Nasdaq-100 fyuchersi"
     },
     "note": "O'zgarish avvalgi yopilishga nisbatan. Manba norasmiy (Yahoo Finance), ma'lumot kechikishi mumkin. VIX rangsiz: qo'rquv o'sishi na yaxshi, na yomon. Investitsiya maslahati emas."
+  },
+  "mistakes": {
+    "title": "Mening xatolarim",
+    "subtitle": "Bu yerda xatoli va qoidalar buzilgan bitimlar yig'ilgan. Xato nima ekanini belgilang, nima sababdan bo'lganini yozing va ekran rasmini qo'shing.",
+    "link": "Xatolar: tahlil va rasmlar",
+    "whyTitle": "Bu nima sababdan bo'ldi",
+    "noNote": "Sabab yozilmagan.",
+    "open": "Xatolarni tahlil qilish",
+    "save": "Saqlash",
+    "saved": "Saqlandi",
+    "pasteHint": "Rasmni buferdan qo'yish (Ctrl+V), bu yerga tortish yoki fayl tanlash mumkin. Qoidasi buzilgan bitimlar bu yerga o'zi tushadi.",
+    "brokenRules": "Buzilgan qoidalar",
+    "marked": "Xato belgilangan bitimlar",
+    "result": "Ularning natijasi",
+    "worst": "Eng qimmat xato «{name}»: {n} ta bitim, natija {amount}.",
+    "byKind": "Har bir xato qancha turadi",
+    "log": "Xatolar jurnali",
+    "empty": "Hozircha bo'sh. Bitimda xatoni belgilasangiz yoki qoidani buzsangiz, bitim shu yerda paydo bo'ladi.",
+    "more": "Ko'proq ko'rsatish",
+    "todo": "Tahlil qilinmagan zararli bitimlar",
+    "todoHint": "Xato bo'lgan-bo'lmaganini ko'ring: bo'lsa, belgilang va sababini yozing."
+  },
+  "pm": {
+    "title": "Foyda va zarar",
+    "subtitle": "Foydali bitimlarda qancha topdingiz, zararli bitimlarda qancha yo'qotdingiz va natija nima.",
+    "link": "Foyda va zarar: daromad va yo'qotish",
+    "period": {
+      "today": "Bugun",
+      "week": "7 kun",
+      "month": "Shu oy",
+      "all": "Butun vaqt"
+    },
+    "plus": "Foyda",
+    "minus": "Zarar",
+    "net": "Natija",
+    "trades": "bitimlar: {n}",
+    "account": "Hisobdagi pul",
+    "balance": "Hozirgi balans",
+    "deposited": "To'ldirilgan",
+    "withdrawn": "Yechib olingan",
+    "accountNote": "To'ldirish va yechib olish Sozlamalarda, hisoblar bo'limida yoziladi. Ular savdo natijasiga kirmaydi.",
+    "byDay": "Kunlar bo'yicha",
+    "byMonth": "Oylar bo'yicha",
+    "day": "Kun",
+    "month": "Oy",
+    "note": "Bitim natijalari komissiyadan keyin ko'rsatilgan. Bu hisob, prognoz emas."
   }
 }

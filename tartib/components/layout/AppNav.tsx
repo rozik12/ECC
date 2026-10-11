@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ChevronRight, Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useI18n } from "@/lib/i18n/provider";
-import { mainNav, secondaryNav } from "./nav-items";
+import { mainNav, secondaryNav, statsNav } from "./nav-items";
 
 function useIsActive() {
   const pathname = usePathname();
@@ -16,30 +16,38 @@ function useIsActive() {
 export function Sidebar() {
   const { t } = useI18n();
   const isActive = useIsActive();
-  const extraNav = secondaryNav.filter((n) => !["/diary", "/settings", "/profile"].includes(n.href));
+  const extraNav = secondaryNav.filter((n) => !["/diary", "/settings", "/profile", "/statistics/mistakes"].includes(n.href));
   const accountNav = secondaryNav.filter((n) => ["/diary", "/settings", "/profile"].includes(n.href));
   const extraActive = extraNav.some((n) => isActive(n.href));
 
-  const item = (href: string, labelKey: string, Icon: React.ElementType) => (
+  const statsSub = statsNav.some((n) => isActive(n.href));
+  const item = (href: string, labelKey: string, Icon: React.ElementType, sub = false) => {
+    const active = href === "/statistics" ? isActive(href) && !statsSub : isActive(href);
+    return (
     <Link prefetch={false}
       key={href}
       href={href}
-      aria-current={isActive(href) ? "page" : undefined}
+      aria-current={active ? "page" : undefined}
       className={cn(
         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-        isActive(href)
+        sub && "ml-4 py-2 text-[13px]",
+        active
           ? "bg-primary-soft text-primary"
           : "text-muted hover:bg-surface-muted hover:text-foreground",
       )}
     >
-      <Icon className="h-5 w-5" aria-hidden />
+      <Icon className={cn("h-5 w-5", sub && "h-4 w-4")} aria-hidden />
       {t(labelKey)}
     </Link>
-  );
+    );
+  };
 
   return (
     <nav aria-label={t("nav.main")} className="flex h-full flex-col justify-between">
-      <div className="flex flex-col gap-1">{mainNav.map((n) => item(n.href, n.labelKey, n.icon))}</div>
+      <div className="flex flex-col gap-1">
+        {mainNav.map((n) => item(n.href, n.labelKey, n.icon))}
+        {statsNav.map((n) => item(n.href, n.labelKey, n.icon, true))}
+      </div>
       <div className="flex flex-col gap-1 border-t border-border pt-3">
         {/* Рыночные разделы свёрнуты, чтобы меню не пестрело. Если открыт один из них, список раскрыт сам. */}
         <details key={extraActive ? "open" : "closed"} open={extraActive} className="group">

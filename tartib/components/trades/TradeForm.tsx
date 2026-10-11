@@ -43,6 +43,11 @@ export type TradeFormValues = {
   /** "A"–"D" или пустая строка */
   grade: string;
   mistakes: string[];
+  /** Из-за чего случилась ошибка */
+  mistakeNote: string;
+  /** Торговля контрактами: число контрактов и размер одного (пусто — не используется) */
+  contracts: string;
+  contractSize: string;
   /** Время закрытия в формате ISO или пустая строка */
   closedAt: string;
 };
@@ -148,7 +153,7 @@ export function TradeForm({
   const mode = useFormMode();
   const ADVANCED_FIELDS = ["leverage", "riskPercent", "takeProfit", "fees", "strategy", "tags", "grade", "closedAt", "reason", "plan", "comment"];
   // Поля из «дополнительных» нельзя прятать, если в них уже что-то есть или в них ошибка
-  const hasExtra = !!(initial.takeProfit || initial.risk || initial.fees || initial.strategy || initial.tags || initial.grade || initial.mistakes.length || initial.reason || initial.plan || initial.comment || (initial.leverage && initial.leverage !== "1"));
+  const hasExtra = !!(initial.takeProfit || initial.risk || initial.fees || initial.strategy || initial.tags || initial.grade || initial.mistakes.length || initial.mistakeNote || initial.reason || initial.plan || initial.comment || (initial.leverage && initial.leverage !== "1"));
   const full = mode === "full" || !!tradeId || hasExtra || ADVANCED_FIELDS.some((k) => errors[k]) || tplId !== "";
   const adv = full ? "" : "hidden";
   const [formError, setFormError] = useState<string | null>(null);
@@ -161,13 +166,14 @@ export function TradeForm({
   });
   const err = (key: string) => (errors[key] ? t(errors[key]) : undefined);
 
+  const [contractMode, setContractMode] = useState(!!initial.contracts);
   const account = accounts.find((a) => a.id === v.accountId);
   const n = {
     entry: parseNumber(v.entry),
     exit: parseNumber(v.exit),
     stop: parseNumber(v.stop),
     tp: parseNumber(v.takeProfit),
-    size: parseNumber(v.size),
+    size: contractMode ? (parseNumber(v.contracts) !== null && parseNumber(v.contractSize) !== null ? (parseNumber(v.contracts) as number) * (parseNumber(v.contractSize) as number) : null) : parseNumber(v.size),
     leverage: parseNumber(v.leverage),
     risk: parseNumber(v.risk),
   };
@@ -254,6 +260,9 @@ export function TradeForm({
       tags: parseTags(v.tags),
       grade: v.grade ? v.grade : null,
       mistakes: v.mistakes,
+      mistakeNote: v.mistakeNote,
+      contracts: contractMode ? parseNumber(v.contracts) : null,
+      contractSize: contractMode ? parseNumber(v.contractSize) : null,
       closedAt: n.exit !== null && closedDate ? closedDate.toISOString() : null,
     };
     const parsed = tradeSchema.safeParse(payload);
@@ -350,8 +359,12 @@ export function TradeForm({
           <Input id="t-entry" inputMode="decimal" label={t("trades.form.entry")} error={err("entryPrice")} value={v.entry} onChange={(e) => setPrice("entry", e.target.value)} />
           <Input id="t-exit" inputMode="decimal" label={t("trades.form.exit")} error={err("exitPrice")} {...bind("exit")} />
           <div>
-            <Input id="t-size" inputMode="decimal" label={v.market === "stocks" ? t("trades.form.sizeStocks") : v.market === "futures" ? t("trades.form.sizeFutures") : t("trades.form.size")} hint={v.market === "futures" ? t("trades.form.futuresHint") : undefined} error={err("positionSize")} {...bind("size")} />
-            {suggestion && suggestion.ok && (
+            {contractMode ? (
+              <Input id="t-size" inputMode="decimal" label={t("trades.form.contractTotal")} value={n.size === null ? "" : String(Math.round(n.size * 1e8) / 1e8)} readOnly error={err("positionSize")} />
+            ) : (
+              <Input id="t-size" inputMode="decimal" label={v.market === "stocks" ? t("trades.form.sizeStocks") : v.market === "futures" ? t("trades.form.sizeFutures") : t("trades.form.size")} hint={v.market === "futures" ? t("trades.form.futuresHint") : undefined} error={err("positionSize")} {...bind("size")} />
+            )}
+            {!contractMode && suggestion && suggestion.ok && (
               <button type="button" onClick={() => set("size", String(Math.floor(suggestion.units * 1e6) / 1e6))} className="mt-1.5 min-h-10 text-left text-xs text-primary hover:underline">
                 {t("journal.sizeHint", { size: String(Math.floor(suggestion.units * 1e6) / 1e6), risk: riskForSize, amount: suggestion.riskAmount.toFixed(2) })}
               </button>
@@ -362,6 +375,18 @@ export function TradeForm({
               <Input id="t-closed-pdt" type="datetime-local" label={t("journal.closedAt")} hint={t("trades.form.closedPdtHint")} error={err("closedAt")} {...bind("closedAt")} />
             </div>
           )}
+          <div className="col-span-2 space-y-3 sm:col-span-3">
+            <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
+              <input type="checkbox" className="h-4 w-4 accent-[var(--primary)]" checked={contractMode} onChange={(e) => setContractMode(e.target.checked)} />
+              {t("trades.form.contractMode")}
+            </label>
+            {contractMode && (
+              <div className="grid grid-cols-2 gap-4">
+                <Input id="t-contracts" inputMode="decimal" label={t("trades.form.contracts")} error={err("contracts")} {...bind("contracts")} />
+                <Input id="t-contract-size" inputMode="decimal" label={t("trades.form.contractSize")} hint={t("trades.form.contractSizeHint")} error={err("contractSize")} {...bind("contractSize")} />
+              </div>
+            )}
+          </div>
           <Input id="t-stop" inputMode="decimal" label={t("trades.form.stop")} error={err("stopLoss")} value={v.stop} onChange={(e) => setPrice("stop", e.target.value)} />
           <div className={adv}><Input id="t-tp" inputMode="decimal" label={t("trades.form.takeProfit")} error={err("takeProfit")} {...bind("takeProfit")} /></div>
           <div className={adv}><Input id="t-leverage" inputMode="decimal" label={t("trades.form.leverage")} error={err("leverage")} {...bind("leverage")} /></div>
@@ -451,6 +476,7 @@ export function TradeForm({
               </label>
             ))}
           </div>
+          <Textarea id="t-mistake-note" className="mt-3" label={t("journal.mistakeNote")} hint={t("journal.mistakeNoteHint")} error={err("mistakeNote")} {...bind("mistakeNote")} />
         </fieldset>
       </Card>
 

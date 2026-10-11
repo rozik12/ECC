@@ -44,6 +44,7 @@ export async function uploadScreenshotAction(tradeId: string, formData: FormData
     }
     if (trade.screenshot_path) await supabase.storage.from(BUCKET).remove([trade.screenshot_path]);
     revalidatePath(`/trades/${tradeId}`);
+    revalidatePath("/statistics/mistakes");
     return { ok: true };
   } catch (e) {
     if (isNextControlFlow(e)) throw e;
@@ -60,6 +61,7 @@ export async function removeScreenshotAction(tradeId: string): Promise<ActionRes
     if (error) return { ok: false, error: "screenshot.failed" };
     if (trade.screenshot_path) await supabase.storage.from(BUCKET).remove([trade.screenshot_path]);
     revalidatePath(`/trades/${tradeId}`);
+    revalidatePath("/statistics/mistakes");
     return { ok: true };
   } catch (e) {
     if (isNextControlFlow(e)) throw e;

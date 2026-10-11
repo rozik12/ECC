@@ -118,6 +118,12 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           <Link href="/statistics/advanced" className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-primary/40 bg-primary-soft px-4 py-2 text-sm font-medium text-primary hover:border-primary">
             {t("adv.link")} →
           </Link>
+          <Link href="/statistics/mistakes" className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-warning/50 bg-warning-soft px-4 py-2 text-sm font-medium hover:border-warning">
+            {t("mistakes.link")}
+          </Link>
+          <Link href="/statistics/pnl" className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted hover:text-foreground">
+            {t("pm.link")}
+          </Link>
           <Link href="/statistics/week" className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted hover:text-foreground">
             {t("week.link")}
           </Link>

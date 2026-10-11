@@ -49,4 +49,7 @@ export type Trade = {
   grade: "A" | "B" | "C" | "D" | null;
   mistakes: string[];
   closed_at: string | null;
+  mistake_note: string;
+  contracts: number | null;
+  contract_size: number | null;
 };

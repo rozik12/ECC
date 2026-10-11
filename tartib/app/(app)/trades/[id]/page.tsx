@@ -115,6 +115,14 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
         </div>
       )}
 
+      {((trade.mistakes ?? []).length > 0 || trade.mistake_note) && (
+        <Card className="space-y-2 border-warning/40">
+          <h2 className="font-semibold">{t("mistakes.whyTitle")}</h2>
+          {trade.mistake_note ? <p className="whitespace-pre-wrap text-sm">{trade.mistake_note}</p> : <p className="text-sm text-muted">{t("mistakes.noNote")}</p>}
+          <Link href="/statistics/mistakes" className="inline-block text-sm font-medium text-primary hover:underline">{t("mistakes.open")} →</Link>
+        </Card>
+      )}
+
       <Card>
         <h2 className="font-semibold">{t("trades.detail.discipline")}</h2>
         {trade.rules_followed ? (
@@ -142,7 +150,7 @@ export default async function TradeDetailPage({ params }: { params: Promise<{ id
           {duration && fact(t("journal.duration"), duration)}
           {fact(t("trades.form.stop"), num(trade.stop_loss))}
           {fact(t("trades.form.takeProfit"), num(trade.take_profit))}
-          {fact(t("trades.form.size"), num(trade.position_size, 6))}
+          {fact(t("trades.form.size"), trade.contracts !== null ? `${num(trade.position_size, 6)} (${num(trade.contracts, 6)} × ${num(trade.contract_size, 6)})` : num(trade.position_size, 6))}
           {fact(t("trades.form.leverage"), num(trade.leverage, 2))}
           {Number(trade.fees) > 0 && fact(t("trades.form.fees"), money(Number(trade.fees)))}
           {fact(t("trades.detail.risk"), trade.risk_amount === null ? t("trades.detail.none") : `${money(trade.risk_amount)}${trade.risk_percent !== null ? ` (${num(trade.risk_percent, 2)}%)` : ""}`)}

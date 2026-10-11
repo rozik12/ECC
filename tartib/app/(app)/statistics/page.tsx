@@ -9,6 +9,7 @@ import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
 import { PnlCalendar } from "@/components/statistics/PnlCalendar";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
 import { EquityChart, PnlBars } from "@/components/statistics/charts";
+import { TraderProfileCard } from "@/components/statistics/TraderProfileCard";
 import { buttonStyles, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { cn } from "@/lib/cn";
@@ -205,6 +206,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           <TimeAnalysis trades={trades} timeZone={tz} currency={currency} />
           <TiltCard trades={all} currency={currency} />
           <BestWorstCard trades={trades} currency={currency} timeZone={tz} />
+          <TraderProfileCard trades={all} />
           <WeeklyReportCard report={latest?.content ?? null} currency={currency} />
         </>
       )}

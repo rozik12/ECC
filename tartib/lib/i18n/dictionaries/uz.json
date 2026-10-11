@@ -40,7 +40,8 @@
     "more": "Yana: bozor va asboblar",
     "diary": "Kundalik",
     "mistakes": "Xatolar",
-    "plusMinus": "Foyda va zarar"
+    "plusMinus": "Foyda va zarar",
+    "traderTypes": "Treyder turlari"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -2003,5 +2004,179 @@
     "every5": "Narxlar har 5 soniyada o'zi yangilanadi",
     "paused": "Yangilanish to'xtatildi: manba bilan aloqa yo'q",
     "connecting": "Narxlarga ulanmoqda…"
+  },
+  "tradertypes": {
+    "title": "Treyder turlari",
+    "subtitle": "6 guruhda 30 tur: bitim davomiyligi, bozor, tahlil usuli, strategiya, maqom va xulq-atvor bo'yicha. Bir kishi odatda bir nechta turni birlashtiradi, masalan, «Nasdaqda day-treyder, texnik, trendchi».",
+    "count": "{n} ta tur",
+    "note": "Bu ma'lumot uchun tasnif: turli manbalar treyderlarni turlicha tasniflaydi. Tavsiflar muayyan usulda savdo qilish maslahati emas.",
+    "cta": "Jurnal bo'yicha o'z profilingizni bilib oling",
+    "link": "Treyder turlari",
+    "you": {
+      "title": "Sizning treyder profilingiz",
+      "subtitle": "Jurnalingiz bo'yicha aniqlangan. Bu o'z yozuvlaringizga asoslangan taxmin, tashxis yoki maslahat emas.",
+      "style": "Uslub",
+      "market": "Asosiy bozor",
+      "behavior": "Xulq-atvor",
+      "need": "Profilni aniqlash uchun kamida 5 ta bitim kerak. Uslub uchun bitimlarda yopilish vaqti bo'lishi kerak.",
+      "needStyle": "Uslub uchun 5 ta bitimda yopilish vaqti kerak.",
+      "unknown": "aniq namuna yo'q",
+      "median": "bitimning o'rtacha davomiyligi: {t}",
+      "share": "bitimlarning {p}%",
+      "all": "Barcha treyder turlari"
+    },
+    "units": {
+      "m": "{n} daq",
+      "h": "{n} soat",
+      "d": "{n} kun"
+    },
+    "groups": {
+      "horizon": {
+        "title": "Bitimni ushlab turish vaqti bo'yicha",
+        "desc": "Asosiy bo'linish: treyder pozitsiyani qancha vaqt ushlab turadi."
+      },
+      "market": {
+        "title": "Bozor bo'yicha",
+        "desc": "Qaysi bozorda savdo qiladi."
+      },
+      "analysis": {
+        "title": "Tahlil usuli bo'yicha",
+        "desc": "Bitim qarori nimaga asoslanadi."
+      },
+      "strategy": {
+        "title": "Strategiya bo'yicha",
+        "desc": "Treyder qaysi g'oyadan foydalanadi."
+      },
+      "status": {
+        "title": "Maqomi bo'yicha",
+        "desc": "Kimning puli bilan va qanday maqomda savdo qiladi."
+      },
+      "behavior": {
+        "title": "Xulq-atvor bo'yicha (jurnalda ko'rinadigani)",
+        "desc": "Tashxis emas, bitimlardagi odatlar. Tartib aynan shularni ko'rishga yordam beradi."
+      }
+    },
+    "types": {
+      "scalper": {
+        "name": "Skalper",
+        "text": "Bitimni soniyalardan bir necha daqiqagacha ushlaydi va kuniga ko'p bitim qiladi. Har bir foyda kichik, shuning uchun komissiya va intizom eng muhim."
+      },
+      "day": {
+        "name": "Day-treyder (kun ichidagi)",
+        "text": "Bitimlarni bir kun ichida ochadi va yopadi, tunga pozitsiya qoldirmaydi. AQSh aksiyalarida unga PDT qoidasi tegishli."
+      },
+      "swing": {
+        "name": "Sving-treyder",
+        "text": "Bitimni bir necha kundan bir necha haftagacha ushlaydi va narxning kattaroq harakatlarini kutadi. Kun bo'yi ekranga qarab turish shart emas."
+      },
+      "position": {
+        "name": "Pozitsion treyder",
+        "text": "Pozitsiyani oylar va yillar davomida ushlaydi, uzoq trendlarga tayanadi. Bitimlar kam, lekin yo'ldagi tebranishlar katta bo'lishi mumkin."
+      },
+      "hft": {
+        "name": "Yuqori chastotali (HFT)",
+        "text": "Yirik kompaniyalar robotlari soniyada minglab bitim qiladi. Oddiy xususiy treyderga ochiq emas, ammo bozorning bir qismini aynan ular harakatlantiradi."
+      },
+      "crypto": {
+        "name": "Kripto-treyder",
+        "text": "Kriptovalyutalar bilan savdo qiladi. Bozor sutka davomida, dam olish kunlarisiz ochiq, narxlar keskin harakatlanadi."
+      },
+      "forex": {
+        "name": "Forex-treyder",
+        "text": "EUR/USD kabi valyuta juftliklari bilan savdo qiladi. Sutkada ko'p sessiya bor, ko'pincha kredit yelkasi bilan."
+      },
+      "stocks": {
+        "name": "Aksiya treyderi",
+        "text": "Kompaniyalar aksiyalari bilan savdo qiladi: Nasdaq, NYSE va boshqa birjalar. Bozor birja soatlarida ishlaydi, premarket va postmarket bor."
+      },
+      "futures": {
+        "name": "Fyuchers treyderi",
+        "text": "Indekslar, oltin, neft va boshqa aktivlar bo'yicha kontraktlar bilan savdo qiladi. Punkt qiymati kontraktda belgilangan, risk kontraktlarda hisoblanadi."
+      },
+      "commodities": {
+        "name": "Xomashyo va oltin treyderi",
+        "text": "Oltin, kumush, neft, gaz va don bilan savdo qiladi. Narxlar siyosat, zaxiralar va talabga bog'liq."
+      },
+      "options": {
+        "name": "Opsion treyderi",
+        "text": "Aktivni belgilangan narxda sotib olish yoki sotish huquqlari bilan savdo qiladi. Risk va natija muddat va o'zgaruvchanlikka bog'liq, shuning uchun alohida tayyorgarlik kerak."
+      },
+      "technical": {
+        "name": "Texnik treyder",
+        "text": "Grafik bo'yicha qaror qiladi: darajalar, trendlar, indikatorlar va sham shakllari."
+      },
+      "fundamental": {
+        "name": "Fundamental treyder",
+        "text": "Iqtisodiyot, kompaniya hisobotlari, stavkalar va talab bilan taklif muvozanatiga qaraydi."
+      },
+      "news": {
+        "name": "Yangilik treyderi",
+        "text": "Muhim ma'lumotlar va voqealar atrofida savdo qiladi: inflyatsiya, stavkalar, hisobotlar. Harakatlar tez, sirpanish katta."
+      },
+      "algo": {
+        "name": "Algoritmik treyder",
+        "text": "Qoidalarni kod bilan yozadi, robot o'zi kiradi va chiqadi. Asosiy xavf: kod xatolari va o'tmishga ortiqcha moslashtirish."
+      },
+      "discretionary": {
+        "name": "Diskretsion treyder",
+        "text": "Tajribaga tayanib, qat'iy tizimsiz vaziyatga qarab o'zi qaror qiladi. Eng ko'p intizom va his-tuyg'ularga bog'liq."
+      },
+      "trend": {
+        "name": "Trendchi treyder",
+        "text": "Harakat yo'nalishi bo'yicha savdo qiladi: o'sishda sotib oladi, tushishda sotadi. Trend tirik ekan, orqaga qaytishlarga chidaydi."
+      },
+      "countertrend": {
+        "name": "Kontrtrend treyder",
+        "text": "Burilishlarni va narxning o'rtachaga qaytishini qidiradi. Harakatga qarshi kiradi, shuning uchun stop ayniqsa muhim."
+      },
+      "breakout": {
+        "name": "Yorib o'tish treyderi",
+        "text": "Narx diapazondan chiqqanda yoki darajani yorib o'tganda kiradi. Ba'zi yorib o'tishlar soxta bo'lib chiqadi."
+      },
+      "arbitrage": {
+        "name": "Arbitraj treyderi",
+        "text": "Bitta aktivning turli bozorlardagi yoki bog'liq vositalardagi narx farqidan daromad topadi. Tezlik va past komissiya kerak."
+      },
+      "orderflow": {
+        "name": "Buyurtmalar oqimi treyderi",
+        "text": "Narxga kim bosim o'tkazayotganini ko'rish uchun stakan, bitimlar lentasi va hajmlarni o'qiydi. Odatda skalperlar va day-treyderlar."
+      },
+      "retail": {
+        "name": "Xususiy (chakana) treyder",
+        "text": "O'z puli bilan broker orqali savdo qiladi. Tartib aynan shu treyder uchun yaratilgan."
+      },
+      "prop": {
+        "name": "Prop-treyder",
+        "text": "Kompaniya puli bilan savdo qiladi va foydani u bilan bo'lishadi. Odatda qat'iy tushish limitlari bor, ularni buzish kirishni yopadi."
+      },
+      "institutional": {
+        "name": "Institutsional treyder",
+        "text": "Bank, fond yoki investitsiya kompaniyasida katta summalar bilan ishlaydi. Qarorlar reglament bo'yicha va risk-menejment nazorati ostida."
+      },
+      "manager": {
+        "name": "Boshqaruvchi (kopitreyding, PAMM)",
+        "text": "Boshqa odamlarning puli bilan savdo qiladi va natija uchun ular oldida javob beradi. Shaffof hisob va tushishni nazorat qilish ayniqsa muhim."
+      },
+      "systematic": {
+        "name": "Tizimli",
+        "text": "O'z qoidalari bo'yicha kiradi va chiqadi, bitimlarning ko'pchiligida rejaga amal qiladi. Natijani kayfiyat bilan emas, raqamlar bilan baholash mumkin."
+      },
+      "impulsive": {
+        "name": "Impulsiv",
+        "text": "Ko'pincha harakatni o'tkazib yuborish qo'rquvi yoki ochko'zlikdan kiradi va narxning orqasidan quvadi. Bitimdan oldingi cheklist va pauza yordam beradi."
+      },
+      "revenge": {
+        "name": "Qasoskor (o'ch oluvchi)",
+        "text": "Zarardan keyin pulni darhol qaytarmoqchi bo'ladi va rejasiz kiradi. Kunlik zarar limiti va ketma-ket zarardan keyingi pauza yordam beradi."
+      },
+      "overtrader": {
+        "name": "O'ta faol",
+        "text": "Juda ko'p bitim qiladi, ko'pincha kuchli signalsiz, va komissiya to'laydi. Kuniga bitimlar soni limiti yordam beradi."
+      },
+      "cautious": {
+        "name": "Ehtiyotkor",
+        "text": "Ko'proq bitimni rejadan oldin yopadi yoki ikkilanib, qo'rquv bilan kiradi. Erta chiqishlar qancha turishini tekshirish foydali."
+      }
+    }
   }
 }

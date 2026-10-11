@@ -40,7 +40,8 @@
     "more": "More: market and tools",
     "diary": "Diary",
     "mistakes": "Mistakes",
-    "plusMinus": "Gains and losses"
+    "plusMinus": "Gains and losses",
+    "traderTypes": "Types of traders"
   },
   "footer": {
     "terms": "Terms of use",
@@ -2003,5 +2004,179 @@
     "every5": "Prices refresh by themselves every 5 seconds",
     "paused": "Updates paused: no connection to the source",
     "connecting": "Connecting to prices…"
+  },
+  "tradertypes": {
+    "title": "Types of traders",
+    "subtitle": "30 types in 6 groups: by trade length, market, way of analysis, strategy, status and behaviour. One person usually combines several, for example “a day trader on Nasdaq, technical, trend-following”.",
+    "count": "{n} types",
+    "note": "This is a reference classification: different sources split traders differently. The descriptions are not advice to trade in any particular way.",
+    "cta": "Find your profile from your journal",
+    "link": "Types of traders",
+    "you": {
+      "title": "Your trader profile",
+      "subtitle": "Worked out from your journal. A hint based on your own records, not a diagnosis or advice.",
+      "style": "Style",
+      "market": "Main market",
+      "behavior": "Behaviour",
+      "need": "At least 5 trades are needed to work out a profile. For style, trades must have a closing time.",
+      "needStyle": "Style needs a closing time on 5 trades.",
+      "unknown": "no clear pattern",
+      "median": "median trade length: {t}",
+      "share": "{p}% of trades",
+      "all": "All trader types"
+    },
+    "units": {
+      "m": "{n} min",
+      "h": "{n} h",
+      "d": "{n} d"
+    },
+    "groups": {
+      "horizon": {
+        "title": "By how long trades are held",
+        "desc": "The main split: how long a trader keeps a position."
+      },
+      "market": {
+        "title": "By market",
+        "desc": "Which market the trader works in."
+      },
+      "analysis": {
+        "title": "By way of analysis",
+        "desc": "What a trade decision rests on."
+      },
+      "strategy": {
+        "title": "By strategy",
+        "desc": "Which idea the trader uses."
+      },
+      "status": {
+        "title": "By status",
+        "desc": "Whose money the trader uses and in what role."
+      },
+      "behavior": {
+        "title": "By behaviour (what shows in the journal)",
+        "desc": "Not a diagnosis but habits in trades. This is what Tartib helps you see."
+      }
+    },
+    "types": {
+      "scalper": {
+        "name": "Scalper",
+        "text": "Holds a trade from seconds to a few minutes and makes many trades a day. Each gain is small, so fees and discipline matter most."
+      },
+      "day": {
+        "name": "Day trader (intraday)",
+        "text": "Opens and closes trades within one day and keeps no positions overnight. For US stocks the PDT rule applies."
+      },
+      "swing": {
+        "name": "Swing trader",
+        "text": "Holds a trade from several days to several weeks and aims at larger price moves. No need to watch the screen all day."
+      },
+      "position": {
+        "name": "Position trader",
+        "text": "Holds a position for months and years, following long trends. Few trades, but swings along the way can be large."
+      },
+      "hft": {
+        "name": "High-frequency (HFT)",
+        "text": "Robots of large firms make thousands of trades per second. Not available to ordinary private traders, yet they move part of the market."
+      },
+      "crypto": {
+        "name": "Crypto trader",
+        "text": "Trades cryptocurrencies. The market is open around the clock with no days off, and prices can move sharply."
+      },
+      "forex": {
+        "name": "Forex trader",
+        "text": "Trades currency pairs such as EUR/USD. Many sessions a day, often with leverage."
+      },
+      "stocks": {
+        "name": "Stock trader",
+        "text": "Trades company shares on Nasdaq, NYSE and other exchanges. The market keeps exchange hours with pre-market and after-hours."
+      },
+      "futures": {
+        "name": "Futures trader",
+        "text": "Trades contracts on indices, gold, oil and other assets. The point value is set by the contract and risk is counted in contracts."
+      },
+      "commodities": {
+        "name": "Commodities and gold trader",
+        "text": "Trades gold, silver, oil, gas and grain. Prices depend on politics, inventories and demand."
+      },
+      "options": {
+        "name": "Options trader",
+        "text": "Trades rights to buy or sell an asset at a set price. Risk and result depend on time and volatility, so separate study is needed."
+      },
+      "technical": {
+        "name": "Technical trader",
+        "text": "Decides from the chart: levels, trends, indicators and candle patterns."
+      },
+      "fundamental": {
+        "name": "Fundamental trader",
+        "text": "Looks at the economy, company reports, rates and the balance of supply and demand."
+      },
+      "news": {
+        "name": "News trader",
+        "text": "Trades around important data and events: inflation, rates, earnings. Moves are fast and slippage is large."
+      },
+      "algo": {
+        "name": "Algorithmic trader",
+        "text": "Writes the rules as code and a robot enters and exits on its own. The main risks are code bugs and overfitting to the past."
+      },
+      "discretionary": {
+        "name": "Discretionary trader",
+        "text": "Decides on the spot from experience without a rigid system. Depends most on discipline and emotions."
+      },
+      "trend": {
+        "name": "Trend follower",
+        "text": "Trades with the direction of the move: buys in rises, sells in falls. Tolerates pullbacks while the trend lives."
+      },
+      "countertrend": {
+        "name": "Counter-trend trader",
+        "text": "Looks for reversals and a return to the mean. Enters against the move, so the stop matters even more."
+      },
+      "breakout": {
+        "name": "Breakout trader",
+        "text": "Enters when price leaves a range or breaks a level. Some breakouts turn out false."
+      },
+      "arbitrage": {
+        "name": "Arbitrage trader",
+        "text": "Earns from price gaps for one asset across markets or between related instruments. Needs speed and low fees."
+      },
+      "orderflow": {
+        "name": "Order-flow trader",
+        "text": "Reads the order book, the tape and volumes to see who pushes the price. Usually scalpers and day traders."
+      },
+      "retail": {
+        "name": "Private (retail) trader",
+        "text": "Trades their own money through a broker. Tartib is made for this trader."
+      },
+      "prop": {
+        "name": "Prop trader",
+        "text": "Trades the firm's money and shares the profit with it. Strict drawdown limits usually apply, and breaking them ends access."
+      },
+      "institutional": {
+        "name": "Institutional trader",
+        "text": "Works at a bank, fund or investment firm with large sums. Decisions follow procedures under risk management."
+      },
+      "manager": {
+        "name": "Money manager (copy trading, PAMM)",
+        "text": "Trades other people's money and answers to them for results. Transparent records and drawdown control matter most."
+      },
+      "systematic": {
+        "name": "Systematic",
+        "text": "Enters and exits by their own rules and follows the plan in most trades. Results can be judged by numbers rather than mood."
+      },
+      "impulsive": {
+        "name": "Impulsive",
+        "text": "Often enters from fear of missing out or greed and chases price. A pre-trade checklist and a pause help."
+      },
+      "revenge": {
+        "name": "Revenge trader",
+        "text": "After a loss wants the money back at once and enters without a plan. A daily loss limit and a pause after a losing run help."
+      },
+      "overtrader": {
+        "name": "Overtrader",
+        "text": "Makes too many trades, often without strong signals, and pays fees. A limit on trades per day helps."
+      },
+      "cautious": {
+        "name": "Cautious",
+        "text": "More often closes a trade earlier than planned or enters with doubt and fear. It helps to check what early exits cost."
+      }
+    }
   }
 }

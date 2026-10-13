@@ -77,3 +77,14 @@ test("котировки: дневное изменение, пропуск пу
   assert.equal((await fetchStockCandles("AAPL", "1h", now - 86_400_000, now, bad as never, now)).candles, null);
   assert.equal((await fetchStockCandles("AAPL", "1h", now - 86_400_000, now, okc as never, now)).candles?.length, 2);
 });
+
+test("металлы: рынок «metals» и палладий", () => {
+  assert.equal(normalizeTicker("XAUUSD", "metals"), "GC=F");
+  assert.equal(normalizeTicker("silver", "metals"), "SI=F");
+  assert.equal(normalizeTicker("XPDUSD", "metals"), "PA=F");
+  assert.equal(normalizeTicker("PA", "metals"), "PA=F");
+  assert.equal(normalizeTicker("MGCZ6", "metals"), "GC=F");
+  assert.equal(normalizeTicker("PALLADIUM", "auto"), "PA=F");
+  assert.equal(normalizeTicker("NQ", "metals"), null); // индекс — не металл
+  assert.equal(normalizeTicker("AAPL", "metals"), null);
+});

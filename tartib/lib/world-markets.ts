@@ -3,7 +3,7 @@
 export type WorldGroup = { id: "metals" | "energy" | "forex" | "usindices" | "world" | "rates" | "crypto"; items: { symbol: string; key: string }[] };
 
 export const WORLD_GROUPS: WorldGroup[] = [
-  { id: "metals", items: [{ symbol: "GC=F", key: "gold" }, { symbol: "SI=F", key: "silver" }, { symbol: "PL=F", key: "platinum" }, { symbol: "HG=F", key: "copper" }] },
+  { id: "metals", items: [{ symbol: "GC=F", key: "gold" }, { symbol: "SI=F", key: "silver" }, { symbol: "PL=F", key: "platinum" }, { symbol: "PA=F", key: "palladium" }, { symbol: "HG=F", key: "copper" }] },
   { id: "energy", items: [{ symbol: "CL=F", key: "wti" }, { symbol: "BZ=F", key: "brent" }, { symbol: "NG=F", key: "gas" }] },
   { id: "forex", items: [{ symbol: "EURUSD=X", key: "eurusd" }, { symbol: "GBPUSD=X", key: "gbpusd" }, { symbol: "USDJPY=X", key: "usdjpy" }, { symbol: "USDCHF=X", key: "usdchf" }, { symbol: "AUDUSD=X", key: "audusd" }, { symbol: "USDCAD=X", key: "usdcad" }, { symbol: "USDUZS=X", key: "usduzs" }, { symbol: "DX-Y.NYB", key: "dxy" }] },
   { id: "usindices", items: [{ symbol: "^NDX", key: "ndx" }, { symbol: "^IXIC", key: "ixic" }, { symbol: "^GSPC", key: "gspc" }, { symbol: "^DJI", key: "dji" }, { symbol: "^RUT", key: "rut" }, { symbol: "QQQ", key: "qqq" }, { symbol: "SPY", key: "spy" }, { symbol: "NQ=F", key: "nqf" }, { symbol: "ES=F", key: "esf" }, { symbol: "YM=F", key: "ymf" }] },

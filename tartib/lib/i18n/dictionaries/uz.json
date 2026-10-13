@@ -43,7 +43,8 @@
     "plusMinus": "Foyda va zarar",
     "traderTypes": "Treyder turlari",
     "portfolio": "Portfel",
-    "prop": "Prop-chellenj"
+    "prop": "Prop-chellenj",
+    "metals": "Oltin va metallar"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -317,7 +318,8 @@
     "forex": "Forex",
     "stocks": "Aksiyalar",
     "futures": "Fyucherslar",
-    "options": "Opsionlar"
+    "options": "Opsionlar",
+    "metals": "Oltin va metallar"
   },
   "emotions": {
     "calm": "Xotirjamlik",
@@ -577,7 +579,8 @@
         "forex": "XAUUSD",
         "stocks": "AAPL",
         "futures": "MNQ",
-        "options": "AAPL 200C 2026-12-18"
+        "options": "AAPL 200C 2026-12-18",
+        "metals": "XAUUSD"
       },
       "closedPdtHint": "Yopilish vaqti bosh sahifadagi day-trade (PDT) hisoblagichi uchun kerak.",
       "contractMode": "Kontraktlar bilan savdo qilaman",
@@ -585,7 +588,8 @@
       "contractSize": "Bitta kontrakt hajmi",
       "contractSizeHint": "Bitta kontraktda aktivning nechta birligi bor (masalan, 100)",
       "contractTotal": "Pozitsiya hajmi (kontraktlar × kontrakt hajmi)",
-      "optionsHint": "Opsion: kirish va chiqish narxi maydonlariga bitta aksiya uchun premiyani kiriting, kontraktlar sotib olingan miqdorda, kontrakt hajmi odatda 100. Opsionni sotib olish «long», sotish «short»."
+      "optionsHint": "Opsion: kirish va chiqish narxi maydonlariga bitta aksiya uchun premiyani kiriting, kontraktlar sotib olingan miqdorda, kontrakt hajmi odatda 100. Opsionni sotib olish «long», sotish «short».",
+      "metalsHint": "Oltin va metallar: narx untsiya uchun dollarda. Broker lotlari uchun kontraktlar rejimi yoqilgan: kontraktlar soni lotlar soniga teng, kontrakt hajmi untsiyalarda (oltin 100, kumush 5000, platina va palladiy 100). GC fyucherslari uchun 100, mikro MGC uchun 10 kiriting."
     },
     "detail": {
       "risk": "Xavf",
@@ -1443,6 +1447,90 @@
         "riseToBreakeven": "Xarid narxidan zararsizlikkacha o'sish"
       },
       "note": "Komissiyasiz hisob. O'rtachalash o'rtacha narxni pasaytiradi, lekin kiritilgan summa va riskni oshiradi: narx tushishda davom etishi mumkin. Bu arifmetika, ko'proq sotib olish maslahati emas."
+    },
+    "metalslot": {
+      "title": "Oltin va metallar: lotlarda pozitsiya hajmi",
+      "desc": "Stop bo'yicha zarar tanlangan riskdan oshmasligi uchun qancha lot oltin, kumush, platina yoki palladiy olish kerak. Shuningdek, 1 dollar harakat narxi, spred va marja.",
+      "f": {
+        "metal": "Metall",
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimdagi risk, %",
+        "entry": "Kirish narxi, bir untsiya uchun $",
+        "stop": "Stop narxi, bir untsiya uchun $",
+        "spread": "Spred, bir untsiya uchun $",
+        "leverage": "Yelka (majburiy emas)"
+      },
+      "c": {
+        "1": "Oltin XAUUSD (lot 100 untsiya)",
+        "2": "Kumush XAGUSD (lot 5000 untsiya)",
+        "3": "Platina XPTUSD (lot 100 untsiya)",
+        "4": "Palladiy XPDUSD (lot 100 untsiya)"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "lots": "Pozitsiya hajmi, lot",
+        "ounces": "Pozitsiyadagi untsiyalar",
+        "riskAmount": "Stop ishlasa zarar, $",
+        "perDollar": "Narx har $1 harakatiga foyda yoki zarar, $",
+        "spreadCost": "Spred narxi, $",
+        "margin": "Kerakli marja, $"
+      },
+      "note": "Brokerlarda lot hajmi farq qilishi mumkin, broker spetsifikatsiyasini tekshiring. Hajm 0,01 lotgacha pastga yaxlitlanadi. Hisob-kitob ma'lumot uchun. Investitsiya tavsiyasi emas."
+    },
+    "metalvalue": {
+      "title": "Oltin: buyum narxi proba va vazn bo'yicha",
+      "desc": "Buyum yoki quymadagi sof oltin qancha turadi: vazn, proba va untsiya narxi. Gramm narxi dollarda va mahalliy valyutada.",
+      "f": {
+        "weightGrams": "Vazn, gramm",
+        "fineness": "Proba (1000 dan)",
+        "spotPerOunce": "Untsiya narxi, $",
+        "rate": "Kurs: 1 $ uchun mahalliy valyuta (1 — dollarda hisoblash)"
+      },
+      "c": {
+        "999": "999,9 / 999 (quyma)",
+        "958": "958 (23 karat)",
+        "925": "925 (kumush yoki 22 karat)",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "pureGrams": "Sof metall, gramm",
+        "karat": "Karat",
+        "pricePerGram": "Sof metall gramm narxi, $",
+        "valueUsd": "Sof metall qiymati, $",
+        "pricePerGramLocal": "Gramm narxi mahalliy valyutada",
+        "valueLocal": "Mahalliy valyutadagi qiymat"
+      },
+      "note": "Bu birja bo'yicha metallning o'zi narxi. Zargarlik buyumlari va tangalar ustama bilan sotiladi, qabul qilish esa arzonroq. Hisob-kitob ma'lumot uchun."
+    },
+    "bullion": {
+      "title": "Jismoniy oltin: ustama va zararsizlik nuqtasi",
+      "desc": "Metall qiymatidan qancha ortiqcha to'ladingiz va dilerga chegirma bilan sotganda nolga chiqish uchun untsiya narxi qancha oshishi kerak.",
+      "f": {
+        "weightGrams": "Vazn, gramm",
+        "fineness": "Proba (1000 dan)",
+        "spotPerOunce": "Hozirgi untsiya narxi, $",
+        "paid": "Jami to'langan, $",
+        "sellDiscountPct": "Diler sotib olishdagi birja narxidan chegirma, %"
+      },
+      "c": {
+        "999": "999,9 / 999 (quyma)",
+        "958": "958 (23 karat)",
+        "925": "925",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "meltValue": "Metallning o'zi qiymati, $",
+        "premium": "Xarid ustamasi",
+        "breakevenSpot": "Zararsizlik untsiya narxi, $",
+        "riseNeeded": "Kerakli narx o'sishi"
+      },
+      "note": "Sotib olish chegirmasini dileringiz yoki bankdan so'rang. Hisob-kitob soliq, saqlash va sug'urtani hisobga olmaydi. Ma'lumot uchun, investitsiya tavsiyasi emas."
     }
   },
   "shortcuts": {
@@ -2085,7 +2173,12 @@
       "tnx": "AQSh 10 yillik obligatsiya daromadi, %",
       "vix": "VIX (qo'rquv indeksi)",
       "btc": "Bitcoin",
-      "eth": "Ethereum"
+      "eth": "Ethereum",
+      "palladium": "Palladiy",
+      "gld": "GLD: oltin ETF (SPDR)",
+      "iau": "IAU: oltin ETF (iShares)",
+      "slv": "SLV: kumush ETF",
+      "gdx": "GDX: oltin qazuvchi aksiyalar"
     }
   },
   "live": {
@@ -2405,7 +2498,9 @@
       "chartNq": "Nasdaq-100 grafigi",
       "optionsCalc": "Opsionlar: to'lov",
       "forexLot": "Lot va punkt qiymati",
-      "avgPrice": "O'rtachalash"
+      "avgPrice": "O'rtachalash",
+      "metalsPage": "Oltin va metallar",
+      "metalsLot": "Oltin va metallar loti"
     }
   },
   "prop": {
@@ -2473,5 +2568,49 @@
     "fields": "Majburiy maydonlar: instrument, direction (long yoki short), entry_price, position_size. Ixtiyoriy: exit_price, market (crypto, forex, stocks, futures, options), fees, funding, leverage, pnl, traded_at va closed_at (ISO formatda), strategy, comment, account (hisob nomi). Bunday bitimlar uchun savdo qoidalaringiz tekshirilmaydi, ular «api» tegi bilan belgilanadi. Kalitni begonalarga bermang: sizib chiqsa, shu yerda o'chiring.",
     "invalid": "Kalit nomini kiriting.",
     "limit": "Chegaraga yetildi: 5 tadan ko'p kalit bo'lmaydi."
+  },
+  "metals": {
+    "title": "Oltin va metallar",
+    "subtitle": "Oltin, kumush, platina, palladiy va mis bir joyda: narxlar o'zi yangilanadi, gramm va kilogrammga hisoblash, asosiy ta'sir qiluvchi ko'rsatkichlar va hisoblash vositalari.",
+    "currency": "Hisoblash valyutasi",
+    "perOz": "untsiya uchun",
+    "perLb": "funt uchun",
+    "perGram": "Gramm narxi",
+    "perKg": "Kilogramm narxi",
+    "ratios": "Metallar nisbati",
+    "goldSilver": "Oltin / kumush (bir untsiya oltin necha untsiya kumushga teng)",
+    "goldPlatinum": "Oltin / platina",
+    "ratioNote": "Oltin va kumush nisbati kumush oltinga nisbatan odatdagidan arzon yoki qimmatligini ko'rsatadi. Bu ma'lumot, signal emas.",
+    "influence": "Oltinga nima ta'sir qiladi",
+    "influenceNote": "Oltin odatda dollar kursi va AQSh obligatsiyalari daromadliligi bilan birga harakatlanadi, lekin bog'liqlik doimiy emas. Bu ma'lumot, prognoz emas.",
+    "etfs": "Metall fondlari",
+    "toolsTitle": "Oltin va metallar uchun vositalar",
+    "note": "Narxlar Yahoo Finance'dan kechikish bilan. Oltin va kumush bu yerda COMEX fyuchers, brokeringizdagi XAUUSD spotdan biroz farq qilishi mumkin. Gramm va mahalliy valyutaga hisoblash taxminiy.",
+    "links": {
+      "lot": {
+        "title": "Lotlarda pozitsiya hajmi",
+        "desc": "Riskingizga qarab qancha lot oltin yoki kumush olish."
+      },
+      "value": {
+        "title": "Buyum narxi proba bo'yicha",
+        "desc": "Buyumdagi oltin narxi: vazn, proba, gramm narxi."
+      },
+      "bullion": {
+        "title": "Jismoniy oltin: zararsizlik",
+        "desc": "Xarid ustamasi va nolga chiqadigan narx."
+      },
+      "futures": {
+        "title": "Fyuchers va oltin riski",
+        "desc": "CME kontraktlari bo'yicha hisob: GC, MGC, SI."
+      },
+      "alerts": {
+        "title": "Narx bildirishnomalari",
+        "desc": "Kriptovalyutalar bo'yicha Telegram ogohlantirishlari. Oltin uchun hozircha grafikka qarang."
+      },
+      "chart": {
+        "title": "Oltin grafigi",
+        "desc": "Indikatorli oltin shamlari."
+      }
+    }
   }
 }

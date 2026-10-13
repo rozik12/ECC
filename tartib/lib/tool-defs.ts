@@ -1,12 +1,12 @@
 // Описание публичных калькуляторов: поля, значения по умолчанию и функция расчёта.
-import { compound, futuresRisk, optionPayoff, forexLot, averagePrice, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
+import { compound, futuresRisk, optionPayoff, forexLot, averagePrice, metalsLot, metalValue, bullionBreakeven, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
 
-export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot" | "average-price";
-export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot", "average-price"];
+export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot" | "average-price" | "metals-lot" | "metal-value" | "bullion-breakeven";
+export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot", "average-price", "metals-lot", "metal-value", "bullion-breakeven"];
 export const TOOL_SLUGS = [...CALC_SLUGS, "sessions"] as const;
 
 /** Ключ в словаре tools.<key> для адреса страницы */
-export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures" | "options" | "forexlot" | "avgprice"> = {
+export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures" | "options" | "forexlot" | "avgprice" | "metalslot" | "metalvalue" | "bullion"> = {
   "position-size": "size",
   "risk-reward": "rr",
   "loss-streak": "streak",
@@ -25,6 +25,9 @@ export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "c
   options: "options",
   "forex-lot": "forexlot",
   "average-price": "avgprice",
+  "metals-lot": "metalslot",
+  "metal-value": "metalvalue",
+  "bullion-breakeven": "bullion",
 };
 
 export type Fmt = "num" | "money" | "pct" | "ratio" | "text" | "int";
@@ -266,6 +269,51 @@ export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
         { key: "newAmount", value: r.newAmount, fmt: "num" },
         { key: "totalCost", value: r.totalCost, fmt: "num" },
         { key: "riseToBreakeven", value: r.riseToBreakevenPct, fmt: "pct" },
+      ];
+    },
+  },
+  "metals-lot": {
+    fields: [{ id: "metal", def: "1", choices: [1, 2, 3, 4] }, { id: "balance", def: "5000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "4200" }, { id: "stop", def: "4190" }, { id: "spread", def: "0.3" }, { id: "leverage", def: "100", optional: true }],
+    compute: (v) => {
+      const r = metalsLot({ metal: n(v.metal), balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), spread: n(v.spread), leverage: v.leverage });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "lots", value: r.lots, fmt: "num" },
+        { key: "ounces", value: r.ounces, fmt: "num" },
+        { key: "riskAmount", value: r.actualRisk, fmt: "num" },
+        { key: "perDollar", value: r.perDollar, fmt: "num" },
+        { key: "spreadCost", value: r.spreadCost, fmt: "num" },
+      ];
+      if (r.margin !== null) rows.push({ key: "margin", value: r.margin, fmt: "num" });
+      return rows;
+    },
+  },
+  "metal-value": {
+    fields: [{ id: "weightGrams", def: "20" }, { id: "fineness", def: "585", choices: [999, 916, 750, 585, 375, 925, 958] }, { id: "spotPerOunce", def: "4200" }, { id: "rate", def: "12000" }],
+    compute: (v) => {
+      const r = metalValue({ weightGrams: n(v.weightGrams), fineness: n(v.fineness), spotPerOunce: n(v.spotPerOunce), rate: n(v.rate) });
+      if (!r.ok) return null;
+      return [
+        { key: "pureGrams", value: r.pureGrams, fmt: "num" },
+        { key: "karat", value: r.karat, fmt: "num" },
+        { key: "pricePerGram", value: r.pricePerGram, fmt: "num" },
+        { key: "valueUsd", value: r.valueUsd, fmt: "num" },
+        { key: "pricePerGramLocal", value: r.pricePerGramLocal, fmt: "num" },
+        { key: "valueLocal", value: r.valueLocal, fmt: "num" },
+      ];
+    },
+  },
+  "bullion-breakeven": {
+    fields: [{ id: "weightGrams", def: "31.1" }, { id: "fineness", def: "999", choices: [999, 916, 750, 585, 375, 925, 958] }, { id: "spotPerOunce", def: "4200" }, { id: "paid", def: "4450" }, { id: "sellDiscountPct", def: "2" }],
+    compute: (v) => {
+      const r = bullionBreakeven({ weightGrams: n(v.weightGrams), fineness: n(v.fineness), spotPerOunce: n(v.spotPerOunce), paid: n(v.paid), sellDiscountPct: n(v.sellDiscountPct) });
+      if (!r.ok) return null;
+      return [
+        { key: "meltValue", value: r.meltValue, fmt: "num" },
+        { key: "premium", value: r.premiumPct, fmt: "pct" },
+        { key: "breakevenSpot", value: r.breakevenSpot, fmt: "num" },
+        { key: "riseNeeded", value: r.riseNeededPct, fmt: "pct", tone: r.riseNeededPct > 0 ? "bad" : "good" },
       ];
     },
   },

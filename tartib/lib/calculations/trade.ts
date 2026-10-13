@@ -1,7 +1,7 @@
 // Формулы калькулятора риска. Чистые функции без зависимостей, чтобы их можно было тестировать.
 
 export type Direction = "long" | "short";
-export type Market = "crypto" | "forex" | "stocks" | "futures" | "options";
+export type Market = "crypto" | "forex" | "stocks" | "futures" | "options" | "metals";
 
 export const FOREX_LOT_SIZE = 100_000;
 

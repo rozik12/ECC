@@ -357,7 +357,7 @@ export function TradeForm({
             const m = e.target.value as MarketKey;
             set("market", m);
             // Опционы торгуются контрактами: включаем режим контрактов с множителем 100
-            if (m === "options") { setContractMode(true); if (!parseNumber(v.contractSize)) set("contractSize", "100"); }
+            if (m === "options" || m === "metals") { setContractMode(true); if (!parseNumber(v.contractSize)) set("contractSize", "100"); }
           }}>
             {markets.map((m) => <option key={m} value={m}>{t(`markets.${m}`)}</option>)}
           </Select>
@@ -399,6 +399,7 @@ export function TradeForm({
               {t("trades.form.contractMode")}
             </label>
             {contractMode && v.market === "options" && <p className="text-xs text-muted">{t("trades.form.optionsHint")}</p>}
+            {contractMode && v.market === "metals" && <p className="text-xs text-muted">{t("trades.form.metalsHint")}</p>}
             {contractMode && (
               <div className="grid grid-cols-2 gap-4">
                 <Input id="t-contracts" inputMode="decimal" label={t("trades.form.contracts")} error={err("contracts")} {...bind("contracts")} />

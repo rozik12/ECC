@@ -79,7 +79,7 @@ begin
     raise exception 'invalid_payload';
   end;
   if v_instrument is null or length(v_instrument) not between 1 and 30 then raise exception 'invalid_payload'; end if;
-  if v_market not in ('crypto', 'forex', 'stocks', 'futures', 'options') then raise exception 'invalid_payload'; end if;
+  if v_market not in ('crypto', 'forex', 'stocks', 'futures', 'options', 'metals') then raise exception 'invalid_payload'; end if;
   if v_direction not in ('long', 'short') then raise exception 'invalid_payload'; end if;
   if v_entry is null or v_entry <= 0 or v_entry >= 1e12 then raise exception 'invalid_payload'; end if;
   if v_exit is not null and (v_exit <= 0 or v_exit >= 1e12) then raise exception 'invalid_payload'; end if;

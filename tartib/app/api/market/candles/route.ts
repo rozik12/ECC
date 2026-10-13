@@ -22,7 +22,7 @@ export async function GET(request: Request) {
   const at = Date.parse(q.get("at") ?? "");
   const instrument = (q.get("instrument") ?? "").slice(0, 40);
   const market = q.get("market") ?? "crypto";
-  if (!["crypto", "forex", "stocks", "futures", "options", "auto"].includes(market)) return NextResponse.json({ error: "bad_request" }, { status: 400, headers: JSON_HEADERS });
+  if (!["crypto", "forex", "stocks", "futures", "options", "metals", "auto"].includes(market)) return NextResponse.json({ error: "bad_request" }, { status: 400, headers: JSON_HEADERS });
   // «auto» (раздел «Графики»): сначала криптопара, потом акции, индексы, металлы, нефть и валюты
   const cryptoFirst = market === "auto" ? normalizePair(instrument) : null;
   const ticker = cryptoFirst || market === "crypto" ? null : normalizeTicker(instrument, market);

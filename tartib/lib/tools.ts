@@ -379,3 +379,74 @@ export function averagePrice(i: { amount: number; avgPrice: number; buyAmount: n
     riseToBreakevenPct: ((newAvg - i.buyPrice) / i.buyPrice) * 100,
   };
 }
+
+// ---------- золото и металлы ----------
+/** Тройская унция в граммах. */
+export const TROY_OZ_GRAMS = 31.1034768;
+
+/** Контракты у брокеров (CFD): сколько унций в одном лоте. Справочно: сверяйте со спецификацией своего брокера. */
+export const METAL_CONTRACTS: Record<number, { name: string; ounces: number }> = {
+  1: { name: "XAUUSD", ounces: 100 },
+  2: { name: "XAGUSD", ounces: 5000 },
+  3: { name: "XPTUSD", ounces: 100 },
+  4: { name: "XPDUSD", ounces: 100 },
+};
+
+export type MetalsLotResult =
+  | { ok: true; direction: "long" | "short"; lots: number; ounces: number; actualRisk: number; riskAmount: number; spreadCost: number; margin: number | null; perDollar: number; stopDistance: number }
+  | Fail;
+
+/**
+ * Размер позиции по золоту и металлам в лотах: убыток по стопу не должен превысить выбранный риск.
+ * Цены вводятся в долларах за унцию, спред тоже. Размер округляется вниз до 0,01 лота.
+ */
+export function metalsLot(i: { metal: number; balance: number; riskPct: number; entry: number; stop: number; spread: number; leverage: number | null }): MetalsLotResult {
+  const spec = METAL_CONTRACTS[i.metal];
+  if (!spec || !fin(i.balance, i.riskPct, i.entry, i.stop, i.spread)) return FAIL;
+  if (i.balance <= 0 || i.riskPct <= 0 || i.riskPct > 100 || i.entry <= 0 || i.stop <= 0 || i.entry === i.stop || i.spread < 0) return FAIL;
+  if (i.leverage !== null && (!Number.isFinite(i.leverage) || i.leverage < 1 || i.leverage > 3000)) return FAIL;
+  const stopDistance = Math.abs(i.entry - i.stop);
+  const riskAmount = (i.balance * i.riskPct) / 100;
+  const lots = Math.floor((riskAmount / (stopDistance * spec.ounces)) * 100) / 100;
+  const ounces = lots * spec.ounces;
+  return {
+    ok: true,
+    direction: i.entry > i.stop ? "long" : "short",
+    lots,
+    ounces,
+    actualRisk: ounces * stopDistance,
+    riskAmount,
+    spreadCost: ounces * i.spread,
+    margin: i.leverage === null ? null : (ounces * i.entry) / i.leverage,
+    perDollar: ounces,
+    stopDistance,
+  };
+}
+
+export type MetalValueResult = { ok: true; pureGrams: number; pureOunces: number; pricePerGram: number; valueUsd: number; valueLocal: number; pricePerGramLocal: number; karat: number } | Fail;
+
+/**
+ * Стоимость изделия или слитка по пробе: вес, проба (из 1000, например 585, 750, 999,9) и цена унции в долларах.
+ * rate — курс местной валюты к доллару (сколько местных за 1 доллар); 1 — оставаться в долларах.
+ */
+export function metalValue(i: { weightGrams: number; fineness: number; spotPerOunce: number; rate: number }): MetalValueResult {
+  if (!fin(i.weightGrams, i.fineness, i.spotPerOunce, i.rate) || i.weightGrams <= 0 || i.fineness <= 0 || i.fineness > 1000 || i.spotPerOunce <= 0 || i.rate <= 0) return FAIL;
+  const pureGrams = (i.weightGrams * i.fineness) / 1000;
+  const pricePerGram = i.spotPerOunce / TROY_OZ_GRAMS;
+  const valueUsd = pureGrams * pricePerGram;
+  return { ok: true, pureGrams, pureOunces: pureGrams / TROY_OZ_GRAMS, pricePerGram, valueUsd, valueLocal: valueUsd * i.rate, pricePerGramLocal: pricePerGram * i.rate, karat: (i.fineness / 1000) * 24 };
+}
+
+export type BullionResult = { ok: true; pureOunces: number; meltValue: number; premiumPct: number; breakevenSpot: number; riseNeededPct: number } | Fail;
+
+/**
+ * Физическое золото и серебро: сколько переплачено над стоимостью металла и при какой цене унции вы выйдете в ноль, если продавать дилеру со скидкой от спота.
+ * paid — сколько заплачено всего в долларах, sellDiscountPct — на сколько процентов ниже спота дилер выкупает.
+ */
+export function bullionBreakeven(i: { weightGrams: number; fineness: number; spotPerOunce: number; paid: number; sellDiscountPct: number }): BullionResult {
+  if (!fin(i.weightGrams, i.fineness, i.spotPerOunce, i.paid, i.sellDiscountPct) || i.weightGrams <= 0 || i.fineness <= 0 || i.fineness > 1000 || i.spotPerOunce <= 0 || i.paid <= 0 || i.sellDiscountPct < 0 || i.sellDiscountPct >= 100) return FAIL;
+  const pureOunces = (i.weightGrams * i.fineness) / 1000 / TROY_OZ_GRAMS;
+  const meltValue = pureOunces * i.spotPerOunce;
+  const breakevenSpot = i.paid / (pureOunces * (1 - i.sellDiscountPct / 100));
+  return { ok: true, pureOunces, meltValue, premiumPct: ((i.paid - meltValue) / meltValue) * 100, breakevenSpot, riseNeededPct: ((breakevenSpot - i.spotPerOunce) / i.spotPerOunce) * 100 };
+}

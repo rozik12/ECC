@@ -16,7 +16,8 @@ test("ярлыки: рынки, потом срок, без повторов и 
 test("рынок по умолчанию и проверки значений", () => {
   const form = ["crypto", "forex", "stocks", "futures"];
   assert.equal(defaultFormMarket(["stocks", "crypto"], form), "stocks");
-  assert.equal(defaultFormMarket(["commodities"], form), "forex");
+  assert.equal(defaultFormMarket(["commodities"], form), null); // «металлов» в этом списке нет
+  assert.equal(defaultFormMarket(["commodities"], [...form, "metals"]), "metals");
   assert.equal(defaultFormMarket(["options"], form), null); // пока нет в форме
   assert.equal(defaultFormMarket([], form), null);
   assert.ok(isHorizon("swing") && !isHorizon("x") && isTraderMarket("options") && !isTraderMarket(1));

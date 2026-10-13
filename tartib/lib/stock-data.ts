@@ -5,13 +5,13 @@ import { TIMEFRAMES, type Candle, type Timeframe } from "./market-data.ts";
 
 const FUTURES_ROOTS: Record<string, string> = {
   NQ: "NQ", MNQ: "NQ", ES: "ES", MES: "ES", YM: "YM", MYM: "YM", RTY: "RTY", M2K: "RTY",
-  CL: "CL", MCL: "CL", GC: "GC", MGC: "GC", SI: "SI", SIL: "SI", HG: "HG", NG: "NG", PL: "PL", BZ: "BZ",
+  CL: "CL", MCL: "CL", GC: "GC", MGC: "GC", SI: "SI", SIL: "SI", HG: "HG", NG: "NG", PL: "PL", PA: "PA", BZ: "BZ",
 };
-const FUTURES_RE = /^(MNQ|MES|MYM|M2K|MCL|MGC|SIL|NQ|ES|YM|RTY|CL|GC|SI|HG|NG|PL|BZ)(=F|1!|[FGHJKMNQUVXZ]\d{1,2})?$/;
+const FUTURES_RE = /^(MNQ|MES|MYM|M2K|MCL|MGC|SIL|NQ|ES|YM|RTY|CL|GC|SI|HG|NG|PL|PA|BZ)(=F|1!|[FGHJKMNQUVXZ]\d{1,2})?$/;
 
 /** Названия, которыми трейдеры и брокеры называют популярные инструменты → символ Yahoo. Золото и серебро берутся по фьючерсу COMEX: спотовых цен у источника нет. */
 const ALIASES: Record<string, string> = {
-  XAUUSD: "GC=F", XAU: "GC=F", GOLD: "GC=F", XAGUSD: "SI=F", XAG: "SI=F", SILVER: "SI=F", XPTUSD: "PL=F", PLATINUM: "PL=F", COPPER: "HG=F",
+  XAUUSD: "GC=F", XAU: "GC=F", GOLD: "GC=F", XAGUSD: "SI=F", XAG: "SI=F", SILVER: "SI=F", XPTUSD: "PL=F", PLATINUM: "PL=F", XPDUSD: "PA=F", XPD: "PA=F", XPT: "PL=F", PALLADIUM: "PA=F", COPPER: "HG=F",
   USOIL: "CL=F", WTI: "CL=F", XTIUSD: "CL=F", OIL: "CL=F", UKOIL: "BZ=F", BRENT: "BZ=F", XBRUSD: "BZ=F", NATGAS: "NG=F", XNGUSD: "NG=F",
   DXY: "DX-Y.NYB", USDX: "DX-Y.NYB", US100: "^NDX", NAS100: "^NDX", USTEC: "^NDX", NDX: "^NDX", US500: "^GSPC", SPX: "^GSPC", SPX500: "^GSPC", SP500: "^GSPC",
   US30: "^DJI", DJI: "^DJI", DOW: "^DJI", US2000: "^RUT", RUT: "^RUT", GER40: "^GDAXI", DE40: "^GDAXI", DAX: "^GDAXI", UK100: "^FTSE", FTSE: "^FTSE",
@@ -30,6 +30,10 @@ export function normalizeTicker(instrument: string, market: string): string | nu
   if (/^\^[A-Z0-9]{2,8}$/.test(s)) return s;
   if (/^[A-Z]{2,4}=F$/.test(s) && FUTURES_RE.test(s)) return `${FUTURES_ROOTS[s.slice(0, -2)] ?? s.slice(0, -2)}=F`;
   if (/^[A-Z]{6}=X$/.test(s) && CURRENCIES.includes(s.slice(0, 3)) && CURRENCIES.includes(s.slice(3, 6))) return s;
+  if (market === "metals") {
+    const m = FUTURES_RE.exec(s);
+    return m && ["GC", "SI", "PL", "PA", "HG"].includes(FUTURES_ROOTS[m[1]]) ? `${FUTURES_ROOTS[m[1]]}=F` : null;
+  }
   if (market === "futures") {
     const m = FUTURES_RE.exec(s);
     return m ? `${FUTURES_ROOTS[m[1]]}=F` : null;

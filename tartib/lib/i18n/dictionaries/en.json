@@ -43,7 +43,8 @@
     "plusMinus": "Gains and losses",
     "traderTypes": "Types of traders",
     "portfolio": "Portfolio",
-    "prop": "Prop challenge"
+    "prop": "Prop challenge",
+    "metals": "Gold and metals"
   },
   "footer": {
     "terms": "Terms of use",
@@ -317,7 +318,8 @@
     "forex": "Forex",
     "stocks": "Stocks",
     "futures": "Futures",
-    "options": "Options"
+    "options": "Options",
+    "metals": "Gold and metals"
   },
   "emotions": {
     "calm": "Calm",
@@ -577,7 +579,8 @@
         "forex": "XAUUSD",
         "stocks": "AAPL",
         "futures": "MNQ",
-        "options": "AAPL 200C 2026-12-18"
+        "options": "AAPL 200C 2026-12-18",
+        "metals": "XAUUSD"
       },
       "closedPdtHint": "Closing time feeds the day-trade (PDT) counter on the dashboard.",
       "contractMode": "I trade contracts",
@@ -585,7 +588,8 @@
       "contractSize": "Size of one contract",
       "contractSizeHint": "How many units of the asset one contract holds (for example, 100)",
       "contractTotal": "Position size (contracts × contract size)",
-      "optionsHint": "Option: enter the premium per share in the entry and exit price fields, contracts as many as you bought, contract size is usually 100. Buying an option is “long”, selling is “short”."
+      "optionsHint": "Option: enter the premium per share in the entry and exit price fields, contracts as many as you bought, contract size is usually 100. Buying an option is “long”, selling is “short”.",
+      "metalsHint": "Gold and metals: price in dollars per ounce. Contract mode is on for broker lots: as many contracts as lots, contract size in ounces (gold 100, silver 5,000, platinum and palladium 100). For GC futures enter 100, for micro MGC 10."
     },
     "detail": {
       "risk": "Risk",
@@ -1443,6 +1447,90 @@
         "riseToBreakeven": "Rise from the buy price to break-even"
       },
       "note": "Calculated without fees. Averaging lowers the average price but raises the amount invested and the risk: price may keep falling. This is arithmetic, not advice to buy more."
+    },
+    "metalslot": {
+      "title": "Gold and metals: position size in lots",
+      "desc": "How many lots of gold, silver, platinum or palladium keep the stop-loss within your chosen risk. Also the value of a $1 move, spread cost and margin.",
+      "f": {
+        "metal": "Metal",
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price, $ per ounce",
+        "stop": "Stop price, $ per ounce",
+        "spread": "Spread, $ per ounce",
+        "leverage": "Leverage (optional)"
+      },
+      "c": {
+        "1": "Gold XAUUSD (lot 100 oz)",
+        "2": "Silver XAGUSD (lot 5000 oz)",
+        "3": "Platinum XPTUSD (lot 100 oz)",
+        "4": "Palladium XPDUSD (lot 100 oz)"
+      },
+      "o": {
+        "direction": "Direction",
+        "lots": "Position size, lots",
+        "ounces": "Ounces in the position",
+        "riskAmount": "Loss if the stop is hit, $",
+        "perDollar": "Profit or loss per $1 price move, $",
+        "spreadCost": "Spread cost, $",
+        "margin": "Margin needed, $"
+      },
+      "note": "Lot size can differ between brokers, so check your broker's specification. Size is rounded down to 0.01 lot. Reference only. Not investment advice."
+    },
+    "metalvalue": {
+      "title": "Gold: value of an item by purity and weight",
+      "desc": "What the pure gold in a piece of jewellery or a bar is worth: weight, purity and ounce price. Price per gram in dollars and in local currency.",
+      "f": {
+        "weightGrams": "Weight, grams",
+        "fineness": "Purity (out of 1000)",
+        "spotPerOunce": "Price per ounce, $",
+        "rate": "Rate: local currency per $1 (1 to stay in dollars)"
+      },
+      "c": {
+        "999": "999.9 / 999 (bar)",
+        "958": "958 (23 karat)",
+        "925": "925 (silver or 22 karat)",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "pureGrams": "Pure metal, grams",
+        "karat": "Karat",
+        "pricePerGram": "Price per gram of pure metal, $",
+        "valueUsd": "Value of pure metal, $",
+        "pricePerGramLocal": "Price per gram, local currency",
+        "valueLocal": "Value in local currency"
+      },
+      "note": "This is the metal's exchange value. Jewellery and coins are sold at a premium and buyers pay less. Reference only."
+    },
+    "bullion": {
+      "title": "Physical gold: premium and breakeven",
+      "desc": "How much you paid above the metal's value and how far the ounce price must rise to break even when selling to a dealer at a discount.",
+      "f": {
+        "weightGrams": "Weight, grams",
+        "fineness": "Purity (out of 1000)",
+        "spotPerOunce": "Current price per ounce, $",
+        "paid": "Total paid, $",
+        "sellDiscountPct": "Dealer buyback discount to market price, %"
+      },
+      "c": {
+        "999": "999.9 / 999 (bar)",
+        "958": "958 (23 karat)",
+        "925": "925",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "meltValue": "Value of the metal itself, $",
+        "premium": "Premium paid",
+        "breakevenSpot": "Breakeven ounce price, $",
+        "riseNeeded": "Price rise needed"
+      },
+      "note": "Ask your dealer or bank for their buyback discount. Taxes, storage and insurance are not included. Reference only, not investment advice."
     }
   },
   "shortcuts": {
@@ -2085,7 +2173,12 @@
       "tnx": "US 10-year yield, %",
       "vix": "VIX (fear index)",
       "btc": "Bitcoin",
-      "eth": "Ethereum"
+      "eth": "Ethereum",
+      "palladium": "Palladium",
+      "gld": "GLD: gold ETF (SPDR)",
+      "iau": "IAU: gold ETF (iShares)",
+      "slv": "SLV: silver ETF",
+      "gdx": "GDX: gold miners"
     }
   },
   "live": {
@@ -2405,7 +2498,9 @@
       "chartNq": "Nasdaq-100 chart",
       "optionsCalc": "Options payoff",
       "forexLot": "Lot and pip value",
-      "avgPrice": "Averaging"
+      "avgPrice": "Averaging",
+      "metalsPage": "Gold and metals",
+      "metalsLot": "Gold and metals lot"
     }
   },
   "prop": {
@@ -2473,5 +2568,49 @@
     "fields": "Required fields: instrument, direction (long or short), entry_price, position_size. Optional: exit_price, market (crypto, forex, stocks, futures, options), fees, funding, leverage, pnl, traded_at and closed_at (ISO format), strategy, comment, account (account name). Your trading rules are not checked for such trades, and they are tagged “api”. Do not share the key: delete it here if it leaks.",
     "invalid": "Enter a key name.",
     "limit": "Limit reached: no more than 5 keys."
+  },
+  "metals": {
+    "title": "Gold and metals",
+    "subtitle": "Gold, silver, platinum, palladium and copper in one place: self-updating prices, grams and kilograms conversion, key drivers and calculation tools.",
+    "currency": "Currency",
+    "perOz": "per ounce",
+    "perLb": "per pound",
+    "perGram": "Price per gram",
+    "perKg": "Price per kilogram",
+    "ratios": "Metal ratios",
+    "goldSilver": "Gold to silver (ounces of silver in one ounce of gold)",
+    "goldPlatinum": "Gold to platinum",
+    "ratioNote": "The gold/silver ratio shows how cheap or expensive silver is versus gold compared with usual levels. Reference only, not a signal.",
+    "influence": "What moves gold",
+    "influenceNote": "Gold often moves with the dollar and US bond yields, but the link is not constant. Reference only, not a forecast.",
+    "etfs": "Metal funds",
+    "toolsTitle": "Tools for gold and metals",
+    "note": "Prices come from Yahoo Finance with a delay. Gold and silver here are COMEX futures and can differ slightly from your broker's XAUUSD spot. Gram and local-currency conversion is approximate.",
+    "links": {
+      "lot": {
+        "title": "Position size in lots",
+        "desc": "How many lots of gold or silver fit your risk."
+      },
+      "value": {
+        "title": "Item value by purity",
+        "desc": "What the gold in an item is worth: weight, purity, price per gram."
+      },
+      "bullion": {
+        "title": "Physical gold: breakeven",
+        "desc": "Premium paid and the price at which you break even."
+      },
+      "futures": {
+        "title": "Futures and gold risk",
+        "desc": "CME contract maths: GC, MGC, SI."
+      },
+      "alerts": {
+        "title": "Price alerts",
+        "desc": "Telegram alerts for crypto. For gold, use the chart for now."
+      },
+      "chart": {
+        "title": "Gold chart",
+        "desc": "Gold candles with indicators."
+      }
+    }
   }
 }

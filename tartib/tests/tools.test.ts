@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { compound, drawdownRecovery, lossStreak, positionSize, riskReward, SESSIONS, sessionStatus } from "../lib/tools.ts";
+import { compound, metalsLot, metalValue, bullionBreakeven, drawdownRecovery, lossStreak, positionSize, riskReward, SESSIONS, sessionStatus } from "../lib/tools.ts";
 
 const near = (a: number, b: number, eps = 1e-9) => assert.ok(Math.abs(a - b) < eps, `${a} ≈ ${b}`);
 
@@ -78,4 +78,42 @@ test("торговые сессии: будний день, летнее вре�
   assert.deepEqual(st("2026-10-10T12:00:00Z").london, { open: false, minutes: 2580 });
   // Пятница после закрытия Нью-Йорка тоже ждёт понедельника
   assert.equal(st("2026-10-09T22:00:00Z").newyork.open, false);
+});
+
+test("metalsLot: золото, риск 1% от 5000 при стопе $10", () => {
+  const r = metalsLot({ metal: 1, balance: 5000, riskPct: 1, entry: 4200, stop: 4190, spread: 0.3, leverage: 100 });
+  assert.ok(r.ok);
+  if (!r.ok) return;
+  assert.equal(r.direction, "long");
+  assert.equal(r.lots, 0.05);
+  assert.equal(r.ounces, 5);
+  assert.equal(r.actualRisk, 50);
+  assert.ok(Math.abs(r.spreadCost - 1.5) < 1e-9);
+  assert.equal(r.margin, 210);
+});
+
+test("metalsLot: плохие данные", () => {
+  assert.equal(metalsLot({ metal: 9, balance: 5000, riskPct: 1, entry: 4200, stop: 4190, spread: 0, leverage: null }).ok, false);
+  assert.equal(metalsLot({ metal: 1, balance: 5000, riskPct: 1, entry: 4200, stop: 4200, spread: 0, leverage: null }).ok, false);
+});
+
+test("metalValue: 20 г пробы 585 при $4200 за унцию", () => {
+  const r = metalValue({ weightGrams: 20, fineness: 585, spotPerOunce: 4200, rate: 12000 });
+  assert.ok(r.ok);
+  if (!r.ok) return;
+  assert.ok(Math.abs(r.pureGrams - 11.7) < 1e-9);
+  assert.ok(Math.abs(r.valueUsd - (11.7 * 4200) / 31.1034768) < 1e-6);
+  assert.ok(Math.abs(r.valueLocal - r.valueUsd * 12000) < 1e-3);
+  assert.ok(Math.abs(r.karat - 14.04) < 1e-9);
+  assert.equal(metalValue({ weightGrams: 0, fineness: 585, spotPerOunce: 4200, rate: 1 }).ok, false);
+});
+
+test("bullionBreakeven: унция 999 за $4450 при споте 4200 и скидке 2%", () => {
+  const r = bullionBreakeven({ weightGrams: 31.1034768, fineness: 1000, spotPerOunce: 4200, paid: 4450, sellDiscountPct: 2 });
+  assert.ok(r.ok);
+  if (!r.ok) return;
+  assert.ok(Math.abs(r.premiumPct - (250 / 4200) * 100) < 1e-6);
+  assert.ok(Math.abs(r.breakevenSpot - 4450 / 0.98) < 1e-6);
+  assert.ok(r.riseNeededPct > 0);
+  assert.equal(bullionBreakeven({ weightGrams: 31, fineness: 999, spotPerOunce: 4200, paid: 4450, sellDiscountPct: 100 }).ok, false);
 });

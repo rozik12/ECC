@@ -23,7 +23,7 @@ const BY_MARKET: Record<TraderMarket, Shortcut[]> = {
   stocks: [{ key: "stockSize", href: "/tools/stock-size" }, { key: "market", href: "/market" }, { key: "chartAapl", href: "/charts?pair=AAPL" }],
   futures: [{ key: "futuresRisk", href: "/tools/futures-risk" }, { key: "chartNq", href: "/charts?pair=NQ%3DF" }, { key: "market", href: "/market" }],
   options: [{ key: "optionsCalc", href: "/tools/options" }, { key: "sessions", href: "/tools/sessions" }, { key: "chartAapl", href: "/charts?pair=AAPL" }],
-  commodities: [{ key: "chartGold", href: "/charts?pair=XAUUSD" }, { key: "futuresRisk", href: "/tools/futures-risk" }, { key: "market", href: "/market" }],
+  commodities: [{ key: "metalsPage", href: "/metals" }, { key: "chartGold", href: "/charts?pair=XAUUSD" }, { key: "metalsLot", href: "/tools/metals-lot" }, { key: "futuresRisk", href: "/tools/futures-risk" }],
 };
 
 /**
@@ -51,7 +51,7 @@ export function shortcutsFor(horizon: Horizon | null, markets: TraderMarket[], m
 /** Рынок для новой сделки по умолчанию: первый из выбранных, который есть в форме; иначе null. */
 export function defaultFormMarket(markets: TraderMarket[], formMarkets: readonly string[]): string | null {
   for (const m of markets) {
-    const mapped = m === "commodities" ? "forex" : m;
+    const mapped = m === "commodities" ? "metals" : m;
     if (formMarkets.includes(mapped)) return mapped;
   }
   return null;

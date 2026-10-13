@@ -1,4 +1,4 @@
-export const markets = ["crypto", "forex", "stocks", "futures", "options"] as const;
+export const markets = ["crypto", "forex", "stocks", "futures", "options", "metals"] as const;
 export const directions = ["long", "short"] as const;
 export const emotions = ["calm", "fear", "greed", "fomo", "revenge", "confident", "uncertain", "other"] as const;
 

@@ -53,7 +53,16 @@
   },
   "seo": {
     "title": "Tartib — trading discipline and trader's journal",
-    "description": "Tartib helps traders manage risk, keep a trade journal and measure the cost of breaking their own trading rules."
+    "description": "Tartib helps traders manage risk, keep a trade journal and measure the cost of breaking their own trading rules.",
+    "keywords": [
+      "trading journal",
+      "trader diary",
+      "lot size calculator",
+      "trading risk management",
+      "position size calculator",
+      "trading discipline",
+      "gold XAUUSD lot size"
+    ]
   },
   "landing": {
     "hero": {

@@ -6,7 +6,7 @@ import { DICT_KEY, TOOL_SLUGS } from "@/lib/tool-defs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
-  return { title: t("tools.title"), description: t("tools.subtitle") };
+  return { title: t("tools.title"), description: t("tools.subtitle"), alternates: { canonical: "/tools" } };
 }
 
 export default async function ToolsPage() {

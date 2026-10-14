@@ -5,7 +5,10 @@ import { UsMarketCard } from "@/components/market/UsMarketCard";
 import { SessionsClock } from "@/components/tools/SessionsClock";
 import { ToolRunner } from "@/components/tools/ToolRunner";
 import { buttonStyles } from "@/components/ui";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getTranslator } from "@/lib/i18n/server";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 import { CALC_SLUGS, DICT_KEY, TOOL_SLUGS, type ToolSlug } from "@/lib/tool-defs";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -30,6 +33,16 @@ export default async function ToolPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6 px-4 py-10 sm:px-6">
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: t(`tools.${key}.title`),
+        description: t(`tools.${key}.desc`),
+        url: `${siteUrl}/tools/${slug}`,
+        applicationCategory: "FinanceApplication",
+        operatingSystem: "Web",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      }} />
       <Link href="/tools" className="text-sm text-muted hover:text-foreground">{t("tools.all")}</Link>
       <div>
         <h1 className="text-2xl font-bold sm:text-3xl">{t(`tools.${key}.title`)}</h1>

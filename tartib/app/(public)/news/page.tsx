@@ -9,7 +9,7 @@ import { fetchNews, filterNews, NEWS_SOURCES, type NewsCategory, type NewsLang }
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
-  return { title: t("news.title"), description: t("news.subtitle") };
+  return { title: t("news.title"), description: t("news.subtitle"), alternates: { canonical: "/news" } };
 }
 
 const CATEGORIES = ["all", "crypto", "markets", "forex", "uzbekistan"] as const;

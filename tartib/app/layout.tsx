@@ -23,8 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title: { default: title, template: "%s · Tartib" },
     description,
-    openGraph: { title, description, type: "website", siteName: "Tartib" },
-    twitter: { card: "summary", title, description },
+    keywords: dictionaries[locale].seo.keywords,
+    openGraph: { title, description, type: "website", siteName: "Tartib", url: siteUrl, locale: locale === "uz" ? "uz_UZ" : locale === "en" ? "en_US" : "ru_RU" },
+    twitter: { card: "summary_large_image", title, description },
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } } : {}),
     appleWebApp: { capable: true, title: "Tartib", statusBarStyle: "default" },
   };
 }

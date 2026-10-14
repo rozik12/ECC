@@ -3,7 +3,13 @@ import Link from "next/link";
 import { ListChecks, ShieldCheck, Wallet } from "lucide-react";
 import { PricingCards } from "@/components/landing/PricingCards";
 import { buttonStyles, Card } from "@/components/ui";
+import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getTranslator } from "@/lib/i18n/server";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function LandingPage() {
   const { t, locale } = await getTranslator();
@@ -24,6 +30,14 @@ export default async function LandingPage() {
 
   return (
     <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          { "@type": "Organization", "@id": `${siteUrl}/#org`, name: "Tartib", url: siteUrl, logo: `${siteUrl}/icon.svg` },
+          { "@type": "WebSite", "@id": `${siteUrl}/#site`, url: siteUrl, name: "Tartib", inLanguage: locale, publisher: { "@id": `${siteUrl}/#org` } },
+          { "@type": "WebApplication", name: "Tartib", url: siteUrl, applicationCategory: "FinanceApplication", operatingSystem: "Web", description: t("seo.description"), inLanguage: locale, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } },
+        ],
+      }} />
       {/* Hero */}
       <section className="hero-glow mx-auto max-w-4xl px-4 pb-16 pt-14 text-center sm:px-6 sm:pt-24">
         <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-6xl">

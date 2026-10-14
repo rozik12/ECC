@@ -53,7 +53,16 @@
   },
   "seo": {
     "title": "Tartib — savdo intizomi va treyder jurnali",
-    "description": "Tartib treyderlarga xavfni boshqarish, bitimlar jurnalini yuritish va savdo qoidalarini buzish narxini o'lchashga yordam beradi."
+    "description": "Tartib treyderlarga xavfni boshqarish, bitimlar jurnalini yuritish va savdo qoidalarini buzish narxini o'lchashga yordam beradi.",
+    "keywords": [
+      "treyder jurnali",
+      "savdo kundaligi",
+      "lot kalkulyatori",
+      "treyding risk menejmenti",
+      "pozitsiya kalkulyatori",
+      "savdo intizomi",
+      "oltin XAUUSD lot"
+    ]
   },
   "landing": {
     "hero": {

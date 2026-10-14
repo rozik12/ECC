@@ -4,7 +4,7 @@ import { getTranslator } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
-  return { title: t("pricing.title") };
+  return { title: t("pricing.title"), alternates: { canonical: "/pricing" } };
 }
 
 export default async function PricingPage() {

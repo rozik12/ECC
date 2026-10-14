@@ -3,7 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buttonStyles } from "@/components/ui";
 import { ARTICLES, getArticle } from "@/lib/articles";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getTranslator } from "@/lib/i18n/server";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!article) return {};
   const { locale } = await getTranslator();
   const x = article.text[locale];
-  return { title: x.title, description: x.description, alternates: { canonical: `/blog/${slug}` } };
+  return { title: x.title, description: x.description, alternates: { canonical: `/blog/${slug}` }, openGraph: { type: "article", title: x.title, description: x.description, publishedTime: article.date, url: `/blog/${slug}` } };
 }
 
 export default async function ArticlePage({ params }: Props) {
@@ -29,6 +32,18 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <article className="mx-auto max-w-2xl space-y-6 px-4 py-10 sm:px-6">
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: x.title,
+        description: x.description,
+        datePublished: article.date,
+        dateModified: article.date,
+        inLanguage: locale,
+        mainEntityOfPage: `${siteUrl}/blog/${slug}`,
+        author: { "@type": "Organization", name: "Tartib", url: siteUrl },
+        publisher: { "@type": "Organization", name: "Tartib", logo: { "@type": "ImageObject", url: `${siteUrl}/icon.svg` } },
+      }} />
       <Link href="/blog" className="text-sm text-muted hover:text-foreground">{t("blog.back")}</Link>
       <header>
         <h1 className="text-2xl font-bold leading-tight sm:text-3xl">{x.title}</h1>

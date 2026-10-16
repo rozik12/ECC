@@ -44,7 +44,8 @@
     "traderTypes": "Treyder turlari",
     "portfolio": "Portfel",
     "prop": "Prop-chellenj",
-    "metals": "Oltin va metallar"
+    "metals": "Oltin va metallar",
+    "support": "Egasiga yozish"
   },
   "footer": {
     "terms": "Foydalanish shartlari",
@@ -1571,13 +1572,15 @@
       "violation": "Buzilgan qoidalar: {count}",
       "goal": "Oy maqsadiga erishildi",
       "report": "Haftalik hisobot tayyor",
-      "price_alert": "Alert ishladi: {symbol}"
+      "price_alert": "Alert ishladi: {symbol}",
+      "support_reply": "Egasidan javob"
     },
     "bodies": {
       "goal": "Intizom {percent}%, maqsad {goal}%.",
       "report": "Hisobotni o'qish uchun statistikani oching.",
       "priceAbove": "{symbol}: narx {price} darajasiga ko'tarildi (hozir {last}).",
-      "priceBelow": "{symbol}: narx {price} darajasiga tushdi (hozir {last})."
+      "priceBelow": "{symbol}: narx {price} darajasiga tushdi (hozir {last}).",
+      "supportReply": "Javobni o'qish uchun yozishmani oching."
     }
   },
   "adv": {
@@ -2621,5 +2624,24 @@
         "desc": "Indikatorli oltin shamlari."
       }
     }
+  },
+  "support": {
+    "title": "Egasiga yozish",
+    "subtitle": "Savol, xato yoki g'oya bormi? Shu yerga yozing, egasi sizga shaxsan javob beradi. Javob qo'ng'iroqcha orqali xabar sifatida keladi.",
+    "empty": "Hozircha bo'sh. Birinchi xabarni yozing.",
+    "adminEmpty": "Hozircha xabarlar yo'q.",
+    "owner": "Egasi",
+    "you": "Siz",
+    "writeLabel": "Xabaringiz",
+    "replyLabel": "Javobingiz",
+    "send": "Yuborish",
+    "invalid": "1 dan 2000 belgigacha xabar yozing.",
+    "tooMany": "Bir kunda juda ko'p xabar. Ertaga urinib ko'ring.",
+    "note": "Egasi xabarlarni o'zi o'qiydi, javob darrov kelmasligi mumkin. Parol va karta ma'lumotlarini yubormang.",
+    "adminTitle": "Foydalanuvchilar xabarlari",
+    "adminNone": "Hozircha hech kim yozmagan.",
+    "back": "← Barcha yozishmalar",
+    "adminLink": "Xabarlar",
+    "adminUnread": "O'qilmagan: {n}"
   }
 }

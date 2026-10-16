@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 
 const PRIVATE_PREFIXES = [
-  "/dashboard", "/calculator", "/trades", "/rules", "/statistics", "/charts", "/market", "/profile", "/settings", "/notifications", "/onboarding", "/reset-password", "/admin", "/diary", "/trader-types", "/portfolio", "/prop", "/metals",
+  "/dashboard", "/calculator", "/trades", "/rules", "/statistics", "/charts", "/market", "/profile", "/settings", "/notifications", "/onboarding", "/reset-password", "/admin", "/diary", "/trader-types", "/portfolio", "/prop", "/metals", "/support",
 ];
 const AUTH_PAGES = ["/login", "/register"];
 
@@ -51,6 +51,6 @@ export const config = {
   matcher: [
     "/dashboard/:path*", "/calculator/:path*", "/trades/:path*", "/rules/:path*", "/statistics/:path*", "/charts/:path*",
     "/market/:path*", "/profile/:path*", "/settings/:path*", "/notifications/:path*", "/onboarding/:path*",
-    "/reset-password/:path*", "/admin/:path*", "/diary/:path*", "/trader-types/:path*", "/portfolio/:path*", "/prop/:path*", "/metals/:path*", "/login", "/register", "/api/:path*",
+    "/reset-password/:path*", "/admin/:path*", "/diary/:path*", "/trader-types/:path*", "/portfolio/:path*", "/prop/:path*", "/metals/:path*", "/support/:path*", "/login", "/register", "/api/:path*",
   ],
 };

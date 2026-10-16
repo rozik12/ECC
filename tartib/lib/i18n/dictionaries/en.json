@@ -44,7 +44,8 @@
     "traderTypes": "Types of traders",
     "portfolio": "Portfolio",
     "prop": "Prop challenge",
-    "metals": "Gold and metals"
+    "metals": "Gold and metals",
+    "support": "Message the owner"
   },
   "footer": {
     "terms": "Terms of use",
@@ -1571,13 +1572,15 @@
       "violation": "Rules broken: {count}",
       "goal": "Monthly goal reached",
       "report": "Weekly report is ready",
-      "price_alert": "Alert triggered: {symbol}"
+      "price_alert": "Alert triggered: {symbol}",
+      "support_reply": "Reply from the owner"
     },
     "bodies": {
       "goal": "Discipline {percent}% against a goal of {goal}%.",
       "report": "Open statistics to read the report.",
       "priceAbove": "{symbol}: price rose to your level {price} (now {last}).",
-      "priceBelow": "{symbol}: price fell to your level {price} (now {last})."
+      "priceBelow": "{symbol}: price fell to your level {price} (now {last}).",
+      "supportReply": "Open the conversation to read the reply."
     }
   },
   "adv": {
@@ -2621,5 +2624,24 @@
         "desc": "Gold candles with indicators."
       }
     }
+  },
+  "support": {
+    "title": "Message the owner",
+    "subtitle": "A question, a bug or an idea? Write here and the owner will reply to you personally. The reply arrives as a bell notification.",
+    "empty": "Nothing here yet. Write the first message.",
+    "adminEmpty": "No messages yet.",
+    "owner": "Owner",
+    "you": "You",
+    "writeLabel": "Your message",
+    "replyLabel": "Your reply",
+    "send": "Send",
+    "invalid": "Write a message of 1 to 2000 characters.",
+    "tooMany": "Too many messages today. Try again tomorrow.",
+    "note": "The owner reads messages personally, so a reply may take a while. Do not send passwords or card details.",
+    "adminTitle": "User messages",
+    "adminNone": "Nobody has written yet.",
+    "back": "← All conversations",
+    "adminLink": "Messages",
+    "adminUnread": "Unread: {n}"
   }
 }

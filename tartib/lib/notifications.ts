@@ -1,7 +1,7 @@
 // Уведомления: какие события создают запись и как запись превращается в текст.
 // Тексты не хранятся в базе: там вид события и параметры, поэтому уведомление читается на языке пользователя.
 
-export const NOTIFICATION_KINDS = ["achievement", "violation", "goal", "report", "announcement", "price_alert"] as const;
+export const NOTIFICATION_KINDS = ["achievement", "violation", "goal", "report", "announcement", "price_alert", "support_reply"] as const;
 export type NotificationKind = (typeof NOTIFICATION_KINDS)[number];
 export type Params = Record<string, string | number | string[]>;
 export type Draft = { kind: NotificationKind; params: Params };
@@ -53,6 +53,8 @@ export function describeNotification(kind: string, params: unknown, t: T): Descr
       return { title: t("notifications.kinds.report"), body: t("notifications.bodies.report"), href: "/statistics" };
     case "announcement":
       return { title: str(p.title, 80), body: str(p.body, 500), href: null };
+    case "support_reply":
+      return { title: t("notifications.kinds.support_reply"), body: t("notifications.bodies.supportReply"), href: "/support" };
     case "price_alert": {
       const symbol = str(p.symbol, 24);
       return {

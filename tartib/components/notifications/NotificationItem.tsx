@@ -3,11 +3,11 @@
 import { useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Award, Bell, BellRing, FileText, Megaphone, Target, TriangleAlert } from "lucide-react";
+import { Award, Bell, BellRing, MessageCircle, FileText, Megaphone, Target, TriangleAlert } from "lucide-react";
 import { markNotificationReadAction } from "@/app/actions/notifications";
 import { cn } from "@/lib/cn";
 
-const ICONS = { achievement: Award, violation: TriangleAlert, goal: Target, report: FileText, announcement: Megaphone, price_alert: BellRing } as const;
+const ICONS = { achievement: Award, violation: TriangleAlert, goal: Target, report: FileText, announcement: Megaphone, price_alert: BellRing, support_reply: MessageCircle } as const;
 
 export type ItemData = { id: string; kind: string; title: string; body: string; href: string | null; ago: string; iso: string; unread: boolean };
 

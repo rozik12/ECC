@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BroadcastForm } from "@/components/admin/BroadcastForm";
 import { ResetMfaForm } from "@/components/admin/ResetMfaForm";
@@ -18,7 +19,7 @@ export default async function AdminPage() {
   if (!profile?.is_admin) notFound();
   const { t, locale } = await getTranslator();
 
-  const [{ data: stats }, { data: users }] = await Promise.all([supabase.rpc("admin_stats"), supabase.rpc("admin_recent_users")]);
+  const [{ data: stats }, { data: users }, { data: unread }] = await Promise.all([supabase.rpc("admin_stats"), supabase.rpc("admin_recent_users"), supabase.rpc("admin_support_unread")]);
   const s = (stats ?? {}) as Partial<Stats>;
   const cards: [string, number | undefined][] = [
     [t("admin.users"), s.users], [t("admin.users7d"), s.users7d], [t("admin.onboarded"), s.onboarded], [t("admin.active7d"), s.active7d],
@@ -36,6 +37,12 @@ export default async function AdminPage() {
           </Card>
         ))}
       </div>
+      <Link href="/admin/messages" className="block">
+        <Card className="flex items-center justify-between gap-3 p-4 transition hover:border-primary">
+          <span className="font-semibold">{t("support.adminLink")}</span>
+          <span className="text-sm text-muted">{t("support.adminUnread", { n: Number(unread) || 0 })}</span>
+        </Card>
+      </Link>
       <BroadcastForm />
       <ResetMfaForm />
       <section>

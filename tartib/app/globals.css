@@ -114,6 +114,12 @@ body {
 
 /* Таблицы на телефоне превращаются в карточки */
 @media (max-width: 767px) {
+  .responsive-table,
+  .responsive-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
   .responsive-table thead {
     display: none;
   }
@@ -126,6 +132,8 @@ body {
     margin-bottom: 0.75rem;
   }
   .responsive-table tbody td {
+    min-width: 0;
+    overflow-wrap: anywhere;
     display: flex;
     justify-content: space-between;
     gap: 1rem;

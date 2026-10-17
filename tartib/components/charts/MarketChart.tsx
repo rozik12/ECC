@@ -112,7 +112,7 @@ export function MarketChart({ initialPair = "BTCUSDT" }: { initialPair?: string 
               </p>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {supported && <LiveBadge mode={liveMode} />}
             <TimeframeSwitch value={tf} onChange={setTf} label={t("chart.timeframe")} />
             <Button type="button" variant="ghost" size="sm" aria-label={t("charts.refresh")} title={t("charts.refresh")} onClick={() => setRefresh((n) => n + 1)}>

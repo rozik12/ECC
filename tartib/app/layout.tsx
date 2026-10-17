@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { dictionaries } from "@/lib/i18n/dictionaries";
+import { clientDictionary } from "@/lib/i18n/client-dictionary";
 import { I18nProvider } from "@/lib/i18n/provider";
 import { getLocale } from "@/lib/i18n/server";
 import { RegisterServiceWorker } from "@/components/layout/RegisterServiceWorker";
@@ -42,7 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-screen antialiased">
-        <I18nProvider locale={locale} dictionary={dictionaries[locale]}>
+        <I18nProvider locale={locale} dictionary={clientDictionary(dictionaries[locale])}>
           {children}
         </I18nProvider>
         <RegisterServiceWorker />

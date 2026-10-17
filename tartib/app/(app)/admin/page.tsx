@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BroadcastForm } from "@/components/admin/BroadcastForm";
 import { ResetMfaForm } from "@/components/admin/ResetMfaForm";
-import { Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
+import { Alert, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { formatDateTime } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
@@ -18,6 +18,8 @@ export default async function AdminPage() {
   const { supabase, profile } = await requireUser();
   if (!profile?.is_admin) notFound();
   const { t, locale } = await getTranslator();
+  const { data: factors } = await supabase.auth.mfa.listFactors();
+  const has2fa = (factors?.totp ?? []).some((f) => f.status === "verified");
 
   const [{ data: stats }, { data: users }, { data: unread }] = await Promise.all([supabase.rpc("admin_stats"), supabase.rpc("admin_recent_users"), supabase.rpc("admin_support_unread")]);
   const s = (stats ?? {}) as Partial<Stats>;
@@ -29,6 +31,11 @@ export default async function AdminPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold sm:text-3xl">{t("admin.title")}</h1>
+      {!has2fa && (
+        <Alert tone="warning">
+          {t("admin.no2fa")} <Link href="/profile" className="font-semibold underline">{t("admin.no2faLink")}</Link>
+        </Alert>
+      )}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {cards.map(([label, value]) => (
           <Card key={label} className="p-4 sm:p-4">

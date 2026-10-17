@@ -914,7 +914,9 @@
     "broadcastSend": "Hammaga yuborish",
     "broadcastDone": "Foydalanuvchilarga yuborildi: {n}.",
     "broadcastInvalid": "Sarlavha (80 belgigacha) va matn (500 gacha) kiriting.",
-    "broadcastConfirm": "E'lonni barcha foydalanuvchilarga yuborasizmi? Qaytarib bo'lmaydi."
+    "broadcastConfirm": "E'lonni barcha foydalanuvchilarga yuborasizmi? Qaytarib bo'lmaydi.",
+    "no2fa": "Egasi akkauntingiz faqat parol bilan himoyalangan. Ikki bosqichli himoyani yoqing: parol o'g'irlansa ham egasi paneliga kira olmaydi.",
+    "no2faLink": "Profilda yoqish"
   },
   "import": {
     "title": "Bitimlarni import qilish",

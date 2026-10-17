@@ -914,7 +914,9 @@
     "broadcastSend": "Send to everyone",
     "broadcastDone": "Sent to users: {n}.",
     "broadcastInvalid": "Fill in a title (up to 80 characters) and text (up to 500).",
-    "broadcastConfirm": "Send the announcement to all users? It cannot be recalled."
+    "broadcastConfirm": "Send the announcement to all users? It cannot be recalled.",
+    "no2fa": "Your owner account is protected by a password only. Turn on two-factor protection: even if the password is stolen, the owner panel stays closed.",
+    "no2faLink": "Turn on in profile"
   },
   "import": {
     "title": "Import trades",

@@ -35,7 +35,9 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+  { key: "Cross-Origin-Resource-Policy", value: "same-site" },
+  { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
 ];
 
 const nextConfig: NextConfig = {

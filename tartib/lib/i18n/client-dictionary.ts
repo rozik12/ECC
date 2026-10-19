@@ -3,7 +3,7 @@
 // Проверяет tests/client-dictionary.test.ts: ни один клиентский файл не должен обращаться к исключённому разделу.
 export const SERVER_ONLY_SECTIONS = [
   "achievements", "adv", "blog", "calendar", "dashboard", "derivatives", "footer", "hero", "landing", "legal", "mytools", "news",
-  "pages", "pdt", "pm", "pricing", "ratios", "reminder", "risk", "seo", "streak", "tradertypes", "usstats", "week",
+  "pages", "pdt", "pm", "pricing", "ratios", "reminder", "risk", "seo", "streak", "tradertypes", "usstats", "week", "toolsx",
 ] as const;
 
 export function clientDictionary<T extends Record<string, unknown>>(dict: T): T {

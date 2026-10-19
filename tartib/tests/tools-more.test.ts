@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { feeBreakeven, goalPlan, kelly, liquidation, margin, riskOfRuin, tradeProfit } from "../lib/tools.ts";
-import { CALC_SLUGS, DICT_KEY, TOOL_DEFS } from "../lib/tool-defs.ts";
+import { CALC_SLUGS, dictPath, TOOL_DEFS } from "../lib/tool-defs.ts";
 import { readFileSync } from "node:fs";
 
 const near = (a: number, b: number, eps = 1e-9) => assert.ok(Math.abs(a - b) < eps, `${a} ≈ ${b}`);
@@ -78,14 +78,14 @@ test("план цели и маржа", () => {
 });
 
 test("каждый калькулятор считает значения по умолчанию, ключи есть в трёх словарях", () => {
-  const dicts = ["ru", "uz", "en"].map((l) => JSON.parse(readFileSync(`lib/i18n/dictionaries/${l}.json`, "utf8")).tools);
+  const dicts = ["ru", "uz", "en"].map((l) => JSON.parse(readFileSync(`lib/i18n/dictionaries/${l}.json`, "utf8")));
   for (const slug of CALC_SLUGS) {
     const def = TOOL_DEFS[slug];
     const values = Object.fromEntries(def.fields.map((f) => [f.id, Number(f.def)]));
     const rows = def.compute(values);
     assert.ok(rows && rows.length > 0, `${slug}: нет результата для значений по умолчанию`);
     for (const d of dicts) {
-      const k = d[DICT_KEY[slug]];
+      const k = dictPath(slug).split(".").reduce((a: Record<string, unknown>, part) => a[part] as Record<string, unknown>, d) as unknown as { title: string; desc: string; note?: string; f: Record<string, string>; o: Record<string, string>; c?: Record<string, string> };
       assert.ok(k?.title && k?.desc, `${slug}: нет названия`);
       for (const f of def.fields) assert.ok(k.f[f.id], `${slug}.f.${f.id}`);
       for (const r of rows) assert.ok(k.o[r.key], `${slug}.o.${r.key}`);

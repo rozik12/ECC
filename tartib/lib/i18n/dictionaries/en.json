@@ -1543,7 +1543,9 @@
         "riseNeeded": "Price rise needed"
       },
       "note": "Ask your dealer or bank for their buyback discount. Taxes, storage and insurance are not included. Reference only, not investment advice."
-    }
+    },
+    "related": "See also",
+    "groupsNav": "Calculator sections"
   },
   "shortcuts": {
     "title": "Keyboard shortcuts",
@@ -2645,5 +2647,837 @@
     "back": "← All conversations",
     "adminLink": "Messages",
     "adminUnread": "Unread: {n}"
+  },
+  "toolsx": {
+    "groups": {
+      "risk": "Risk and position size",
+      "forex": "Forex and CFDs",
+      "stocks": "Stocks and investing",
+      "derivs": "Options and futures",
+      "crypto": "Crypto",
+      "metals": "Gold and metals",
+      "finance": "Finance and planning",
+      "stats": "Statistics and sessions"
+    },
+    "bewr": {
+      "title": "Break-even win rate",
+      "desc": "For a given reward to risk, shows what share of trades must win so you do not lose money.",
+      "note": "Formula: (1 + costs) / (reward to risk + 1). Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "rr": "Reward to risk (reward per 1 of risk)",
+        "costR": "Cost per trade, in units of risk (R)"
+      },
+      "o": {
+        "winRate": "Required win rate",
+        "lossRate": "Allowed losing share",
+        "winsPer10": "Winners per 10 trades"
+      }
+    },
+    "expect": {
+      "title": "Trade expectancy",
+      "desc": "What one trade earns or loses on average from your own stats: win rate, average win and average loss.",
+      "note": "Use figures from your journal over a long enough period. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "winRate": "Win rate, %",
+        "avgWin": "Average win",
+        "avgLoss": "Average loss (positive number)"
+      },
+      "o": {
+        "expectancy": "Average per trade",
+        "expectancyR": "Average per trade, in R",
+        "payoff": "Win to loss ratio",
+        "per100": "Per 100 pips",
+        "profitFactor": "Profit factor"
+      }
+    },
+    "pfactor": {
+      "title": "Profit factor",
+      "desc": "Total profits divided by total losses. Above 1 the system is profitable before fees, below 1 it loses.",
+      "note": "Use a large enough number of trades. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "grossProfit": "Total of all profits",
+        "grossLoss": "Total of all losses (positive number)"
+      },
+      "o": {
+        "profitFactor": "Profit factor",
+        "net": "Net result",
+        "lossShare": "Share of losses"
+      }
+    },
+    "rmult": {
+      "title": "Trade result in R",
+      "desc": "R is your risk on the trade. Shows how many risks the trade made or lost, and its result in money.",
+      "note": "Direction is taken from entry and stop. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "entry": "Entry price",
+        "stop": "Stop price",
+        "exit": "Exit price",
+        "size": "Position size (units, lots or contracts)"
+      },
+      "o": {
+        "direction": "Direction",
+        "r": "Result in R",
+        "riskMoney": "Risk in money",
+        "pnl": "Result"
+      }
+    },
+    "dailylimit": {
+      "title": "Daily loss limit",
+      "desc": "How much money your daily limit is and how many losing trades in a row reach it at your risk per trade.",
+      "note": "Once you reach the limit, stop for the day. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "balance": "Account balance",
+        "dailyLossPct": "Daily loss limit, %",
+        "riskPct": "Risk per trade, %"
+      },
+      "o": {
+        "limitMoney": "Daily loss limit",
+        "riskMoney": "Risk in money",
+        "lossesToLimit": "Losing trades to the limit"
+      }
+    },
+    "exposure": {
+      "title": "Position exposure and effective leverage",
+      "desc": "Shows the position as a share of balance, your effective leverage and the margin it needs.",
+      "note": "Broker leverage and effective leverage are different things. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "balance": "Account balance",
+        "price": "Price per unit",
+        "quantity": "Quantity",
+        "leverage": "Broker leverage"
+      },
+      "o": {
+        "notional": "Position size, $",
+        "exposurePct": "Position as share of balance",
+        "effLeverage": "Effective leverage",
+        "marginNeeded": "Margin needed"
+      }
+    },
+    "partial": {
+      "title": "Partial close",
+      "desc": "Takes profit on part of a position: how much is closed, how much is left and the result locked in.",
+      "note": "The remainder is valued at the partial close price. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "exit": "Partial close price",
+        "quantity": "Position size",
+        "closePct": "Share to close, %"
+      },
+      "o": {
+        "closedQty": "Closed",
+        "remainingQty": "Remaining",
+        "realized": "Realized result",
+        "remainingAtExit": "Remainder result at the exit price"
+      }
+    },
+    "atrstop": {
+      "title": "ATR stop-loss",
+      "desc": "Places the stop a few ATRs away from entry so it respects normal price swings, and shows a 1:2 target.",
+      "note": "Take ATR from your chart (usually 14 periods). Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "atr": "ATR (average range)",
+        "mult": "ATR multiplier"
+      },
+      "o": {
+        "stop": "Stop level",
+        "distance": "Distance to stop",
+        "distancePct": "Distance to stop, %",
+        "target2R": "Target at 1:2 reward to risk"
+      }
+    },
+    "atrsize": {
+      "title": "Position size by ATR",
+      "desc": "The position size for which a stop a few ATRs away costs exactly your chosen risk.",
+      "note": "The size is not rounded: round down to your instrument's step. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "balance": "Account balance",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price",
+        "atr": "ATR (average range)",
+        "mult": "ATR multiplier"
+      },
+      "o": {
+        "riskMoney": "Risk in money",
+        "stopDistance": "Distance to stop",
+        "units": "Position size, units",
+        "notional": "Position size"
+      }
+    },
+    "recwins": {
+      "title": "How many wins to recover a drawdown",
+      "desc": "After a drawdown, shows the gain needed and how many winning trades in a row at your risk and reward bring it back.",
+      "note": "Each winning trade is assumed to grow the account by risk × reward. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "drawdownPct": "Drawdown, %",
+        "riskPct": "Risk per trade, %",
+        "rr": "Reward to risk (reward per 1 of risk)"
+      },
+      "o": {
+        "neededGain": "Gain needed to recover",
+        "gainPerWin": "Account gain per winning trade",
+        "winsNeeded": "Winning trades in a row"
+      }
+    },
+    "pipvalue": {
+      "title": "Pip value",
+      "desc": "How many dollars one pip is worth at your lot size. For yen pairs set the pip size to 0.01.",
+      "note": "If the dollar is not the quote currency, enter the quote currency to USD rate. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "lots": "Size, lots",
+        "contract": "Lot size (units per 1 lot)",
+        "pipSize": "Pip size",
+        "quoteToUsd": "Quote currency to USD rate"
+      },
+      "o": {
+        "perPip": "Per 1 pip",
+        "per10": "Per 10 pips",
+        "per100": "Per 100 pips"
+      }
+    },
+    "swapcost": {
+      "title": "Swap cost",
+      "desc": "What you pay or receive for holding a position overnight, including triple swap on Wednesday.",
+      "note": "Check the swap size in your broker's specification. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "lots": "Size, lots",
+        "swapPerLot": "Swap per night per 1 lot (minus = you pay)",
+        "nights": "Nights in total",
+        "tripleDays": "Of which Wednesdays with triple swap"
+      },
+      "o": {
+        "total": "Total for the period",
+        "perNight": "Per night",
+        "per30": "Per 30 nights"
+      }
+    },
+    "spreadcost": {
+      "title": "Spread and commission cost",
+      "desc": "What entering and exiting a trade costs: spread plus commission, in money and as a percent of the position.",
+      "note": "Enter the spread in price units (for example 0.0002). Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Price",
+        "spread": "Spread (in price units)",
+        "units": "Size in units",
+        "commission": "Round-trip commission, $"
+      },
+      "o": {
+        "spreadPct": "Spread as share of price",
+        "spreadMoney": "Spread cost",
+        "totalCost": "Total entry and exit cost",
+        "costPct": "Cost as share of position"
+      }
+    },
+    "fxconvert": {
+      "title": "Currency converter with fees",
+      "desc": "How much you receive after a fee and the effective rate you got.",
+      "note": "Rate is how many units of the second currency per one of the first. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "amount": "Amount in the first currency",
+        "rate": "Rate (second currency per one first)",
+        "feePct": "Fee, %"
+      },
+      "o": {
+        "received": "You receive",
+        "feeAmount": "Fee",
+        "effectiveRate": "Effective rate"
+      }
+    },
+    "crossrate": {
+      "title": "Cross rate",
+      "desc": "Works out a pair from two others, for example EUR/JPY from EUR/USD and USD/JPY.",
+      "note": "Choose whether to multiply or divide the rates. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "mode": "How to calculate",
+        "a": "First rate",
+        "b": "Second rate"
+      },
+      "o": {
+        "cross": "Cross rate",
+        "inverse": "Inverse rate"
+      },
+      "c": {
+        "1": "Multiply: A/B × B/C",
+        "2": "Divide: A/B ÷ C/B"
+      }
+    },
+    "pipsprofit": {
+      "title": "Profit in pips and money",
+      "desc": "Converts a price move into pips and into money for your lot size.",
+      "note": "Get the pip value from the pip value calculator. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "exit": "Exit price",
+        "pipSize": "Pip size",
+        "lots": "Size, lots",
+        "pipValue": "Pip value per 1 lot, $"
+      },
+      "o": {
+        "pips": "Result in pips",
+        "profit": "Result, $"
+      }
+    },
+    "marginlevel": {
+      "title": "Margin level and stop-out cushion",
+      "desc": "Shows margin level, free margin and how much more you can lose before a margin call and forced closing.",
+      "note": "Margin call and stop-out levels differ between brokers. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "equity": "Equity (balance including open trades)",
+        "usedMargin": "Used margin",
+        "callLevel": "Margin call level, %",
+        "stopOutLevel": "Stop-out level, %"
+      },
+      "o": {
+        "level": "Margin level",
+        "freeMargin": "Free margin",
+        "lossToCall": "Cushion to margin call",
+        "lossToStopOut": "Cushion to stop-out"
+      }
+    },
+    "lotconv": {
+      "title": "Lots, mini and micro lots",
+      "desc": "Converts a size in lots into currency units, mini lots and micro lots.",
+      "note": "A standard lot is 100,000 units, but your broker may differ. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "lots": "Size, lots",
+        "contract": "Lot size (units per 1 lot)"
+      },
+      "o": {
+        "units": "Currency units",
+        "miniLots": "Mini lots (0.1 lot)",
+        "microLots": "Micro lots (0.01 lot)"
+      }
+    },
+    "divyield": {
+      "title": "Dividend yield",
+      "desc": "Dividend yield on the current price and on your purchase price, plus income per year and per month.",
+      "note": "Dividends are not guaranteed and can change. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Current share price",
+        "dividend": "Annual dividend per share",
+        "shares": "Number of shares",
+        "buyPrice": "Purchase price"
+      },
+      "o": {
+        "yield": "Dividend yield",
+        "yieldOnCost": "Yield on your purchase price",
+        "incomeYear": "Income per year",
+        "incomeMonth": "Income per month"
+      }
+    },
+    "pe": {
+      "title": "P/E, earnings yield and PEG",
+      "desc": "Three quick valuation figures for a share: price to earnings, earnings yield and PEG.",
+      "note": "A rough measure, not a verdict of cheap or expensive. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Share price",
+        "eps": "Earnings per share per year (EPS)",
+        "growth": "Earnings growth, % per year"
+      },
+      "o": {
+        "pe": "P/E (price to earnings)",
+        "earningsYield": "Earnings yield",
+        "peg": "PEG (P/E to growth)"
+      }
+    },
+    "split": {
+      "title": "Stock split",
+      "desc": "How many shares you will hold and at what price after a split or reverse split. Position value does not change.",
+      "note": "For a reverse split enter, for example, 1 new share for 10 old. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "shares": "Number of shares",
+        "price": "Current share price",
+        "newPer": "New shares",
+        "oldPer": "For old shares"
+      },
+      "o": {
+        "ratio": "Ratio",
+        "newShares": "Shares after",
+        "newPrice": "Price after",
+        "value": "Position value (unchanged)"
+      }
+    },
+    "stocknet": {
+      "title": "Net profit on shares",
+      "desc": "Profit on selling shares after commissions and tax.",
+      "note": "Check the tax rate yourself: it depends on country and income type. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "buy": "Buy price",
+        "sell": "Sell price",
+        "shares": "Number of shares",
+        "commissionPct": "Broker fee, % per side",
+        "taxPct": "Tax on profit, %"
+      },
+      "o": {
+        "gross": "Profit before costs",
+        "commission": "Commissions",
+        "tax": "Tax",
+        "net": "Net profit",
+        "netPct": "Net return"
+      }
+    },
+    "stockbe": {
+      "title": "Share breakeven with commissions",
+      "desc": "The price at which selling covers both buy and sell commissions.",
+      "note": "Tax is not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "buy": "Buy price",
+        "shares": "Number of shares",
+        "commissionPct": "Broker fee, % per side"
+      },
+      "o": {
+        "breakeven": "Breakeven price",
+        "movePct": "Price rise needed",
+        "roundTrip": "Buy and sell commissions"
+      }
+    },
+    "periodic": {
+      "title": "Regular contributions with growth",
+      "desc": "How much you will accumulate by contributing the same amount monthly at a given return.",
+      "note": "Future returns are unknown, this is just a worked example. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "monthly": "Monthly contribution",
+        "annualReturn": "Return, % per year",
+        "years": "Term, years"
+      },
+      "o": {
+        "invested": "Total contributed",
+        "futureValue": "Future value",
+        "gain": "Gain from growth"
+      }
+    },
+    "cagr": {
+      "title": "Annualized return (CAGR)",
+      "desc": "Turns total growth over several years into an average yearly return.",
+      "note": "CAGR smooths out swings within the period. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "start": "Starting amount",
+        "end": "Ending amount",
+        "years": "Term, years"
+      },
+      "o": {
+        "cagr": "Annualized return (CAGR)",
+        "totalReturn": "Total growth"
+      }
+    },
+    "totalret": {
+      "title": "Total return with dividends",
+      "desc": "Return on an investment including price growth and dividends received.",
+      "note": "Taxes and fees are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "start": "Starting amount",
+        "end": "Ending amount",
+        "dividends": "Dividends received"
+      },
+      "o": {
+        "total": "Total return",
+        "priceReturn": "Return from price",
+        "dividendReturn": "Return from dividends"
+      }
+    },
+    "optbe": {
+      "title": "Option breakeven and result",
+      "desc": "Breakeven for a bought option, the maximum loss and the result at a chosen expiry price.",
+      "note": "A contract usually covers 100 shares. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "type": "Option type",
+        "strike": "Strike price",
+        "premium": "Premium per share",
+        "contracts": "Contracts",
+        "mult": "Shares per contract",
+        "target": "Underlying price at expiry"
+      },
+      "o": {
+        "breakeven": "Breakeven price",
+        "maxLoss": "Maximum loss (premium)",
+        "profitAtTarget": "Result at the expiry price",
+        "roi": "Return on premium"
+      },
+      "c": {
+        "1": "Call",
+        "2": "Put"
+      }
+    },
+    "covcall": {
+      "title": "Covered call",
+      "desc": "Selling a call against shares: maximum profit, breakeven and downside cushion.",
+      "note": "If shares rise above the strike you give up further gains. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "stockPrice": "Current stock price",
+        "strike": "Strike price",
+        "premium": "Premium per share",
+        "shares": "Number of shares"
+      },
+      "o": {
+        "maxProfit": "Maximum profit",
+        "breakeven": "Breakeven price",
+        "protection": "Downside cushion (premium to price)",
+        "returnIfCalled": "Return if called away"
+      }
+    },
+    "futpnl": {
+      "title": "Futures result in ticks and money",
+      "desc": "Converts a futures price move into ticks and money using tick size and number of contracts.",
+      "note": "Find tick size and value in the contract specification. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "exit": "Exit price",
+        "tickSize": "Tick size (price step)",
+        "tickValue": "Tick value, $",
+        "contracts": "Contracts"
+      },
+      "o": {
+        "ticks": "Result in ticks",
+        "perContract": "Per contract",
+        "pnl": "Result"
+      }
+    },
+    "futlev": {
+      "title": "Futures leverage",
+      "desc": "Position size in dollars, contract leverage and the share of balance taken by margin.",
+      "note": "Check the margin per contract with your broker, it changes. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Futures price",
+        "multiplier": "Multiplier (point value), $",
+        "marginPerContract": "Margin per contract, $",
+        "contracts": "Contracts",
+        "balance": "Account balance"
+      },
+      "o": {
+        "notional": "Position size",
+        "marginTotal": "Total margin",
+        "contractLeverage": "Contract leverage",
+        "accountLeverage": "Leverage to account",
+        "marginPct": "Margin as share of balance"
+      }
+    },
+    "opttv": {
+      "title": "Option intrinsic and time value",
+      "desc": "Splits an option premium into intrinsic and time value.",
+      "note": "A negative time value usually means bad input data. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "type": "Option type",
+        "spot": "Underlying price",
+        "strike": "Strike price",
+        "premium": "Premium per share"
+      },
+      "o": {
+        "intrinsic": "Intrinsic value",
+        "timeValue": "Time value",
+        "timeShare": "Time value share of premium"
+      },
+      "c": {
+        "1": "Call",
+        "2": "Put"
+      }
+    },
+    "fundcost": {
+      "title": "Funding cost",
+      "desc": "What you pay or receive on a perpetual contract's funding rate while holding the position.",
+      "note": "With a positive rate longs pay and shorts receive. The rate changes. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "notional": "Position size, $",
+        "ratePct": "Rate per 8 hours, %",
+        "hours": "Hours the position is held"
+      },
+      "o": {
+        "perInterval": "Per 8 hours (positive = you pay)",
+        "total": "Total (positive = you pay)",
+        "annualPct": "Annualized"
+      }
+    },
+    "ammslip": {
+      "title": "Slippage in a DEX pool",
+      "desc": "How many tokens you get from a constant-product pool (like Uniswap v2) and how much the trade moves the price.",
+      "note": "A simplified model: gas and network fees are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "poolX": "Pool reserve of the token you sell",
+        "poolY": "Pool reserve of the token you buy",
+        "amountIn": "Amount you sell",
+        "feePct": "Pool fee, %"
+      },
+      "o": {
+        "out": "You receive",
+        "spotPrice": "Pool price before the trade",
+        "execPrice": "Execution price",
+        "impact": "Price impact (slippage)",
+        "feePaid": "Pool fee"
+      }
+    },
+    "impermanent": {
+      "title": "Impermanent loss",
+      "desc": "How much you lose versus simply holding when a token's price moves inside a liquidity pool.",
+      "note": "For a “token + stablecoin” pair, pool fees are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "priceChangePct": "Token price change, %",
+        "deposit": "Deposited into the pool, $"
+      },
+      "o": {
+        "il": "Impermanent loss",
+        "holdValue": "If you simply hold",
+        "lpValue": "Value of your pool share",
+        "difference": "Difference vs holding"
+      }
+    },
+    "apy": {
+      "title": "Staking: APR to APY",
+      "desc": "Converts an APR into the effective APY with compounding and works out the final amount.",
+      "note": "Staking rates float. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "amount": "Amount",
+        "aprPct": "Rate, % per year",
+        "compounds": "Compounding periods per year",
+        "years": "Term, years"
+      },
+      "o": {
+        "apy": "Effective yield (APY)",
+        "final": "Final amount",
+        "earned": "Earned"
+      }
+    },
+    "sats": {
+      "title": "Bitcoin in satoshis and dollars",
+      "desc": "Converts BTC to satoshis, values it in dollars and shows how many sats fit in one dollar.",
+      "note": "1 BTC = 100,000,000 satoshis. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "btc": "Amount of BTC",
+        "price": "BTC price, $"
+      },
+      "o": {
+        "sats": "Satoshi",
+        "usd": "Value, $",
+        "satsPerDollar": "Sats per 1 dollar"
+      }
+    },
+    "hodlpnl": {
+      "title": "Coin holdings result with fees",
+      "desc": "Profit or loss on coins you bought, including buy and sell fees, plus the breakeven price.",
+      "note": "Crypto taxes depend on your country. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "coins": "Number of coins",
+        "buyPrice": "Purchase price",
+        "nowPrice": "Current price",
+        "feePct": "Exchange fee, % per side"
+      },
+      "o": {
+        "cost": "Cost including fee",
+        "value": "Position value (unchanged)",
+        "pnl": "Result",
+        "pnlPct": "Result, %",
+        "breakeven": "Breakeven price"
+      }
+    },
+    "metalconv": {
+      "title": "Weight converter: grams, ounces, tola",
+      "desc": "Converts weight between grams, kilograms, troy ounces and tola.",
+      "note": "A troy ounce = 31.1035 g, a tola = 11.6638 g. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "value": "Weight",
+        "unit": "Unit"
+      },
+      "o": {
+        "grams": "Grams",
+        "kilograms": "Kilograms",
+        "troyOz": "Troy ounces",
+        "tola": "Tola (11.66 g)"
+      },
+      "c": {
+        "1": "Grams",
+        "2": "Kilograms",
+        "3": "Troy ounces",
+        "4": "Tola"
+      }
+    },
+    "jewelmark": {
+      "title": "Jewellery markup",
+      "desc": "Compares a shop price with the value of the gold in the item and shows the markup.",
+      "note": "Gold price and shop price must be in the same currency. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "weight": "Weight, grams",
+        "fineness": "Fineness (out of 1000)",
+        "spot": "Gold price per ounce",
+        "shopPrice": "Shop price"
+      },
+      "o": {
+        "melt": "Value of the gold itself",
+        "markup": "Shop markup",
+        "markupPct": "Markup over gold value",
+        "perGram": "Markup per gram"
+      }
+    },
+    "karat": {
+      "title": "Karats and fineness",
+      "desc": "Converts karats into fineness and percent of pure gold.",
+      "note": "24 karats is pure gold. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "karat": "Karats (out of 24)"
+      },
+      "o": {
+        "fineness": "Fineness (out of 1000)",
+        "goldPct": "Gold in the alloy",
+        "otherPct": "Other metals"
+      }
+    },
+    "etfgold": {
+      "title": "Gold per ETF share",
+      "desc": "How much gold backs one share of a gold fund and whether the share trades at a premium or discount.",
+      "note": "Take ounces per share from the fund's site: each has its own. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "sharePrice": "Fund share price",
+        "ouncesPerShare": "Ounces of gold per share (check the fund)",
+        "spot": "Gold price per ounce",
+        "shares": "Number of shares"
+      },
+      "o": {
+        "nav": "Gold value per share",
+        "premium": "Premium or discount to gold",
+        "gramsPerShare": "Grams of gold per share",
+        "goldGrams": "Grams of gold in your position"
+      }
+    },
+    "rebalance": {
+      "title": "Portfolio rebalancing",
+      "desc": "How much to buy or sell of two assets to restore target weights.",
+      "note": "Commissions and taxes on selling are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "valueA": "Value of asset A",
+        "valueB": "Value of asset B",
+        "targetA": "Target share of asset A, %"
+      },
+      "o": {
+        "currentA": "Current share of A",
+        "targetAmountA": "Target amount in A",
+        "tradeA": "Trade in A (plus = buy, minus = sell)",
+        "tradeB": "Trade in B (plus = buy, minus = sell)"
+      }
+    },
+    "realreturn": {
+      "title": "Real return after inflation",
+      "desc": "Shows what you really earn after inflation and what an amount becomes in today's money.",
+      "note": "Use inflation for your country and currency. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "nominal": "Return, % per year",
+        "inflation": "Inflation, % per year",
+        "years": "Term, years",
+        "amount": "Amount now"
+      },
+      "o": {
+        "real": "Real return per year",
+        "futureNominal": "Future amount (nominal)",
+        "futureReal": "Future amount in today's money"
+      }
+    },
+    "loan": {
+      "title": "Loan payment",
+      "desc": "Monthly payment and total interest with equal instalments (annuity).",
+      "note": "Bank fees and insurance are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "amount": "Loan amount",
+        "aprPct": "Rate, % per year",
+        "months": "Term, months"
+      },
+      "o": {
+        "payment": "Monthly payment",
+        "total": "Total for the period",
+        "interest": "Interest paid"
+      }
+    },
+    "savegoal": {
+      "title": "Monthly savings for a goal",
+      "desc": "The monthly amount you need to save to reach a goal in a set term at a given return.",
+      "note": "Future returns are unknown. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "target": "Goal amount",
+        "years": "Term, years",
+        "annualReturn": "Return, % per year",
+        "initial": "Already saved"
+      },
+      "o": {
+        "monthly": "Save per month",
+        "totalPaid": "You will contribute",
+        "growth": "Growth will add"
+      }
+    },
+    "rule72": {
+      "title": "Rule of 72: years to double",
+      "desc": "A quick estimate of the doubling time from a yearly return, plus the exact figure and time to triple.",
+      "note": "The rule of 72 is a good approximation at 6–10%. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "ratePct": "Return, % per year"
+      },
+      "o": {
+        "approx": "Years to double (rule of 72)",
+        "exact": "Years to double (exact)",
+        "triple": "Years to triple"
+      }
+    },
+    "pctchange": {
+      "title": "Percent change and the way back",
+      "desc": "By what percent a value changed and the move needed to get back.",
+      "note": "A 50% fall needs a 100% rise to recover. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "from": "From",
+        "to": "To"
+      },
+      "o": {
+        "change": "Change",
+        "backNeeded": "To get back you need",
+        "ratio": "Times changed"
+      }
+    },
+    "wilson": {
+      "title": "Win rate with confidence interval",
+      "desc": "Shows the range your true win rate may lie in (95%) when you have few trades.",
+      "note": "Wilson method. The more trades, the narrower the interval. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "wins": "Winning trades",
+        "trades": "Total trades"
+      },
+      "o": {
+        "rate": "Win rate",
+        "low": "Lower bound (95%)",
+        "high": "Upper bound (95%)",
+        "margin": "Margin of error (±)"
+      }
+    },
+    "streakprob": {
+      "title": "Losing streak probability",
+      "desc": "The chance that at least one losing streak of the chosen length occurs within a number of trades.",
+      "note": "Trades are assumed independent. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "trades": "Total trades",
+        "winRate": "Win rate, %",
+        "streak": "Losing streak length"
+      },
+      "o": {
+        "probability": "Chance of such a streak",
+        "noStreak": "Chance of no such streak"
+      }
+    },
+    "sharpe": {
+      "title": "Sharpe ratio",
+      "desc": "Return per unit of risk from average return and its volatility per period. Annualized.",
+      "note": "Needs enough history, with few periods the value is noisy. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "mean": "Average return per period, %",
+        "stdev": "Return volatility (standard deviation), %",
+        "rf": "Risk-free rate per period, %",
+        "periods": "Data period"
+      },
+      "o": {
+        "perPeriod": "Ratio per period",
+        "annual": "Annualized Sharpe ratio"
+      },
+      "c": {
+        "252": "Daily (252 a year)",
+        "52": "Weekly (52 a year)",
+        "12": "Monthly (12 a year)"
+      }
+    }
   }
 }

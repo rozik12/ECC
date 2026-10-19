@@ -1543,7 +1543,9 @@
         "riseNeeded": "Kerakli narx o'sishi"
       },
       "note": "Sotib olish chegirmasini dileringiz yoki bankdan so'rang. Hisob-kitob soliq, saqlash va sug'urtani hisobga olmaydi. Ma'lumot uchun, investitsiya tavsiyasi emas."
-    }
+    },
+    "related": "Shuningdek qarang",
+    "groupsNav": "Kalkulyator bo'limlari"
   },
   "shortcuts": {
     "title": "Tezkor tugmalar",
@@ -2645,5 +2647,837 @@
     "back": "← Barcha yozishmalar",
     "adminLink": "Xabarlar",
     "adminUnread": "O'qilmagan: {n}"
+  },
+  "toolsx": {
+    "groups": {
+      "risk": "Risk va pozitsiya hajmi",
+      "forex": "Forex va CFD",
+      "stocks": "Aksiyalar va investitsiyalar",
+      "derivs": "Opsionlar va fyucherslar",
+      "crypto": "Kripto",
+      "metals": "Oltin va metallar",
+      "finance": "Moliya va rejalashtirish",
+      "stats": "Statistika va sessiyalar"
+    },
+    "bewr": {
+      "title": "Nolga chiqish uchun foydali bitimlar ulushi",
+      "desc": "Risk va foyda nisbatiga ko'ra pul yo'qotmaslik uchun bitimlarning qanchasi foydali bo'lishi kerakligini ko'rsatadi.",
+      "note": "Formula: (1 + xarajat) / (foyda/risk + 1). Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "rr": "Risk va foyda (1 riskka foyda)",
+        "costR": "Bitimdagi xarajat, risk ulushida (R)"
+      },
+      "o": {
+        "winRate": "Kerakli foydali bitimlar ulushi",
+        "lossRate": "Ruxsat etilgan zararli ulush",
+        "winsPer10": "10 bitimdan foydali"
+      }
+    },
+    "expect": {
+      "title": "Bitimning matematik kutilmasi",
+      "desc": "Statistikangiz bo'yicha bitta bitim o'rtacha qancha foyda yoki zarar keltiradi.",
+      "note": "Raqamlarni yetarlicha uzoq davr jurnalidan oling. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "winRate": "Foydali bitimlar ulushi, %",
+        "avgWin": "O'rtacha foyda",
+        "avgLoss": "O'rtacha zarar (musbat son)"
+      },
+      "o": {
+        "expectancy": "Bitimga o'rtacha",
+        "expectancyR": "Bitimga o'rtacha, R da",
+        "payoff": "Foyda zararga nisbati",
+        "per100": "100 pip uchun",
+        "profitFactor": "Profit-faktor"
+      }
+    },
+    "pfactor": {
+      "title": "Profit-faktor",
+      "desc": "Foydalar yig'indisining zararlar yig'indisiga nisbati. 1 dan yuqori — tizim plyusda.",
+      "note": "Yetarli bitimlar sonida hisoblang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "grossProfit": "Barcha foydalar yig'indisi",
+        "grossLoss": "Barcha zararlar yig'indisi (musbat son)"
+      },
+      "o": {
+        "profitFactor": "Profit-faktor",
+        "net": "Sof natija",
+        "lossShare": "Zararlarning ulushi"
+      }
+    },
+    "rmult": {
+      "title": "Bitim natijasi R da",
+      "desc": "R — bitimdagi riskingiz. Bitim necha risk keltirgani yoki yo'qotganini ko'rsatadi.",
+      "note": "Yo'nalish kirish va stop bo'yicha aniqlanadi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi",
+        "exit": "Chiqish narxi",
+        "size": "Pozitsiya hajmi (dona, lot yoki kontrakt)"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "r": "Natija R da",
+        "riskMoney": "Pulda risk",
+        "pnl": "Natija"
+      }
+    },
+    "dailylimit": {
+      "title": "Kunlik zarar limiti",
+      "desc": "Kunlik limit pulda qancha va riskingiz bilan nechta zararli bitim unga olib kelishini hisoblaydi.",
+      "note": "Limitga yetsangiz kun uchun to'xtang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "balance": "Hisob balansi",
+        "dailyLossPct": "Kunlik zarar limiti, %",
+        "riskPct": "Bitimdagi risk, %"
+      },
+      "o": {
+        "limitMoney": "Kunlik zarar limiti",
+        "riskMoney": "Pulda risk",
+        "lossesToLimit": "Limitgacha zararli bitimlar"
+      }
+    },
+    "exposure": {
+      "title": "Pozitsiya hajmi va haqiqiy yelka",
+      "desc": "Pozitsiya balansning qancha qismi, haqiqiy yelka va unga qancha marja kerakligini ko'rsatadi.",
+      "note": "Broker yelkasi va haqiqiy yelka — turli narsalar. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "balance": "Hisob balansi",
+        "price": "Bir birlik narxi",
+        "quantity": "Miqdor",
+        "leverage": "Broker yelkasi"
+      },
+      "o": {
+        "notional": "Pozitsiya hajmi, $",
+        "exposurePct": "Pozitsiyaning balansga ulushi",
+        "effLeverage": "Haqiqiy yelka",
+        "marginNeeded": "Kerakli marja"
+      }
+    },
+    "partial": {
+      "title": "Pozitsiyani qisman yopish",
+      "desc": "Pozitsiyaning bir qismini qayd etadi: qancha yopildi, qancha qoldi va natija qancha.",
+      "note": "Qoldiq natijasi qisman yopish narxida ko'rsatilgan. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "exit": "Qisman yopish narxi",
+        "quantity": "Pozitsiya hajmi",
+        "closePct": "Qaysi qismini yopish, %"
+      },
+      "o": {
+        "closedQty": "Yopildi",
+        "remainingQty": "Qoldi",
+        "realized": "Qayd etilgan natija",
+        "remainingAtExit": "Qoldiq natijasi yopilish narxida"
+      }
+    },
+    "atrstop": {
+      "title": "ATR bo'yicha stop",
+      "desc": "Stopni kirishdan bir necha ATR masofada qo'yadi va 1:2 maqsadni ko'rsatadi.",
+      "note": "ATR ni grafikdan oling (odatda 14 davr). Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "atr": "ATR (o'rtacha diapazon)",
+        "mult": "ATR ko'paytuvchisi"
+      },
+      "o": {
+        "stop": "Stop darajasi",
+        "distance": "Stopgacha masofa",
+        "distancePct": "Stopgacha masofa, %",
+        "target2R": "Risk-foyda 1:2 dagi maqsad"
+      }
+    },
+    "atrsize": {
+      "title": "ATR bo'yicha pozitsiya hajmi",
+      "desc": "Stop bir necha ATR masofada tanlangan riskka teng bo'ladigan pozitsiya hajmi.",
+      "note": "Hajm yaxlitlanmaydi: asbobingiz qadamigacha pastga yaxlitlang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "balance": "Hisob balansi",
+        "riskPct": "Bitimdagi risk, %",
+        "entry": "Kirish narxi",
+        "atr": "ATR (o'rtacha diapazon)",
+        "mult": "ATR ko'paytuvchisi"
+      },
+      "o": {
+        "riskMoney": "Pulda risk",
+        "stopDistance": "Stopgacha masofa",
+        "units": "Pozitsiya hajmi, birlik",
+        "notional": "Pozitsiya hajmi"
+      }
+    },
+    "recwins": {
+      "title": "Prosadkani qaytarish uchun nechta bitim kerak",
+      "desc": "Prosadkadan keyin qanday o'sish kerakligi va riskingiz bilan nechta foydali bitim uni qaytarishini hisoblaydi.",
+      "note": "Har bir foydali bitim hisobni risk × nisbat ga oshiradi deb hisoblanadi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "drawdownPct": "Prosadka, %",
+        "riskPct": "Bitimdagi risk, %",
+        "rr": "Risk va foyda (1 riskka foyda)"
+      },
+      "o": {
+        "neededGain": "Prosadkani qaytarish uchun kerakli o'sish",
+        "gainPerWin": "Bitta foydali bitimdan hisob o'sishi",
+        "winsNeeded": "Ketma-ket foydali bitimlar"
+      }
+    },
+    "pipvalue": {
+      "title": "Pip qiymati",
+      "desc": "Lot hajmingizda bitta pip necha dollar turishini hisoblaydi. Yena juftliklari uchun pip o'lchamini 0,01 qiling.",
+      "note": "Dollar juftlik oxirida bo'lmasa, kotirovka valyutasining dollarga kursini kiriting. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "lots": "Hajm, lot",
+        "contract": "Lot hajmi (1 lotdagi birlik)",
+        "pipSize": "Pip o'lchami",
+        "quoteToUsd": "Kotirovka valyutasining dollarga kursi"
+      },
+      "o": {
+        "perPip": "1 pip uchun",
+        "per10": "10 pip uchun",
+        "per100": "100 pip uchun"
+      }
+    },
+    "swapcost": {
+      "title": "Svop narxi",
+      "desc": "Pozitsiyani tunga ko'chirish uchun qancha to'lashingiz yoki olishingizni hisoblaydi.",
+      "note": "Svop miqdorini brokerning spetsifikatsiyasida ko'ring. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "lots": "Hajm, lot",
+        "swapPerLot": "1 lot uchun bir kecha svop (minus — yechiladi)",
+        "nights": "Jami kechalar",
+        "tripleDays": "Shundan uchlangan svopli chorshanbalar"
+      },
+      "o": {
+        "total": "Davr uchun jami",
+        "perNight": "Bir kechaga",
+        "per30": "30 kechaga"
+      }
+    },
+    "spreadcost": {
+      "title": "Spred va komissiya narxi",
+      "desc": "Kirish va chiqish qancha turishi: spred plyus komissiya, pulda va pozitsiyaga nisbatan foizda.",
+      "note": "Spred narx birligida kiritiladi (masalan 0,0002). Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Narx",
+        "spread": "Spred (narx birligida)",
+        "units": "Hajm birlikda",
+        "commission": "Doira uchun komissiya, $"
+      },
+      "o": {
+        "spreadPct": "Spredning narxdagi ulushi",
+        "spreadMoney": "Spred qiymati",
+        "totalCost": "Kirish va chiqish xarajatlari",
+        "costPct": "Xarajatlarning pozitsiyaga ulushi"
+      }
+    },
+    "fxconvert": {
+      "title": "Komissiyali valyuta konvertori",
+      "desc": "Almashtirishda komissiyani hisobga olib qancha olishingiz va yakuniy kurs qancha ekanini ko'rsatadi.",
+      "note": "Kurs — birinchi valyutaning bittasiga ikkinchisidan qancha. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "amount": "Birinchi valyutadagi summa",
+        "rate": "Kurs (ikkinchi valyuta birinchining bittasiga)",
+        "feePct": "Komissiya, %"
+      },
+      "o": {
+        "received": "Siz olasiz",
+        "feeAmount": "Komissiya",
+        "effectiveRate": "Yakuniy kurs"
+      }
+    },
+    "crossrate": {
+      "title": "Valyutalar kross-kursi",
+      "desc": "Juftlik kursini boshqa ikkitasidan hisoblaydi, masalan EUR/USD va USD/JPY dan EUR/JPY.",
+      "note": "Kurslarni ko'paytirish yoki bo'lishni tanlang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "mode": "Qanday hisoblash",
+        "a": "Birinchi kurs",
+        "b": "Ikkinchi kurs"
+      },
+      "o": {
+        "cross": "Kross-kurs",
+        "inverse": "Teskari kurs"
+      },
+      "c": {
+        "1": "Ko'paytirish: A/B × B/C",
+        "2": "Bo'lish: A/B ÷ C/B"
+      }
+    },
+    "pipsprofit": {
+      "title": "Pip va pulda foyda",
+      "desc": "Narx harakatini pip va lot bo'yicha pulga aylantiradi.",
+      "note": "Pip qiymatini pip qiymati kalkulyatoridan oling. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "exit": "Chiqish narxi",
+        "pipSize": "Pip o'lchami",
+        "lots": "Hajm, lot",
+        "pipValue": "1 lot uchun pip qiymati, $"
+      },
+      "o": {
+        "pips": "Pipda natija",
+        "profit": "Natija, $"
+      }
+    },
+    "marginlevel": {
+      "title": "Marja darajasi va stop-autgacha zaxira",
+      "desc": "Marja darajasi, bo'sh marja va marja-chaqiruv hamda majburiy yopilishgacha yana qancha yo'qotish mumkinligini ko'rsatadi.",
+      "note": "Marja-chaqiruv va stop-aut darajalari brokerlarda turlicha. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "equity": "Ekvity (ochiq bitimlar bilan balans)",
+        "usedMargin": "Band marja",
+        "callLevel": "Marja-chaqiruv darajasi, %",
+        "stopOutLevel": "Stop-aut darajasi, %"
+      },
+      "o": {
+        "level": "Marja darajasi",
+        "freeMargin": "Bo'sh marja",
+        "lossToCall": "Marja-chaqiruvgacha zaxira",
+        "lossToStopOut": "Stop-autgacha zaxira"
+      }
+    },
+    "lotconv": {
+      "title": "Lotlar, mini va mikro lotlar",
+      "desc": "Lot hajmini valyuta birliklariga, mini va mikro lotlarga aylantiradi.",
+      "note": "Standart lot — 100 000 birlik, ammo brokerda boshqacha bo'lishi mumkin. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "lots": "Hajm, lot",
+        "contract": "Lot hajmi (1 lotdagi birlik)"
+      },
+      "o": {
+        "units": "Valyuta birligi",
+        "miniLots": "Mini-lot (0,1 lot)",
+        "microLots": "Mikro-lot (0,01 lot)"
+      }
+    },
+    "divyield": {
+      "title": "Dividend daromadliligi",
+      "desc": "Dividendlarning joriy narxga va xarid narxingizga nisbatan daromadliligi, yillik va oylik daromad.",
+      "note": "Dividendlar kafolatlanmagan va o'zgarishi mumkin. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Aksiyaning hozirgi narxi",
+        "dividend": "Bir aksiyaga yillik dividend",
+        "shares": "Aksiyalar soni",
+        "buyPrice": "Xarid narxi"
+      },
+      "o": {
+        "yield": "Dividend daromadliligi",
+        "yieldOnCost": "Xarid narxingizdagi daromadlilik",
+        "incomeYear": "Yillik daromad",
+        "incomeMonth": "Oylik daromad"
+      }
+    },
+    "pe": {
+      "title": "P/E, foyda daromadliligi va PEG",
+      "desc": "Aksiyani baholashning uchta tez ko'rsatkichi: narx/foyda, foyda daromadliligi va PEG.",
+      "note": "Bu qo'pol baho, «qimmat» yoki «arzon» degan xulosa emas. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Aksiya narxi",
+        "eps": "Bir aksiyaga yillik foyda (EPS)",
+        "growth": "Foyda o'sishi, % yiliga"
+      },
+      "o": {
+        "pe": "P/E (narx/foyda)",
+        "earningsYield": "Foyda daromadliligi",
+        "peg": "PEG (P/E ning o'sishga nisbati)"
+      }
+    },
+    "split": {
+      "title": "Aksiyalar splitı",
+      "desc": "Split yoki teskari splitdan keyin aksiyalaringiz soni va narxi qancha bo'lishini hisoblaydi.",
+      "note": "Teskari split uchun, masalan, 10 ta eskiga 1 ta yangi kiriting. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "shares": "Aksiyalar soni",
+        "price": "Aksiyaning hozirgi narxi",
+        "newPer": "Yangi aksiyalar",
+        "oldPer": "Eski aksiyalar uchun"
+      },
+      "o": {
+        "ratio": "Koeffitsient",
+        "newShares": "Keyingi aksiyalar",
+        "newPrice": "Keyingi narx",
+        "value": "Pozitsiya qiymati (o'zgarmaydi)"
+      }
+    },
+    "stocknet": {
+      "title": "Aksiyalar bo'yicha sof foyda",
+      "desc": "Aksiyalarni sotishdan komissiya va soliqdan keyingi foyda.",
+      "note": "Soliq stavkasini o'zingiz aniqlang: u davlat va daromad turiga bog'liq. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "buy": "Xarid narxi",
+        "sell": "Sotish narxi",
+        "shares": "Aksiyalar soni",
+        "commissionPct": "Broker komissiyasi, % har tomondan",
+        "taxPct": "Foydadan soliq, %"
+      },
+      "o": {
+        "gross": "Xarajatlarsiz foyda",
+        "commission": "Komissiyalar",
+        "tax": "Soliq",
+        "net": "Sof foyda",
+        "netPct": "Sof daromadlilik"
+      }
+    },
+    "stockbe": {
+      "title": "Aksiyalar zararsizligi komissiya bilan",
+      "desc": "Aksiyani sotish xarid va sotuv komissiyalarini qoplaydigan narx.",
+      "note": "Soliq hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "buy": "Xarid narxi",
+        "shares": "Aksiyalar soni",
+        "commissionPct": "Broker komissiyasi, % har tomondan"
+      },
+      "o": {
+        "breakeven": "Zararsizlik narxi",
+        "movePct": "Narxning kerakli o'sishi",
+        "roundTrip": "Xarid va sotuv komissiyalari"
+      }
+    },
+    "periodic": {
+      "title": "Muntazam badallar va o'sish",
+      "desc": "Har oy bir xil summa kiritilsa va berilgan daromadlilikda qancha to'planishini hisoblaydi.",
+      "note": "Kelajakdagi daromadlilik noma'lum, bu faqat hisob misoli. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "monthly": "Oylik badal",
+        "annualReturn": "Daromadlilik, % yiliga",
+        "years": "Muddat, yil"
+      },
+      "o": {
+        "invested": "Jami kiritildi",
+        "futureValue": "To'planadi",
+        "gain": "O'sishdan daromad"
+      }
+    },
+    "cagr": {
+      "title": "O'rtacha yillik daromad (CAGR)",
+      "desc": "Bir necha yillik umumiy o'sishni o'rtacha yillik daromadga aylantiradi.",
+      "note": "CAGR davr ichidagi tebranishlarni silliqlaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "start": "Boshlang'ich summa",
+        "end": "Yakuniy summa",
+        "years": "Muddat, yil"
+      },
+      "o": {
+        "cagr": "O'rtacha yillik daromad (CAGR)",
+        "totalReturn": "Umumiy o'sish"
+      }
+    },
+    "totalret": {
+      "title": "Dividendlar bilan to'liq daromad",
+      "desc": "Narx o'sishi va olingan dividendlarni hisobga olgan daromadlilik.",
+      "note": "Soliq va komissiyalar hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "start": "Boshlang'ich summa",
+        "end": "Yakuniy summa",
+        "dividends": "Olingan dividendlar"
+      },
+      "o": {
+        "total": "To'liq daromadlilik",
+        "priceReturn": "Narxdan daromad",
+        "dividendReturn": "Dividenddan daromad"
+      }
+    },
+    "optbe": {
+      "title": "Opsion zararsizligi va natijasi",
+      "desc": "Opsion sotib olishda zararsizlik narxi, maksimal zarar va tanlangan narxdagi natija.",
+      "note": "Kontraktda odatda 100 ta aksiya bo'ladi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "type": "Opsion turi",
+        "strike": "Strayk (bajarilish narxi)",
+        "premium": "1 aksiya uchun mukofot",
+        "contracts": "Kontraktlar",
+        "mult": "Kontraktdagi aksiyalar",
+        "target": "Muddatdagi bazaviy aktiv narxi"
+      },
+      "o": {
+        "breakeven": "Zararsizlik narxi",
+        "maxLoss": "Maksimal zarar (mukofot)",
+        "profitAtTarget": "Muddatdagi narxda natija",
+        "roi": "Mukofotga daromadlilik"
+      },
+      "c": {
+        "1": "Kol (xarid)",
+        "2": "Put (sotuv)"
+      }
+    },
+    "covcall": {
+      "title": "Qoplangan kol",
+      "desc": "Aksiyalar ustiga kol sotish: maksimal foyda, zararsizlik va pasayishdan himoya.",
+      "note": "Aksiyalar strayk dan oshsa, keyingi o'sishni boy berasiz. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "stockPrice": "Aksiyaning hozirgi narxi",
+        "strike": "Strayk (bajarilish narxi)",
+        "premium": "1 aksiya uchun mukofot",
+        "shares": "Aksiyalar soni"
+      },
+      "o": {
+        "maxProfit": "Maksimal foyda",
+        "breakeven": "Zararsizlik narxi",
+        "protection": "Pasayishdan himoya (mukofot/narx)",
+        "returnIfCalled": "Aksiyalar olib qo'yilsa daromad"
+      }
+    },
+    "futpnl": {
+      "title": "Fyuchers natijasi tikda va pulda",
+      "desc": "Fyuchers narxi harakatini tik o'lchami va kontraktlar soni bo'yicha tik va pulga aylantiradi.",
+      "note": "Tik o'lchami va qiymatini kontrakt spetsifikatsiyasida ko'ring. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "exit": "Chiqish narxi",
+        "tickSize": "Tik o'lchami (narx qadami)",
+        "tickValue": "Tik qiymati, $",
+        "contracts": "Kontraktlar"
+      },
+      "o": {
+        "ticks": "Tikda natija",
+        "perContract": "1 kontraktga",
+        "pnl": "Natija"
+      }
+    },
+    "futlev": {
+      "title": "Fyuchers bo'yicha yelka",
+      "desc": "Pozitsiya hajmi dollarda, kontrakt yelkasi va marja balansning qancha qismini egallashi.",
+      "note": "Kontrakt uchun marjani brokerda ko'ring, u o'zgaradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Fyuchers narxi",
+        "multiplier": "Ko'paytuvchi (punkt qiymati), $",
+        "marginPerContract": "1 kontrakt uchun marja, $",
+        "contracts": "Kontraktlar",
+        "balance": "Hisob balansi"
+      },
+      "o": {
+        "notional": "Pozitsiya hajmi",
+        "marginTotal": "Jami marja",
+        "contractLeverage": "Kontrakt yelkasi",
+        "accountLeverage": "Hisobga yelka",
+        "marginPct": "Marjaning balansga ulushi"
+      }
+    },
+    "opttv": {
+      "title": "Opsionning ichki va vaqt qiymati",
+      "desc": "Opsion mukofotini ichki va vaqt qiymatiga ajratadi.",
+      "note": "Manfiy vaqt qiymati odatda ma'lumotdagi xatoni bildiradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "type": "Opsion turi",
+        "spot": "Bazaviy aktiv narxi",
+        "strike": "Strayk (bajarilish narxi)",
+        "premium": "1 aksiya uchun mukofot"
+      },
+      "o": {
+        "intrinsic": "Ichki qiymat",
+        "timeValue": "Vaqt qiymati",
+        "timeShare": "Vaqt qiymatining mukofotdagi ulushi"
+      },
+      "c": {
+        "1": "Kol",
+        "2": "Put"
+      }
+    },
+    "fundcost": {
+      "title": "Fandin narxi",
+      "desc": "Abadiy kontrakt fandin stavkasi bo'yicha pozitsiyani ushlab turish davrida qancha to'lash yoki olishingizni hisoblaydi.",
+      "note": "Stavka musbat bo'lsa long to'laydi, short oladi. Stavka o'zgaradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "notional": "Pozitsiya hajmi, $",
+        "ratePct": "8 soat uchun stavka, %",
+        "hours": "Pozitsiya necha soat saqlanadi"
+      },
+      "o": {
+        "perInterval": "8 soatga (plyus — siz to'laysiz)",
+        "total": "Jami (plyus — siz to'laysiz)",
+        "annualPct": "Yillik hisobda"
+      }
+    },
+    "ammslip": {
+      "title": "Puldagi sirpanish (DEX)",
+      "desc": "Doimiy ko'paytmali pulda (Uniswap v2 kabi) qancha token olishingiz va bitim narxni qanchalik siljitishini hisoblaydi.",
+      "note": "Model soddalashtirilgan: gaz va tarmoq komissiyalarini hisobga olmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "poolX": "Siz beradigan token zaxirasi (pul)",
+        "poolY": "Siz oladigan token zaxirasi (pul)",
+        "amountIn": "Qancha berasiz",
+        "feePct": "Pul komissiyasi, %"
+      },
+      "o": {
+        "out": "Siz olasiz",
+        "spotPrice": "Pulda bitimgacha narx",
+        "execPrice": "Bitim narxi",
+        "impact": "Narxga ta'sir (sirpanish)",
+        "feePaid": "Pul komissiyasi"
+      }
+    },
+    "impermanent": {
+      "title": "Doimiy bo'lmagan yo'qotish (Impermanent Loss)",
+      "desc": "Likvidlik pulida token narxi o'zgarganda «shunchaki ushlash» ga nisbatan qancha yo'qotishingizni hisoblaydi.",
+      "note": "«Token + barqaror tanga» jufti uchun, pul komissiyalari hisobga olinmagan. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "priceChangePct": "Token narxi o'zgarishi, %",
+        "deposit": "Pulga kiritilgan, $"
+      },
+      "o": {
+        "il": "Doimiy bo'lmagan yo'qotish",
+        "holdValue": "Shunchaki ushlab tursangiz",
+        "lpValue": "Puldagi ulush qiymati",
+        "difference": "«Shunchaki ushlash» dan farq"
+      }
+    },
+    "apy": {
+      "title": "Staking: APR dan APY ga",
+      "desc": "APR stavkasini murakkab foizni hisobga olib samarali APY ga aylantiradi va yakuniy summani hisoblaydi.",
+      "note": "Staking stavkalari o'zgaruvchan. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "amount": "Summa",
+        "aprPct": "Stavka, % yillik",
+        "compounds": "Yilda hisoblashlar",
+        "years": "Muddat, yil"
+      },
+      "o": {
+        "apy": "Samarali daromadlilik (APY)",
+        "final": "Yakuniy summa",
+        "earned": "Daromad"
+      }
+    },
+    "sats": {
+      "title": "Bitkoin satoshi va dollarda",
+      "desc": "BTC ni satoshiga aylantiradi, dollarda qiymatini hisoblaydi va bir dollarda necha satoshi borligini ko'rsatadi.",
+      "note": "1 BTC = 100 000 000 satoshi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "btc": "BTC miqdori",
+        "price": "BTC narxi, $"
+      },
+      "o": {
+        "sats": "Satoshi",
+        "usd": "Qiymati, $",
+        "satsPerDollar": "1 dollarga satoshi"
+      }
+    },
+    "hodlpnl": {
+      "title": "Tangalar bo'yicha natija komissiyalar bilan",
+      "desc": "Sotib olingan tangalar bo'yicha xarid va sotuv komissiyasini hisobga olgan foyda yoki zarar va zararsizlik narxi.",
+      "note": "Kripto soliqlari davlatga bog'liq. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "coins": "Tangalar soni",
+        "buyPrice": "Xarid narxi",
+        "nowPrice": "Hozirgi narx",
+        "feePct": "Birja komissiyasi, % har tomondan"
+      },
+      "o": {
+        "cost": "Komissiya bilan xarajat",
+        "value": "Pozitsiya qiymati (o'zgarmaydi)",
+        "pnl": "Natija",
+        "pnlPct": "Natija, %",
+        "breakeven": "Zararsizlik narxi"
+      }
+    },
+    "metalconv": {
+      "title": "Vazn konvertori: gramm, untsiya, tola",
+      "desc": "Vaznni gramm, kilogramm, troy untsiya va tola o'rtasida aylantiradi.",
+      "note": "Troy untsiya = 31,1035 g, tola = 11,6638 g. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "value": "Vazn",
+        "unit": "Birlik"
+      },
+      "o": {
+        "grams": "Gramm",
+        "kilograms": "Kilogramm",
+        "troyOz": "Troy untsiya",
+        "tola": "Tola (11,66 g)"
+      },
+      "c": {
+        "1": "Gramm",
+        "2": "Kilogramm",
+        "3": "Troy untsiya",
+        "4": "Tola"
+      }
+    },
+    "jewelmark": {
+      "title": "Zargarlik buyumiga ustama",
+      "desc": "Do'kondagi buyum narxini undagi oltin qiymati bilan solishtirib ustamani ko'rsatadi.",
+      "note": "Oltin narxi va buyum narxi bir valyutada bo'lishi kerak. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "weight": "Vazn, gramm",
+        "fineness": "Proba (1000 dan)",
+        "spot": "Oltin untsiyasi narxi",
+        "shopPrice": "Do'kondagi narx"
+      },
+      "o": {
+        "melt": "Oltinning o'zi qiymati",
+        "markup": "Do'kon ustamasi",
+        "markupPct": "Oltin narxiga ustama",
+        "perGram": "Gramm uchun ustama"
+      }
+    },
+    "karat": {
+      "title": "Karat va proba",
+      "desc": "Karatni proba va sof oltin foiziga aylantiradi.",
+      "note": "24 karat — sof oltin. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "karat": "Karat (24 dan)"
+      },
+      "o": {
+        "fineness": "Proba (1000 dan)",
+        "goldPct": "Qotishmada oltin",
+        "otherPct": "Boshqa metallar"
+      }
+    },
+    "etfgold": {
+      "title": "Fond (ETF) ulushidagi oltin",
+      "desc": "Oltin fondining bir ulushiga qancha oltin to'g'ri kelishi va ulush mukofot yoki chegirma bilan savdo qilinishini ko'rsatadi.",
+      "note": "Ulushga untsiyani fond saytida ko'ring: har birida o'zi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "sharePrice": "Fond ulushi narxi",
+        "ouncesPerShare": "1 ulushga untsiya oltin (fondda ko'ring)",
+        "spot": "Oltin untsiyasi narxi",
+        "shares": "Ulushlar soni"
+      },
+      "o": {
+        "nav": "1 ulushga oltin (birja bo'yicha)",
+        "premium": "Oltinga mukofot yoki chegirma",
+        "gramsPerShare": "Ulushga gramm oltin",
+        "goldGrams": "Pozitsiyangizdagi gramm oltin"
+      }
+    },
+    "rebalance": {
+      "title": "Portfelni qayta muvozanatlash",
+      "desc": "Kerakli ulushlarni qaytarish uchun ikki aktivdan qancha sotib olish yoki sotish kerakligini hisoblaydi.",
+      "note": "Sotishdagi komissiya va soliqlar hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "valueA": "A aktivi qiymati",
+        "valueB": "B aktivi qiymati",
+        "targetA": "A aktivining kerakli ulushi, %"
+      },
+      "o": {
+        "currentA": "Hozir A ulushi",
+        "targetAmountA": "A dagi kerakli summa",
+        "tradeA": "A bo'yicha bitim (plyus — sotib olish, minus — sotish)",
+        "tradeB": "B bo'yicha bitim (plyus — sotib olish, minus — sotish)"
+      }
+    },
+    "realreturn": {
+      "title": "Inflyatsiyani hisobga olgan haqiqiy daromad",
+      "desc": "Inflyatsiyadan keyin haqiqatda qancha topishingiz va summa bugungi pulda nimaga aylanishini ko'rsatadi.",
+      "note": "Inflyatsiyani davlat va valyutangiz bo'yicha oling. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "nominal": "Daromadlilik, % yiliga",
+        "inflation": "Inflyatsiya, % yiliga",
+        "years": "Muddat, yil",
+        "amount": "Hozirgi summa"
+      },
+      "o": {
+        "real": "Haqiqiy yillik daromadlilik",
+        "futureNominal": "Kelajakdagi summa (nominal)",
+        "futureReal": "Kelajakdagi summa bugungi pulda"
+      }
+    },
+    "loan": {
+      "title": "Kredit to'lovi",
+      "desc": "Teng to'lovlarda (annuitet) oylik to'lov va ortiqcha to'lov.",
+      "note": "Bank komissiyalari va sug'urta hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "amount": "Kredit summasi",
+        "aprPct": "Stavka, % yillik",
+        "months": "Muddat, oy"
+      },
+      "o": {
+        "payment": "Oylik to'lov",
+        "total": "Davr uchun jami",
+        "interest": "Foizlar bo'yicha ortiqcha to'lov"
+      }
+    },
+    "savegoal": {
+      "title": "Maqsadgacha oyiga qancha ajratish",
+      "desc": "Berilgan daromadlilikda muddatga maqsadni to'plash uchun har oy qancha ajratish kerakligini hisoblaydi.",
+      "note": "Kelajakdagi daromadlilik noma'lum. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "target": "Maqsad summasi",
+        "years": "Muddat, yil",
+        "annualReturn": "Daromadlilik, % yiliga",
+        "initial": "Allaqachon yig'ilgan"
+      },
+      "o": {
+        "monthly": "Oyiga ajratish",
+        "totalPaid": "Jami kiritasiz",
+        "growth": "O'sish keltiradi"
+      }
+    },
+    "rule72": {
+      "title": "72 qoidasi: summa necha yilda ikki baravar bo'ladi",
+      "desc": "Yillik daromadlilik bo'yicha ikki baravar bo'lish muddatini tez baholash, aniq hisob va uch baravar bo'lish muddati.",
+      "note": "72 qoidasi 6–10% stavkalarda yaxshi yaqinlashuv beradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "ratePct": "Daromadlilik, % yiliga"
+      },
+      "o": {
+        "approx": "Ikki baravar bo'lguncha yil (72 qoidasi)",
+        "exact": "Ikki baravar bo'lguncha yil (aniq)",
+        "triple": "Uch baravar bo'lguncha yil"
+      }
+    },
+    "pctchange": {
+      "title": "Foizdagi o'zgarish va qaytish yo'li",
+      "desc": "Qiymat necha foizga o'zgargani va qaytish uchun qanday o'sish yoki pasayish kerakligini hisoblaydi.",
+      "note": "50% ga pasayish 100% o'sishni talab qiladi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "from": "Bor edi",
+        "to": "Bo'ldi"
+      },
+      "o": {
+        "change": "O'zgarish",
+        "backNeeded": "Qaytish uchun kerak",
+        "ratio": "Necha baravar o'zgardi"
+      }
+    },
+    "wilson": {
+      "title": "Foydali ulush ishonch oralig'i bilan",
+      "desc": "Bitimlar kam bo'lsa foydali bitimlar ulushingiz aslida qaysi oraliqda bo'lishi mumkinligini (95%) ko'rsatadi.",
+      "note": "Uilson usuli. Bitimlar ko'p bo'lsa interval torroq. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "wins": "Foydali bitimlar",
+        "trades": "Jami bitimlar"
+      },
+      "o": {
+        "rate": "Foydali ulush",
+        "low": "Quyi chegara (95%)",
+        "high": "Yuqori chegara (95%)",
+        "margin": "Xatolik (±)"
+      }
+    },
+    "streakprob": {
+      "title": "Zararlar seriyasi ehtimoli",
+      "desc": "Berilgan bitimlar soni ichida kamida bitta kerakli uzunlikdagi ketma-ket zararlar seriyasi bo'lish ehtimoli.",
+      "note": "Bitimlar bir-biriga bog'liq emas deb hisoblanadi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "trades": "Jami bitimlar",
+        "winRate": "Foydali bitimlar ulushi, %",
+        "streak": "Ketma-ket zararlar uzunligi"
+      },
+      "o": {
+        "probability": "Bunday seriya ehtimoli",
+        "noStreak": "Seriya bo'lmaslik ehtimoli"
+      }
+    },
+    "sharpe": {
+      "title": "Sharp koeffitsienti",
+      "desc": "O'rtacha daromad va uning tarqoqligi bo'yicha risk birligiga daromad. Yillikka keltiriladi.",
+      "note": "Yetarli tarix kerak, kam davrlarda qiymat shovqinli. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "mean": "Davr uchun o'rtacha daromad, %",
+        "stdev": "Daromad tarqoqligi (standart og'ish), %",
+        "rf": "Davr uchun risksiz stavka, %",
+        "periods": "Ma'lumot davri"
+      },
+      "o": {
+        "perPeriod": "Davr koeffitsienti",
+        "annual": "Yillik Sharp koeffitsienti"
+      },
+      "c": {
+        "252": "Kunlar (yilda 252)",
+        "52": "Haftalar (yilda 52)",
+        "12": "Oylar (yilda 12)"
+      }
+    }
   }
 }

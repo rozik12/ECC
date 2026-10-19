@@ -1,12 +1,16 @@
 // Описание публичных калькуляторов: поля, значения по умолчанию и функция расчёта.
 import { compound, futuresRisk, optionPayoff, forexLot, averagePrice, metalsLot, metalValue, bullionBreakeven, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
+import { EXTRA_DEFS, EXTRA_DICT_KEY, EXTRA_SLUGS, isExtraSlug, type XGroup } from "./tools-extra.ts";
 
-export type ToolSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot" | "average-price" | "metals-lot" | "metal-value" | "bullion-breakeven";
-export const CALC_SLUGS: ToolSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot", "average-price", "metals-lot", "metal-value", "bullion-breakeven"];
-export const TOOL_SLUGS = [...CALC_SLUGS, "sessions"] as const;
+type BaseSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot" | "average-price" | "metals-lot" | "metal-value" | "bullion-breakeven";
+const BASE_CALC_SLUGS: BaseSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot", "average-price", "metals-lot", "metal-value", "bullion-breakeven"];
+/** Слаг страницы /tools/<слаг>. Базовые инструменты описаны здесь, 50 дополнительных в lib/tools-extra.ts */
+export type ToolSlug = string;
+export const CALC_SLUGS: ToolSlug[] = [...BASE_CALC_SLUGS, ...EXTRA_SLUGS];
+export const TOOL_SLUGS: readonly string[] = [...CALC_SLUGS, "sessions"];
 
 /** Ключ в словаре tools.<key> для адреса страницы */
-export const DICT_KEY: Record<string, "size" | "rr" | "streak" | "recovery" | "compound" | "sessions" | "kelly" | "ruin" | "liq" | "fee" | "profit" | "goal" | "margin" | "stock" | "futures" | "options" | "forexlot" | "avgprice" | "metalslot" | "metalvalue" | "bullion"> = {
+const BASE_DICT_KEY: Record<BaseSlug | "sessions", string> = {
   "position-size": "size",
   "risk-reward": "rr",
   "loss-streak": "streak",
@@ -40,7 +44,7 @@ export type ToolDef = { fields: Field[]; compute: (v: Record<string, number | nu
 
 const n = (v: number | null) => v ?? NaN;
 
-export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
+const BASE_DEFS: Record<BaseSlug, ToolDef> = {
   "position-size": {
     fields: [{ id: "balance", def: "5000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "100" }, { id: "stop", def: "98" }],
     compute: (v) => {
@@ -318,3 +322,18 @@ export const TOOL_DEFS: Record<ToolSlug, ToolDef> = {
     },
   },
 };
+
+export const TOOL_DEFS: Record<ToolSlug, ToolDef> = { ...BASE_DEFS, ...EXTRA_DEFS };
+export const DICT_KEY: Record<string, string> = { ...BASE_DICT_KEY, ...EXTRA_DICT_KEY };
+
+/** Раздел словаря, где лежат подписи инструмента: tools.<ключ> (базовые) или toolsx.<ключ> (дополнительные, в браузер целиком не отправляются) */
+export const dictPath = (slug: string) => `${isExtraSlug(slug) ? "toolsx" : "tools"}.${DICT_KEY[slug]}`;
+
+/** Группы на странице /tools: у каждой свой набор калькуляторов */
+export type ToolGroup = XGroup;
+const BASE_GROUPS: Record<string, XGroup> = {
+  "position-size": "risk", "risk-reward": "risk", "loss-streak": "risk", "drawdown-recovery": "risk", kelly: "risk", "risk-of-ruin": "risk", "fee-breakeven": "risk", profit: "risk",
+  "forex-lot": "forex", margin: "forex", "stock-size": "stocks", "average-price": "stocks", "futures-risk": "derivs", options: "derivs", liquidation: "derivs",
+  "metals-lot": "metals", "metal-value": "metals", "bullion-breakeven": "metals", compound: "finance", goal: "finance", sessions: "stats",
+};
+export const toolGroup = (slug: string): XGroup => (isExtraSlug(slug) ? EXTRA_DEFS[slug].group : BASE_GROUPS[slug] ?? "risk");

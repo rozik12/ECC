@@ -5,15 +5,19 @@ import { Card, Input, Select } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatNumber, parseNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n/provider";
-import { DICT_KEY, TOOL_DEFS, type Row, type ToolSlug } from "@/lib/tool-defs";
+import { dictPath, TOOL_DEFS, type Row, type ToolSlug } from "@/lib/tool-defs";
+
+/** Подписи полей, вариантов и результатов (для дополнительных инструментов приходят с сервера) */
+export type ToolTexts = { f: Record<string, string>; c: Record<string, string>; o: Record<string, string> };
 
 /** Универсальный калькулятор: поля и формулы берутся из lib/tool-defs.ts, подписи — из словаря. */
-export function ToolRunner({ slug }: { slug: ToolSlug }) {
+export function ToolRunner({ slug, texts }: { slug: ToolSlug; texts?: ToolTexts }) {
   const { t, locale } = useI18n();
   // Результаты показываем только в браузере: формат чисел зависит от языковых данных браузера и сервера
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
   const def = TOOL_DEFS[slug];
-  const dict = DICT_KEY[slug];
+  const base = dictPath(slug);
+  const label = (part: "f" | "c" | "o", id: string | number) => (texts ? texts[part][String(id)] ?? "" : t(`${base}.${part}.${id}`));
   const [values, setValues] = useState<Record<string, string>>(() => Object.fromEntries(def.fields.map((f) => [f.id, f.def])));
 
   const parsed: Record<string, number | null> = {};
@@ -42,17 +46,17 @@ export function ToolRunner({ slug }: { slug: ToolSlug }) {
           <Select
             key={f.id}
             id={`tool-${f.id}`}
-            label={t(`tools.${dict}.f.${f.id}`)}
+            label={label("f", f.id)}
             value={values[f.id] ?? f.def}
             onChange={(e) => setValues((prev) => ({ ...prev, [f.id]: e.target.value }))}
           >
-            {f.choices.map((c) => <option key={c} value={String(c)}>{f.id === "side" ? t(c === 2 ? "tools.short" : "tools.long") : t(`tools.${dict}.c.${c}`)}</option>)}
+            {f.choices.map((c) => <option key={c} value={String(c)}>{f.id === "side" ? t(c === 2 ? "tools.short" : "tools.long") : label("c", c)}</option>)}
           </Select>
         ) : (
           <Input
             key={f.id}
             id={`tool-${f.id}`}
-            label={t(`tools.${dict}.f.${f.id}`)}
+            label={label("f", f.id)}
             inputMode="decimal"
             autoComplete="off"
             value={values[f.id] ?? ""}
@@ -68,7 +72,7 @@ export function ToolRunner({ slug }: { slug: ToolSlug }) {
           <dl className="mt-3 divide-y divide-border">
             {rows.map((r) => (
               <div key={r.key} className="flex items-baseline justify-between gap-4 py-2.5">
-                <dt className="text-sm text-muted">{t(`tools.${dict}.o.${r.key}`)}</dt>
+                <dt className="text-sm text-muted">{label("o", r.key)}</dt>
                 <dd className={cn("text-right font-semibold tabular-nums", r.tone === "good" && "text-success", r.tone === "bad" && "text-danger")}>{show(r)}</dd>
               </div>
             ))}

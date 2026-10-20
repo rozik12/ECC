@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ChevronRight, Plus } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useI18n } from "@/lib/i18n/provider";
+import { UnreadBadge } from "@/components/messenger/UnreadBadge";
 import { mainNav, secondaryNav, statsNav } from "./nav-items";
 
 function useIsActive() {
@@ -16,8 +17,8 @@ function useIsActive() {
 export function Sidebar() {
   const { t } = useI18n();
   const isActive = useIsActive();
-  const extraNav = secondaryNav.filter((n) => !["/diary", "/settings", "/profile", "/statistics/mistakes"].includes(n.href));
-  const accountNav = secondaryNav.filter((n) => ["/diary", "/settings", "/profile"].includes(n.href));
+  const extraNav = secondaryNav.filter((n) => !["/messages", "/diary", "/settings", "/profile", "/statistics/mistakes"].includes(n.href));
+  const accountNav = secondaryNav.filter((n) => ["/messages", "/diary", "/settings", "/profile"].includes(n.href));
   const extraActive = extraNav.some((n) => isActive(n.href));
 
   const statsSub = statsNav.some((n) => isActive(n.href));
@@ -38,6 +39,7 @@ export function Sidebar() {
     >
       <Icon className={cn("h-5 w-5", sub && "h-4 w-4")} aria-hidden />
       {t(labelKey)}
+      {href === "/messages" && <UnreadBadge />}
     </Link>
     );
   };
@@ -117,6 +119,7 @@ export function TopIcons() {
         <Link prefetch={false} key={href} href={href} className={cn("flex min-h-10 shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
           <Icon className="h-4 w-4" aria-hidden />
           {t(labelKey)}
+          {href === "/messages" && <UnreadBadge />}
         </Link>
       ))}
     </nav>

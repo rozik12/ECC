@@ -50,6 +50,12 @@ export default async function AdminPage() {
           <span className="text-sm text-muted">{t("support.adminUnread", { n: Number(unread) || 0 })}</span>
         </Card>
       </Link>
+      <Link href="/admin/reports" className="block">
+        <Card className="flex items-center justify-between gap-3 p-4 transition hover:border-primary">
+          <span className="font-semibold">{t("admin.reportsTitle")}</span>
+          <span className="text-sm text-muted">{t("admin.reportsHint")}</span>
+        </Card>
+      </Link>
       <BroadcastForm />
       <ResetMfaForm />
       <section>

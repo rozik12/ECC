@@ -1,4 +1,4 @@
-import { AlertTriangle, Gem, MessageCircle, Scale, Target, Users, Wallet, BookOpen, BarChart3, Calculator, LayoutDashboard, ListChecks, Activity, CandlestickChart, Newspaper, NotebookText, Settings, User, Wrench } from "lucide-react";
+import { AlertTriangle, Gem, MessageCircle, MessagesSquare, Scale, Target, Users, Wallet, BookOpen, BarChart3, Calculator, LayoutDashboard, ListChecks, Activity, CandlestickChart, Newspaper, NotebookText, Settings, User, Wrench } from "lucide-react";
 
 export const mainNav = [
   { href: "/dashboard", labelKey: "nav.dashboard", icon: LayoutDashboard },
@@ -24,6 +24,7 @@ export const secondaryNav = [
   { href: "/charts", labelKey: "nav.charts", icon: CandlestickChart },
   { href: "/news", labelKey: "nav.news", icon: Newspaper },
   { href: "/tools", labelKey: "nav.tools", icon: Wrench },
+  { href: "/messages", labelKey: "nav.messages", icon: MessagesSquare },
   { href: "/support", labelKey: "nav.support", icon: MessageCircle },
   { href: "/trader-types", labelKey: "nav.traderTypes", icon: Users },
   { href: "/settings", labelKey: "nav.settings", icon: Settings },

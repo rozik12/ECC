@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Bell } from "lucide-react";
 import { useI18n } from "@/lib/i18n/provider";
+import { getBrowserClient } from "@/lib/supabase/browser";
 
-const POLL_MS = 60_000;
+const POLL_MS = 120_000;
 
-/** Колокольчик с числом непрочитанных. Раз в минуту (и при возврате на вкладку) спрашивает сервер; если разрешено, показывает системное уведомление браузера. */
+/** Колокольчик с числом непрочитанных. Раз в две минуты (и при возврате на вкладку) спрашивает сервер; если разрешено, показывает системное уведомление браузера. */
 export function NotificationBell({ initial }: { initial: number }) {
   const { t } = useI18n();
   const [count, setCount] = useState(initial);
@@ -17,11 +18,12 @@ export function NotificationBell({ initial }: { initial: number }) {
     let stopped = false;
     async function poll() {
       try {
-        const res = await fetch("/api/notifications/count", { cache: "no-store" });
-        if (!res.ok) return;
-        const { unread } = (await res.json()) as { unread: number };
-        if (stopped || typeof unread !== "number") return;
-        if (unread > last.current && document.visibilityState === "hidden" && "Notification" in window && Notification.permission === "granted") {
+        if (document.visibilityState !== "visible") return;
+        // Запрос идёт прямо в базу (политики доступа показывают только свои уведомления) и не нагружает сервер сайта
+        const { count, error } = await getBrowserClient().from("notifications").select("id", { count: "exact", head: true }).is("read_at", null);
+        if (error || stopped || typeof count !== "number") return;
+        const unread = count;
+        if (unread > last.current && document.hidden && "Notification" in window && Notification.permission === "granted") {
           try {
             new Notification("Tartib", { body: t("notifications.browserNew", { n: unread - last.current }), icon: "/logo/tartib-mark-512.png", tag: "tartib-unread" });
           } catch {

@@ -14,7 +14,7 @@ import { SidePanel, type ChatInfo, type Member } from "./SidePanel";
 const PAGE = 50;
 const COLS = "id, chat_id, sender_id, body, created_at, edited_at, deleted_at";
 
-/** Переписка: сообщения приходят сразу (реальное время), при сбое связи подтягиваются раз в 15 секунд. */
+/** Переписка: сообщения приходят сразу (реальное время), при сбое связи подтягиваются раз в 30 секунд. */
 export function ChatPane({ chat, meId, timeZone, onBack, onChanged, onLeft }: { chat: ChatInfo & { members: number }; meId: string; timeZone: string; onBack: () => void; onChanged: () => void; onLeft: () => void }) {
   const { t, locale } = useI18n();
   const supabase = getBrowserClient();
@@ -63,17 +63,21 @@ export function ChatPane({ chat, meId, timeZone, onBack, onChanged, onLeft }: { 
 
   // Реальное время и запасной опрос
   useEffect(() => {
+    let live = false;
     const channel = supabase.channel(`chat-${chatId}`).on("postgres_changes", { event: "*", schema: "public", table: "chat_messages", filter: `chat_id=eq.${chatId}` }, (payload) => {
       const row = payload.new as ChatMessage | undefined;
       if (!row || !row.id) return;
       setMessages((list) => upsertMessage(list, row));
       if (payload.eventType === "INSERT" && row.sender_id !== meId) markRead();
-    }).subscribe();
+    }).subscribe((status) => { live = status === "SUBSCRIBED"; });
+    // Пока живое соединение работает, запасной опрос редкий (раз в 45 с); если соединения нет (лимит бесплатного плана), опрос каждые 8 с
+    let tick = 0;
     const poll = setInterval(async () => {
-      if (document.visibilityState !== "visible") return;
+      tick += 1;
+      if (document.visibilityState !== "visible" || (live && tick % 6 !== 0)) return;
       const { data } = await supabase.from("chat_messages").select(COLS).eq("chat_id", chatId).order("created_at", { ascending: false }).limit(20);
       if (data) setMessages((list) => (data as ChatMessage[]).reduce((acc, m) => upsertMessage(acc, m), list));
-    }, 15_000);
+    }, 8_000);
     return () => { clearInterval(poll); supabase.removeChannel(channel); };
   }, [chatId, meId, supabase, markRead]);
 

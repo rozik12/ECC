@@ -2211,7 +2211,7 @@
   },
   "live": {
     "realtime": "Prices in real time",
-    "every15": "Prices refresh by themselves every 15 seconds",
+    "every15": "Prices refresh by themselves every 30 seconds",
     "paused": "Updates paused: no connection to the source",
     "connecting": "Connecting to prices…"
   },

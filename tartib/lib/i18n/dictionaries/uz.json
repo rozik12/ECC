@@ -2211,7 +2211,7 @@
   },
   "live": {
     "realtime": "Narxlar real vaqtda",
-    "every15": "Narxlar har 15 soniyada o'zi yangilanadi",
+    "every15": "Narxlar har 30 soniyada o'zi yangilanadi",
     "paused": "Yangilanish to'xtatildi: manba bilan aloqa yo'q",
     "connecting": "Narxlarga ulanmoqda…"
   },

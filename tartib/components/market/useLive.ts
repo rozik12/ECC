@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { OkxLive, type LiveTick } from "@/lib/live-feed";
 
 /** Как часто опрашиваются цены, которые идут через наш сервер (крипто идёт отдельным потоком, раз в секунду) */
-export const POLL_MS = 15_000;
+export const POLL_MS = 30_000;
 /** Если пользователь 10 минут ничего не трогал, опрос приостанавливается до первого действия */
 const IDLE_MS = 10 * 60_000;
 let lastActive = Date.now();
@@ -96,7 +96,7 @@ export function useLiveCrypto(symbols: string[], initial: Record<string, { last:
 
 export type LiveQuote = { price: number; changePct: number; dir: -1 | 0 | 1 };
 
-/** Котировки золота, индексов, валют и акций: запрос каждые 15 секунд, пока вкладка на экране и пользователь не бездействует дольше 10 минут. */
+/** Котировки золота, индексов, валют и акций: запрос каждые 30 секунд, пока вкладка на экране и пользователь не бездействует дольше 10 минут. */
 export function useLiveQuotes(symbols: string[], initial: Record<string, { price: number; changePct: number }> = {}, intervalMs = POLL_MS) {
   const key = symbols.join(",");
   const [quotes, setQuotes] = useState<Record<string, LiveQuote>>(() => Object.fromEntries(Object.entries(initial).map(([k, v]) => [k, { ...v, dir: 0 as const }])));

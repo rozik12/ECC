@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MessageSquarePlus, Search } from "lucide-react";
 import { Button } from "@/components/ui";
 import { dayKey, previewText } from "@/lib/chat";
@@ -29,7 +29,6 @@ export function Messenger({ me, initialChat }: { me: { id: string; handle: strin
   const [showNew, setShowNew] = useState(false);
   const [filter, setFilter] = useState("");
   const [loadError, setLoadError] = useState(false);
-  const reloadTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const load = useCallback(async () => {
     const { data, error } = await getBrowserClient().rpc("chat_list");
@@ -39,21 +38,15 @@ export function Messenger({ me, initialChat }: { me: { id: string; handle: strin
     setChats(rows);
     window.dispatchEvent(new CustomEvent("tartib-chat-unread", { detail: rows.filter((r) => !r.muted).reduce((s, r) => s + r.unread, 0) }));
   }, []);
-  const reloadSoon = useCallback(() => {
-    if (reloadTimer.current) clearTimeout(reloadTimer.current);
-    reloadTimer.current = setTimeout(load, 350);
-  }, [load]);
-
   useEffect(() => {
     if (!handle) return;
     const first = setTimeout(load, 0);
-    const supabase = getBrowserClient();
-    const channel = supabase.channel("messenger-list").on("postgres_changes", { event: "*", schema: "public", table: "chat_messages" }, reloadSoon).subscribe();
-    const poll = setInterval(() => { if (document.visibilityState === "visible") load(); }, 25_000);
+    // Один общий поток на все чаты не нужен: открытый чат слушает себя сам, список обновляется раз в 40 секунд (так базе легче при тысячах людей)
+    const poll = setInterval(() => { if (document.visibilityState === "visible") load(); }, 40_000);
     const onVisible = () => { if (document.visibilityState === "visible") load(); };
     document.addEventListener("visibilitychange", onVisible);
-    return () => { clearTimeout(first); clearInterval(poll); document.removeEventListener("visibilitychange", onVisible); supabase.removeChannel(channel); if (reloadTimer.current) clearTimeout(reloadTimer.current); };
-  }, [handle, load, reloadSoon]);
+    return () => { clearTimeout(first); clearInterval(poll); document.removeEventListener("visibilitychange", onVisible); };
+  }, [handle, load]);
 
   const open = useCallback((id: string | null) => {
     setActiveId(id);

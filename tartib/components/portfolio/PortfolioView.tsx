@@ -27,7 +27,7 @@ export function PortfolioView({ lots, sources, initialPrices, initialQuotes }: {
   const [form, setForm] = useState({ symbol: "", side: "buy", amount: "", price: "", fee: "", note: "" });
 
   const pos = useMemo(() => positions(lots), [lots]);
-  // Монеты идут потоком OKX (раз в секунду), акции, ETF и золото запрашиваются раз в 15 секунд
+  // Монеты идут потоком OKX (раз в секунду), акции, ETF и золото запрашиваются раз в 30 секунд
   const open_ = useMemo(() => new Set(pos.filter((p) => p.amount > 0).map((p) => p.symbol)), [pos]);
   const okxPairs = useMemo(() => [...open_].flatMap((s) => (sources[s]?.kind === "okx" ? [(sources[s] as { pair: string }).pair] : [])), [open_, sources]);
   const yahooTickers = useMemo(() => [...new Set([...open_].flatMap((s) => (sources[s]?.kind === "yahoo" ? [(sources[s] as { ticker: string }).ticker] : [])))], [open_, sources]);

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -15,11 +16,23 @@ type fakeRT struct {
 	prepErr error
 	started []string
 	removed []string
+	logs    map[string][]model.LogLine // by container name
+	logCall []string
 }
 
 func (f *fakeRT) List(context.Context) ([]Container, error) { return f.cs, nil }
-func (f *fakeRT) Prepare(_ context.Context, s model.Service) (string, error) {
-	return "img", f.prepErr
+func (f *fakeRT) Prepare(_ context.Context, s model.Service) (string, string, error) {
+	return "img", "c0ffee" + fmt.Sprint(s.Revision), f.prepErr
+}
+func (f *fakeRT) Logs(_ context.Context, name string, since time.Time, tail int) ([]model.LogLine, error) {
+	f.logCall = append(f.logCall, fmt.Sprintf("%s since=%v tail=%d", name, !since.IsZero(), tail))
+	var out []model.LogLine
+	for _, l := range f.logs[name] {
+		if since.IsZero() || !l.Time.Before(since) { // docker's --since is inclusive
+			out = append(out, l)
+		}
+	}
+	return out, nil
 }
 func (f *fakeRT) Start(_ context.Context, s model.Service, _ string) (Container, error) {
 	n := fmt.Sprintf("lp-%s-%d", s.ID, s.Revision)
@@ -144,5 +157,72 @@ func TestBuildFailureBacksOff(t *testing.T) {
 	h.now = h.now.Add(2 * time.Minute)
 	if s := h.run(svc); stateOf(s, 1) != model.StateStarting || len(h.rt.started) != 1 {
 		t.Fatalf("no retry after backoff: %+v", s)
+	}
+}
+
+func TestVolumeServiceStopsOldBeforeStartingNew(t *testing.T) {
+	h := newHarness(Container{Name: "lp-abc-1", ServiceID: "abc", Revision: 1, Running: true, HostPort: 40001})
+	h.healthy[40001] = true
+	svc := model.Service{ID: "abc", Revision: 2, Volumes: []model.Volume{{Name: "data", Path: "/data"}}}
+	sts := h.run(svc)
+	if !removedOld(h) {
+		t.Fatal("old revision still running next to the new one: two writers on one volume")
+	}
+	if stateOf(sts, 1) != "absent" {
+		t.Fatalf("removed revision still reported: %+v", sts)
+	}
+}
+
+func TestReportsCommitOfBuiltRevision(t *testing.T) {
+	h := newHarness()
+	h.healthy[40001] = true
+	sts := h.run(model.Service{ID: "abc", Revision: 1, GitURL: "https://x/y"})
+	if sts[0].Commit != "c0ffee1" {
+		t.Fatalf("%+v", sts)
+	}
+}
+
+func TestCollectLogsShipsOnlyNewLines(t *testing.T) {
+	h := newHarness()
+	h.healthy[40001] = true
+	t0 := h.now.Add(-time.Minute)
+	h.run(model.Service{ID: "abc", Revision: 1})
+	h.rt.logs = map[string][]model.LogLine{"lp-abc-1": {
+		{Time: t0, Text: "boot"}, {Time: t0.Add(time.Second), Text: "ready"}}}
+
+	b := h.rec.CollectLogs(context.Background())
+	if len(b) != 1 || len(b[0].Lines) != 2 || b[0].ServiceID != "abc" || b[0].Revision != 1 {
+		t.Fatalf("first collect: %+v", b)
+	}
+	// Docker's --since is inclusive, so the last line comes back; it must not be shipped twice.
+	h.rt.logs["lp-abc-1"] = append(h.rt.logs["lp-abc-1"], model.LogLine{Time: t0.Add(2 * time.Second), Text: "request"})
+	b = h.rec.CollectLogs(context.Background())
+	if len(b) != 1 || len(b[0].Lines) != 1 || b[0].Lines[0].Text != "request" {
+		t.Fatalf("second collect: %+v", b)
+	}
+	if b = h.rec.CollectLogs(context.Background()); len(b) != 0 {
+		t.Fatalf("nothing new, got %+v", b)
+	}
+}
+
+func TestParseLogs(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
+	out := "2026-01-01T10:00:00.123456789Z hello world\n2026-01-01T10:00:01Z \nno timestamp here\n\xff\xfebad utf8\n"
+	ls := ParseLogs(out, now)
+	if len(ls) != 4 {
+		t.Fatalf("%d lines: %+v", len(ls), ls)
+	}
+	if ls[0].Text != "hello world" || ls[0].Time.Nanosecond() != 123456789 {
+		t.Fatalf("%+v", ls[0])
+	}
+	if ls[2].Text != "no timestamp here" || !ls[2].Time.Equal(ls[1].Time) {
+		t.Fatalf("untimestamped line should inherit previous time: %+v", ls[2])
+	}
+	if !strings.HasSuffix(ls[3].Text, "bad utf8") {
+		t.Fatalf("%q", ls[3].Text)
+	}
+	long := ParseLogs("2026-01-01T10:00:00Z "+strings.Repeat("x", 10000), now)
+	if len(long[0].Text) > model.MaxLogLineBytes+4 {
+		t.Fatalf("line not truncated: %d", len(long[0].Text))
 	}
 }

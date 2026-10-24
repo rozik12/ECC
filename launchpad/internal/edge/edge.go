@@ -1,11 +1,13 @@
 // Package edge is the public HTTP entry point. It polls routes from the
 // control plane and reverse-proxies each Host to its upstream node:port.
-// TLS is terminated in front of it (Caddy/cloud LB); see docs/ARCHITECTURE.md.
+// It can terminate TLS itself with automatic Let's Encrypt certificates (see
+// cmd/lp-edge) or sit behind another TLS terminator.
 package edge
 
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -20,6 +22,7 @@ import (
 type Edge struct {
 	URL, Token string
 	HTTP       *http.Client
+	Interval   time.Duration // route refresh interval; 0 means 3s
 
 	mu     sync.RWMutex
 	routes map[string]string
@@ -36,6 +39,9 @@ func (e *Edge) Refresh(ctx context.Context) error {
 		return err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("routes: HTTP %d", resp.StatusCode) // keep the last good table
+	}
 	var rs []model.Route
 	if err := json.NewDecoder(resp.Body).Decode(&rs); err != nil {
 		return err
@@ -50,8 +56,25 @@ func (e *Edge) Refresh(ctx context.Context) error {
 	return nil
 }
 
+// HostPolicy is for autocert: certificates are issued only for hosts that
+// currently have a route, so the edge cannot be made to request certificates
+// for arbitrary names.
+func (e *Edge) HostPolicy(_ context.Context, host string) error {
+	e.mu.RLock()
+	_, ok := e.routes[strings.ToLower(host)]
+	e.mu.RUnlock()
+	if !ok {
+		return fmt.Errorf("host %q is not served by this platform", host)
+	}
+	return nil
+}
+
 func (e *Edge) Poll(ctx context.Context) {
-	t := time.NewTicker(3 * time.Second)
+	every := e.Interval
+	if every == 0 {
+		every = 3 * time.Second
+	}
+	t := time.NewTicker(every)
 	defer t.Stop()
 	for {
 		if err := e.Refresh(ctx); err != nil {

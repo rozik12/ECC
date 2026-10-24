@@ -29,7 +29,20 @@ type Store interface {
 
 	SetStatuses(nodeID string, sts []model.Status) error
 	StatusesOf(serviceID string) ([]model.Status, error)
+
+	// ClaimDomain reserves a custom domain for a service; ErrConflict if another
+	// service owns it. ReleaseDomain is a no-op for domains the service does not own.
+	ClaimDomain(host, serviceID string) error
+	ReleaseDomain(host, serviceID string) error
+
+	// AppendLogs stores lines (Seq is assigned here) and keeps the newest
+	// MaxLogLines per service. Logs returns lines with Seq > afterSeq, oldest
+	// first, at most limit of them (the newest ones when limit cuts the range).
+	AppendLogs(serviceID string, lines []model.LogLine) error
+	Logs(serviceID string, afterSeq int64, limit int) ([]model.LogLine, error)
 }
+
+const MaxLogLines = 2000
 
 func NewID() string {
 	b := make([]byte, 6)

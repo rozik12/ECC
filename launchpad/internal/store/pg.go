@@ -23,6 +23,12 @@ create table if not exists services (
 create table if not exists statuses (
   service_id text not null, revision int not null, node_id text not null, data jsonb not null,
   primary key (service_id, revision));
+create table if not exists domains (
+  host text primary key, service_id text not null);
+create table if not exists logs (
+  id bigserial primary key, service_id text not null, ts timestamptz not null,
+  revision int not null, text text not null);
+create index if not exists logs_service_id on logs (service_id, id);
 `
 
 const leaderLockKey = 0x4c50 // "LP"
@@ -94,6 +100,7 @@ func (p *PG) CreateService(svc model.Service) (model.Service, error) {
 	svc.ID = NewID()
 	svc.Revision = 1
 	svc.CreatedAt = time.Now().UTC()
+	svc.History = []model.Release{svc.Snapshot("created", svc.CreatedAt)}
 	b, _ := json.Marshal(svc)
 	_, err := p.db.Exec("insert into services(id,name,data,created_at) values($1,$2,$3,$4)",
 		svc.ID, svc.Name, b, svc.CreatedAt)
@@ -184,8 +191,14 @@ func (p *PG) DeleteService(id string) error {
 	if n, _ := res.RowsAffected(); n == 0 {
 		return ErrNotFound
 	}
-	if _, err := tx.Exec("delete from statuses where service_id=$1", id); err != nil {
-		return err
+	for _, q := range []string{
+		"delete from statuses where service_id=$1",
+		"delete from domains where service_id=$1",
+		"delete from logs where service_id=$1",
+	} {
+		if _, err := tx.Exec(q, id); err != nil {
+			return err
+		}
 	}
 	return tx.Commit()
 }
@@ -279,6 +292,85 @@ func (p *PG) StatusesOf(id string) ([]model.Status, error) {
 			return nil, err
 		}
 		out = append(out, st)
+	}
+	return out, rows.Err()
+}
+
+func (p *PG) ClaimDomain(host, serviceID string) error {
+	tx, err := p.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	// Lock the service row so a concurrent DeleteService cannot leave an orphan claim.
+	var one int
+	if err := tx.QueryRow("select 1 from services where id=$1 for share", serviceID).Scan(&one); errors.Is(err, sql.ErrNoRows) {
+		return ErrNotFound
+	} else if err != nil {
+		return err
+	}
+	res, err := tx.Exec(`insert into domains(host,service_id) values($1,$2)
+		on conflict (host) do update set service_id = domains.service_id where domains.service_id = $2`, host, serviceID)
+	if err != nil {
+		return err
+	}
+	if n, _ := res.RowsAffected(); n == 0 {
+		return ErrConflict
+	}
+	return tx.Commit()
+}
+
+func (p *PG) ReleaseDomain(host, serviceID string) error {
+	_, err := p.db.Exec("delete from domains where host=$1 and service_id=$2", host, serviceID)
+	return err
+}
+
+func (p *PG) AppendLogs(serviceID string, lines []model.LogLine) error {
+	if len(lines) == 0 {
+		return nil
+	}
+	tx, err := p.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	var one int
+	if err := tx.QueryRow("select 1 from services where id=$1 for share", serviceID).Scan(&one); errors.Is(err, sql.ErrNoRows) {
+		return ErrNotFound
+	} else if err != nil {
+		return err
+	}
+	for _, l := range lines {
+		if _, err := tx.Exec("insert into logs(service_id,ts,revision,text) values($1,$2,$3,$4)",
+			serviceID, l.Time, l.Revision, l.Text); err != nil {
+			return err
+		}
+	}
+	if _, err := tx.Exec(`delete from logs where service_id=$1 and id <=
+		(select id from logs where service_id=$1 order by id desc offset $2 limit 1)`, serviceID, MaxLogLines); err != nil {
+		return err
+	}
+	return tx.Commit()
+}
+
+func (p *PG) Logs(serviceID string, after int64, limit int) ([]model.LogLine, error) {
+	if limit <= 0 {
+		limit = MaxLogLines
+	}
+	rows, err := p.db.Query(`select id,ts,revision,text from
+		(select id,ts,revision,text from logs where service_id=$1 and id>$2 order by id desc limit $3) t
+		order by id`, serviceID, after, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []model.LogLine
+	for rows.Next() {
+		var l model.LogLine
+		if err := rows.Scan(&l.Seq, &l.Time, &l.Revision, &l.Text); err != nil {
+			return nil, err
+		}
+		out = append(out, l)
 	}
 	return out, rows.Err()
 }

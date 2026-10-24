@@ -14,7 +14,8 @@ func Healthy(n model.Node, now time.Time, ttl time.Duration) bool {
 }
 
 // Reconcile gives every service a healthy node: unassigned services are placed
-// on the least-loaded node, and services on dead nodes are moved. It returns
+// on the least-loaded node, and services on dead nodes are moved (except services
+// with volumes, which stay pinned to their node). It returns
 // how many services were (re)assigned. Safe to call from one process at a time
 // (the API server guards this with leader election).
 func Reconcile(st store.Store, now time.Time, ttl time.Duration) (int, error) {
@@ -45,6 +46,11 @@ func Reconcile(st store.Store, now time.Time, ttl time.Duration) (int, error) {
 	moved := 0
 	for _, s := range svcs {
 		if healthy[s.NodeID] {
+			continue
+		}
+		if s.NodeID != "" && len(s.Volumes) > 0 {
+			// Volumes live on one node. Moving the service would start it with
+			// empty storage, so it waits for its node (or an explicit reschedule).
 			continue
 		}
 		target := leastLoaded(nodes, healthy, load)

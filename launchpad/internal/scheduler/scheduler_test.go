@@ -54,3 +54,34 @@ func mustReconcile(t *testing.T, st store.Store, now time.Time) {
 		t.Fatal(err)
 	}
 }
+
+func TestVolumeServicesStayPinnedToTheirNode(t *testing.T) {
+	st, _ := store.Open("")
+	now := time.Now()
+	_ = st.UpsertNode(model.Node{ID: "aaaaaaaaaaaa", Name: "a", Addr: "a", LastSeen: now})
+	_ = st.UpsertNode(model.Node{ID: "bbbbbbbbbbbb", Name: "b", Addr: "b", LastSeen: now})
+	db, _ := st.CreateService(model.Service{Name: "db", Image: "postgres", Port: 5432,
+		Volumes: []model.Volume{{Name: "data", Path: "/var/lib/postgresql/data"}}})
+	web, _ := st.CreateService(model.Service{Name: "web", Image: "nginx", Port: 80})
+	_, _ = st.UpdateService(db.ID, func(s *model.Service) { s.NodeID = "aaaaaaaaaaaa" })
+	_, _ = st.UpdateService(web.ID, func(s *model.Service) { s.NodeID = "aaaaaaaaaaaa" })
+
+	later := now.Add(time.Minute) // node a is silent, node b is alive
+	_ = st.Touch("bbbbbbbbbbbb", later)
+	mustReconcile(t, st, later)
+
+	gotDB, _ := st.GetService(db.ID)
+	gotWeb, _ := st.GetService(web.ID)
+	if gotDB.NodeID != "aaaaaaaaaaaa" {
+		t.Fatalf("volume service moved to %s and would start with empty storage", gotDB.NodeID)
+	}
+	if gotWeb.NodeID != "bbbbbbbbbbbb" {
+		t.Fatalf("stateless service not failed over: %s", gotWeb.NodeID)
+	}
+	// An explicit reschedule (node lost for good) clears the pin.
+	_, _ = st.UpdateService(db.ID, func(s *model.Service) { s.NodeID = "" })
+	mustReconcile(t, st, later)
+	if gotDB, _ = st.GetService(db.ID); gotDB.NodeID != "bbbbbbbbbbbb" {
+		t.Fatalf("reschedule did not place the service: %q", gotDB.NodeID)
+	}
+}

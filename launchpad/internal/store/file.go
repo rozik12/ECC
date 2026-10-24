@@ -18,12 +18,17 @@ type File struct {
 	mu   sync.Mutex
 	path string
 	d    data
+
+	// Logs are soft state: kept in memory only.
+	logs   map[string][]model.LogLine
+	logSeq map[string]int64
 }
 
 type data struct {
 	Services map[string]*model.Service `json:"services"`
 	Nodes    map[string]*model.Node    `json:"nodes"`
 	Statuses map[string][]reported     `json:"statuses"`
+	Domains  map[string]string         `json:"domains"` // host -> service id
 }
 
 type reported struct {
@@ -37,7 +42,8 @@ func Open(path string) (*File, error) {
 		Services: map[string]*model.Service{},
 		Nodes:    map[string]*model.Node{},
 		Statuses: map[string][]reported{},
-	}}
+		Domains:  map[string]string{},
+	}, logs: map[string][]model.LogLine{}, logSeq: map[string]int64{}}
 	if path == "" {
 		return s, nil
 	}
@@ -59,6 +65,9 @@ func Open(path string) (*File, error) {
 	}
 	if s.d.Statuses == nil {
 		s.d.Statuses = map[string][]reported{}
+	}
+	if s.d.Domains == nil {
+		s.d.Domains = map[string]string{}
 	}
 	return s, nil
 }
@@ -93,6 +102,7 @@ func (s *File) CreateService(svc model.Service) (model.Service, error) {
 	svc.ID = NewID()
 	svc.Revision = 1
 	svc.CreatedAt = time.Now().UTC()
+	svc.History = []model.Release{svc.Snapshot("created", svc.CreatedAt)}
 	s.d.Services[svc.ID] = &svc
 	return svc, s.save()
 }
@@ -137,6 +147,13 @@ func (s *File) DeleteService(id string) error {
 	}
 	delete(s.d.Services, id)
 	delete(s.d.Statuses, id)
+	for host, owner := range s.d.Domains {
+		if owner == id {
+			delete(s.d.Domains, host)
+		}
+	}
+	delete(s.logs, id)
+	delete(s.logSeq, id)
 	return s.save()
 }
 
@@ -206,13 +223,86 @@ func (s *File) StatusesOf(id string) ([]model.Status, error) {
 	return out, nil
 }
 
+func (s *File) ClaimDomain(host, serviceID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.d.Services[serviceID]; !ok {
+		return ErrNotFound
+	}
+	if owner, ok := s.d.Domains[host]; ok && owner != serviceID {
+		return ErrConflict
+	}
+	s.d.Domains[host] = serviceID
+	return s.save()
+}
+
+func (s *File) ReleaseDomain(host, serviceID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.d.Domains[host] != serviceID {
+		return nil
+	}
+	delete(s.d.Domains, host)
+	return s.save()
+}
+
+func (s *File) AppendLogs(id string, lines []model.LogLine) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.d.Services[id]; !ok {
+		return ErrNotFound
+	}
+	for _, l := range lines {
+		s.logSeq[id]++
+		l.Seq = s.logSeq[id]
+		s.logs[id] = append(s.logs[id], l)
+	}
+	if n := len(s.logs[id]); n > MaxLogLines {
+		s.logs[id] = append([]model.LogLine(nil), s.logs[id][n-MaxLogLines:]...)
+	}
+	return nil
+}
+
+func (s *File) Logs(id string, after int64, limit int) ([]model.LogLine, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.d.Services[id]; !ok {
+		return nil, ErrNotFound
+	}
+	var out []model.LogLine
+	for _, l := range s.logs[id] {
+		if l.Seq > after {
+			out = append(out, l)
+		}
+	}
+	if limit > 0 && len(out) > limit {
+		out = out[len(out)-limit:]
+	}
+	return out, nil
+}
+
 func clone(s *model.Service) model.Service {
 	c := *s
-	if s.Env != nil {
-		c.Env = make(map[string]string, len(s.Env))
-		for k, v := range s.Env {
-			c.Env[k] = v
+	c.Env = copyEnv(s.Env)
+	c.Volumes = append([]model.Volume(nil), s.Volumes...)
+	c.CustomDomains = append([]string(nil), s.CustomDomains...)
+	if s.History != nil {
+		c.History = make([]model.Release, len(s.History))
+		for i, r := range s.History {
+			r.Env = copyEnv(r.Env)
+			c.History[i] = r
 		}
 	}
 	return c
+}
+
+func copyEnv(m map[string]string) map[string]string {
+	if m == nil {
+		return nil
+	}
+	out := make(map[string]string, len(m))
+	for k, v := range m {
+		out[k] = v
+	}
+	return out
 }

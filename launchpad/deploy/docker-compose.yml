@@ -1,0 +1,53 @@
+# Control plane + Postgres + edge on one machine. Agents run on your worker
+# nodes (see deploy/lp-agent.service); a worker can also be this machine.
+#
+#   cp deploy/.env.example deploy/.env   # then edit the values
+#   docker compose --env-file deploy/.env -f deploy/docker-compose.yml up -d
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: launchpad
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+      POSTGRES_DB: launchpad
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U launchpad"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  controlplane:
+    build: { context: .., dockerfile: deploy/Dockerfile }
+    restart: unless-stopped
+    command: ["--addr", ":8080", "--domain", "${LP_DOMAIN:?set LP_DOMAIN in deploy/.env}"]
+    environment:
+      LP_API_TOKEN: ${LP_API_TOKEN:?set LP_API_TOKEN in deploy/.env}
+      LP_NODE_TOKEN: ${LP_NODE_TOKEN:?set LP_NODE_TOKEN in deploy/.env}
+      LP_DATABASE_URL: postgres://launchpad:${POSTGRES_PASSWORD}@db:5432/launchpad?sslmode=disable
+    depends_on:
+      db: { condition: service_healthy }
+    ports:
+      # Dashboard, API and webhooks. Put TLS in front (or bind to localhost and
+      # reach it through a reverse proxy) before exposing it to the internet.
+      - "${LP_BIND:-127.0.0.1}:8080:8080"
+
+  edge:
+    build: { context: .., dockerfile: deploy/Dockerfile }
+    restart: unless-stopped
+    entrypoint: ["lp-edge"]
+    command: ["--control-plane", "http://controlplane:8080", "--listen", ":80", "--https-listen", ":443", "--cert-dir", "/certs", "--acme-email", "${ACME_EMAIL:-}"]
+    environment:
+      LP_NODE_TOKEN: ${LP_NODE_TOKEN}
+    volumes:
+      - certs:/certs
+    depends_on: [controlplane]
+    ports:
+      - "80:80"
+      - "443:443"
+
+volumes:
+  db:
+  certs:

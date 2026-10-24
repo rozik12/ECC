@@ -1,0 +1,26 @@
+# systemd unit for a worker node (needs Docker and git installed).
+#   sudo install -m 0755 lp-agent /usr/local/bin/
+#   sudo install -m 0644 deploy/lp-agent.service /etc/systemd/system/
+#   sudo install -m 0600 /dev/null /etc/launchpad-agent.env   # then add LP_NODE_TOKEN=...
+#   sudo systemctl enable --now lp-agent
+[Unit]
+Description=Launchpad node agent
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/launchpad-agent.env
+# --addr is how the edge reaches this node; --registry is optional (see README).
+ExecStart=/usr/local/bin/lp-agent --control-plane https://cp.example.com --addr 10.0.0.5
+Restart=always
+RestartSec=3
+# The agent needs the Docker socket, so it must run as a user allowed to use it.
+# Keep it off the public internet: it opens no listening ports.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

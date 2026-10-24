@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"sync"
 	"testing"
@@ -30,7 +31,7 @@ func backends(t *testing.T) map[string]func(t *testing.T) Store {
 				t.Fatal(err)
 			}
 			t.Cleanup(func() { p.Close() })
-			for _, tbl := range []string{"statuses", "services", "nodes"} {
+			for _, tbl := range []string{"statuses", "services", "nodes", "domains", "logs"} {
 				if _, err := p.db.Exec("delete from " + tbl); err != nil {
 					t.Fatal(err)
 				}
@@ -116,8 +117,76 @@ func TestStoreContract(t *testing.T) {
 				t.Fatalf("status from previous node still visible: %+v", sts)
 			}
 
+			// History starts with the "created" release and survives updates.
+			if len(got.History) != 1 || got.History[0].Revision != 1 || got.History[0].Note != "created" {
+				t.Fatalf("history: %+v", got.History)
+			}
+			_, _ = st.UpdateService(a.ID, func(s *model.Service) { s.Bump("again", time.Now()); s.SetCommit(s.Revision, "abc1234") })
+			got, _ = st.GetService(a.ID)
+			if len(got.History) != 2 || got.History[1].Commit != "abc1234" || got.History[1].Env["A"] != "1" {
+				t.Fatalf("history after bump: %+v", got.History)
+			}
+			// Mutating a returned copy must not corrupt stored state.
+			got.History[0].Env["A"] = "tampered"
+			got.Env["A"] = "tampered"
+			if again, _ := st.GetService(a.ID); again.Env["A"] != "1" || again.History[0].Env["A"] != "1" {
+				t.Fatal("store returned aliased maps")
+			}
+
+			// Custom domains belong to one service at a time.
+			b, _ := st.CreateService(model.Service{Name: "api", Image: "x", Port: 1})
+			if err := st.ClaimDomain("shop.example.org", a.ID); err != nil {
+				t.Fatal(err)
+			}
+			if err := st.ClaimDomain("shop.example.org", a.ID); err != nil {
+				t.Fatalf("re-claim by owner: %v", err)
+			}
+			if err := st.ClaimDomain("shop.example.org", b.ID); !errors.Is(err, ErrConflict) {
+				t.Fatalf("domain stolen: %v", err)
+			}
+			if err := st.ReleaseDomain("shop.example.org", b.ID); err != nil {
+				t.Fatal(err)
+			}
+			if err := st.ClaimDomain("shop.example.org", b.ID); !errors.Is(err, ErrConflict) {
+				t.Fatalf("non-owner release freed the domain: %v", err)
+			}
+			if err := st.ClaimDomain("x.example.org", "nope"); !errors.Is(err, ErrNotFound) {
+				t.Fatalf("claim for missing service: %v", err)
+			}
+
+			// Logs: increasing seq, cursor reads, limit keeps the newest, cap enforced.
+			for i := 0; i < 5; i++ {
+				_ = st.AppendLogs(a.ID, []model.LogLine{{Time: now, Revision: 1, Text: fmt.Sprint("line", i)}})
+			}
+			all, _ := st.Logs(a.ID, 0, 100)
+			if len(all) != 5 || all[0].Text != "line0" || all[4].Text != "line4" || all[0].Seq >= all[4].Seq {
+				t.Fatalf("logs: %+v", all)
+			}
+			rest, _ := st.Logs(a.ID, all[2].Seq, 100)
+			if len(rest) != 2 || rest[0].Text != "line3" {
+				t.Fatalf("after cursor: %+v", rest)
+			}
+			if last2, _ := st.Logs(a.ID, 0, 2); len(last2) != 2 || last2[0].Text != "line3" {
+				t.Fatalf("limit should keep newest: %+v", last2)
+			}
+			big := make([]model.LogLine, MaxLogLines+50)
+			for i := range big {
+				big[i] = model.LogLine{Time: now, Text: fmt.Sprint("b", i)}
+			}
+			_ = st.AppendLogs(a.ID, big)
+			capped, _ := st.Logs(a.ID, 0, MaxLogLines*2)
+			if len(capped) != MaxLogLines || capped[len(capped)-1].Text != fmt.Sprint("b", len(big)-1) {
+				t.Fatalf("cap: %d lines, last %q", len(capped), capped[len(capped)-1].Text)
+			}
+			if err := st.AppendLogs("nope", big[:1]); !errors.Is(err, ErrNotFound) {
+				t.Fatalf("logs for missing service: %v", err)
+			}
+
 			if err := st.DeleteService(a.ID); err != nil {
 				t.Fatal(err)
+			}
+			if err := st.ClaimDomain("shop.example.org", b.ID); err != nil {
+				t.Fatalf("domain not released with its service: %v", err)
 			}
 			if err := st.DeleteService(a.ID); !errors.Is(err, ErrNotFound) {
 				t.Fatalf("double delete: %v", err)

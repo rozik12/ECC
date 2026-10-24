@@ -1,0 +1,53 @@
+name: Launchpad CI
+
+on:
+  push:
+    branches: [main]
+    paths: ['launchpad/**', '.github/workflows/launchpad-ci.yml']
+  pull_request:
+    branches: [main]
+    paths: ['launchpad/**', '.github/workflows/launchpad-ci.yml']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Go test (with Postgres)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Run inside the official Go image so no third-party setup action is needed.
+    container: golang:1.24
+    defaults:
+      run:
+        working-directory: launchpad
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: lp_test
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      LP_TEST_DATABASE_URL: postgres://postgres:postgres@postgres:5432/lp_test?sslmode=disable
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Formatting
+        run: test -z "$(gofmt -l .)" || { gofmt -l .; exit 1; }
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test -race -count=1 ./...
+      - name: Build binaries
+        run: go build -o /dev/null ./cmd/...

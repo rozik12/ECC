@@ -1,2 +1,5 @@
 bin/
 launchpad-state.json
+
+# repo root ignores build/; this directory is source code
+!internal/build/

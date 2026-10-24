@@ -3,10 +3,12 @@
 package api
 
 import (
+	"context"
 	"crypto/subtle"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -25,11 +27,11 @@ type Config struct {
 
 type Server struct {
 	cfg Config
-	st  *store.Store
+	st  store.Store
 	now func() time.Time
 }
 
-func New(cfg Config, st *store.Store) *Server {
+func New(cfg Config, st store.Store) *Server {
 	if cfg.NodeTTL == 0 {
 		cfg.NodeTTL = 15 * time.Second
 	}
@@ -38,9 +40,13 @@ func New(cfg Config, st *store.Store) *Server {
 
 type View struct {
 	model.Service
-	State    string `json:"state"`
-	Error    string `json:"error,omitempty"`
-	Upstream string `json:"upstream,omitempty"`
+	// State is the state of the newest revision: pending, building, starting,
+	// running or failed. While it is not running, ServingRevision names the
+	// older revision still receiving traffic (0 if none).
+	State           string `json:"state"`
+	Error           string `json:"error,omitempty"`
+	ServingRevision int    `json:"serving_revision,omitempty"`
+	Upstream        string `json:"upstream,omitempty"`
 }
 
 func (s *Server) Handler() http.Handler {
@@ -60,17 +66,32 @@ func (s *Server) Handler() http.Handler {
 	return m
 }
 
-// RunScheduler places services until stop is closed.
+// RunScheduler places services until stop is closed. With several control
+// plane replicas only the elected leader schedules.
 func (s *Server) RunScheduler(stop <-chan struct{}) {
 	t := time.NewTicker(2 * time.Second)
 	defer t.Stop()
 	for {
-		scheduler.Reconcile(s.st, s.now(), s.cfg.NodeTTL)
+		s.RunSchedulerOnce()
 		select {
 		case <-stop:
 			return
 		case <-t.C:
 		}
+	}
+}
+
+// RunSchedulerOnce runs one placement pass if this replica is the leader.
+func (s *Server) RunSchedulerOnce() {
+	if l, ok := s.st.(interface{ IsLeader(context.Context) bool }); ok {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		if !l.IsLeader(ctx) {
+			return
+		}
+	}
+	if _, err := scheduler.Reconcile(s.st, s.now(), s.cfg.NodeTTL); err != nil {
+		log.Printf("scheduler: %v", err)
 	}
 }
 
@@ -88,19 +109,56 @@ func (s *Server) auth(token string, h http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func (s *Server) view(svc model.Service) View {
+func (s *Server) view(svc model.Service) (View, error) {
 	v := View{Service: svc, State: "pending"}
-	if st, ok := s.st.StatusOf(svc.ID); ok {
-		v.State, v.Error = st.State, st.Error
-		if st.State == model.StateRunning {
-			for _, n := range s.st.ListNodes() {
-				if n.ID == svc.NodeID {
-					v.Upstream = fmt.Sprintf("%s:%d", n.Addr, st.HostPort)
-				}
+	sts, err := s.st.StatusesOf(svc.ID)
+	if err != nil {
+		return v, err
+	}
+	for _, st := range sts {
+		if st.Revision == svc.Revision {
+			v.State, v.Error = st.State, st.Error
+		}
+	}
+	if live, ok := store.Live(sts); ok {
+		if live.Revision != svc.Revision {
+			v.ServingRevision = live.Revision
+		}
+		nodes, err := s.st.ListNodes()
+		if err != nil {
+			return v, err
+		}
+		for _, n := range nodes {
+			if n.ID == svc.NodeID {
+				v.Upstream = fmt.Sprintf("%s:%d", n.Addr, live.HostPort)
 			}
 		}
 	}
-	return v
+	return v, nil
+}
+
+func (s *Server) respondView(w http.ResponseWriter, code int, svc model.Service) {
+	v, err := s.view(svc)
+	if err != nil {
+		storeErr(w, err)
+		return
+	}
+	writeJSON(w, code, v)
+}
+
+// storeErr maps store errors to HTTP codes; anything unexpected is a 500 so
+// callers (notably the edge) keep their last good state instead of trusting
+// a half-answer.
+func storeErr(w http.ResponseWriter, err error) {
+	switch {
+	case errors.Is(err, store.ErrNotFound):
+		writeErr(w, 404, err)
+	case errors.Is(err, store.ErrConflict):
+		writeErr(w, 409, err)
+	default:
+		log.Printf("store: %v", err)
+		writeErr(w, 500, errors.New("internal error"))
+	}
 }
 
 func (s *Server) createService(w http.ResponseWriter, r *http.Request) {
@@ -118,20 +176,27 @@ func (s *Server) createService(w http.ResponseWriter, r *http.Request) {
 	}
 	svc.NodeID, svc.Domain = "", svc.Name+"."+s.cfg.BaseDomain
 	out, err := s.st.CreateService(svc)
-	if errors.Is(err, store.ErrConflict) {
-		writeErr(w, 409, err)
-		return
-	} else if err != nil {
-		writeErr(w, 500, err)
+	if err != nil {
+		storeErr(w, err)
 		return
 	}
-	writeJSON(w, 201, s.view(out))
+	s.respondView(w, 201, out)
 }
 
 func (s *Server) listServices(w http.ResponseWriter, _ *http.Request) {
+	svcs, err := s.st.ListServices()
+	if err != nil {
+		storeErr(w, err)
+		return
+	}
 	out := []View{}
-	for _, svc := range s.st.ListServices() {
-		out = append(out, s.view(svc))
+	for _, svc := range svcs {
+		v, err := s.view(svc)
+		if err != nil {
+			storeErr(w, err)
+			return
+		}
+		out = append(out, v)
 	}
 	writeJSON(w, 200, out)
 }
@@ -139,15 +204,15 @@ func (s *Server) listServices(w http.ResponseWriter, _ *http.Request) {
 func (s *Server) getService(w http.ResponseWriter, r *http.Request) {
 	svc, err := s.st.GetService(r.PathValue("id"))
 	if err != nil {
-		writeErr(w, 404, err)
+		storeErr(w, err)
 		return
 	}
-	writeJSON(w, 200, s.view(svc))
+	s.respondView(w, 200, svc)
 }
 
 func (s *Server) deleteService(w http.ResponseWriter, r *http.Request) {
 	if err := s.st.DeleteService(r.PathValue("id")); err != nil {
-		writeErr(w, 404, err)
+		storeErr(w, err)
 		return
 	}
 	w.WriteHeader(204)
@@ -165,19 +230,19 @@ func (s *Server) setEnv(w http.ResponseWriter, r *http.Request) {
 	}
 	svc, err := s.st.UpdateService(r.PathValue("id"), func(x *model.Service) { x.Env = env; x.Revision++ })
 	if err != nil {
-		writeErr(w, 404, err)
+		storeErr(w, err)
 		return
 	}
-	writeJSON(w, 200, s.view(svc))
+	s.respondView(w, 200, svc)
 }
 
 func (s *Server) redeploy(w http.ResponseWriter, r *http.Request) {
 	svc, err := s.st.UpdateService(r.PathValue("id"), func(x *model.Service) { x.Revision++ })
 	if err != nil {
-		writeErr(w, 404, err)
+		storeErr(w, err)
 		return
 	}
-	writeJSON(w, 200, s.view(svc))
+	s.respondView(w, 200, svc)
 }
 
 func (s *Server) listNodes(w http.ResponseWriter, _ *http.Request) {
@@ -185,8 +250,13 @@ func (s *Server) listNodes(w http.ResponseWriter, _ *http.Request) {
 		model.Node
 		Healthy bool `json:"healthy"`
 	}
+	nodes, err := s.st.ListNodes()
+	if err != nil {
+		storeErr(w, err)
+		return
+	}
 	out := []nv{}
-	for _, n := range s.st.ListNodes() {
+	for _, n := range nodes {
 		out = append(out, nv{n, scheduler.Healthy(n, s.now(), s.cfg.NodeTTL)})
 	}
 	writeJSON(w, 200, out)
@@ -203,7 +273,7 @@ func (s *Server) register(w http.ResponseWriter, r *http.Request) {
 	}
 	n.LastSeen = s.now()
 	if err := s.st.UpsertNode(n); err != nil {
-		writeErr(w, 500, err)
+		storeErr(w, err)
 		return
 	}
 	writeJSON(w, 200, n)
@@ -219,7 +289,11 @@ type heartbeatResp struct {
 func (s *Server) heartbeat(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
 	if err := s.st.Touch(id, s.now()); err != nil {
-		writeErr(w, 404, errors.New("unknown node: register first"))
+		if errors.Is(err, store.ErrNotFound) {
+			writeErr(w, 404, errors.New("unknown node: register first"))
+			return
+		}
+		storeErr(w, err)
 		return
 	}
 	var req heartbeatReq
@@ -227,9 +301,17 @@ func (s *Server) heartbeat(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 400, err)
 		return
 	}
-	s.st.SetStatuses(id, req.Statuses)
+	if err := s.st.SetStatuses(id, req.Statuses); err != nil {
+		storeErr(w, err)
+		return
+	}
+	svcs, err := s.st.ListServices()
+	if err != nil {
+		storeErr(w, err)
+		return
+	}
 	resp := heartbeatResp{Services: []model.Service{}}
-	for _, svc := range s.st.ListServices() {
+	for _, svc := range svcs {
 		if svc.NodeID == id {
 			resp.Services = append(resp.Services, svc)
 		}
@@ -238,9 +320,19 @@ func (s *Server) heartbeat(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) routes(w http.ResponseWriter, _ *http.Request) {
+	svcs, err := s.st.ListServices()
+	if err != nil {
+		storeErr(w, err)
+		return
+	}
 	out := []model.Route{}
-	for _, svc := range s.st.ListServices() {
-		if v := s.view(svc); v.Upstream != "" {
+	for _, svc := range svcs {
+		v, err := s.view(svc)
+		if err != nil {
+			storeErr(w, err)
+			return
+		}
+		if v.Upstream != "" {
 			out = append(out, model.Route{Host: svc.Domain, Upstream: v.Upstream})
 		}
 	}
@@ -261,6 +353,3 @@ func writeJSON(w http.ResponseWriter, code int, v any) {
 func writeErr(w http.ResponseWriter, code int, err error) {
 	writeJSON(w, code, map[string]string{"error": err.Error()})
 }
-
-// RunSchedulerOnce runs a single placement pass (used by tests and startup).
-func (s *Server) RunSchedulerOnce() { scheduler.Reconcile(s.st, s.now(), s.cfg.NodeTTL) }

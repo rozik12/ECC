@@ -103,5 +103,8 @@ func (Docker) Start(ctx context.Context, s model.Service, image string) (Contain
 
 func (Docker) Remove(ctx context.Context, name string) error {
 	_, err := run(ctx, "docker", "rm", "-f", name)
+	if err != nil && strings.Contains(err.Error(), "No such container") {
+		return nil
+	}
 	return err
 }

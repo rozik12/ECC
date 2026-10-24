@@ -2,6 +2,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	"net/http"
@@ -14,7 +15,8 @@ import (
 
 func main() {
 	addr := flag.String("addr", ":8080", "listen address")
-	state := flag.String("state", "launchpad-state.json", "state file")
+	state := flag.String("state", "launchpad-state.json", "state file (single-node mode, used when no database URL is set)")
+	dbURL := flag.String("database-url", os.Getenv("LP_DATABASE_URL"), "Postgres URL; enables running several replicas")
 	domain := flag.String("domain", "localhost", "base domain; services get <name>.<domain>")
 	flag.Parse()
 
@@ -26,7 +28,15 @@ func main() {
 	if cfg.APIToken == "" || cfg.NodeToken == "" {
 		log.Fatal("LP_API_TOKEN and LP_NODE_TOKEN must be set")
 	}
-	st, err := store.Open(*state)
+	var st store.Store
+	var err error
+	if *dbURL != "" {
+		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		st, err = store.OpenPG(ctx, *dbURL)
+		cancel()
+	} else {
+		st, err = store.Open(*state)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}

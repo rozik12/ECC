@@ -18,9 +18,10 @@ func TestPlacesAndFailsOver(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	Reconcile(st, now, 15*time.Second)
+	mustReconcile(t, st, now)
 	count := map[string]int{}
-	for _, s := range st.ListServices() {
+	svcs, _ := st.ListServices()
+	for _, s := range svcs {
 		count[s.NodeID]++
 	}
 	if count["aaaaaaaaaaaa"] != 2 || count["bbbbbbbbbbbb"] != 2 {
@@ -30,8 +31,9 @@ func TestPlacesAndFailsOver(t *testing.T) {
 	// Node a stops heartbeating; its services must move to b.
 	later := now.Add(time.Minute)
 	_ = st.Touch("bbbbbbbbbbbb", later)
-	Reconcile(st, later, 15*time.Second)
-	for _, s := range st.ListServices() {
+	mustReconcile(t, st, later)
+	svcs, _ = st.ListServices()
+	for _, s := range svcs {
 		if s.NodeID != "bbbbbbbbbbbb" {
 			t.Fatalf("%s still on %s", s.Name, s.NodeID)
 		}
@@ -41,7 +43,14 @@ func TestPlacesAndFailsOver(t *testing.T) {
 func TestNoHealthyNodeLeavesUnassigned(t *testing.T) {
 	st, _ := store.Open("")
 	_, _ = st.CreateService(model.Service{Name: "web", Image: "nginx", Port: 80})
-	if n := Reconcile(st, time.Now(), time.Second); n != 0 {
+	if n, _ := Reconcile(st, time.Now(), time.Second); n != 0 {
 		t.Fatalf("moved %d", n)
+	}
+}
+
+func mustReconcile(t *testing.T, st store.Store, now time.Time) {
+	t.Helper()
+	if _, err := Reconcile(st, now, 15*time.Second); err != nil {
+		t.Fatal(err)
 	}
 }

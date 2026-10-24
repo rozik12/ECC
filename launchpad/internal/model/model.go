@@ -8,17 +8,20 @@ import (
 )
 
 type Service struct {
-	ID        string            `json:"id"`
-	Name      string            `json:"name"`
-	Image     string            `json:"image,omitempty"`
-	GitURL    string            `json:"git_url,omitempty"`
-	GitRef    string            `json:"git_ref,omitempty"`
-	Port      int               `json:"port"`
-	Env       map[string]string `json:"env,omitempty"`
-	Revision  int               `json:"revision"`
-	NodeID    string            `json:"node_id,omitempty"`
-	Domain    string            `json:"domain"`
-	CreatedAt time.Time         `json:"created_at"`
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	Image  string `json:"image,omitempty"`
+	GitURL string `json:"git_url,omitempty"`
+	GitRef string `json:"git_ref,omitempty"`
+	Port   int    `json:"port"`
+	// HealthPath, when set, is probed over HTTP (any status below 500 is healthy).
+	// Empty means a plain TCP connect to the published port.
+	HealthPath string            `json:"health_path,omitempty"`
+	Env        map[string]string `json:"env,omitempty"`
+	Revision   int               `json:"revision"`
+	NodeID     string            `json:"node_id,omitempty"`
+	Domain     string            `json:"domain"`
+	CreatedAt  time.Time         `json:"created_at"`
 }
 
 type Node struct {
@@ -45,16 +48,18 @@ type Route struct {
 
 const (
 	StateBuilding = "building"
+	StateStarting = "starting" // container is up, not yet healthy
 	StateRunning  = "running"
 	StateFailed   = "failed"
 )
 
 var (
-	nameRe  = regexp.MustCompile(`^[a-z][a-z0-9-]{1,38}$`)
-	imageRe = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9._/:@-]{0,254}$`)
-	refRe   = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,127}$`)
-	envRe   = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]{0,127}$`)
-	idRe    = regexp.MustCompile(`^[a-f0-9]{12}$`)
+	nameRe   = regexp.MustCompile(`^[a-z][a-z0-9-]{1,38}$`)
+	imageRe  = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9._/:@-]{0,254}$`)
+	refRe    = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,127}$`)
+	envRe    = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]{0,127}$`)
+	healthRe = regexp.MustCompile(`^/[A-Za-z0-9._~/%?&=+-]{0,255}$`)
+	idRe     = regexp.MustCompile(`^[a-f0-9]{12}$`)
 )
 
 func ValidID(id string) bool { return idRe.MatchString(id) }
@@ -75,6 +80,9 @@ func (s *Service) Validate() error {
 	}
 	if s.GitRef != "" && !refRe.MatchString(s.GitRef) {
 		return fmt.Errorf("invalid git_ref")
+	}
+	if s.HealthPath != "" && !healthRe.MatchString(s.HealthPath) {
+		return fmt.Errorf("health_path must start with / and contain no spaces")
 	}
 	if s.Port < 1 || s.Port > 65535 {
 		return fmt.Errorf("port out of range")

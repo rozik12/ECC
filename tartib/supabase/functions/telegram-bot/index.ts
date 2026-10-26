@@ -13,6 +13,7 @@ import { dayBounds, safeTimeZone } from "./time.ts";
 import { Tg } from "./tg.ts";
 import { emotionKeys, emotionLabel, langOf, menuAction, tr, type Lang } from "./text.ts";
 import * as ui from "./ui.ts";
+import * as ex from "./extras.ts";
 import { disciplineStreak, summarize, topViolations } from "./stats.ts";
 
 const LOGO_URL = "https://tartib.uk/logo/tartib-mark-512.png";
@@ -480,7 +481,7 @@ async function onCallback(c: Ctx, data: string) {
 const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
   "/menu": async (c) => { await c.tg.send(c.chatId, "🏠", ui.replyMenu(c.lang)); return say(c, ui.mainMenu(c.lang)); },
   "/start": async (c) => { await c.tg.send(c.chatId, "🏠", ui.replyMenu(c.lang)); return say(c, ui.mainMenu(c.lang)); },
-  "/help": (c) => say(c, ui.helpMenu(c.lang)),
+  "/help": (c) => say(c, ex.withHelpExtra(c.lang, ui.helpMenu(c.lang))),
   "/new": (c) => startWizard(c),
   "/repeat": (c) => repeatLast(c),
   "/stats": (c) => say(c, ui.statsMenu(c.lang)),
@@ -529,6 +530,24 @@ const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
     const r = await addWatch(c.u.userId, symbol);
     return say(c, await watchView(c, r === "limit" ? tr(c.lang, "watchLimit") : r === "ok" ? tr(c.lang, "watchAdded", { symbol }) : tr(c.lang, "error")));
   },
+  "/metals": async (c) => say(c, ex.metalsScreen(c.lang, await ex.fetchMetals())),
+  "/support": async (c, arg) => {
+    const body = arg.trim();
+    if (!body) return say(c, ex.supportUsage(c.lang));
+    if (body.length > ex.SUPPORT_MAX) return say(c, ex.supportDone(c.lang, "supportLong"));
+    const { error } = await db.from("support_messages").insert({ user_id: c.u.userId, from_admin: false, body });
+    if (error) return say(c, ex.supportDone(c.lang, /limit|too many|rate/i.test(error.message) ? "supportLimit" : "supportErr"));
+    return say(c, ex.supportDone(c.lang, "supportSent"));
+  },
+  "/messages": async (c) => {
+    const { data: prof } = await db.from("profiles").select("handle").eq("id", c.u.userId).maybeSingle();
+    if (!prof?.handle) return say(c, ex.messagesScreen(c.lang, false, 0, 0));
+    const { data } = await db.rpc("bot_chat_unread", { p_user: c.u.userId });
+    const row = Array.isArray(data) ? data[0] : data;
+    return say(c, ex.messagesScreen(c.lang, true, Number(row?.total ?? 0), Number(row?.chats ?? 0)));
+  },
+  "/site": (c) => say(c, ex.siteScreen(c.lang)),
+  "/channel": (c) => say(c, ex.siteScreen(c.lang)),
   "/tools": (c) => say(c, ui.toolsMenu(c.lang)),
   "/sessions": (c) => say(c, ui.sessionsScreen(c.lang, new Date(), c.u.tz)),
   "/rr": (c, arg) => say(c, ui.rrScreen(c.lang, parseNums(arg))),

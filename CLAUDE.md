@@ -80,3 +80,11 @@ Use the following skills when working on related files:
 | `*.tsx`, `*.jsx`, `components/**` | `react-patterns`, `react-testing` — for React-specific work invoke `/react-review`, `/react-build`, `/react-test` |
 
 When spawning subagents, always pass conventions from the respective skill into the agent's prompt.
+
+## Token economy (always on)
+
+- Answer short and direct. No preamble, no recap of what was just done.
+- Read only the needed line ranges; search before reading whole files.
+- Do not spawn subagents unless the user asks.
+- Do not echo code or command output back; reference `file:line`.
+- Ask a question only when blocked.

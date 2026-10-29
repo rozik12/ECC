@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'TOKEN ECONOMY: answer short, no preamble or recap; read only needed line ranges; no subagents unless asked; do not echo code/output; ask only if blocked.'"
+          }
+        ]
+      }
+    ]
+  }
+}

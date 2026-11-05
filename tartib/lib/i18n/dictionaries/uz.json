@@ -3592,6 +3592,18 @@
     "legendHigh": "80% va undan yuqori",
     "legendMid": "50–79%",
     "legendLow": "50% dan past",
-    "legendNone": "bitim yo'q"
+    "legendNone": "bitim yo'q",
+    "heroAlt": "3D sahna: Tartib logotipi, oltin tangalar va quymalar",
+    "metalsAlt": "Oltin quymalar va tanga, 3D",
+    "landscapeTitle": "Qoidalar qachon buziladi (3D)",
+    "landscapeHint": "Ustunlar hafta kunlari va kun vaqti bo'yicha. Balandlik — qoidabuzarliklar soni, rang — qoidabuzarlik bilan bitimlar ulushi. Vaqt tepadan pastga: 00:00 dan 24:00 gacha 3 soatlik bloklar.",
+    "landscapeAlt": "Hafta kunlari va kun vaqti bo'yicha qoidabuzarliklarning hajmli grafigi",
+    "landscapeSlot": "{day}, {from}–{to}: {n} bitimdan {v} tasida qoidabuzarlik",
+    "landscapeTop": "Eng xavfli oynalar",
+    "landscapeNone": "Bu manzara uchun kamida 10 ta bitim kerak. Hozircha yozuvlar kam.",
+    "riskHigh": "50% va undan ko'p qoidabuzarlik",
+    "riskMid": "25–49%",
+    "riskLow": "25% gacha",
+    "noViolations": "Hech bir oynada qoidabuzarlik yo'q. Shunday davom eting."
   }
 }

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { shouldRun3D } from "../lib/three-support.ts";
-import { disciplineByDay, type StatTrade } from "../lib/statistics/index.ts";
+import { disciplineByDay, weekdayHourGrid, type StatTrade } from "../lib/statistics/index.ts";
 
 const base = { reducedMotion: false, saveData: false, hasWebGL: true };
 
@@ -42,4 +42,18 @@ test("дисциплина по дням: переход на летнее вр�
   const days = disciplineByDay([], "America/New_York", 28, new Date("2026-11-02T12:00:00Z"));
   assert.equal(days.length, 28);
   assert.equal(new Set(days.map((d) => d.day)).size, 28);
+});
+
+test("сетка день недели × время суток: клетки, блоки по 3 часа, нарушения", () => {
+  const cells = weekdayHourGrid([
+    trade("2026-11-02T08:30:00Z", true, "mon-morning-ok"), // понедельник, блок 06–09 (индекс 2)
+    trade("2026-11-02T08:50:00Z", false, "mon-morning-bad"),
+    trade("2026-11-08T23:50:00Z", false, "sun-night"), // воскресенье, блок 21–24 (индекс 7)
+  ], "UTC", 3);
+  assert.equal(cells.length, 56);
+  const mon = cells[2 * 7 + 0];
+  assert.deepEqual({ n: mon.count, v: mon.violations }, { n: 2, v: 1 });
+  const sun = cells[7 * 7 + 6];
+  assert.deepEqual({ n: sun.count, v: sun.violations }, { n: 1, v: 1 });
+  assert.equal(cells.reduce((s, c) => s + c.count, 0), 3);
 });

@@ -269,6 +269,21 @@ function bucketize(trades: StatTrade[], size: number, indexOf: (t: StatTrade) =>
   return buckets;
 }
 
+export type GridCell = { weekday: number; block: number; count: number; violations: number };
+
+/** Сетка «день недели × время суток» (блоки по blockHours часов): сколько сделок и нарушений в каждой клетке. Индекс клетки = block * 7 + weekday. */
+export function weekdayHourGrid(trades: StatTrade[], timeZone: string, blockHours = 3): GridCell[] {
+  const blocks = Math.ceil(24 / blockHours);
+  const cells: GridCell[] = Array.from({ length: 7 * blocks }, (_, i) => ({ weekday: i % 7, block: Math.floor(i / 7), count: 0, violations: 0 }));
+  for (const t of trades) {
+    const { weekday, hour } = localWeekdayAndHour(t.tradedAt, timeZone);
+    const c = cells[Math.floor(hour / blockHours) * 7 + weekday];
+    c.count += 1;
+    if (!t.rulesFollowed) c.violations += 1;
+  }
+  return cells;
+}
+
 /** Результат и нарушения по дням недели (0 — понедельник) в часовом поясе пользователя. */
 export function byWeekday(trades: StatTrade[], timeZone: string): TimeBucket[] {
   return bucketize(trades, 7, (t) => localWeekdayAndHour(t.tradedAt, timeZone).weekday);

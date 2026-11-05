@@ -1,4 +1,4 @@
-import { Discipline3D } from "@/components/three/Lazy3D";
+import { Scene3D } from "@/components/three/Lazy3D";
 import { DisciplineFallback, disciplineColor } from "@/components/three/DisciplineFallback";
 import { Card } from "@/components/ui";
 import { getTranslator } from "@/lib/i18n/server";
@@ -24,8 +24,9 @@ export async function Discipline3DCard({ days }: { days: DisciplineDay[] }) {
         <p className="mt-4 text-sm text-muted">{t("scene3d.noData")}</p>
       ) : (
         <>
-          <Discipline3D
-            days={days.map((d) => ({ percent: d.percent }))}
+          <Scene3D
+            name="discipline"
+            props={{ days: days.map((d) => ({ percent: d.percent })) }}
             fallback={<DisciplineFallback days={days} />}
             label={t("scene3d.disciplineAlt")}
             className="mt-4 h-60 w-full overflow-hidden rounded-xl bg-surface-muted sm:h-72"

@@ -6,6 +6,7 @@ import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { BestWorstCard } from "@/components/statistics/BestWorstCard";
 import { TiltCard } from "@/components/statistics/TiltCard";
 import { TimeAnalysis } from "@/components/statistics/TimeAnalysis";
+import { ViolationLandscapeCard } from "@/components/statistics/ViolationLandscapeCard";
 import { EmotionAnalysis } from "@/components/statistics/EmotionAnalysis";
 import { PnlCalendar } from "@/components/statistics/PnlCalendar";
 import { PeriodTabs } from "@/components/statistics/PeriodTabs";
@@ -206,6 +207,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
 
           <EmotionAnalysis stats={emotions} currency={currency} />
           <TimeAnalysis trades={trades} timeZone={tz} currency={currency} />
+          <ViolationLandscapeCard trades={all} timeZone={tz} />
           <TiltCard trades={all} currency={currency} />
           <BestWorstCard trades={trades} currency={currency} timeZone={tz} />
           <TraderProfileCard trades={all} />

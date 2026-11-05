@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ListChecks, ShieldCheck, Wallet } from "lucide-react";
 import { PricingCards } from "@/components/landing/PricingCards";
-import { IngotFallback } from "@/components/three/IngotFallback";
-import { Ingot3D } from "@/components/three/Lazy3D";
+import { HeroFallback } from "@/components/three/Fallbacks";
+import { Scene3D } from "@/components/three/Lazy3D";
+import { Tilt } from "@/components/ui/Tilt";
 import { buttonStyles, Card } from "@/components/ui";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -41,30 +42,39 @@ export default async function LandingPage() {
         ],
       }} />
       {/* Hero */}
-      <section className="hero-glow mx-auto max-w-4xl px-4 pb-16 pt-14 text-center sm:px-6 sm:pt-24">
-        <Ingot3D fallback={<IngotFallback />} label={t("scene3d.ingotAlt")} className="mx-auto mb-4 h-40 w-full max-w-xs sm:h-52 sm:max-w-sm" />
-        <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
-          {t("landing.hero.title")}
-        </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-balance text-lg text-muted">
-          {t("landing.hero.subtitle")}
-        </p>
-        <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-          <Link href="/register" className={buttonStyles({ size: "lg" })}>
-            {t("landing.hero.start")}
-          </Link>
-          <a href="#demo" className={buttonStyles({ variant: "secondary", size: "lg" })}>
-            {t("landing.hero.demo")}
-          </a>
+      <section className="hero-glow mx-auto max-w-6xl px-4 pb-12 pt-8 sm:px-6 sm:pt-14">
+        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10">
+          <Scene3D
+            name="hero"
+            fallback={<HeroFallback />}
+            label={t("scene3d.heroAlt")}
+            className="h-64 w-full sm:h-80 lg:order-last lg:h-[30rem]"
+          />
+          <div className="text-center lg:text-left">
+            <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+              {t("landing.hero.title")}
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-balance text-lg text-muted lg:mx-0">
+              {t("landing.hero.subtitle")}
+            </p>
+            <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center lg:justify-start">
+              <Link href="/register" className={buttonStyles({ size: "lg" })}>
+                {t("landing.hero.start")}
+              </Link>
+              <a href="#demo" className={buttonStyles({ variant: "secondary", size: "lg" })}>
+                {t("landing.hero.demo")}
+              </a>
+            </div>
+            <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted lg:justify-start">
+              {(["t1", "t2", "t3"] as const).map((k) => (
+                <li key={k} className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
+                  {t(`landing.hero.${k}`)}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted">
-          {(["t1", "t2", "t3"] as const).map((k) => (
-            <li key={k} className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-              {t(`landing.hero.${k}`)}
-            </li>
-          ))}
-        </ul>
       </section>
 
       {/* Преимущества */}
@@ -74,13 +84,13 @@ export default async function LandingPage() {
         </h2>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {pillars.map(({ key, icon: Icon }) => (
-            <Card key={key}>
+            <Tilt key={key}><Card className="h-full">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <Icon className="h-6 w-6" aria-hidden />
               </span>
               <h3 className="mt-4 text-lg font-semibold">{t(`landing.pillars.${key}.title`)}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{t(`landing.pillars.${key}.text`)}</p>
-            </Card>
+            </Card></Tilt>
           ))}
         </div>
       </section>
@@ -115,7 +125,7 @@ export default async function LandingPage() {
         <ul className="mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible">
           {shots.map((s) => (
             <li key={s.key} className="w-[16.5rem] shrink-0 snap-center md:w-auto">
-              <div className="mx-auto max-w-[16.5rem] rounded-[2rem] border-4 border-border bg-surface-muted p-1.5 shadow-lg">
+              <Tilt className="mx-auto max-w-[16.5rem]"><div className="rounded-[2rem] border-4 border-border bg-surface-muted p-1.5 shadow-lg">
                 <Image
                   src={`/shots/${s.key}-${locale}.jpg`}
                   alt={t(s.alt)}
@@ -125,7 +135,7 @@ export default async function LandingPage() {
                   loading="lazy"
                   className="h-auto w-full rounded-[1.5rem]"
                 />
-              </div>
+              </div></Tilt>
               <p className="mt-4 text-center text-sm font-medium">{t(s.caption)}</p>
             </li>
           ))}

@@ -3592,6 +3592,18 @@
     "legendHigh": "80% and above",
     "legendMid": "50–79%",
     "legendLow": "below 50%",
-    "legendNone": "no trades"
+    "legendNone": "no trades",
+    "heroAlt": "3D scene: Tartib logo, gold coins and bars",
+    "metalsAlt": "Gold bars and a coin in 3D",
+    "landscapeTitle": "When rules get broken (3D)",
+    "landscapeHint": "Columns by weekday and time of day. Height is the number of violations, colour is the share of trades with a violation. Top to bottom is time: 00:00 to 24:00 in 3-hour blocks.",
+    "landscapeAlt": "3D chart of violations by weekday and time of day",
+    "landscapeSlot": "{day}, {from}–{to}: {v} of {n} trades with a violation",
+    "landscapeTop": "Riskiest windows",
+    "landscapeNone": "This picture needs at least 10 trades. There are too few entries so far.",
+    "riskHigh": "50% or more violations",
+    "riskMid": "25–49%",
+    "riskLow": "under 25%",
+    "noViolations": "No violations in any window. Keep it up."
   }
 }

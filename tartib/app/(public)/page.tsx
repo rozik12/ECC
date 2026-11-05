@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ListChecks, ShieldCheck, Wallet } from "lucide-react";
 import { PricingCards } from "@/components/landing/PricingCards";
+import { IngotFallback } from "@/components/three/IngotFallback";
+import { Ingot3D } from "@/components/three/Lazy3D";
 import { buttonStyles, Card } from "@/components/ui";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -40,6 +42,7 @@ export default async function LandingPage() {
       }} />
       {/* Hero */}
       <section className="hero-glow mx-auto max-w-4xl px-4 pb-16 pt-14 text-center sm:px-6 sm:pt-24">
+        <Ingot3D fallback={<IngotFallback />} label={t("scene3d.ingotAlt")} className="mx-auto mb-4 h-40 w-full max-w-xs sm:h-52 sm:max-w-sm" />
         <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
           {t("landing.hero.title")}
         </h1>

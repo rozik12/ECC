@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { WeeklyReportCard } from "@/components/reports/WeeklyReportCard";
+import { Discipline3DCard } from "@/components/statistics/Discipline3DCard";
 import { DisciplineCostCard } from "@/components/statistics/DisciplineCostCard";
 import { BestWorstCard } from "@/components/statistics/BestWorstCard";
 import { TiltCard } from "@/components/statistics/TiltCard";
@@ -18,7 +19,7 @@ import { getLatestWeeklyReport } from "@/services/reports";
 import { formatMoney, formatNumber, pnlTone } from "@/lib/format";
 import { getTranslator } from "@/lib/i18n/server";
 import {
-  byEmotion, disciplineCost, equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, pnlByDay, pnlByInstrument,
+  byEmotion, disciplineByDay, disciplineCost, equityCurve, filterByPeriod, maxDrawdown, periods, periodStart, pnlByDay, pnlByInstrument,
   pnlByStrategy, summarize, type Period,
 } from "@/lib/statistics";
 import { safeTimeZone } from "@/lib/time";
@@ -148,6 +149,7 @@ export default async function StatisticsPage({ searchParams }: { searchParams: P
           </div>
 
           <DisciplineCostCard data={discipline} currency={currency} />
+          <Discipline3DCard days={disciplineByDay(all, tz)} />
 
           <Card>
             <h2 className="mb-3 font-semibold">{t("stats.charts.equity")}</h2>

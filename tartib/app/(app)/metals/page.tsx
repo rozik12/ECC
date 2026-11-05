@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Card } from "@/components/ui";
 import { MetalsLive } from "@/components/metals/MetalsLive";
+import { IngotFallback } from "@/components/three/IngotFallback";
+import { Ingot3D } from "@/components/three/Lazy3D";
 import { requireUser } from "@/lib/auth";
 import { sharedJson } from "@/lib/edge-cache";
 import { ALL_METALS_SYMBOLS } from "@/lib/metals";
@@ -36,9 +38,12 @@ export default async function MetalsPage() {
   ];
   return (
     <div className="mx-auto max-w-5xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold sm:text-3xl">{t("metals.title")}</h1>
-        <p className="mt-1 text-muted">{t("metals.subtitle")}</p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold sm:text-3xl">{t("metals.title")}</h1>
+          <p className="mt-1 text-muted">{t("metals.subtitle")}</p>
+        </div>
+        <Ingot3D fallback={<IngotFallback />} label={t("scene3d.ingotAlt")} className="hidden h-28 w-44 shrink-0 sm:block" />
       </div>
       <MetalsLive initial={initial} names={names} />
       <section aria-labelledby="metals-tools" className="space-y-3">

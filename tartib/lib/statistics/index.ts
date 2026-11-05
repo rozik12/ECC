@@ -221,6 +221,30 @@ export function disciplineStreak(trades: StatTrade[], now: Date = new Date()): S
   };
 }
 
+export type DisciplineDay = { day: string; total: number; followed: number; percent: number | null };
+
+/** Дисциплина по дням: за последние `days` дней (по местному времени) доля сделок, где правила соблюдены. Дни без сделок: percent = null. */
+export function disciplineByDay(trades: StatTrade[], timeZone: string, days = 28, now: Date = new Date()): DisciplineDay[] {
+  const count = new Map<string, { total: number; followed: number }>();
+  for (const t of trades) {
+    const key = localDay(t.tradedAt, timeZone);
+    const c = count.get(key) ?? { total: 0, followed: 0 };
+    c.total += 1;
+    if (t.rulesFollowed) c.followed += 1;
+    count.set(key, c);
+  }
+  // Шаги по 24 часа с запасом: на переходе на летнее время день может повториться, повторы убираем
+  const keys: string[] = [];
+  for (let i = days + 1; i >= 0; i--) {
+    const key = localDay(new Date(now.getTime() - i * DAY_MS).toISOString(), timeZone);
+    if (keys[keys.length - 1] !== key) keys.push(key);
+  }
+  return keys.slice(-days).map((day) => {
+    const c = count.get(day);
+    return { day, total: c?.total ?? 0, followed: c?.followed ?? 0, percent: c ? Math.round((c.followed / c.total) * 100) : null };
+  });
+}
+
 export type TimeBucket = { index: number; pnl: number; count: number; violations: number };
 
 const WEEKDAY_INDEX: Record<string, number> = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4, Sat: 5, Sun: 6 };

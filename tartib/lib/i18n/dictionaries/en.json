@@ -3579,5 +3579,19 @@
       "unauthorized": "Please sign in again.",
       "blocked": "Message not sent: you cannot write in this chat (block or restriction)."
     }
+  },
+  "scene3d": {
+    "ingotAlt": "Tartib gold bar in 3D",
+    "disciplineTitle": "Discipline by day in 3D",
+    "disciplineHint": "Column height is the share of trades that followed your rules that day over the last 28 days. Grey tiles are days without trades. Move the mouse to tilt the chart.",
+    "disciplineAlt": "3D chart of discipline over 28 days",
+    "best": "Best day",
+    "worst": "Weakest day",
+    "dayLine": "{day}: {percent}% by the rules ({n} trades)",
+    "noData": "No trades in the last 28 days. The chart will appear after your first entries.",
+    "legendHigh": "80% and above",
+    "legendMid": "50–79%",
+    "legendLow": "below 50%",
+    "legendNone": "no trades"
   }
 }

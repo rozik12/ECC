@@ -3579,5 +3579,19 @@
       "unauthorized": "Qaytadan kiring.",
       "blocked": "Xabar yuborilmadi: bu chatga yozishingiz mumkin emas (blok yoki cheklov)."
     }
+  },
+  "scene3d": {
+    "ingotAlt": "Tartib oltin quymasi, 3D",
+    "disciplineTitle": "Kunlar bo'yicha intizom, 3D",
+    "disciplineHint": "Ustun balandligi — oxirgi 28 kunda shu kuni qoidalarga ko'ra qilingan bitimlar ulushi. Kulrang plitkalar — bitimsiz kunlar. Hajmli grafikni sichqoncha bilan egish mumkin.",
+    "disciplineAlt": "28 kunlik intizomning hajmli grafigi",
+    "best": "Eng yaxshi kun",
+    "worst": "Eng zaif kun",
+    "dayLine": "{day}: qoida bo'yicha {percent}% ({n} bitim)",
+    "noData": "Oxirgi 28 kunda bitim yo'q. Grafik birinchi yozuvlardan keyin paydo bo'ladi.",
+    "legendHigh": "80% va undan yuqori",
+    "legendMid": "50–79%",
+    "legendLow": "50% dan past",
+    "legendNone": "bitim yo'q"
   }
 }

@@ -546,6 +546,11 @@ const COMMANDS: Record<string, (c: Ctx, arg: string) => Promise<unknown>> = {
     const row = Array.isArray(data) ? data[0] : data;
     return say(c, ex.messagesScreen(c.lang, true, Number(row?.total ?? 0), Number(row?.chats ?? 0)));
   },
+  "/invite": async (c) => {
+    const { data: prof } = await db.from("profiles").select("referral_code").eq("id", c.u.userId).maybeSingle();
+    const { count } = await db.from("profiles").select("id", { count: "exact", head: true }).eq("referred_by", c.u.userId);
+    return say(c, ex.inviteScreen(c.lang, prof?.referral_code ? `${ui.SITE}/r/${prof.referral_code}` : null, count ?? 0));
+  },
   "/site": (c) => say(c, ex.siteScreen(c.lang)),
   "/channel": (c) => say(c, ex.siteScreen(c.lang)),
   "/tools": (c) => say(c, ui.toolsMenu(c.lang)),

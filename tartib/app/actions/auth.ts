@@ -1,8 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { applyProfileLanguage } from "@/lib/profile-language";
+import { parseRefCode, REF_COOKIE } from "@/lib/referral";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { forgotSchema, loginSchema, registerSchema, resetSchema } from "@/lib/validations/auth";
@@ -43,11 +44,12 @@ export async function registerAction(input: unknown): Promise<ActionResult> {
     const host = h.get("x-forwarded-host") ?? h.get("host");
     const proto = h.get("x-forwarded-proto") ?? "http";
     const supabase = await createClient();
+    const ref = parseRefCode((await cookies()).get(REF_COOKIE)?.value);
     const { data, error } = await supabase.auth.signUp({
       email: parsed.data.email,
       password: parsed.data.password,
       options: {
-        data: { name: parsed.data.name },
+        data: ref ? { name: parsed.data.name, ref } : { name: parsed.data.name },
         emailRedirectTo: `${proto}://${host}/auth/callback`,
       },
     });

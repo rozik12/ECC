@@ -49,6 +49,7 @@
     "messages": "Xabarlar"
   },
   "footer": {
+    "channel": "Telegram-kanal",
     "terms": "Foydalanish shartlari",
     "privacy": "Maxfiylik siyosati",
     "rights": "Barcha huquqlar himoyalangan."
@@ -3605,5 +3606,17 @@
     "riskMid": "25–49%",
     "riskLow": "25% gacha",
     "noViolations": "Hech bir oynada qoidabuzarlik yo'q. Shunday davom eting."
+  },
+  "referral": {
+    "title": "Do'stni taklif qilish",
+    "text": "Bu havolani tanish treyderlarga yuboring. Ular shu havola orqali ro'yxatdan o'tganda, ularning sonini shu yerda ko'rasiz.",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "share": "Ulashish",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "invited": "Taklif qilinganlar",
+    "shareText": "Tartib: bitimlar jurnali va treyder intizomi. Bepul, signallarsiz va foyda va'dasiz.",
+    "note": "Pul mukofoti yo'q: biz shunchaki sizning havolangiz orqali nechta odam kelganini sanaymiz. Tartib — hisob va intizom vositasi, investitsiya tavsiyasi emas."
   }
 }

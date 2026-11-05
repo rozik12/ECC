@@ -49,6 +49,7 @@
     "messages": "Messages"
   },
   "footer": {
+    "channel": "Telegram channel",
     "terms": "Terms of use",
     "privacy": "Privacy policy",
     "rights": "All rights reserved."
@@ -3605,5 +3606,17 @@
     "riskMid": "25–49%",
     "riskLow": "under 25%",
     "noViolations": "No violations in any window. Keep it up."
+  },
+  "referral": {
+    "title": "Invite a friend",
+    "text": "Send this link to traders you know. When they sign up through it, you will see how many here.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "share": "Share",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "invited": "Invited",
+    "shareText": "Tartib: a trade journal and discipline tool. Free, no signals, no profit promises.",
+    "note": "There is no cash reward: we simply count how many people came through your link. Tartib is a tool for record keeping and discipline, not investment advice."
   }
 }

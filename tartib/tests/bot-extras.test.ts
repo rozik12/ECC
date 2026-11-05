@@ -61,3 +61,22 @@ test("копия extras.ts у маршрутизатора совпадает с
   const b = readFileSync(new URL("../supabase/functions/telegram-router/extras.ts", import.meta.url), "utf8");
   assert.equal(a, b);
 });
+
+import { channelCheckScreen, channelInviteScreen, inviteScreen, isMemberStatus } from "../supabase/functions/telegram-bot/extras.ts";
+test("приглашение друга и подписка на канал", () => {
+  const link = "https://tartib.uk/r/ABCD1234";
+  for (const lang of ["ru", "uz", "en"] as const) {
+    const s = inviteScreen(lang, link, 3);
+    assert.match(s.text, /ABCD1234/);
+    assert.ok(s.kb!.inline_keyboard[0][0].url!.startsWith("https://t.me/share/url?url="));
+    assert.match(inviteScreen(lang, null, 0).text, /./);
+    const ch = channelInviteScreen(lang, "https://t.me/+abc");
+    assert.equal(ch.kb!.inline_keyboard[1][0].callback_data, "ch:check");
+    assert.equal(ch.kb!.inline_keyboard[0][0].url, "https://t.me/+abc");
+    assert.equal(channelCheckScreen(lang, "ok", "x").kb, undefined);
+    assert.ok(channelCheckScreen(lang, "no", "https://t.me/+abc").kb);
+  }
+  assert.equal(isMemberStatus("member"), true);
+  assert.equal(isMemberStatus("left"), false);
+  assert.equal(isMemberStatus(undefined), false);
+});

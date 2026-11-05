@@ -61,7 +61,10 @@ export default async function ArticlePage({ params }: Props) {
       ))}
       <div className="rounded-xl border border-border bg-surface p-5">
         <p className="font-medium">{t("blog.cta")}</p>
-        <Link href="/register" className={buttonStyles({ className: "mt-3" })}>{t("blog.ctaBtn")}</Link>
+        <div className="mt-3 flex flex-wrap gap-3">
+          <Link href="/register" className={buttonStyles()}>{t("blog.ctaBtn")}</Link>
+          <a href="/c/blog" target="_blank" rel="noopener noreferrer" className={buttonStyles({ variant: "secondary" })}>{t("footer.channel")}</a>
+        </div>
       </div>
       <p className="text-xs leading-relaxed text-muted">{t("blog.edu")} {t("common.disclaimer")}</p>
     </article>

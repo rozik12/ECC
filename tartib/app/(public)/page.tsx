@@ -173,9 +173,14 @@ export default async function LandingPage() {
       <section className="mx-auto max-w-3xl px-4 pb-20 text-center sm:px-6">
         <h2 className="text-balance text-2xl font-bold sm:text-3xl">{t("landing.cta.title")}</h2>
         <p className="mt-3 text-muted">{t("landing.cta.text")}</p>
-        <Link href="/register" className={buttonStyles({ size: "lg", className: "mt-8" })}>
-          {t("landing.hero.start")}
-        </Link>
+        <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <Link href="/register" className={buttonStyles({ size: "lg" })}>
+            {t("landing.hero.start")}
+          </Link>
+          <a href="/c/site" target="_blank" rel="noopener noreferrer" className={buttonStyles({ variant: "secondary", size: "lg" })}>
+            {t("footer.channel")}
+          </a>
+        </div>
       </section>
     </>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Download, LogOut, Shield } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import { MfaCard } from "@/components/profile/MfaCard";
+import { ReferralCard } from "@/components/profile/ReferralCard";
 import { ShareCard } from "@/components/profile/ShareCard";
 import { InstallApp } from "@/components/profile/InstallApp";
 import { TelegramCard } from "@/components/profile/TelegramCard";
@@ -11,6 +12,7 @@ import { ProfileForm } from "@/components/profile/ProfileForm";
 import { Button, buttonStyles, Card } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getTranslator } from "@/lib/i18n/server";
+import { refLink } from "@/lib/referral";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslator();
@@ -27,6 +29,13 @@ export default async function ProfilePage() {
     supabase.from("trades").select("id", { count: "exact", head: true }),
     supabase.from("rules").select("id", { count: "exact", head: true }),
   ]);
+
+  const [{ data: refRow }, { data: invitedCount }] = await Promise.all([
+    supabase.from("profiles").select("referral_code").eq("id", user.id).maybeSingle(),
+    supabase.rpc("referral_stats"),
+  ]);
+  const refCode = typeof refRow?.referral_code === "string" ? refRow.referral_code : null;
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tartib.uk";
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -53,6 +62,14 @@ export default async function ProfilePage() {
 
       <InstallApp />
       <TelegramCard linked={!!tg} reminders={tg?.reminders ?? true} notify={tg?.notify ?? true} />
+
+      {refCode && (
+        <ReferralCard
+          link={refLink(site, refCode)}
+          invited={typeof invitedCount === "number" ? invitedCount : 0}
+          texts={{ title: t("referral.title"), text: t("referral.text"), copy: t("referral.copy"), copied: t("referral.copied"), share: t("referral.share"), telegram: t("referral.telegram"), whatsapp: t("referral.whatsapp"), invited: t("referral.invited"), shareText: t("referral.shareText"), note: t("referral.note") }}
+        />
+      )}
 
       <ShareCard token={profile?.share_token ?? null} />
 

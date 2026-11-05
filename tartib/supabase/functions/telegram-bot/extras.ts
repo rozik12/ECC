@@ -17,6 +17,13 @@ export const SUPPORT_MAX = 2000;
 type Dict = Record<string, string>;
 const X: Record<Lang, Dict> = {
   ru: {
+    inviteTitle: "👥 <b>Пригласить друга</b>",
+    inviteBody: "Ваша ссылка:\n<code>{link}</code>\n\nПриглашено: <b>{n}</b>\nОтправьте её знакомым трейдерам. Денежной награды нет, мы просто считаем приглашённых.",
+    inviteShare: "📤 Отправить в Telegram", inviteSite: "🌐 Всё в профиле на сайте", inviteNone: "Не получилось получить ссылку. Откройте профиль на сайте.",
+    inviteText: "Tartib: журнал сделок и дисциплина трейдера. Бесплатно, без сигналов и обещаний прибыли.",
+    chInvite: "📣 <b>Наш Telegram-канал</b>\n\nКаждый день короткий разбор про риск и дисциплину. Подписка по желанию.",
+    chSubscribe: "📣 Подписаться", chDid: "✅ Я подписался", chThanks: "Спасибо, вы в канале! 🙌",
+    chNotYet: "Пока не вижу подписки. Нажмите «Подписаться», потом снова «Я подписался».", chUnknown: "Не удалось проверить подписку. Попробуйте позже.",
     metalsTitle: "🥇 <b>Золото и металлы</b>",
     gold: "Золото", silver: "Серебро", platinum: "Платина", palladium: "Палладий", copper: "Медь",
     metalsNote: "Цены фьючерсов COMEX из открытого источника, возможна задержка. Золото, серебро, платина и палладий: $ за унцию, медь: $ за фунт. Справочные данные, а не рекомендация.",
@@ -35,9 +42,16 @@ const X: Record<Lang, Dict> = {
     msgNoHandle: "Чтобы общаться с другими трейдерами, выбери ник на сайте: «Сообщения».",
     siteTitle: "🌐 <b>Tartib</b>\n\nСайт, инструменты, блог и наш канал в Telegram.",
     bSite: "🌐 Сайт", bTools: "🧰 Калькуляторы", bBlog: "📚 Блог", bMetals: "🥇 Металлы", bMessages: "💬 Мессенджер", bChannel: "📣 Канал",
-    helpExtra: "<b>Ещё команды</b>\n/metals: цены золота и металлов\n/support текст: написать владельцу\n/messages: непрочитанные в мессенджере\n/site: ссылки на сайт и канал",
+    helpExtra: "<b>Ещё команды</b>\n/metals: цены золота и металлов\n/support текст: написать владельцу\n/invite: пригласить друга\n/messages: непрочитанные в мессенджере\n/site: ссылки на сайт и канал",
   },
   uz: {
+    inviteTitle: "👥 <b>Do'stni taklif qilish</b>",
+    inviteBody: "Havolangiz:\n<code>{link}</code>\n\nTaklif qilinganlar: <b>{n}</b>\nUni tanish treyderlarga yuboring. Pul mukofoti yo'q, biz shunchaki taklif qilinganlarni sanaymiz.",
+    inviteShare: "📤 Telegramda yuborish", inviteSite: "🌐 Hammasi saytdagi profilda", inviteNone: "Havolani olib bo'lmadi. Saytdagi profilni oching.",
+    inviteText: "Tartib: bitimlar jurnali va treyder intizomi. Bepul, signallarsiz va foyda va'dasiz.",
+    chInvite: "📣 <b>Telegram-kanalimiz</b>\n\nHar kuni risk va intizom haqida qisqa tahlil. Obuna ixtiyoriy.",
+    chSubscribe: "📣 Obuna bo'lish", chDid: "✅ Obuna bo'ldim", chThanks: "Rahmat, siz kanaldasiz! 🙌",
+    chNotYet: "Hozircha obunani ko'rmayapman. «Obuna bo'lish» tugmasini bosing, keyin yana «Obuna bo'ldim».", chUnknown: "Obunani tekshirib bo'lmadi. Keyinroq urinib ko'ring.",
     metalsTitle: "🥇 <b>Oltin va metallar</b>",
     gold: "Oltin", silver: "Kumush", platinum: "Platina", palladium: "Palladiy", copper: "Mis",
     metalsNote: "COMEX fyuchers narxlari ochiq manbadan, kechikish bo’lishi mumkin. Oltin, kumush, platina va palladiy: untsiyasi uchun $, mis: funti uchun $. Bu ma’lumot uchun, tavsiya emas.",
@@ -56,9 +70,16 @@ const X: Record<Lang, Dict> = {
     msgNoHandle: "Boshqa treyderlar bilan yozishish uchun saytda «Xabarlar» bo’limida nik tanlang.",
     siteTitle: "🌐 <b>Tartib</b>\n\nSayt, vositalar, blog va Telegramdagi kanalimiz.",
     bSite: "🌐 Sayt", bTools: "🧰 Kalkulyatorlar", bBlog: "📚 Blog", bMetals: "🥇 Metallar", bMessages: "💬 Messenjer", bChannel: "📣 Kanal",
-    helpExtra: "<b>Yana buyruqlar</b>\n/metals: oltin va metall narxlari\n/support matn: egasiga yozish\n/messages: messenjerdagi o’qilmaganlar\n/site: sayt va kanal havolalari",
+    helpExtra: "<b>Yana buyruqlar</b>\n/metals: oltin va metall narxlari\n/support matn: egasiga yozish\n/invite: do’stni taklif qilish\n/messages: messenjerdagi o’qilmaganlar\n/site: sayt va kanal havolalari",
   },
   en: {
+    inviteTitle: "👥 <b>Invite a friend</b>",
+    inviteBody: "Your link:\n<code>{link}</code>\n\nInvited: <b>{n}</b>\nSend it to traders you know. There is no cash reward, we simply count who came.",
+    inviteShare: "📤 Send in Telegram", inviteSite: "🌐 Everything in your profile on the site", inviteNone: "Could not get the link. Open your profile on the site.",
+    inviteText: "Tartib: a trade journal and discipline tool. Free, no signals, no profit promises.",
+    chInvite: "📣 <b>Our Telegram channel</b>\n\nA short daily note on risk and discipline. Subscribing is optional.",
+    chSubscribe: "📣 Subscribe", chDid: "✅ I subscribed", chThanks: "Thanks, you are in the channel! 🙌",
+    chNotYet: "I do not see a subscription yet. Tap “Subscribe”, then “I subscribed” again.", chUnknown: "Could not check the subscription. Try again later.",
     metalsTitle: "🥇 <b>Gold and metals</b>",
     gold: "Gold", silver: "Silver", platinum: "Platinum", palladium: "Palladium", copper: "Copper",
     metalsNote: "COMEX futures prices from an open source, may be delayed. Gold, silver, platinum and palladium: $ per ounce, copper: $ per pound. Reference data, not a recommendation.",
@@ -77,7 +98,7 @@ const X: Record<Lang, Dict> = {
     msgNoHandle: "To chat with other traders, pick a handle on the site under “Messages”.",
     siteTitle: "🌐 <b>Tartib</b>\n\nThe site, tools, blog and our Telegram channel.",
     bSite: "🌐 Site", bTools: "🧰 Calculators", bBlog: "📚 Blog", bMetals: "🥇 Metals", bMessages: "💬 Messenger", bChannel: "📣 Channel",
-    helpExtra: "<b>More commands</b>\n/metals: gold and metals prices\n/support text: write to the owner\n/messages: unread in the messenger\n/site: links to the site and channel",
+    helpExtra: "<b>More commands</b>\n/metals: gold and metals prices\n/support text: write to the owner\n/invite: invite a friend\n/messages: unread in the messenger\n/site: links to the site and channel",
   },
 };
 
@@ -170,3 +191,28 @@ export function siteScreen(lang: Lang): Screen {
 export function withHelpExtra(lang: Lang, help: Screen): Screen {
   return { ...help, text: `${help.text}\n\n${xt(lang, "helpExtra")}` };
 }
+
+// ---------- приглашение друга и канал ----------
+export const CHANNEL_USERNAME = "@tartibuk";
+
+export function inviteScreen(lang: Lang, link: string | null, invited: number): Screen {
+  if (!link) return { text: xt(lang, "inviteNone"), kb: kbOf([{ text: xt(lang, "inviteSite"), url: `${SITE}/profile` }]) };
+  const share = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(xt(lang, "inviteText"))}`;
+  return {
+    text: `${xt(lang, "inviteTitle")}\n\n${xt(lang, "inviteBody", { link: esc(link), n: invited })}`,
+    kb: kbOf([{ text: xt(lang, "inviteShare"), url: share }], [{ text: xt(lang, "inviteSite"), url: `${SITE}/profile` }]),
+  };
+}
+
+/** Предложение подписаться на канал: кнопка «Подписаться» ведёт по ссылке источника, «Я подписался» проверяет подписку. */
+export function channelInviteScreen(lang: Lang, joinUrl: string): Screen {
+  return { text: xt(lang, "chInvite"), kb: { inline_keyboard: [[{ text: xt(lang, "chSubscribe"), url: joinUrl }], [{ text: xt(lang, "chDid"), callback_data: "ch:check" }]] } };
+}
+
+export function channelCheckScreen(lang: Lang, result: "ok" | "no" | "unknown", joinUrl: string): Screen {
+  if (result === "ok") return { text: xt(lang, "chThanks") };
+  return { text: xt(lang, result === "no" ? "chNotYet" : "chUnknown"), kb: channelInviteScreen(lang, joinUrl).kb };
+}
+
+/** Статус участника канала (getChatMember) → подписан ли человек. */
+export const isMemberStatus = (status: unknown) => status === "member" || status === "administrator" || status === "creator";

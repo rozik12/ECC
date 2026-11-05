@@ -1,0 +1,30 @@
+import Link from "next/link";
+import { getTranslator } from "@/lib/i18n/server";
+import { Disclaimer } from "./Disclaimer";
+import { Logo } from "./Logo";
+import { PoweredBy } from "./PoweredBy";
+
+export async function Footer() {
+  const { t } = await getTranslator();
+  return (
+    <footer className="border-t border-border bg-surface">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:px-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <Logo />
+          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+            <Link href="/pricing" className="hover:text-foreground">{t("nav.pricing")}</Link>
+            <Link href="/news" className="hover:text-foreground">{t("nav.news")}</Link>
+            <Link href="/tools" className="hover:text-foreground">{t("nav.tools")}</Link>
+            <Link href="/blog" className="hover:text-foreground">{t("nav.blog")}</Link>
+            <a href="/c/site" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">{t("footer.channel")}</a>
+            <Link href="/terms" className="hover:text-foreground">{t("footer.terms")}</Link>
+            <Link href="/privacy" className="hover:text-foreground">{t("footer.privacy")}</Link>
+          </nav>
+        </div>
+        <Disclaimer />
+        <p className="text-xs text-muted">© {new Date().getFullYear()} Tartib. {t("footer.rights")}</p>
+        <PoweredBy />
+      </div>
+    </footer>
+  );
+}

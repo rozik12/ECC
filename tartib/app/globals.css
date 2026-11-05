@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Светлая тема: спокойная, с холодным оттенком. Зелёный и красный зарезервированы под деньги (прибыль и убыток),
+     поэтому кнопки и ссылки синие: акцент не должен выглядеть как «прибыль». */
+  --background: #f3f5f9;
+  --surface: #ffffff;
+  --surface-muted: #eceff5;
+  --border: #dde3ec;
+  --foreground: #121a26;
+  --muted: #566274;
+  --primary: #2458d6;
+  --primary-hover: #1d49b3;
+  --primary-soft: #e6edfd;
+  --success: #12794a;
+  --success-soft: #e3f5ec;
+  --danger: #c0213a;
+  --danger-soft: #fdebee;
+  --warning: #9a5b00;
+  --warning-soft: #fdf1da;
+  --glow: rgba(36, 88, 214, 0.12);
+}
+
+.dark {
+  /* Тёмная тема в духе торгового терминала: почти чёрный фон, мягкие границы, яркие, но не кричащие цвета */
+  --background: #080c12;
+  --surface: #0f151e;
+  --surface-muted: #161e29;
+  --border: #212c3a;
+  --foreground: #e9eef5;
+  --muted: #8896a8;
+  --primary: #5b95ff;
+  --primary-hover: #86b0ff;
+  --primary-soft: #12223f;
+  --success: #34d399;
+  --success-soft: #0d2a22;
+  --danger: #fb7185;
+  --danger-soft: #35141c;
+  --warning: #fbbf24;
+  --warning-soft: #33260c;
+  --glow: rgba(91, 149, 255, 0.16);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  /* Ровные цифры одной ширины: столбцы чисел не «прыгают», а деньги читаются быстрее */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "cv11", "ss03";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Поверхность карточки: тонкий светлый блик сверху в тёмной теме придаёт глубину без теней */
+.surface-card {
+  background-color: var(--surface);
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--foreground) 3.5%, transparent), transparent 55%);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--foreground) 4%, transparent) inset, 0 8px 24px -16px rgba(0, 0, 0, 0.35);
+}
+
+/* Подсветка и сетка за первым экраном: глубина без изображений */
+.hero-glow {
+  position: relative;
+  isolation: isolate;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: -4rem 0 auto 0;
+  height: 28rem;
+  z-index: -1;
+  background:
+    radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%),
+    linear-gradient(var(--border) 1px, transparent 1px) 0 0 / 100% 3.5rem,
+    linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 3.5rem 100%;
+  -webkit-mask-image: radial-gradient(70% 80% at 50% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(70% 80% at 50% 0%, #000 20%, transparent 75%);
+  opacity: 0.75;
+}
+
+/* Крупные числа (деньги, проценты) */
+.num-xl {
+  font-size: clamp(1.9rem, 7vw, 2.75rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Таблицы на телефоне превращаются в карточки */
+@media (max-width: 767px) {
+  .responsive-table,
+  .responsive-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+  .responsive-table thead {
+    display: none;
+  }
+  .responsive-table tbody tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .responsive-table tbody td {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.35rem 0;
+    border: 0;
+    text-align: right;
+  }
+  .responsive-table tbody td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    text-align: left;
+    flex-shrink: 0;
+  }
+}
+
+/* Мягкое появление карточек и рост полосок прогресса */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.card-enter {
+  animation: rise-in 0.35s ease-out both;
+}
+.bar-grow {
+  transform-origin: left center;
+  animation: bar-grow 0.8s ease-out both;
+}
+
+/* Тем, кто просит меньше движения, анимации отключаем */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Живые цены: короткая подсветка при изменении. При «уменьшить анимацию» подсветка отключена. */
+@keyframes tick-up { from { background-color: color-mix(in srgb, var(--success) 28%, transparent); } to { background-color: transparent; } }
+@keyframes tick-down { from { background-color: color-mix(in srgb, var(--danger) 28%, transparent); } to { background-color: transparent; } }
+.tick-up { animation: tick-up 0.9s ease-out; border-radius: 4px; }
+.tick-down { animation: tick-down 0.9s ease-out; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { .tick-up, .tick-down { animation: none; } }

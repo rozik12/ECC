@@ -1,0 +1,19 @@
+{
+  "name": "tartib",
+  "main": "cf-worker.js",
+  "version_metadata": { "binding": "CF_VERSION_METADATA" },
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  // Умное размещение: Cloudflare сам переносит сервер ближе к базе данных (Supabase, Франкфурт).
+  // Принудительный регион (region) давал ошибки 503 при одновременных запросах, поэтому не используем.
+  "placement": { "mode": "smart" },
+  // Журнал запросов: пишем только малую долю, иначе логирование каждого запроса съедает процессорное время бесплатного тарифа
+  "observability": { "enabled": true, "head_sampling_rate": 0.02 },
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://tartib.uk",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://rwmhsjznrlgsxqgclbbl.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_jh5WAX1UFt9dmosOZXm6EQ_Pm70T0gd",
+    "NEXT_PUBLIC_GOOGLE_AUTH": "false"
+  }
+}

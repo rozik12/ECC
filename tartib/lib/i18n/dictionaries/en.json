@@ -1,0 +1,3622 @@
+{
+  "common": {
+    "appName": "TARTIB",
+    "disclaimer": "Tartib is a tracking and discipline tool. It does not provide investment advice, trading signals or profit guarantees.",
+    "soon": "Soon",
+    "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light theme",
+    "themeDark": "Dark theme",
+    "loading": "Loading…",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "all": "All",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "optional"
+  },
+  "nav": {
+    "dashboard": "Home",
+    "calculator": "Calculator",
+    "trades": "My trades",
+    "rules": "Rules",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "profile": "Profile",
+    "pricing": "All free",
+    "login": "Log in",
+    "register": "Sign up",
+    "main": "Main navigation",
+    "news": "News",
+    "blog": "Blog",
+    "tools": "Tools",
+    "charts": "Charts",
+    "market": "Market",
+    "more": "More: market and tools",
+    "diary": "Diary",
+    "mistakes": "Mistakes",
+    "plusMinus": "Gains and losses",
+    "traderTypes": "Types of traders",
+    "portfolio": "Portfolio",
+    "prop": "Prop challenge",
+    "metals": "Gold and metals",
+    "support": "Message the owner",
+    "messages": "Messages"
+  },
+  "footer": {
+    "channel": "Telegram channel",
+    "terms": "Terms of use",
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  },
+  "seo": {
+    "title": "Tartib — trading discipline and trader's journal",
+    "description": "Tartib helps traders manage risk, keep a trade journal and measure the cost of breaking their own trading rules.",
+    "keywords": [
+      "trading journal",
+      "trader diary",
+      "lot size calculator",
+      "trading risk management",
+      "position size calculator",
+      "trading discipline",
+      "gold XAUUSD lot size"
+    ]
+  },
+  "landing": {
+    "hero": {
+      "title": "Trade by your rules, not by emotions.",
+      "subtitle": "Tartib helps traders control risk, keep a trade journal and see the real price of their mistakes.",
+      "start": "Start for free",
+      "demo": "See the demo",
+      "t1": "No signals, no profit promises",
+      "t2": "Your data stays yours",
+      "t3": "RU · UZ · EN"
+    },
+    "pillars": {
+      "title": "Don't guess the market. Control yourself.",
+      "risk": {
+        "title": "Risk control",
+        "text": "Calculate position size, potential loss and the risk-to-reward ratio before you enter a trade."
+      },
+      "discipline": {
+        "title": "Discipline",
+        "text": "Set your own rules and see how honestly you follow them. Tartib warns you when a trade breaks them."
+      },
+      "cost": {
+        "title": "Cost of mistakes",
+        "text": "See in money how much breaking your own rules has cost you — based on your own data."
+      }
+    },
+    "demo": {
+      "title": "Price of discipline",
+      "followed": "Following rules",
+      "violated": "Violations",
+      "cost": "Cost of violations",
+      "text": "Tartib shows not only the result of your trades, but the result of your decisions.",
+      "note": "An illustrative example. The numbers do not reflect real results."
+    },
+    "how": {
+      "title": "How it works",
+      "step1": {
+        "title": "Create rules",
+        "text": "Maximum risk, leverage, minimum R:R — whatever matters to you."
+      },
+      "step2": {
+        "title": "Calculate the trade",
+        "text": "The calculator shows risk, loss and profit, and warns about rule violations."
+      },
+      "step3": {
+        "title": "Record the result",
+        "text": "Add the trade to your journal with the emotion and the reason for entry."
+      },
+      "step4": {
+        "title": "Analyze discipline",
+        "text": "Review statistics and the cost of violations to understand your mistakes."
+      }
+    },
+    "pricing": {
+      "title": "Start for free",
+      "subtitle": "The whole service is free: no paid plans and no limits on trades or rules."
+    },
+    "cta": {
+      "title": "Ready to trade with awareness?",
+      "text": "Create an account in a minute and add your first rules."
+    },
+    "shots": {
+      "title": "This is how the app looks",
+      "subtitle": "Screenshots of a demo account. The numbers are not real; they show how everything works.",
+      "s1": "Price of discipline on the home screen",
+      "s2": "Statistics and equity curve",
+      "s3": "Your own rules with auto-check",
+      "alt1": "Tartib home screen",
+      "alt2": "Tartib statistics screen",
+      "alt3": "Tartib rules screen"
+    }
+  },
+  "pricing": {
+    "title": "Everything is free",
+    "subtitle": "There are no paid plans. Every feature is open to everyone.",
+    "free": {
+      "name": "Tartib",
+      "price": "$0",
+      "period": "forever",
+      "features": [
+        "Trade journal with no limits",
+        "Any number of trading rules",
+        "All-time statistics, by strategy and advanced analytics",
+        "Mistakes review, gains and losses, weekly reports",
+        "World markets, charts, calculators and the Telegram bot"
+      ],
+      "cta": "Start for free"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "subtitle": "Welcome back! Log in to continue.",
+      "submit": "Log in",
+      "noAccount": "No account yet?",
+      "toRegister": "Sign up"
+    },
+    "register": {
+      "title": "Create an account",
+      "subtitle": "Free. Takes a minute.",
+      "name": "Name",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "toLogin": "Log in"
+    },
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters",
+    "checkEmailTitle": "Check your email",
+    "checkEmailText": "We sent you a message with a link. Click it to confirm your email and log in.",
+    "notConfigured": "Sign-in is not configured yet. Supabase keys must be added to the .env.local file.",
+    "logout": "Log out",
+    "linkExpired": "The link from the email has expired or was opened in a different browser. Request a new one.",
+    "forgot": {
+      "link": "Forgot password?",
+      "title": "Password recovery",
+      "subtitle": "Enter your account email and we'll send a link to set a new password.",
+      "submit": "Send link",
+      "back": "Back to log in",
+      "sentTitle": "Check your email",
+      "sentText": "If an account with this email exists, we sent a message with a link. Open it in this same browser.",
+      "rateLimit": "Emails are being sent too often right now. Please try again a bit later."
+    },
+    "reset": {
+      "title": "New password",
+      "subtitle": "Choose a new password for signing in.",
+      "newPassword": "New password",
+      "submit": "Save password",
+      "expired": "The link has expired. Request password recovery again.",
+      "same": "The new password must be different from the old one."
+    },
+    "google": "Continue with Google",
+    "or": "or with email",
+    "oauthFailed": "Couldn't sign in with Google. Try again or use email.",
+    "mfa": {
+      "title": "Verification code",
+      "text": "Enter the 6-digit code from your authenticator app.",
+      "code": "Code",
+      "verify": "Log in",
+      "cancel": "Cancel and log out",
+      "invalid": "Wrong code. Please try again.",
+      "sessionExpired": "The sign-in session has expired. Please log in again."
+    },
+    "phone": {
+      "button": "Sign in or sign up with phone number",
+      "hint": "The Tartib Telegram bot will open. Press “Start”, then “📱 Share my number”. Telegram itself verifies the number, no SMS needed.",
+      "open": "Open Telegram",
+      "waiting": "Waiting for confirmation in Telegram…",
+      "expired": "Time ran out or the sign-in was cancelled. Press the button again.",
+      "error": "Something went wrong. Try again or sign in with email."
+    }
+  },
+  "pages": {
+    "comingTitle": "This section is in development",
+    "comingText": "We will finish it at one of the next stages.",
+    "dashboard": "Dashboard",
+    "calculator": "Calculator",
+    "trades": "My trades",
+    "rules": "My trading rules",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "legal": {
+    "termsTitle": "Terms of use",
+    "privacyTitle": "Privacy policy",
+    "updated": "Version of October 2, 2026",
+    "terms": {
+      "s1": {
+        "title": "About the service",
+        "text": "Tartib is a tracking and discipline tool for traders: a risk calculator, a trade journal, personal trading rules and statistics."
+      },
+      "s2": {
+        "title": "Not advice",
+        "text": "Tartib does not provide investment advice, trading signals or profit guarantees. It is not a broker, a trading bot or an advisor. The trade score in the calculator only shows how well a trade fits your own rules and says nothing about where the market goes. You make your own trading decisions and are responsible for them. Trading on financial markets involves a risk of losing money."
+      },
+      "s3": {
+        "title": "Account",
+        "text": "You are responsible for keeping your password safe and for the accuracy of the data you enter. One person, one account."
+      },
+      "s4": {
+        "title": "Cost",
+        "text": "The service is free: there are no paid plans and no limits on the number of trades or rules. We will tell you in advance about any changes."
+      },
+      "s5": {
+        "title": "Acceptable use",
+        "text": "You must not try to access other people's data, disrupt the service or use it for unlawful purposes."
+      },
+      "s6": {
+        "title": "Limitation of liability",
+        "text": "The service is provided “as is”. Calculations are for reference: check them before you trade. We are not liable for losses related to trading or to using the service."
+      },
+      "s7": {
+        "title": "Changes to the terms",
+        "text": "The terms may be updated. The current version is always available on this page."
+      }
+    },
+    "privacy": {
+      "s1": {
+        "title": "What data we store",
+        "text": "Email, name, settings (language, currency, time zone), trading accounts, rules, trades and your notes on them. We do not store your password: the Supabase authentication service handles it and keeps only a secure hash."
+      },
+      "s2": {
+        "title": "Why we need it",
+        "text": "Only to make the calculator, the journal and the statistics work. We do not sell data or use it for advertising."
+      },
+      "s3": {
+        "title": "Where data is stored",
+        "text": "In a Supabase database (PostgreSQL). Row-level security is on: each user can see and change only their own data."
+      },
+      "s4": {
+        "title": "Who we share data with",
+        "text": "Only with services Tartib cannot work without: hosting and the database. If AI reports appear in the future, processing by an external AI provider will be switched on only with your consent, and we will tell you in advance."
+      },
+      "s5": {
+        "title": "Cookies and browser storage",
+        "text": "We use cookies for signing in and your chosen language, and browser storage for your chosen theme. There are no advertising or third-party tracking cookies."
+      },
+      "s6": {
+        "title": "Your rights",
+        "text": "You can change your name and settings in your profile. To delete your account with all data, contact us; the contact address will be published on the site before the public launch."
+      }
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "required": "Fill in this field",
+    "email": "Enter a valid email",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordMax": "Password is too long",
+    "nameMax": "Value is too long",
+    "number": "Enter a number",
+    "balanceMin": "Balance cannot be below zero",
+    "balanceMax": "Number is too large",
+    "invalidCredentials": "Wrong email or password.",
+    "emailTaken": "This email is already registered. Try logging in.",
+    "positive": "Enter a number above zero",
+    "tooLarge": "Value is too large",
+    "textMax": "Text is too long",
+    "leverageMin": "Leverage cannot be below 1",
+    "nonNegative": "The number cannot be below zero",
+    "passwordWeak": "This password is too easy to guess. Choose something unique, ideally a few words"
+  },
+  "onboarding": {
+    "title": "Let's get acquainted",
+    "subtitle": "It takes half a minute. You can change everything later in settings.",
+    "name": "What's your name?",
+    "language": "Interface language",
+    "currency": "Currency",
+    "accountName": "Trading account name",
+    "accountNamePlaceholder": "Main account",
+    "startingBalance": "Starting balance",
+    "startingBalanceHint": "How much money is on the account now. The equity curve is built from it.",
+    "submit": "Start"
+  },
+  "directions": {
+    "long": "LONG",
+    "short": "SHORT"
+  },
+  "markets": {
+    "crypto": "Crypto",
+    "forex": "Forex",
+    "stocks": "Stocks",
+    "futures": "Futures",
+    "options": "Options",
+    "metals": "Gold and metals"
+  },
+  "emotions": {
+    "calm": "Calm",
+    "fear": "Fear",
+    "greed": "Greed",
+    "fomo": "FOMO",
+    "revenge": "Revenge",
+    "confident": "Confident",
+    "uncertain": "Uncertain",
+    "other": "Other"
+  },
+  "rules": {
+    "title": "My trading rules",
+    "subtitle": "Rules that Tartib will help you follow.",
+    "add": "Add rule",
+    "empty": {
+      "title": "Create your rules",
+      "text": "Define the rules that Tartib will help you follow."
+    },
+    "presets": {
+      "title": "Ready-made examples",
+      "text": "Add with one tap, then adjust to your style.",
+      "add": "Add",
+      "risk1": {
+        "name": "Risk no more than 1% per trade",
+        "description": "I never risk more than 1% of my balance in one trade."
+      },
+      "rr2": {
+        "name": "R:R at least 2",
+        "description": "I take trades where potential profit is at least twice the risk."
+      },
+      "lev10": {
+        "name": "Leverage up to 10",
+        "description": "I don't use excessive leverage."
+      },
+      "sl": {
+        "name": "Stop-loss is mandatory",
+        "description": "I don't enter a trade without a stop-loss."
+      },
+      "trades3": {
+        "name": "No more than 3 trades a day",
+        "description": "I limit the number of trades to avoid emotional trading."
+      },
+      "dayloss3": {
+        "name": "Stop for the day at a 3% loss",
+        "description": "If I lose 3% of my balance in a day, I stop trading until tomorrow."
+      }
+    },
+    "form": {
+      "createTitle": "New rule",
+      "editTitle": "Edit rule",
+      "name": "Name",
+      "description": "Description",
+      "type": "Rule type",
+      "value": "Value",
+      "active": "Rule is on",
+      "save": "Save"
+    },
+    "types": {
+      "max_risk_percent": "Maximum risk per trade",
+      "min_risk_reward": "Minimum R:R",
+      "max_leverage": "Maximum leverage",
+      "require_stop_loss": "Stop-loss required",
+      "max_trades_per_day": "Maximum trades per day",
+      "custom": "Custom rule",
+      "max_daily_loss_percent": "Daily loss limit"
+    },
+    "valueLabels": {
+      "max_risk_percent": "Maximum risk, %",
+      "min_risk_reward": "Minimum R:R",
+      "max_leverage": "Maximum leverage",
+      "max_trades_per_day": "Maximum trades per day",
+      "max_daily_loss_percent": "Maximum loss per day, % of balance"
+    },
+    "describe": {
+      "max_risk_percent": "Risk no more than {value}% per trade",
+      "min_risk_reward": "R:R at least {value}",
+      "max_leverage": "Leverage up to {value}",
+      "require_stop_loss": "Stop-loss is required",
+      "max_trades_per_day": "No more than {value} trades a day",
+      "custom": "Marked manually",
+      "max_daily_loss_percent": "Stop for the day once the loss reaches {value}% of the balance"
+    },
+    "auto": "Checked automatically",
+    "manual": "Marked manually",
+    "on": "On",
+    "off": "Off",
+    "deleteTitle": "Delete this rule?",
+    "deleteText": "The rule will disappear from the list. Violation marks for this rule in past trades will be removed too.",
+    "saveFailed": "Couldn't save the rule. Please try again.",
+    "deleteFailed": "Couldn't delete the rule. Please try again."
+  },
+  "calc": {
+    "title": "Risk calculator",
+    "subtitle": "Work out the position size before you enter a trade.",
+    "account": "Trading account",
+    "noAccount": "No account — create one in settings",
+    "balance": "Balance",
+    "riskPercent": "Risk per trade, %",
+    "instrument": "Instrument",
+    "market": "Market",
+    "direction": "Direction",
+    "entry": "Entry price",
+    "stop": "Stop-loss",
+    "takeProfit": "Take-profit (optional)",
+    "leverage": "Leverage",
+    "results": {
+      "title": "Result",
+      "empty": "Fill in the fields and the calculation will appear here.",
+      "riskAmount": "Risk amount",
+      "positionSize": "Position size",
+      "shares": "Shares",
+      "lots": "Lots",
+      "potentialLoss": "Potential loss",
+      "potentialProfit": "Potential profit",
+      "riskReward": "R:R",
+      "positionValue": "Position value",
+      "margin": "Required margin"
+    },
+    "errors": {
+      "invalidNumbers": "Fill in balance, risk, entry price and stop-loss with numbers above zero.",
+      "riskRange": "Risk must be above 0% and no more than 100%.",
+      "leverageMin": "Leverage cannot be below 1.",
+      "stopSame": "Stop-loss cannot equal the entry price.",
+      "longStop": "For LONG the stop-loss must be below the entry price.",
+      "shortStop": "For SHORT the stop-loss must be above the entry price.",
+      "longTp": "For LONG the take-profit must be above the entry price.",
+      "shortTp": "For SHORT the take-profit must be below the entry price.",
+      "sizeZero": "At this risk you get less than one share. Increase the risk or move the stop-loss closer."
+    },
+    "score": {
+      "title": "Trade score",
+      "of": "out of 10",
+      "note": "The score only shows how well the trade fits your rules. It says nothing about where the market goes.",
+      "noRules": "You have no active rules yet. Create some to get a score.",
+      "createRules": "Create rules"
+    },
+    "reasons": {
+      "max_risk_percent": {
+        "ok": "Risk {actual}% is within the rule (up to {limit}%)",
+        "violated": "Your maximum risk: {limit}%. Trade risk: {actual}%."
+      },
+      "min_risk_reward": {
+        "ok": "R:R {actual} is at least {limit}",
+        "violated": "Minimum R:R by your rule: {limit}. Trade R:R: {actual}."
+      },
+      "max_leverage": {
+        "ok": "Leverage {actual} is within the rule (up to {limit})",
+        "violated": "Maximum leverage by your rule: {limit}. Trade leverage: {actual}."
+      },
+      "require_stop_loss": {
+        "ok": "Stop-loss is set",
+        "violated": "Your rule requires a stop-loss."
+      },
+      "max_trades_per_day": {
+        "ok": "Trades today: {actual} of {limit}",
+        "violated": "Maximum trades per day by your rule: {limit}. With this one it will be {actual}."
+      },
+      "custom": {
+        "manual": "{name} — mark it manually when recording the trade"
+      },
+      "max_daily_loss_percent": {
+        "ok": "Daily loss {actual}% — the limit ({limit}%) is not reached",
+        "violated": "Your daily loss limit: {limit}%. You have already lost {actual}% of the balance today."
+      }
+    },
+    "warning": {
+      "title": "This trade breaks one or more of your rules",
+      "text": "The decision is yours. Tartib only shows what goes against your own rules.",
+      "cancel": "Cancel",
+      "proceed": "Continue anyway"
+    },
+    "saveAsTrade": "Save as trade",
+    "marginWarning": "Required margin ({margin}) is higher than the account balance ({balance}). Lower the risk or raise the leverage."
+  },
+  "trades": {
+    "title": "My trades",
+    "add": "Add trade",
+    "empty": {
+      "title": "No trades here yet. Add your first trade so Tartib can start analyzing your trading discipline.",
+      "cta": "Add first trade"
+    },
+    "noResults": "No trades match these filters.",
+    "cols": {
+      "date": "Date",
+      "instrument": "Instrument",
+      "direction": "Direction",
+      "entry": "Entry",
+      "exit": "Exit",
+      "size": "Size",
+      "pnl": "P&L",
+      "emotion": "Emotion",
+      "rules": "Rules"
+    },
+    "rulesFollowed": "Followed",
+    "rulesViolated": "Broken",
+    "filters": {
+      "from": "From date",
+      "to": "To date",
+      "instrument": "Instrument",
+      "direction": "Direction",
+      "result": "Result",
+      "profit": "Profit",
+      "loss": "Loss",
+      "emotion": "Emotion",
+      "rules": "Rules",
+      "all": "All",
+      "apply": "Apply",
+      "reset": "Reset",
+      "title": "Filters and search"
+    },
+    "pagination": {
+      "prev": "Back",
+      "next": "Next",
+      "page": "Page {page} of {total}"
+    },
+    "form": {
+      "newTitle": "New trade",
+      "editTitle": "Edit trade",
+      "account": "Trading account",
+      "instrument": "Instrument",
+      "market": "Market",
+      "direction": "Direction",
+      "entry": "Entry price",
+      "exit": "Exit price",
+      "stop": "Stop-loss",
+      "takeProfit": "Take-profit",
+      "size": "Size (asset units)",
+      "leverage": "Leverage",
+      "riskPercent": "Risk, %",
+      "pnl": "P&L",
+      "pnlHint": "Calculated from entry, exit and size. You can change it manually, for example to include fees.",
+      "emotion": "Emotion",
+      "violated": "Rules broken",
+      "violatedHint": "Mark the rules you broke. Rules broken by the numbers are marked automatically.",
+      "auto": "auto",
+      "noActiveRules": "You have no active rules.",
+      "reason": "Reason for entry",
+      "plan": "Trading plan",
+      "comment": "Comment after the trade",
+      "tradedAt": "Date and time",
+      "save": "Save trade",
+      "fromCalculator": "Data carried over from the calculator.",
+      "strategy": "Strategy",
+      "strategyHint": "For example “Breakout” or “Pullback”. Statistics are built from it.",
+      "fees": "Commission and swap",
+      "feesHint": "What you paid the broker or exchange. P&L is calculated after fees.",
+      "tzHint": "Time is entered in the time zone from your settings: {tz}",
+      "saveAgain": "Save and add another",
+      "savedAgain": "Trade saved. You can record the next one.",
+      "saveTip": "Tip: Ctrl+Enter saves the trade",
+      "sizeStocks": "Number of shares",
+      "sizeFutures": "Size: contracts × point value",
+      "futuresHint": "For example, 2 MNQ contracts at $2 per point = 4. The Futures risk calculator works this out for you.",
+      "ph": {
+        "crypto": "BTC/USDT",
+        "forex": "XAUUSD",
+        "stocks": "AAPL",
+        "futures": "MNQ",
+        "options": "AAPL 200C 2026-12-18",
+        "metals": "XAUUSD"
+      },
+      "closedPdtHint": "Closing time feeds the day-trade (PDT) counter on the dashboard.",
+      "contractMode": "I trade contracts",
+      "contracts": "Contracts",
+      "contractSize": "Size of one contract",
+      "contractSizeHint": "How many units of the asset one contract holds (for example, 100)",
+      "contractTotal": "Position size (contracts × contract size)",
+      "optionsHint": "Option: enter the premium per share in the entry and exit price fields, contracts as many as you bought, contract size is usually 100. Buying an option is “long”, selling is “short”.",
+      "metalsHint": "Gold and metals: price in dollars per ounce. Contract mode is on for broker lots: as many contracts as lots, contract size in ounces (gold 100, silver 5,000, platinum and palladium 100). For GC futures enter 100, for micro MGC 10."
+    },
+    "detail": {
+      "risk": "Risk",
+      "riskReward": "R:R",
+      "potentialLoss": "Potential loss",
+      "potentialProfit": "Potential profit",
+      "discipline": "Discipline",
+      "followed": "Rules followed",
+      "violated": "Rules broken",
+      "back": "Back to trades",
+      "deleteTitle": "Delete this trade?",
+      "deleteText": "The trade will be deleted permanently.",
+      "none": "—",
+      "neighbors": "Adjacent trades",
+      "prev": "Earlier",
+      "next": "Later"
+    },
+    "account": "Account",
+    "noAccount": "Couldn't find the trading account.",
+    "notFound": "Trade not found.",
+    "saveFailed": "Couldn't save the trade. Please try again.",
+    "deleteFailed": "Couldn't delete the trade. Please try again.",
+    "export": "Download CSV",
+    "import": "Import",
+    "cooldown": "Your last trade closed at a loss {m} min ago. Take a pause and go through your checklist before opening a new one.",
+    "period": {
+      "title": "Period",
+      "all": "All",
+      "today": "Today",
+      "d7": "7 days",
+      "d30": "30 days",
+      "month": "This month"
+    },
+    "summary": {
+      "found": "Found:",
+      "net": "Net:",
+      "winRate": "Win rate:",
+      "limited": "over the first {n} trades"
+    },
+    "sort": {
+      "title": "Sort",
+      "new": "newest",
+      "old": "oldest",
+      "best": "best",
+      "worst": "worst"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "subtitle": "All numbers are calculated from your trade journal.",
+    "period": {
+      "7d": "7 days",
+      "30d": "30 days",
+      "all": "All time"
+    },
+    "none": "—",
+    "kpi": {
+      "totalPnl": "Total P&L",
+      "winRate": "Win rate",
+      "profitFactor": "Profit factor",
+      "avgWin": "Average win",
+      "avgLoss": "Average loss",
+      "maxDrawdown": "Max drawdown",
+      "totalTrades": "Total trades",
+      "avgR": "Average R"
+    },
+    "discipline": {
+      "title": "Price of discipline",
+      "followed": "Following rules",
+      "violated": "With violations",
+      "difference": "Difference",
+      "trades": "Trades: {n}",
+      "cost": "Cost of violations",
+      "costText": "Without the trades that broke your rules, your result would have been {amount} higher.",
+      "noLoss": "Trades with violations did not lose money in this period.",
+      "noViolations": "No violations in this period. Keep it up!",
+      "empty": "The calculation will appear after your first trades."
+    },
+    "charts": {
+      "equity": "Equity curve",
+      "byDay": "P&L by day",
+      "byInstrument": "P&L by instrument",
+      "byEmotion": "P&L by emotion",
+      "byRules": "P&L by rule compliance",
+      "balance": "Balance",
+      "pnl": "P&L",
+      "tradesCount": "Trades: {n}",
+      "noData": "No data for this period.",
+      "byStrategy": "P&L by strategy",
+      "noStrategy": "Set a strategy on your trades and the comparison will appear here."
+    },
+    "emotions": {
+      "title": "Emotion analysis",
+      "subtitle": "Conclusions are based only on your own journal.",
+      "count": "Trades",
+      "total": "Total",
+      "average": "Average",
+      "insight": "In your journal, trades with the emotion {emotion} give {avg} on average.",
+      "tooFew": "Not enough data for {emotion} yet: {n} trades, at least 3 needed.",
+      "note": "This is an observation from your data, not a general rule."
+    },
+    "emptyPeriod": "No trades in this period.",
+    "time": {
+      "title": "When you trade",
+      "subtitle": "Time is counted in your time zone ({tz}).",
+      "byWeekday": "P&L by weekday",
+      "byHour": "P&L by time of day",
+      "worstDay": "Violations happen most on this weekday: {day} ({v} violations in {n} trades).",
+      "worstHour": "Violations happen most at this time of day: {hours} ({v} violations in {n} trades).",
+      "noPattern": "No clear pattern yet: it takes at least 3 trades and 2 violations on the same day or time.",
+      "note": "This is an observation from your journal, not a recommendation to trade at a certain time."
+    },
+    "tilt": {
+      "title": "After a loss",
+      "subtitle": "How you trade within an hour after a losing trade.",
+      "afterLoss": "Trades within an hour after a loss",
+      "other": "Other trades",
+      "trades": "trades",
+      "violations": "with rule violations",
+      "avg": "average result",
+      "warn": "You break the rules more often after a loss. Try a pause rule: after a stop-out, do not open a new trade for 15 minutes.",
+      "ok": "No noticeable difference: after a loss you keep to the rules as usual.",
+      "notEnough": "Not enough data yet: at least 3 trades are needed in each group."
+    },
+    "best": {
+      "title": "Best and worst trades",
+      "best": "Best",
+      "worst": "Worst",
+      "none": "none"
+    }
+  },
+  "dashboard": {
+    "greeting": "Hi, {name}!",
+    "today": {
+      "title": "Today",
+      "balance": "Current balance",
+      "pnl": "P&L today",
+      "trades": "Trades today",
+      "winRate": "Win rate today"
+    },
+    "recent": {
+      "title": "Recent trades",
+      "all": "All trades"
+    },
+    "violations": {
+      "title": "Your frequent violations",
+      "period": "Last 30 days",
+      "none": "No violations in the last 30 days.",
+      "times": "Violations: {n}",
+      "period7d": "Last 7 days"
+    },
+    "discipline": {
+      "period": "Last 30 days",
+      "more": "More in statistics",
+      "period7d": "Last 7 days"
+    }
+  },
+  "settings": {
+    "general": "General",
+    "timezone": "Time zone",
+    "timezoneHint": "Used so that “today” follows your local time. For example, Asia/Tashkent.",
+    "badTimezone": "No such time zone. Pick one from the suggestions.",
+    "saved": "Saved.",
+    "saveFailed": "Couldn't save. Please try again.",
+    "accounts": "Trading accounts",
+    "addAccount": "Add account",
+    "renameAccount": "Rename account",
+    "accountsLimit": "Maximum number of accounts reached (10).",
+    "checklistMax": "No more than 10 questions.",
+    "transactions": {
+      "title": "Deposits and withdrawals",
+      "text": "Record money you add or take out. It changes the account balance but is not counted as profit, loss or drawdown.",
+      "kind": "Operation",
+      "deposit": "Deposit",
+      "withdrawal": "Withdrawal",
+      "amount": "Amount",
+      "date": "Date",
+      "dateHint": "Leave empty for today.",
+      "note": "Note (optional)",
+      "add": "Record"
+    }
+  },
+  "profile": {
+    "name": "Name",
+    "dangerTitle": "Delete account",
+    "dangerText": "Your account and all data (accounts, rules, trades, reports) will be deleted permanently. This cannot be undone.",
+    "deleteAccount": "Delete account",
+    "deleteTitle": "Delete account permanently?",
+    "deleteText": "All your data will disappear and cannot be recovered.",
+    "deleteType": "To confirm, type your email: {email}",
+    "deleteConfirm": "Delete permanently",
+    "deleteMismatch": "The email does not match the account email.",
+    "deleteFailed": "Couldn't delete the account. Please try again.",
+    "dataTitle": "My data",
+    "dataText": "Download everything stored in your account: accounts, rules, trades, deposits and withdrawals, reports.",
+    "dataDownload": "Download my data (JSON)",
+    "mfa": {
+      "title": "Two-factor authentication",
+      "text": "Besides the password, signing in needs a code from an authenticator app (Google Authenticator, Microsoft Authenticator, Authy and similar).",
+      "on": "On",
+      "off": "Off",
+      "enable": "Turn on protection",
+      "disable": "Turn off protection",
+      "disableTitle": "Turn off two-factor authentication?",
+      "disableText": "Signing in will again need only a password. The account becomes less protected.",
+      "scan": "Scan the QR code in your authenticator app or enter the secret key manually.",
+      "secret": "Secret key",
+      "codeLabel": "6-digit code from the app",
+      "confirm": "Confirm and turn on",
+      "failed": "Couldn't complete the action. Please try again.",
+      "lostHint": "If you lose your phone, signing in is impossible without help from the service owner. Keep the secret key in a safe place."
+    },
+    "usage": "Usage",
+    "allFree": "Everything is free and unlimited."
+  },
+  "states": {
+    "errorTitle": "Something went wrong",
+    "errorText": "We couldn't load this page. Please try again.",
+    "retry": "Try again",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "The link may be outdated or contain a typo.",
+    "home": "Go home"
+  },
+  "reports": {
+    "title": "Weekly report",
+    "generate": "Generate report",
+    "regenerate": "Refresh report",
+    "none": "No report yet. Press the button to summarize the last 7 days.",
+    "period": "Period: {from} — {to}",
+    "noTrades": "No trades this week.",
+    "trades": "Trades: {n}.",
+    "result": "Result for the week: {pnl}.",
+    "violationTrades": "Trades that broke your rules: {n}.",
+    "topViolation": "The rule broken most often was “{name}” (violations: {count}). Result of those trades: {pnl}.",
+    "noViolations": "No rule violations this week.",
+    "best": "Best category by result — {kind} {key}: {pnl} (trades: {n}).",
+    "kinds": {
+      "instrument": "instrument",
+      "emotion": "emotion"
+    },
+    "by": {
+      "rules": "Built from rules, no AI",
+      "ai": "Built with AI"
+    },
+    "note": "The report describes your behaviour based on your journal. It is not a forecast or a trading recommendation.",
+    "failed": "Couldn't build the report. Please try again."
+  },
+  "screenshot": {
+    "title": "Chart screenshot",
+    "add": "Add screenshot",
+    "replace": "Replace",
+    "choose": "Choose file",
+    "hint": "Attach a chart image (PNG, JPG or WebP up to 5 MB) to review the trade later.",
+    "invalid": "A PNG, JPG or WebP image is required.",
+    "tooBig": "The file is larger than 5 MB.",
+    "failed": "Couldn't save the screenshot. Please try again."
+  },
+  "streak": {
+    "title": "Discipline streak",
+    "current": "trades in a row without violations",
+    "best": "Best streak: {n}",
+    "neverViolated": "No violations yet",
+    "daysSince": "Days without violations: {n}",
+    "next": "{left} more trades to reach {m}",
+    "top": "You have passed every milestone. Keep it up!",
+    "milestone": "Milestone reached: {m} trades in a row"
+  },
+  "calendar": {
+    "title": "Trade calendar",
+    "prev": "Previous month",
+    "next": "Next month",
+    "trades": "Trades: {n}",
+    "total": "This month: {pnl}, trades: {n}"
+  },
+  "checklist": {
+    "title": "Pre-trade checklist",
+    "text": "Tick what is done. It is only a reminder: the decision stays with you.",
+    "continue": "Continue",
+    "unchecked": "Unticked items: {n}. You can continue, but it is worth a second look.",
+    "defaults": {
+      "plan": "The trade is from my trading plan",
+      "stop": "Stop-loss is set",
+      "risk": "Risk is within my rules",
+      "calm": "I am calm, not excited",
+      "revenge": "I am not trying to win back a previous loss"
+    },
+    "settingsTitle": "Pre-trade checklist",
+    "settingsText": "A short list of questions shown in the calculator before you record a trade.",
+    "enable": "Show the checklist",
+    "itemsLabel": "Questions",
+    "itemsHint": "One question per line, up to 10. An empty list restores the defaults."
+  },
+  "admin": {
+    "title": "Owner panel",
+    "users": "Users",
+    "users7d": "New in 7 days",
+    "onboarded": "Finished onboarding",
+    "active7d": "Active in 7 days",
+    "trades": "Total trades",
+    "trades7d": "Trades in 7 days",
+    "rules": "Total rules",
+    "recent": "Recent sign-ups",
+    "registered": "Registered",
+    "notFound": "No user with this email.",
+    "resetMfa": "Reset two-factor authentication",
+    "resetMfaText": "For a user who lost their phone. They can sign in with a password and turn protection on again.",
+    "resetMfaButton": "Reset",
+    "broadcast": "Announcement to everyone",
+    "broadcastText": "All users see it in the bell, and those who connected Telegram get it there too. It is sent once and cannot be recalled.",
+    "broadcastTitle": "Title",
+    "broadcastBody": "Text",
+    "broadcastSend": "Send to everyone",
+    "broadcastDone": "Sent to users: {n}.",
+    "broadcastInvalid": "Fill in a title (up to 80 characters) and text (up to 500).",
+    "broadcastConfirm": "Send the announcement to all users? It cannot be recalled.",
+    "no2fa": "Your owner account is protected by a password only. Turn on two-factor protection: even if the password is stolen, the owner panel stays closed.",
+    "no2faLink": "Turn on in profile",
+    "reportsTitle": "Message reports",
+    "reportsHint": "Messenger",
+    "reportsNone": "No reports.",
+    "reportAuthor": "Author",
+    "reportFrom": "Reported by",
+    "reportReason": "Reason",
+    "reportBanned": "already banned",
+    "reportDismiss": "Dismiss report",
+    "reportDelete": "Delete message",
+    "reportBan": "Delete and ban the author",
+    "reportBanConfirm": "Ban the author from the messenger? They will no longer be able to write."
+  },
+  "import": {
+    "title": "Import trades",
+    "intro": "Upload a CSV table of trades from Excel, Google Sheets, an exchange or a broker. Tartib detects the columns itself; fix them manually if it guesses wrong. Each trade is checked against your rules like a manually entered one.",
+    "columns": "Columns",
+    "required": "Required fields: instrument, direction (long/short or buy/sell), entry price and size. Separate several broken rules in one cell with the | sign.",
+    "template": "Download a sample file",
+    "file": "File (CSV or MetaTrader HTML report)",
+    "missing": "No columns found for required fields: {cols}. Choose them manually below.",
+    "limitRows": "The first {n} rows will be processed.",
+    "summary": "Valid rows: {valid}. With errors: {invalid}.",
+    "lineError": "Line {line}: {reason}",
+    "more": "…and {n} more",
+    "progress": "Importing… {done} of {total}",
+    "run": "Import trades: {n}",
+    "done": "Trades imported: {n}",
+    "errDirection": "direction must be long or short",
+    "errMarket": "market: crypto, forex, stocks or futures",
+    "errValues": "invalid values in the row",
+    "tooBig": "The file is larger than 2 MB.",
+    "mappingTitle": "Column mapping",
+    "mappingText": "For each field choose a column from your file. Fields with a star are required.",
+    "notUsed": "— not used —",
+    "errDate": "could not read the date",
+    "fields": {
+      "date_time": "Date and time",
+      "instrument": "Instrument",
+      "market": "Market",
+      "direction": "Direction",
+      "entry": "Entry price",
+      "exit": "Exit price",
+      "stop_loss": "Stop-loss",
+      "take_profit": "Take-profit",
+      "size": "Size",
+      "leverage": "Leverage",
+      "risk_percent": "Risk, %",
+      "fees": "Commission",
+      "pnl": "P&L",
+      "emotion": "Emotion",
+      "strategy": "Strategy",
+      "violated_rules": "Rules broken",
+      "reason": "Reason for entry",
+      "plan": "Trading plan",
+      "comment": "Comment",
+      "tags": "Tags",
+      "grade": "Grade",
+      "mistakes": "Mistakes",
+      "closed_at": "Closed at"
+    },
+    "detected": "{platform} report detected: {used} trades, {skipped} skipped",
+    "mtNotice": "Closed buy and sell trades were taken. Deposits, pending orders and open positions were skipped. Result = profit + commission + swap. Trade time is taken from the broker server clock. Size is converted from lots to units (currency pairs ×100,000, gold ×100).",
+    "unknownHtml": "No MetaTrader report was found in this HTML file. For MT4 choose “Detailed Statement”, for MT5 “Trade History Report”, and save it as HTML.",
+    "duplicate": "this trade is already in your journal"
+  },
+  "quick": {
+    "button": "Quick entry",
+    "title": "Quick trade entry",
+    "full": "Full form",
+    "hint": "You can add the rest later in the trade itself. Rules are checked automatically.",
+    "invalid": "Fill in the instrument, entry price and size. Numbers must be above zero.",
+    "line": "One line",
+    "lineHint": "Instrument, direction, entry, stop, take profit, size, leverage. Any order.",
+    "lineFound": "Recognised",
+    "lineOpen": "Open the form"
+  },
+  "reminder": {
+    "title": "You haven't logged trades for {n} days",
+    "text": "If you traded, add your trades to the journal while you remember the details."
+  },
+  "goal": {
+    "title": "Monthly goal",
+    "target": "goal: {n}% by the rules",
+    "change": "Goal:",
+    "noTrades": "No trades yet this month.",
+    "reached": "Goal reached: {followed} of {total} trades followed the rules.",
+    "left": "{followed} of {total} followed the rules. To reach the goal you need {n} more trades by the rules in a row.",
+    "progress": "{followed} of {total} trades followed the rules."
+  },
+  "achievements": {
+    "title": "Achievements",
+    "done": "Unlocked",
+    "items": {
+      "first_trade": {
+        "name": "First entry",
+        "hint": "Log your first trade"
+      },
+      "trades_10": {
+        "name": "10 entries",
+        "hint": "Log 10 trades"
+      },
+      "trades_50": {
+        "name": "50 entries",
+        "hint": "Log 50 trades"
+      },
+      "trades_100": {
+        "name": "100 entries",
+        "hint": "Log 100 trades"
+      },
+      "streak_5": {
+        "name": "Streak 5",
+        "hint": "5 trades by the rules in a row"
+      },
+      "streak_10": {
+        "name": "Streak 10",
+        "hint": "10 trades by the rules in a row"
+      },
+      "streak_20": {
+        "name": "Streak 20",
+        "hint": "20 trades by the rules in a row"
+      },
+      "clean_week": {
+        "name": "Clean week",
+        "hint": "3 trades in 7 days with no violations"
+      }
+    }
+  },
+  "share": {
+    "title": "Discipline card",
+    "titleNamed": "Discipline: {name}",
+    "subtitle": "Journal results from Tartib.",
+    "discipline30": "Trades by own rules, last 30 days",
+    "noTrades": "No entries in the last 30 days.",
+    "ofTrades": "{followed} of {total} trades without breaking rules",
+    "streak": "Streak by the rules",
+    "entries": "Total entries",
+    "privacy": "No amounts, instruments or trades are shown here. Only the share of trades by the rules and the streak.",
+    "cta": "Keep your own journal",
+    "cardTitle": "Share your result",
+    "cardText": "Create a link to a card showing only the share of trades by your rules and your streak. Amounts, instruments and trades are not shown. You can turn the link off at any time.",
+    "on": "Create link",
+    "off": "Turn link off",
+    "renew": "New link",
+    "copy": "Copy",
+    "copied": "Copied",
+    "link": "Card link"
+  },
+  "telegram": {
+    "title": "Telegram bot",
+    "on": "Connected",
+    "off": "Not connected",
+    "text": "Log trades by messaging the bot and get reminders. The bot only keeps records: it gives no advice and does not trade for you.",
+    "connect": "Connect Telegram",
+    "step1": "Press the button below: Telegram will open.",
+    "step2": "In the chat with the bot press “Start”.",
+    "open": "Open in Telegram",
+    "manual": "If the button didn't work: find {bot} and send it /start {code}. The code is valid for 15 minutes.",
+    "check": "I connected, refresh",
+    "reminders": "Reminders if no entries for 3 days",
+    "disconnect": "Disconnect",
+    "failed": "Something went wrong. Please try again.",
+    "notify": "Notifications in Telegram"
+  },
+  "news": {
+    "title": "Market news",
+    "subtitle": "Fresh trading news from open sources: crypto, stock and commodity markets, Forex and exchange rates. Tap a headline to read the article on the source's site.",
+    "cats": {
+      "all": "All",
+      "crypto": "Crypto",
+      "markets": "Markets",
+      "forex": "Forex",
+      "uzbekistan": "Uzbekistan: rates & markets"
+    },
+    "langLabel": "Language",
+    "langs": {
+      "all": "All",
+      "ru": "RU",
+      "en": "EN",
+      "uz": "UZ"
+    },
+    "empty": "No news for this filter yet.",
+    "unavailable": "The sources are unavailable right now. Please try again later.",
+    "note": "Headlines, images and links belong to their authors; articles open on the sources' sites. Sources:"
+  },
+  "blog": {
+    "title": "Blog on trading discipline",
+    "subtitle": "Short, clear articles: how to keep a journal, calculate risk and stop emotions from spending your money.",
+    "read": "Read",
+    "minutes": "{n} min read",
+    "back": "← All articles",
+    "cta": "Try it in practice: keep a journal and see the cost of your rule-breaking.",
+    "ctaBtn": "Start for free",
+    "edu": "This material is educational."
+  },
+  "tools": {
+    "title": "Trader tools",
+    "subtitle": "Free calculators. They work without signing up and every calculation runs right in your browser.",
+    "open": "Open",
+    "all": "← All tools",
+    "result": "Result",
+    "fillIn": "Fill in the fields to see the result.",
+    "invalid": "Check the values: numbers must be valid and positive, and the stop must differ from the entry.",
+    "note": "Calculations are for reference and ignore fees, slippage and gaps. This is not investment advice.",
+    "cta": "Want to keep a trade journal and see the cost of breaking your rules?",
+    "ctaBtn": "Start for free",
+    "long": "Long (buy)",
+    "short": "Short (sell)",
+    "none": "no data",
+    "size": {
+      "title": "Position size calculator",
+      "desc": "How many units of the asset to buy so that a stop-out loses the amount you chose in advance.",
+      "f": {
+        "balance": "Account",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price",
+        "stop": "Stop price"
+      },
+      "o": {
+        "direction": "Direction",
+        "riskAmount": "Amount at risk",
+        "distance": "Distance to stop",
+        "units": "Position size, units",
+        "value": "Position value"
+      }
+    },
+    "rr": {
+      "title": "Risk to reward calculator",
+      "desc": "The ratio of potential profit to loss and the minimum win rate at which trading does not lose money.",
+      "f": {
+        "entry": "Entry price",
+        "stop": "Stop price",
+        "target": "Target price (take profit)",
+        "winRate": "Win rate, % (optional)"
+      },
+      "o": {
+        "direction": "Direction",
+        "risk": "Risk per unit",
+        "reward": "Reward per unit",
+        "rr": "Risk to reward",
+        "breakEven": "Break-even win rate",
+        "expectancy": "Expectancy per trade, R"
+      }
+    },
+    "streak": {
+      "title": "Losing streaks",
+      "desc": "How often long losing streaks happen even with a working strategy and what they do to your account.",
+      "f": {
+        "winRate": "Win rate, %",
+        "trades": "Number of trades",
+        "streak": "Losing streak length",
+        "riskPct": "Risk per trade, %"
+      },
+      "o": {
+        "single": "Chance of such a streak at a given spot",
+        "atLeast": "Chance of at least one such streak over these trades",
+        "drawdown": "Drawdown after the streak",
+        "recovery": "Growth needed to recover, %"
+      },
+      "note": "The calculation assumes independent trades with the same probability. In real life this is an approximation."
+    },
+    "recovery": {
+      "title": "Drawdown recovery",
+      "desc": "Why losing 50% is easy and getting it back is hard: how much growth you need after a drawdown.",
+      "f": {
+        "drawdown": "Drawdown, %"
+      },
+      "o": {
+        "needed": "Growth needed to recover, %",
+        "mult": "Account must be multiplied by"
+      }
+    },
+    "compound": {
+      "title": "Compound growth",
+      "desc": "How an amount grows with a constant monthly return and deposits. A math illustration, not a forecast.",
+      "f": {
+        "start": "Starting amount",
+        "monthlyPct": "Monthly return, %",
+        "months": "Months",
+        "deposit": "Monthly deposit"
+      },
+      "o": {
+        "final": "Final amount",
+        "deposited": "Total deposited",
+        "gain": "Gain"
+      },
+      "note": "Steady returns do not exist in trading. The result only shows the arithmetic of percentages."
+    },
+    "sessions": {
+      "title": "Trading sessions and market hours",
+      "desc": "Which market sessions are open right now in Sydney, Tokyo, London and New York, and how long until they open or close.",
+      "open": "Open",
+      "closed": "Closed",
+      "closesIn": "closes in {t}",
+      "opensIn": "opens in {t}",
+      "yourTime": "Your time: {tz}",
+      "hours": "{o}:00–{c}:00 local time",
+      "overlap": "Two sessions are running at once: {names}.",
+      "names": {
+        "sydney": "Sydney",
+        "tokyo": "Tokyo",
+        "london": "London",
+        "newyork": "New York"
+      },
+      "note": "Hours are typical for the Forex market and follow daylight saving time. A specific exchange may differ; weekends are Saturday and Sunday.",
+      "h": "{h} h",
+      "m": "{m} min",
+      "d": "{d} d"
+    },
+    "kelly": {
+      "title": "Kelly criterion",
+      "desc": "What share of your account is mathematically worth risking per trade, given your win rate and reward-to-risk ratio.",
+      "f": {
+        "winRate": "Win rate, %",
+        "rr": "Reward to risk (e.g. 2 for 1:2)"
+      },
+      "o": {
+        "edge": "Expectancy per trade, R",
+        "full": "Full Kelly",
+        "half": "Half Kelly",
+        "quarter": "Quarter Kelly"
+      },
+      "note": "Full Kelly means big drawdowns. Practitioners use half or a quarter. If expectancy is negative the result is 0%: there is nothing to bet."
+    },
+    "ruin": {
+      "title": "Risk of ruin",
+      "desc": "The probability that, at a given risk per trade, your account ever falls to the chosen drawdown. It shows why position risk matters more than entries.",
+      "f": {
+        "winRate": "Win rate, %",
+        "rr": "Reward to risk (e.g. 2 for 1:2)",
+        "riskPct": "Risk per trade, %",
+        "ruinDrawdown": "Drawdown counted as “ruin”, %"
+      },
+      "o": {
+        "expectancy": "Expectancy per trade, R",
+        "cushion": "Cushion, losing trades in a row",
+        "ruin": "Probability of reaching this drawdown"
+      },
+      "note": "The model assumes independent trades with constant probability and risk. It is an approximation, not a forecast."
+    },
+    "liq": {
+      "title": "Liquidation price",
+      "desc": "The approximate price at which an isolated leveraged position is force-closed by the exchange.",
+      "f": {
+        "entry": "Entry price",
+        "size": "Position size, units",
+        "leverage": "Leverage",
+        "maintenance": "Maintenance margin, %",
+        "side": "Direction"
+      },
+      "o": {
+        "direction": "Direction",
+        "price": "Liquidation price",
+        "distance": "Distance from entry",
+        "margin": "Position margin"
+      },
+      "note": "Approximate: exchanges include fees and use their own formulas. Check the price on your exchange before trading."
+    },
+    "fee": {
+      "title": "Break-even with fees",
+      "desc": "The price at which a trade with entry and exit fees ends at zero.",
+      "f": {
+        "entry": "Entry price",
+        "feePct": "Fee per side, %",
+        "side": "Direction"
+      },
+      "o": {
+        "price": "Break-even price",
+        "move": "Price move needed",
+        "total": "Entry plus exit fee"
+      },
+      "note": "Spread and slippage are not included."
+    },
+    "profit": {
+      "title": "Trade result",
+      "desc": "Profit or loss of a trade including fees.",
+      "f": {
+        "entry": "Entry price",
+        "exit": "Exit price",
+        "size": "Position size, units",
+        "feePct": "Fee per side, %",
+        "balance": "Account balance (optional)",
+        "side": "Direction"
+      },
+      "o": {
+        "gross": "Before fees",
+        "fees": "Fees",
+        "net": "Net result",
+        "pctPosition": "Of position value",
+        "pctBalance": "Of account"
+      }
+    },
+    "goal": {
+      "title": "Goal planner",
+      "desc": "How many months it takes to reach a target at a steady monthly return with deposits.",
+      "f": {
+        "start": "Now",
+        "target": "Target",
+        "monthlyPct": "Monthly return, %",
+        "deposit": "Monthly deposit"
+      },
+      "o": {
+        "months": "Months",
+        "years": "Years",
+        "deposited": "Deposited over the period"
+      },
+      "note": "Trading returns are never steady. This is percentage arithmetic, not a forecast or a promise."
+    },
+    "margin": {
+      "title": "Margin and leverage",
+      "desc": "How much of your own money a leveraged position needs and what share of your account it takes.",
+      "f": {
+        "positionValue": "Position value",
+        "leverage": "Leverage",
+        "balance": "Account balance (optional)"
+      },
+      "o": {
+        "margin": "Margin needed",
+        "pctBalance": "Share of account",
+        "maxPosition": "Maximum position at this leverage"
+      },
+      "note": "Higher leverage puts liquidation closer. Leverage does not raise expectancy, it raises risk."
+    },
+    "stock": {
+      "title": "Stock position size (Nasdaq, NYSE)",
+      "desc": "How many whole shares to buy or short so the loss at your stop stays within the risk you chose. Includes per-share commission.",
+      "f": {
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price, $",
+        "stop": "Stop price, $",
+        "feePerShare": "Commission per share (per side), $"
+      },
+      "o": {
+        "direction": "Direction",
+        "shares": "Number of shares",
+        "riskAmount": "Loss if the stop hits",
+        "value": "Position value",
+        "pctBalance": "Share of balance",
+        "commission": "Round-trip commission",
+        "leverage": "Leverage needed (position / balance)"
+      },
+      "note": "Shares trade in whole units, so the result is rounded down. If the share of balance is above 100%, you need broker leverage or a smaller size. Not investment advice."
+    },
+    "futures": {
+      "title": "Futures and gold risk (NQ, ES, GC, CL, XAUUSD)",
+      "desc": "How many contracts or lots fit your risk when the stop hits. Gold, silver, oil and indices: the point value is filled in from the contract.",
+      "f": {
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price",
+        "stop": "Stop price",
+        "contract": "Contract",
+        "feePerContract": "Commission per contract (per side), $"
+      },
+      "c": {
+        "1": "NQ — Nasdaq-100, $20 per point",
+        "2": "MNQ — micro Nasdaq, $2 per point",
+        "3": "ES — S&P 500, $50 per point",
+        "4": "MES — micro S&P, $5 per point",
+        "5": "GC — gold, 100 oz, $100 per $1",
+        "6": "MGC — micro gold, 10 oz, $10 per $1",
+        "7": "SI — silver, 5,000 oz, $5,000 per $1",
+        "8": "CL — WTI crude, 1,000 barrels, $1,000 per $1",
+        "9": "MCL — micro crude, $100 per $1",
+        "10": "YM — Dow Jones, $5 per point",
+        "11": "MYM — micro Dow, $0.5 per point",
+        "12": "RTY — Russell 2000, $50 per point",
+        "13": "M2K — micro Russell, $5 per point",
+        "14": "XAUUSD — gold at a broker, 1 lot = 100 oz, $100 per $1"
+      },
+      "o": {
+        "direction": "Direction",
+        "contracts": "Number of contracts",
+        "points": "Stop distance in points",
+        "riskPerContract": "Risk per contract",
+        "riskAmount": "Loss if the stop hits",
+        "formSize": "Size for the trade form"
+      },
+      "note": "Form size = contracts × point value, so profit and loss in Tartib come out right in dollars. Point values are for reference: check the exchange contract specs. Not investment advice."
+    },
+    "options": {
+      "title": "Options: payoff at expiry",
+      "desc": "Break-even, maximum profit and loss and the result of a bought or sold call and put at expiry.",
+      "f": {
+        "kind": "Option type",
+        "side": "Position",
+        "strike": "Strike",
+        "premium": "Premium per share",
+        "contracts": "Contracts",
+        "multiplier": "Shares per contract",
+        "underlying": "Underlying price at expiry (optional)"
+      },
+      "c": {
+        "1": "Call (right to buy)",
+        "2": "Put (right to sell)"
+      },
+      "o": {
+        "premiumTotal": "Total premium (paid or received)",
+        "breakeven": "Break-even price",
+        "maxProfit": "Maximum profit",
+        "maxLoss": "Maximum loss",
+        "moveToBreakeven": "Price move needed to break even",
+        "pnlAtExpiry": "Result at this price"
+      },
+      "note": "Calculated at expiry, ignoring fees and early closing. Long is a bought option, short is a sold (written) one. Sold options carry large risk. Not investment advice."
+    },
+    "unlimited": "Unlimited",
+    "forexlot": {
+      "title": "Forex: lot size, pip value, margin and spread",
+      "desc": "How many lots keep the loss at your stop within your risk. Also the pip value, margin and what the spread costs.",
+      "f": {
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "stopPips": "Stop in pips",
+        "pairClass": "Which pair",
+        "price": "Current pair price",
+        "quoteToUsd": "Quote currency to USD rate (for cross pairs)",
+        "spreadPips": "Spread in pips",
+        "leverage": "Leverage (optional)"
+      },
+      "c": {
+        "1": "Dollar last: EUR/USD, GBP/USD, AUD/USD",
+        "2": "Dollar first: USD/CHF, USD/CAD",
+        "3": "With yen: USD/JPY",
+        "4": "Cross without dollar: EUR/GBP, EUR/JPY"
+      },
+      "o": {
+        "pipValue": "Pip value per 1 lot, $",
+        "lots": "Position size, lots",
+        "units": "Units of base currency",
+        "riskAmount": "Loss if the stop hits, $",
+        "spreadCost": "Spread cost, $",
+        "margin": "Margin needed, $"
+      },
+      "note": "Dollar account, standard lot of 100,000 units, size rounded down to 0.01 lot. For cross pairs enter the rate of the last currency of the pair to the dollar (for EUR/GBP that is GBP/USD). Gold is in the “Futures and gold risk” calculator (XAUUSD lot). Not investment advice."
+    },
+    "avgprice": {
+      "title": "Averaging: new average price",
+      "desc": "What the average price becomes if you buy more cheaper or higher, and how far the price must rise to break even.",
+      "f": {
+        "amount": "How much you hold",
+        "avgPrice": "Current average price",
+        "buyAmount": "How much to buy",
+        "buyPrice": "Buy price"
+      },
+      "o": {
+        "newAvg": "New average price",
+        "avgChange": "Change of average price",
+        "newAmount": "Total after buying",
+        "totalCost": "Total invested",
+        "riseToBreakeven": "Rise from the buy price to break-even"
+      },
+      "note": "Calculated without fees. Averaging lowers the average price but raises the amount invested and the risk: price may keep falling. This is arithmetic, not advice to buy more."
+    },
+    "metalslot": {
+      "title": "Gold and metals: position size in lots",
+      "desc": "How many lots of gold, silver, platinum or palladium keep the stop-loss within your chosen risk. Also the value of a $1 move, spread cost and margin.",
+      "f": {
+        "metal": "Metal",
+        "balance": "Account balance, $",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price, $ per ounce",
+        "stop": "Stop price, $ per ounce",
+        "spread": "Spread, $ per ounce",
+        "leverage": "Leverage (optional)"
+      },
+      "c": {
+        "1": "Gold XAUUSD (lot 100 oz)",
+        "2": "Silver XAGUSD (lot 5000 oz)",
+        "3": "Platinum XPTUSD (lot 100 oz)",
+        "4": "Palladium XPDUSD (lot 100 oz)"
+      },
+      "o": {
+        "direction": "Direction",
+        "lots": "Position size, lots",
+        "ounces": "Ounces in the position",
+        "riskAmount": "Loss if the stop is hit, $",
+        "perDollar": "Profit or loss per $1 price move, $",
+        "spreadCost": "Spread cost, $",
+        "margin": "Margin needed, $"
+      },
+      "note": "Lot size can differ between brokers, so check your broker's specification. Size is rounded down to 0.01 lot. Reference only. Not investment advice."
+    },
+    "metalvalue": {
+      "title": "Gold: value of an item by purity and weight",
+      "desc": "What the pure gold in a piece of jewellery or a bar is worth: weight, purity and ounce price. Price per gram in dollars and in local currency.",
+      "f": {
+        "weightGrams": "Weight, grams",
+        "fineness": "Purity (out of 1000)",
+        "spotPerOunce": "Price per ounce, $",
+        "rate": "Rate: local currency per $1 (1 to stay in dollars)"
+      },
+      "c": {
+        "999": "999.9 / 999 (bar)",
+        "958": "958 (23 karat)",
+        "925": "925 (silver or 22 karat)",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "pureGrams": "Pure metal, grams",
+        "karat": "Karat",
+        "pricePerGram": "Price per gram of pure metal, $",
+        "valueUsd": "Value of pure metal, $",
+        "pricePerGramLocal": "Price per gram, local currency",
+        "valueLocal": "Value in local currency"
+      },
+      "note": "This is the metal's exchange value. Jewellery and coins are sold at a premium and buyers pay less. Reference only."
+    },
+    "bullion": {
+      "title": "Physical gold: premium and breakeven",
+      "desc": "How much you paid above the metal's value and how far the ounce price must rise to break even when selling to a dealer at a discount.",
+      "f": {
+        "weightGrams": "Weight, grams",
+        "fineness": "Purity (out of 1000)",
+        "spotPerOunce": "Current price per ounce, $",
+        "paid": "Total paid, $",
+        "sellDiscountPct": "Dealer buyback discount to market price, %"
+      },
+      "c": {
+        "999": "999.9 / 999 (bar)",
+        "958": "958 (23 karat)",
+        "925": "925",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "meltValue": "Value of the metal itself, $",
+        "premium": "Premium paid",
+        "breakevenSpot": "Breakeven ounce price, $",
+        "riseNeeded": "Price rise needed"
+      },
+      "note": "Ask your dealer or bank for their buyback discount. Taxes, storage and insurance are not included. Reference only, not investment advice."
+    },
+    "related": "See also",
+    "groupsNav": "Calculator sections"
+  },
+  "shortcuts": {
+    "title": "Keyboard shortcuts",
+    "hint": "Press ? to see keyboard shortcuts",
+    "new": "New trade",
+    "dashboard": "Dashboard",
+    "trades": "Trades",
+    "stats": "Statistics",
+    "rules": "Rules",
+    "calc": "Calculator",
+    "tools": "Tools",
+    "close": "Close",
+    "help": "This help"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Events from your journal: achievements, rule violations, the monthly goal and Tartib announcements.",
+    "empty": "No notifications yet. They appear when you earn an achievement, break a rule or reach your monthly goal.",
+    "markAll": "Mark all as read",
+    "clear": "Clear",
+    "enableBrowser": "Enable browser notifications",
+    "browserOn": "Browser notifications are on (when the tab is hidden).",
+    "browserDenied": "Browser notifications are blocked in the site settings.",
+    "browserNew": "New notifications: {n}",
+    "bellUnread": "Notifications: {n} unread",
+    "kinds": {
+      "achievement": "New achievement",
+      "violation": "Rules broken: {count}",
+      "goal": "Monthly goal reached",
+      "report": "Weekly report is ready",
+      "price_alert": "Alert triggered: {symbol}",
+      "support_reply": "Reply from the owner"
+    },
+    "bodies": {
+      "goal": "Discipline {percent}% against a goal of {goal}%.",
+      "report": "Open statistics to read the report.",
+      "priceAbove": "{symbol}: price rose to your level {price} (now {last}).",
+      "priceBelow": "{symbol}: price fell to your level {price} (now {last}).",
+      "supportReply": "Open the conversation to read the reply."
+    }
+  },
+  "adv": {
+    "title": "Advanced analytics",
+    "subtitle": "Deeper than ordinary statistics: expectancy, R, long vs short, sessions, heatmap, drawdown and the cost of each rule. Only facts from your journal.",
+    "link": "Advanced analytics",
+    "back": "Statistics",
+    "kpi": {
+      "expectancy": "Expectancy per trade",
+      "payoff": "Payoff ratio",
+      "profitFactor": "Profit factor",
+      "winRate": "Win rate",
+      "avgR": "Average result in R",
+      "longestWin": "Longest winning streak",
+      "longestLoss": "Longest losing streak"
+    },
+    "kpiHint": {
+      "expectancy": "What one trade brings on average",
+      "payoff": "Average win divided by average loss",
+      "avgR": "Profit in units of risk (1R is the amount you risk in a trade)"
+    },
+    "r": {
+      "title": "Results in R",
+      "subtitle": "How many units of risk you win or lose per trade. Losses are left of zero, profits are right.",
+      "note": "Counting trades with a known risk amount (a stop-loss is needed): {n} of {total}.",
+      "none": "No trades with a known risk. Set a stop-loss and the distribution will appear here."
+    },
+    "side": {
+      "title": "Long and short",
+      "long": "Long",
+      "short": "Short",
+      "trades": "Trades",
+      "winRate": "Winners",
+      "pnl": "Result",
+      "avg": "Average"
+    },
+    "sessions": {
+      "title": "Trading sessions",
+      "subtitle": "Trade time in UTC. Shows when you trade best and when you break rules most.",
+      "asia": "Asia (00–07)",
+      "europe": "Europe (07–13)",
+      "overlap": "Europe + US (13–17)",
+      "us": "US (17–22)",
+      "late": "Late evening (22–24)",
+      "trades": "Trades",
+      "winRate": "Winners",
+      "pnl": "Result",
+      "violations": "Violations"
+    },
+    "heat": {
+      "title": "When you trade best",
+      "subtitle": "Result by weekday and time of day, time zone: {tz}. Colour: green is profit, red is loss; the number is trades.",
+      "empty": "No trades in this cell"
+    },
+    "dd": {
+      "title": "Drawdown from peak",
+      "max": "Maximum drawdown: {amount} ({percent})",
+      "none": "Not enough data to calculate drawdown."
+    },
+    "months": {
+      "title": "Result by month"
+    },
+    "rules": {
+      "title": "What each rule costs",
+      "subtitle": "Result of trades where the rule was broken. Most costly first.",
+      "rule": "Rule",
+      "count": "Violations",
+      "pnl": "Total of trades",
+      "avg": "Average",
+      "none": "No rule violations in this period."
+    },
+    "risk": {
+      "title": "Risk consistency",
+      "avg": "Average risk",
+      "min": "Smallest",
+      "max": "Largest",
+      "variation": "Spread",
+      "hint": "The smaller the spread, the more evenly you risk. A large spread means your risk size changes a lot from trade to trade.",
+      "none": "No trades with a known risk amount."
+    },
+    "instruments": {
+      "title": "Instruments",
+      "instrument": "Instrument",
+      "trades": "Trades",
+      "winRate": "Winners",
+      "pnl": "Result",
+      "avgR": "Average R"
+    }
+  },
+  "chart": {
+    "title": "Price chart",
+    "timeframe": "Candle timeframe",
+    "loading": "Loading chart…",
+    "unsupported": "Charts work for crypto pairs (BTCUSDT), gold and metals (XAUUSD), oil, currency pairs (EURUSD), US stocks and indices (AAPL, ^NDX) and futures. There is no free keyless data for anything else.",
+    "no_data": "No candles for that time: the pair may not have traded yet.",
+    "unavailable": "Could not load data from the exchange. Try again later.",
+    "entry": "Entry",
+    "stop": "Stop",
+    "tp": "Target",
+    "exit": "Exit",
+    "note": "Pair {symbol}, data: {source} (spot). Prices on this exchange can differ slightly from your broker or futures prices.",
+    "offChart": "Some trade prices (entry, stop, target or exit) are far from the market at that time and are not drawn. Check the instrument, time and prices.",
+    "retry": "Retry",
+    "noteStocks": "Ticker {symbol}, data: {source}. The source is unofficial: prices may be delayed and differ from your broker. Futures show the continuous contract.",
+    "indicators": "Indicators"
+  },
+  "pwa": {
+    "title": "Phone app",
+    "text": "Install Tartib on your home screen: it opens like a regular app, without the address bar, with quick actions on long-press of the icon.",
+    "install": "Install app",
+    "installed": "The app is installed on this device.",
+    "ios": "On iPhone: open the site in Safari, tap Share (the square with an arrow), then “Add to Home Screen”.",
+    "manual": "Open the browser menu and choose “Install app” or “Add to Home screen”. In desktop Chrome the install icon is at the right of the address bar."
+  },
+  "charts": {
+    "title": "Charts",
+    "subtitle": "Fresh candles: crypto pairs, gold, silver, oil, currencies, indices and US stocks. Pick an instrument and a timeframe. Data is free, needs no keys and refreshes on the button.",
+    "quick": "Popular pairs",
+    "pair": "Pair",
+    "pairHint": "For example BTCUSDT, XAUUSD, EURUSD, AAPL, US100",
+    "show": "Show",
+    "refresh": "Refresh",
+    "unsupported": "I can't find that instrument. Try BTCUSDT, XAUUSD (gold), USOIL, EURUSD, US100, ^GSPC or AAPL.",
+    "note": "Data: {source} (spot), the last 120 candles. This is a reference chart, not trading advice.",
+    "quickOther": "Gold, indices, currencies, stocks",
+    "noteOther": "Data: {source}, last 120 candles. The source is unofficial: delays are possible and prices may differ from your broker. Gold and silver are shown as COMEX futures. A reference chart, not a trading recommendation.",
+    "short": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "oil": "Crude WTI",
+      "eurusd": "EUR/USD",
+      "usdjpy": "USD/JPY",
+      "ndx": "Nasdaq-100",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "aapl": "Apple",
+      "nvda": "Nvidia",
+      "tsla": "Tesla"
+    }
+  },
+  "market": {
+    "title": "Market",
+    "subtitle": "Market mood, the day's leaders, your watchlist, price alerts and the events calendar. The data is free.",
+    "unavailable": "Data is unavailable right now. Try again later.",
+    "sources": "Sources: alternative.me, OKX, CoinGecko, ForexFactory.",
+    "badSymbol": "I can't find that pair on the exchange. Examples: BTC, ETH/USDT, SOLUSDT.",
+    "badAlert": "Check the price: it must be a positive number.",
+    "noPrice": "Could not get the current price to choose a direction. Pick the direction manually.",
+    "limitWatch": "The watchlist holds at most 30 pairs.",
+    "limitAlerts": "You can keep at most 20 active alerts at once.",
+    "fear": {
+      "title": "Fear and Greed Index",
+      "labels": {
+        "extreme_fear": "Extreme fear",
+        "fear": "Fear",
+        "neutral": "Neutral",
+        "greed": "Greed",
+        "extreme_greed": "Extreme greed"
+      },
+      "fear": "fear",
+      "greed": "greed",
+      "previous": "Yesterday: {v}",
+      "dominance": "Bitcoin's share of the market cap: {v}%",
+      "hint": "Shows crypto market sentiment on a scale from 0 to 100. This is a reference indicator, not a signal."
+    },
+    "movers": {
+      "title": "24-hour leaders",
+      "hint": "USDT pairs with a daily turnover above 2 million (OKX, spot). Tap a pair to open its chart.",
+      "gainers": "Gainers",
+      "losers": "Losers"
+    },
+    "watch": {
+      "title": "Watchlist",
+      "add": "Add a pair",
+      "addButton": "Add",
+      "empty": "Empty for now. Add the pairs you follow.",
+      "noPrice": "no price",
+      "remove": "Remove {symbol}"
+    },
+    "alerts": {
+      "title": "Price alerts",
+      "subtitle": "When the price reaches the level you get a notification on the site and in Telegram. Checked every minute.",
+      "symbol": "Pair",
+      "price": "Price level",
+      "direction": "Condition",
+      "auto": "Detect automatically",
+      "above": "Price is at or above",
+      "below": "Price is at or below",
+      "aboveShort": "≥",
+      "belowShort": "≤",
+      "note": "Note (optional)",
+      "create": "Create alert",
+      "empty": "No active alerts.",
+      "delete": "Delete alert",
+      "triggered": "Recently triggered"
+    },
+    "calendar": {
+      "title": "Events calendar",
+      "subtitle": "Upcoming events this week, time zone: {tz}. Important news moves the market.",
+      "important": "Important only",
+      "allEvents": "All events",
+      "none": "No upcoming events.",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "forecast": "forecast",
+      "previous": "previous",
+      "impact": {
+        "high": "High impact",
+        "medium": "Medium impact",
+        "low": "Low impact",
+        "holiday": "Holiday"
+      }
+    }
+  },
+  "journal": {
+    "title": "Trade journal",
+    "tags": "Tags",
+    "tagsHint": "Comma-separated, up to 10. E.g. breakout, news",
+    "grade": "Execution grade",
+    "gradeHint": "A — followed the plan, D — many deviations. Grade how you stuck to the plan, not the profit.",
+    "gradeShort": "Grade {g}",
+    "mistakes": "Mistakes in this trade",
+    "mistake": "Mistake",
+    "mistakesHint": "Mark what went off plan. This is data for review, not a judgement of you.",
+    "duration": "Duration",
+    "units": {
+      "d": "{n} d",
+      "h": "{n} h",
+      "m": "{n} min"
+    },
+    "closedAt": "Closed at",
+    "closedAtHint": "If empty, duration is not calculated",
+    "close": "Close trade",
+    "closeTitle": "Close trade",
+    "closeText": "Enter the exit price — the result is calculated for you.",
+    "closeConfirm": "Close",
+    "closeTimeHint": "If empty, the current time is used",
+    "alreadyClosed": "This trade is already closed",
+    "errClosedBefore": "Close time cannot be before the open time",
+    "clone": "Clone",
+    "fromClone": "This is a copy of a trade: check prices and time before saving.",
+    "saveTemplate": "Save as template",
+    "templateName": "Template name",
+    "templateText": "Saves instrument, direction, strategy, tags and plan — without prices and time.",
+    "templateSaved": "Template saved. It will appear when you create a new trade.",
+    "template": "Template",
+    "templateNone": "No template",
+    "limitTemplates": "You can keep at most 20 templates",
+    "search": "Text search",
+    "searchHint": "Instrument, comment, reason…",
+    "tag": "Tag",
+    "mistakeNames": {
+      "fomo_entry": "Entered out of FOMO",
+      "moved_stop": "Moved the stop",
+      "oversize": "Position too large",
+      "early_exit": "Exited too early",
+      "late_exit": "Exited too late",
+      "no_plan": "No plan",
+      "revenge": "Revenge trade",
+      "overtrading": "Overtrading",
+      "chased": "Chased the price",
+      "no_stop": "No stop"
+    },
+    "an": {
+      "trades": "Trades",
+      "winRate": "Win rate",
+      "pnl": "Result",
+      "avg": "Average",
+      "mistakes": "What mistakes cost you",
+      "mistakesHint": "Result of trades where you marked this mistake. One trade can appear in several rows.",
+      "noMistakes": "No trades with marked mistakes yet. Mark them in the trade form.",
+      "grades": "By execution grade",
+      "gradesHint": "Shows whether trades made by the plan actually pay off.",
+      "noGrades": "No graded trades yet.",
+      "tags": "By tags",
+      "noTags": "No tagged trades yet.",
+      "duration": "By trade duration",
+      "avgDuration": "Average duration: winners — {win}, losers — {loss}.",
+      "noDuration": "Needs a close time, which is set when you close a trade."
+    },
+    "buckets": {
+      "lt5": "under 5 min",
+      "m5_30": "5–30 min",
+      "m30_120": "30 min – 2 h",
+      "h2_8": "2–8 hours",
+      "h8_24": "8–24 hours",
+      "gt24": "over a day"
+    },
+    "deleteTemplate": "Delete template",
+    "modeSimpleText": "Showing only the main fields.",
+    "modeFullText": "Showing all fields.",
+    "modeToFull": "Show all fields",
+    "modeToSimple": "Main only",
+    "sizeHint": "By formula: size {size} (risk {risk}% = {amount}). Use it",
+    "mistakeNote": "Why it happened",
+    "mistakeNoteHint": "In your own words: what you felt, what went wrong, what you will do differently. Only you can see this."
+  },
+  "risk": {
+    "title": "System quality and risk",
+    "subtitle": "Figures are calculated from trades in the selected period. This is arithmetic on past trades, not a forecast.",
+    "sqn": "SQN (system quality)",
+    "sqnNone": "needs 10+ trades with risk set",
+    "sqnHint": "Shows how steady your results are in R. Higher means smoother profit per unit of risk.",
+    "band": {
+      "poor": "poor",
+      "belowAvg": "below average",
+      "average": "average",
+      "good": "good",
+      "excellent": "excellent",
+      "superb": "superb"
+    },
+    "recovery": "Recovery factor",
+    "recoveryHint": "Net profit divided by the maximum drawdown in money.",
+    "longestWater": "Longest time below the peak",
+    "waterHint": "How many days the balance could not get back to its previous high.",
+    "currentWater": "Currently below the peak for",
+    "atPeak": "at the peak now",
+    "days": "{n} d",
+    "mathTitle": "Your Kelly and risk-of-ruin figures",
+    "mathText": "With {win}% winning trades and an average win to average loss of {payoff}, Kelly maths gives {kelly}% of the account per trade. At 1% risk per trade, the chance of ever losing 50% of the account in this model is {ruin}%.",
+    "mathNote": "The model assumes independent trades and constant numbers; it is a reference, not advice or a forecast.",
+    "mathNone": "Needs at least 20 trades, including both winners and losers.",
+    "weekday": "By day of the week",
+    "weekdayHint": "Time zone comes from your settings.",
+    "weekdayNone": "No trades in this period yet.",
+    "days7": {
+      "0": "Monday",
+      "1": "Tuesday",
+      "2": "Wednesday",
+      "3": "Thursday",
+      "4": "Friday",
+      "5": "Saturday",
+      "6": "Sunday"
+    }
+  },
+  "diary": {
+    "title": "Day diary",
+    "subtitle": "Plan and mood in the morning, result and lesson in the evening. After a couple of weeks you can see how your state affects results.",
+    "days": "Days",
+    "today": "Today",
+    "filled": "filled",
+    "mood": "Mood",
+    "energy": "Energy",
+    "scaleHint": "From 1 (bad) to 5 (great). Tap again to clear.",
+    "plan": "Plan for the day",
+    "planHint": "What you trade, where you enter, when you stop. Keep it short.",
+    "review": "Day review",
+    "reviewHint": "What worked, what did not, and why.",
+    "followed": "Did you follow the plan?",
+    "yes": "Yes",
+    "no": "No",
+    "lesson": "One lesson of the day",
+    "lessonHint": "One sentence you want to remember.",
+    "saved": "Saved.",
+    "readOnly": "Entries older than 14 days are read-only.",
+    "errDay": "You cannot write for this day: today and the last 14 days only.",
+    "streak": "Days in a row with an entry",
+    "daysWord": "d",
+    "streakBest": "Best streak: {n}",
+    "planEffect": "Plan and result",
+    "planYesDays": "Plan followed, days: {n}",
+    "planNoDays": "Plan broken, days: {n}",
+    "avgPerDay": "Average result per day.",
+    "planEffectNone": "Mark in your day review whether you followed the plan and a comparison will appear here.",
+    "moodEffect": "Mood and day result",
+    "moodNone": "Needs entries with mood at two or more different ratings and days with trades.",
+    "moodLevel": "Mood {n}",
+    "daysCount": "days: {n}",
+    "moodNote": "Average over days with trades. This is an observation, not cause and effect. Days counted:",
+    "history": "Recent entries",
+    "delete": "Delete entry",
+    "deleteConfirm": "Delete this day's entry?"
+  },
+  "report": {
+    "title": "Printable report",
+    "print": "Print / save as PDF",
+    "hint": "The print dialog will open. Choose “Save as PDF” to get a file.",
+    "generated": "generated {date}",
+    "empty": "No trades in this period.",
+    "trades": "Trades",
+    "net": "Net result",
+    "winRate": "Win rate",
+    "profitFactor": "Profit factor",
+    "expectancy": "Expectancy per trade",
+    "maxDd": "Maximum drawdown",
+    "discipline": "Rules followed",
+    "rulesCost": "Cost of rule violations",
+    "lastTrades": "Latest trades",
+    "link": "Printable report / PDF"
+  },
+  "start": {
+    "title": "First steps",
+    "subtitle": "{done} of {total} done. Do only what is useful to you.",
+    "hide": "Hide",
+    "steps": {
+      "trade": "Record your first trade",
+      "journal": "Add tags, a grade or mistakes to a trade",
+      "diary": "Write your first day diary entry",
+      "telegram": "Connect the Telegram bot"
+    }
+  },
+  "hero": {
+    "today": "Today",
+    "trades": "Trades",
+    "winRate": "Win rate",
+    "balance": "Balance",
+    "discipline": "Discipline",
+    "diary": "Day diary",
+    "hintNone": "No trades today. Plan first: write it in your diary, then open a position.",
+    "hintViolated": "There is a trade with a rule violation today. Stop and reread your rules before opening the next one.",
+    "hintLosing": "The day is in the red. That is normal. Check your daily limit and your rules, not the urge to win it back.",
+    "hintOk": "Every trade today followed your rules. Keep this pace; the result is secondary.",
+    "quick": "Quick",
+    "limit": "Daily loss limit",
+    "limitUsed": "{loss}% of {limit}%",
+    "limitNone": "No daily loss limit set",
+    "limitSet": "Set it",
+    "hintLimit": "Your daily loss limit is reached. Your own rule says: enough for today. Close the terminal and come back tomorrow.",
+    "hintPause": "Several losses in a row. Take a 15–30 minute break, stand up, walk, then reread your plan.",
+    "pauseBanner": "{n} losses in a row, the last one {m} min ago. Take a 15–30 minute break and reread your plan before opening a new trade."
+  },
+  "week": {
+    "title": "Week review",
+    "link": "Week review",
+    "subtitle": "The last 7 days against the previous 7. One takeaway and a few numbers.",
+    "empty": "No trades in the last 7 days. Record one and the review will appear here.",
+    "takeaway": "Main takeaway of the week",
+    "result": "Result",
+    "trades": "Trades",
+    "winRate": "Win rate",
+    "discipline": "Discipline",
+    "vsPrev": "vs last week",
+    "same": "same as last week",
+    "was": "was",
+    "best": "Best day",
+    "worst": "Worst day",
+    "takeRule": "Biggest leak this week: the rule “{name}” was broken in {n} trades, net {amount}. Think about what stops you following it and write it in your diary.",
+    "takeMistake": "Most expensive mistake this week: “{name}”, {n} trades, net {amount}. Tag it in your trades to catch the moment earlier.",
+    "takeDiscipline": "Discipline {pct}% against a {goal}% goal. The result is secondary: first bring back the share of trades made by your rules.",
+    "takeSteady": "No serious leaks this week: rules were mostly followed. Keep up the journal and the diary.",
+    "takeNone": "Not enough data yet.",
+    "note": "The takeaway is built from your records by simple rules; it is not a forecast."
+  },
+  "usmarket": {
+    "title": "US market",
+    "phase": {
+      "pre": "Pre-market",
+      "regular": "Regular session",
+      "after": "After-hours",
+      "closed": "Closed"
+    },
+    "next": {
+      "pre": "Pre-market starts in {t}",
+      "regular": "Regular session starts in {t}",
+      "after": "Regular session ends in {t}",
+      "closed": "Trading ends in {t}"
+    },
+    "tz": "Times in your zone ({tz}), trading day: {day}.",
+    "closures": "Upcoming holidays and short days",
+    "early": "early close",
+    "note": "NYSE and Nasdaq hours: pre-market 4:00–9:30, regular session 9:30–16:00, after-hours 16:00–20:00 New York time. Daylight saving is handled. Holiday dates are for reference; check the exchange calendar. Futures trade almost around the clock with their own hours.",
+    "holiday": {
+      "newYear": "New Year's Day",
+      "mlk": "Martin Luther King Jr. Day",
+      "presidents": "Presidents' Day",
+      "goodFriday": "Good Friday",
+      "memorial": "Memorial Day",
+      "juneteenth": "Juneteenth",
+      "independence": "Independence Day (observed)",
+      "labor": "Labor Day",
+      "thanksgiving": "Thanksgiving",
+      "christmas": "Christmas",
+      "afterThanksgiving": "Day after Thanksgiving",
+      "christmasEve": "Christmas Eve"
+    }
+  },
+  "usstats": {
+    "title": "Results by US market hours",
+    "hint": "Stock and futures trades only. Times are New York time (daylight saving handled). Shows which hours you trade better and worse.",
+    "none": "Needs stock or futures trades: pick the market in the trade form.",
+    "b": {
+      "pre": "Pre-market (4:00–9:30)",
+      "open": "Open (9:30–10:00)",
+      "morning": "Morning (10:00–12:00)",
+      "midday": "Midday (12:00–14:00)",
+      "afternoon": "Afternoon (14:00–15:30)",
+      "power": "Power hour (15:30–16:00)",
+      "after": "After-hours (16:00–20:00)",
+      "off": "Outside sessions"
+    }
+  },
+  "pdt": {
+    "title": "Day trades (PDT)",
+    "window": "Stock trades opened and closed on the same day over the last {n} trading days (New York time).",
+    "ok": "Day trades left before the limit: {n}.",
+    "warn": "This is the maximum: the next day trade would be the fourth within 5 days.",
+    "flag": "More than three day trades in 5 days. Check your account terms with the broker.",
+    "rule": "For a margin account under ${limit}, 4 or more day trades in 5 trading days make you a pattern day trader.",
+    "notApplies": "Your USD account equity is at least ${limit}, so this rule normally does not limit you.",
+    "note": "The counter is for reference and only counts trades in your journal: confirm the rule with your broker."
+  },
+  "mistakes": {
+    "title": "My mistakes",
+    "subtitle": "Trades with mistakes and broken rules are collected here. Mark what the mistake was, write why it happened and attach a screenshot.",
+    "link": "Mistakes: review and photos",
+    "whyTitle": "Why it happened",
+    "noNote": "No reason written yet.",
+    "open": "Review mistakes",
+    "save": "Save",
+    "saved": "Saved",
+    "pasteHint": "Paste a screenshot from the clipboard (Ctrl+V), drop it here or choose a file. Trades with broken rules appear here by themselves.",
+    "brokenRules": "Broken rules",
+    "marked": "Trades with a marked mistake",
+    "result": "Their result",
+    "worst": "The costliest mistake is “{name}”: {n} trades, result {amount}.",
+    "byKind": "What each mistake costs",
+    "log": "Mistake log",
+    "empty": "Nothing yet. Once you mark a mistake in a trade or break a rule, the trade shows up here.",
+    "more": "Show more",
+    "todo": "Losing trades not yet reviewed",
+    "todoHint": "Check whether there was a mistake: if so, mark it and write the reason."
+  },
+  "pm": {
+    "title": "Gains and losses",
+    "subtitle": "How much you made in winning trades, how much you lost in losing ones and where you end up.",
+    "link": "Gains and losses: income and spending",
+    "period": {
+      "today": "Today",
+      "week": "7 days",
+      "month": "This month",
+      "all": "All time"
+    },
+    "plus": "Gains",
+    "minus": "Losses",
+    "net": "Net",
+    "trades": "trades: {n}",
+    "account": "Money on the account",
+    "balance": "Balance now",
+    "deposited": "Deposited",
+    "withdrawn": "Withdrawn",
+    "accountNote": "Deposits and withdrawals are recorded in Settings, in the accounts section. They are not part of the trading result.",
+    "byDay": "By day",
+    "byMonth": "By month",
+    "day": "Day",
+    "month": "Month",
+    "note": "Trade results are after fees. This is record keeping, not a forecast.",
+    "byYear": "By year",
+    "year": "Year",
+    "yearNote": "A reference summary of your records, not a tax calculation: tax rules depend on the country.",
+    "feesTitle": "Fees",
+    "feesMonth": "This month",
+    "feesAll": "All time",
+    "feesAvg": "Average per trade",
+    "feesShare": "Share of the pre-fee result",
+    "feesNote": "Result before fees: {gross}, after: {net}. Many small trades can give fees a noticeable part of the profit: check that your style can bear it."
+  },
+  "worldmarkets": {
+    "title": "World markets",
+    "subtitle": "Gold and metals, oil and gas, currencies, indices, bonds and crypto. Tap a name to open its chart.",
+    "none": "no data",
+    "groups": {
+      "metals": "Gold and metals",
+      "energy": "Oil and gas",
+      "forex": "Currencies",
+      "usindices": "US: indices, ETFs and futures",
+      "world": "World indices",
+      "rates": "Bonds and fear",
+      "crypto": "Crypto"
+    },
+    "note": "Change versus the previous close. The source is unofficial (Yahoo Finance): data may be delayed and differ from your broker. Gold and silver are shown as COMEX futures, not the XAU/USD spot price. Rises in VIX, yields and the dollar have no colour: they are neither good nor bad. Not investment advice.",
+    "names": {
+      "gold": "Gold (XAU, COMEX futures)",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "copper": "Copper",
+      "wti": "Crude oil WTI",
+      "brent": "Crude oil Brent",
+      "gas": "Natural gas",
+      "eurusd": "EUR/USD",
+      "gbpusd": "GBP/USD",
+      "usdjpy": "USD/JPY",
+      "usdchf": "USD/CHF",
+      "audusd": "AUD/USD",
+      "usdcad": "USD/CAD",
+      "usduzs": "USD/UZS (sum)",
+      "dxy": "US dollar index (DXY)",
+      "ndx": "Nasdaq-100",
+      "ixic": "Nasdaq Composite",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "rut": "Russell 2000",
+      "qqq": "QQQ (Nasdaq-100 ETF)",
+      "spy": "SPY (S&P 500 ETF)",
+      "nqf": "Nasdaq-100 futures (NQ)",
+      "esf": "S&P 500 futures (ES)",
+      "ymf": "Dow futures (YM)",
+      "dax": "DAX (Germany)",
+      "ftse": "FTSE 100 (UK)",
+      "cac": "CAC 40 (France)",
+      "nikkei": "Nikkei 225 (Japan)",
+      "hsi": "Hang Seng (Hong Kong)",
+      "tnx": "US 10-year yield, %",
+      "vix": "VIX (fear index)",
+      "btc": "Bitcoin",
+      "eth": "Ethereum",
+      "palladium": "Palladium",
+      "gld": "GLD: gold ETF (SPDR)",
+      "iau": "IAU: gold ETF (iShares)",
+      "slv": "SLV: silver ETF",
+      "gdx": "GDX: gold miners"
+    }
+  },
+  "live": {
+    "realtime": "Prices in real time",
+    "every15": "Prices refresh by themselves every 30 seconds",
+    "paused": "Updates paused: no connection to the source",
+    "connecting": "Connecting to prices…"
+  },
+  "tradertypes": {
+    "title": "Types of traders",
+    "subtitle": "30 types in 6 groups: by trade length, market, way of analysis, strategy, status and behaviour. One person usually combines several, for example “a day trader on Nasdaq, technical, trend-following”.",
+    "count": "{n} types",
+    "note": "This is a reference classification: different sources split traders differently. The descriptions are not advice to trade in any particular way.",
+    "cta": "Find your profile from your journal",
+    "link": "Types of traders",
+    "you": {
+      "title": "Your trader profile",
+      "subtitle": "Worked out from your journal. A hint based on your own records, not a diagnosis or advice.",
+      "style": "Style",
+      "market": "Main market",
+      "behavior": "Behaviour",
+      "need": "At least 5 trades are needed to work out a profile. For style, trades must have a closing time.",
+      "needStyle": "Style needs a closing time on 5 trades.",
+      "unknown": "no clear pattern",
+      "median": "median trade length: {t}",
+      "share": "{p}% of trades",
+      "all": "All trader types"
+    },
+    "units": {
+      "m": "{n} min",
+      "h": "{n} h",
+      "d": "{n} d"
+    },
+    "groups": {
+      "horizon": {
+        "title": "By how long trades are held",
+        "desc": "The main split: how long a trader keeps a position."
+      },
+      "market": {
+        "title": "By market",
+        "desc": "Which market the trader works in."
+      },
+      "analysis": {
+        "title": "By way of analysis",
+        "desc": "What a trade decision rests on."
+      },
+      "strategy": {
+        "title": "By strategy",
+        "desc": "Which idea the trader uses."
+      },
+      "status": {
+        "title": "By status",
+        "desc": "Whose money the trader uses and in what role."
+      },
+      "behavior": {
+        "title": "By behaviour (what shows in the journal)",
+        "desc": "Not a diagnosis but habits in trades. This is what Tartib helps you see."
+      }
+    },
+    "types": {
+      "scalper": {
+        "name": "Scalper",
+        "text": "Holds a trade from seconds to a few minutes and makes many trades a day. Each gain is small, so fees and discipline matter most."
+      },
+      "day": {
+        "name": "Day trader (intraday)",
+        "text": "Opens and closes trades within one day and keeps no positions overnight. For US stocks the PDT rule applies."
+      },
+      "swing": {
+        "name": "Swing trader",
+        "text": "Holds a trade from several days to several weeks and aims at larger price moves. No need to watch the screen all day."
+      },
+      "position": {
+        "name": "Position trader",
+        "text": "Holds a position for months and years, following long trends. Few trades, but swings along the way can be large."
+      },
+      "hft": {
+        "name": "High-frequency (HFT)",
+        "text": "Robots of large firms make thousands of trades per second. Not available to ordinary private traders, yet they move part of the market."
+      },
+      "crypto": {
+        "name": "Crypto trader",
+        "text": "Trades cryptocurrencies. The market is open around the clock with no days off, and prices can move sharply."
+      },
+      "forex": {
+        "name": "Forex trader",
+        "text": "Trades currency pairs such as EUR/USD. Many sessions a day, often with leverage."
+      },
+      "stocks": {
+        "name": "Stock trader",
+        "text": "Trades company shares on Nasdaq, NYSE and other exchanges. The market keeps exchange hours with pre-market and after-hours."
+      },
+      "futures": {
+        "name": "Futures trader",
+        "text": "Trades contracts on indices, gold, oil and other assets. The point value is set by the contract and risk is counted in contracts."
+      },
+      "commodities": {
+        "name": "Commodities and gold trader",
+        "text": "Trades gold, silver, oil, gas and grain. Prices depend on politics, inventories and demand."
+      },
+      "options": {
+        "name": "Options trader",
+        "text": "Trades rights to buy or sell an asset at a set price. Risk and result depend on time and volatility, so separate study is needed."
+      },
+      "technical": {
+        "name": "Technical trader",
+        "text": "Decides from the chart: levels, trends, indicators and candle patterns."
+      },
+      "fundamental": {
+        "name": "Fundamental trader",
+        "text": "Looks at the economy, company reports, rates and the balance of supply and demand."
+      },
+      "news": {
+        "name": "News trader",
+        "text": "Trades around important data and events: inflation, rates, earnings. Moves are fast and slippage is large."
+      },
+      "algo": {
+        "name": "Algorithmic trader",
+        "text": "Writes the rules as code and a robot enters and exits on its own. The main risks are code bugs and overfitting to the past."
+      },
+      "discretionary": {
+        "name": "Discretionary trader",
+        "text": "Decides on the spot from experience without a rigid system. Depends most on discipline and emotions."
+      },
+      "trend": {
+        "name": "Trend follower",
+        "text": "Trades with the direction of the move: buys in rises, sells in falls. Tolerates pullbacks while the trend lives."
+      },
+      "countertrend": {
+        "name": "Counter-trend trader",
+        "text": "Looks for reversals and a return to the mean. Enters against the move, so the stop matters even more."
+      },
+      "breakout": {
+        "name": "Breakout trader",
+        "text": "Enters when price leaves a range or breaks a level. Some breakouts turn out false."
+      },
+      "arbitrage": {
+        "name": "Arbitrage trader",
+        "text": "Earns from price gaps for one asset across markets or between related instruments. Needs speed and low fees."
+      },
+      "orderflow": {
+        "name": "Order-flow trader",
+        "text": "Reads the order book, the tape and volumes to see who pushes the price. Usually scalpers and day traders."
+      },
+      "retail": {
+        "name": "Private (retail) trader",
+        "text": "Trades their own money through a broker. Tartib is made for this trader."
+      },
+      "prop": {
+        "name": "Prop trader",
+        "text": "Trades the firm's money and shares the profit with it. Strict drawdown limits usually apply, and breaking them ends access."
+      },
+      "institutional": {
+        "name": "Institutional trader",
+        "text": "Works at a bank, fund or investment firm with large sums. Decisions follow procedures under risk management."
+      },
+      "manager": {
+        "name": "Money manager (copy trading, PAMM)",
+        "text": "Trades other people's money and answers to them for results. Transparent records and drawdown control matter most."
+      },
+      "systematic": {
+        "name": "Systematic",
+        "text": "Enters and exits by their own rules and follows the plan in most trades. Results can be judged by numbers rather than mood."
+      },
+      "impulsive": {
+        "name": "Impulsive",
+        "text": "Often enters from fear of missing out or greed and chases price. A pre-trade checklist and a pause help."
+      },
+      "revenge": {
+        "name": "Revenge trader",
+        "text": "After a loss wants the money back at once and enters without a plan. A daily loss limit and a pause after a losing run help."
+      },
+      "overtrader": {
+        "name": "Overtrader",
+        "text": "Makes too many trades, often without strong signals, and pays fees. A limit on trades per day helps."
+      },
+      "cautious": {
+        "name": "Cautious",
+        "text": "More often closes a trade earlier than planned or enters with doubt and fear. It helps to check what early exits cost."
+      }
+    },
+    "advice": {
+      "systematic": {
+        "text": "You mostly follow your rules. Stay the course: look at the weekly review and make sure discipline does not slip after a run of winners.",
+        "label": "Week review"
+      },
+      "impulsive": {
+        "text": "Frequent entries from fear of missing out or greed. A pre-trade checklist and a pause help: write the plan before entering and do not chase.",
+        "label": "Pre-trade checklist"
+      },
+      "revenge": {
+        "text": "After losses there are entries without a plan to win it back. A daily loss limit rule and a compulsory pause after a losing run help.",
+        "label": "Rules and limits"
+      },
+      "overtrader": {
+        "text": "Too many trades a day. A rule on the maximum trades per day helps, and so does checking what the extra entries cost with fees.",
+        "label": "Fees and result"
+      },
+      "cautious": {
+        "text": "You often close before the plan or enter with doubt. See what early exits cost and describe the reasons in the mistake review.",
+        "label": "Mistake review"
+      }
+    }
+  },
+  "crypto": {
+    "title": "Crypto",
+    "kind": "Type",
+    "kindAuto": "Detect by leverage",
+    "spot": "Spot",
+    "perp": "Perpetual contract",
+    "funding": "Funding",
+    "fundingHint": "How much was paid during the trade. If received, enter it with a minus. It is deducted from the result.",
+    "feeTitle": "Fee at the exchange rate",
+    "exchange": "Exchange",
+    "order": "Order type",
+    "taker": "Taker (market)",
+    "maker": "Maker (limit)",
+    "rate": "Rate: {p}%",
+    "calcFee": "Calculate fee",
+    "feeNote": "Base rates without discounts, for reference: check your own rate on the exchange. The fee covers entry and exit.",
+    "liqPrice": "Liquidation price is about {price} ({pct}% from entry).",
+    "liqBefore": "Liquidation would happen before your stop, so the stop cannot trigger. Lower the leverage or put the stop closer.",
+    "liqClose": "The stop is very close to liquidation: price may jump past it.",
+    "liqNote": "Approximate, for isolated margin and 0.5% maintenance margin. The exchange shows the exact price.",
+    "exchanges": {
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "okx": "OKX",
+      "bitget": "Bitget",
+      "kucoin": "KuCoin"
+    }
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Which coins you bought, at what average price, what they are worth now and what you locked in by selling.",
+    "note": "Average-cost accounting. These are your own records, not exchange data: the site does not connect to your accounts. Coin prices come from OKX (USDT pairs), stocks, ETFs and gold from Yahoo Finance in dollars and may be delayed. If there is no price, no valuation is shown.",
+    "value": "Value now",
+    "invested": "Invested",
+    "unrealized": "Unrealised",
+    "realized": "Realised",
+    "positions": "Positions",
+    "empty": "Nothing yet. Record your first purchase below.",
+    "coin": "Coin",
+    "amount": "Amount",
+    "avg": "Average price",
+    "price": "Price now",
+    "valueCol": "Value",
+    "pnl": "Result",
+    "share": "Share",
+    "noPrice": "no price",
+    "oversold": "Sold more than bought: check your records",
+    "add": "Record a purchase or sale",
+    "side": "Action",
+    "buy": "Buy",
+    "sell": "Sell",
+    "priceUsdt": "Price, USDT",
+    "fee": "Fee, USDT",
+    "save": "Record",
+    "history": "History of records",
+    "invalid": "Check the fields: coin, amount and price must be filled in with numbers.",
+    "limit": "Portfolio record limit reached (3000).",
+    "symbolHint": "Coin or asset: BTC, AAPL, GOLD"
+  },
+  "derivatives": {
+    "title": "Perpetual contracts (crypto futures)",
+    "hint": "OKX data: funding rate, open interest and the ratio of long to short accounts. Refreshed once a minute.",
+    "coin": "Coin",
+    "funding": "Funding",
+    "annual": "Per year",
+    "oi": "Open interest",
+    "ls": "Longs to shorts",
+    "hours": "{n} h",
+    "note": "Funding: when positive, long holders pay short holders; when negative, the other way round. Open interest shows the volume of open positions, and a ratio above 1 means more accounts are long than short. This is reference data, not a signal: no rise or fall in any of these means “good” or “bad”."
+  },
+  "traderprofile": {
+    "title": "What kind of trader you are",
+    "text": "Choose how long you hold trades and which markets you trade. The dashboard will show matching shortcuts and the new-trade form will pre-select your market.",
+    "horizon": "How long you hold trades",
+    "markets": "Markets you trade",
+    "horizons": {
+      "scalper": "Scalping (minutes)",
+      "day": "Within the day",
+      "swing": "Swing (days and weeks)",
+      "position": "Position (months and years)"
+    },
+    "marketNames": {
+      "crypto": "Crypto",
+      "forex": "Forex",
+      "stocks": "Stocks",
+      "futures": "Futures",
+      "options": "Options",
+      "commodities": "Gold and commodities"
+    }
+  },
+  "mytools": {
+    "title": "My tools",
+    "change": "Change",
+    "empty": "Tell us how you trade and the dashboard will show the tools you need.",
+    "set": "Set up",
+    "links": {
+      "quick": "Quick entry",
+      "feeBreakeven": "Break-even with fees",
+      "sessions": "Trading sessions",
+      "advanced": "Advanced analytics",
+      "portfolio": "Portfolio",
+      "goal": "Goal plan",
+      "week": "Week review",
+      "compound": "Compound interest",
+      "market": "Market",
+      "liquidation": "Liquidation price",
+      "chartBtc": "BTC chart",
+      "positionSize": "Position size",
+      "chartGold": "Gold chart",
+      "stockSize": "Stock position size",
+      "chartAapl": "AAPL chart",
+      "futuresRisk": "Futures risk",
+      "chartNq": "Nasdaq-100 chart",
+      "optionsCalc": "Options payoff",
+      "forexLot": "Lot and pip value",
+      "avgPrice": "Averaging",
+      "metalsPage": "Gold and metals",
+      "metalsLot": "Gold and metals lot"
+    }
+  },
+  "prop": {
+    "title": "Prop challenge",
+    "subtitle": "Track a prop firm's rules: profit target, daily loss limit and overall drawdown. Everything is calculated from your journal.",
+    "empty": "No challenges yet. Create the first one below and copy your firm's rules.",
+    "add": "New challenge",
+    "name": "Name",
+    "account": "Account",
+    "allAccounts": "All accounts",
+    "balance": "Starting balance",
+    "target": "Profit target, %",
+    "daily": "Daily loss limit, %",
+    "total": "Overall loss limit, %",
+    "minDays": "Minimum trading days",
+    "start": "Start",
+    "end": "End (optional)",
+    "trailing": "Drawdown from the balance peak (trailing)",
+    "trailingShort": "trailing drawdown",
+    "create": "Create",
+    "formNote": "Copy the rules from your contract with the firm. The daily limit is counted from the starting balance for a calendar day in your time zone, but some firms define the day and the calculation differently: double-check.",
+    "invalid": "Check the fields: name, balance and percentages must be filled in.",
+    "limit": "Limit reached: no more than 20 challenges.",
+    "rules": "Balance {bal} · target {t}% · daily {d}% · overall {l}%",
+    "status": {
+      "active": "In progress",
+      "passed": "Passed",
+      "breached": "Failed"
+    },
+    "breachDaily": "The daily loss limit was exceeded on {day}. Under the rules of such a challenge this is a fail.",
+    "breachTotal": "The overall drawdown limit was exceeded on {day}. Under the rules of such a challenge this is a fail.",
+    "passedText": "Target reached, minimum trading days met, no rule broken.",
+    "barTarget": "Profit target",
+    "barDaily": "Daily limit (today)",
+    "barTotal": "Overall drawdown",
+    "bufferText": "room before the limit: {buffer}",
+    "equity": "Balance now",
+    "result": "Result",
+    "days": "Trading days",
+    "left": "Left",
+    "daysLeft": "{n} d",
+    "note": "This is bookkeeping from your records, not the firm's data: the final decision is always the prop firm's. It does not promise a pass and is not advice."
+  },
+  "ratios": {
+    "title": "Ratios (Sharpe, Sortino, Calmar)",
+    "hint": "Measures familiar to algorithmic traders, based on the daily results of your journal over all time.",
+    "sharpe": "Sharpe ratio",
+    "sortino": "Sortino ratio",
+    "calmar": "Calmar ratio",
+    "cagr": "Annual return",
+    "maxdd": "Maximum drawdown",
+    "total": "Total return",
+    "none": "Needs at least 10 trading days with trades and a positive starting account balance.",
+    "note": "Daily return = the day's result over the balance at the start of the day, annualised over 252 trading days, risk-free rate 0, deposits and withdrawals ignored. Annual return and Calmar need at least 30 days of history. This is arithmetic of past trades, not a forecast or a verdict on a strategy."
+  },
+  "apitoken": {
+    "title": "API key for bots and scripts",
+    "text": "A bot or script can write trades into your journal by itself, without connecting to your exchange. The key can only write trades.",
+    "once": "Copy the key now: it will not be shown again.",
+    "name": "Key name",
+    "create": "Create key",
+    "lastUsed": "last used: {d}",
+    "never": "not used yet",
+    "how": "How to send a trade",
+    "fields": "Required fields: instrument, direction (long or short), entry_price, position_size. Optional: exit_price, market (crypto, forex, stocks, futures, options), fees, funding, leverage, pnl, traded_at and closed_at (ISO format), strategy, comment, account (account name). Your trading rules are not checked for such trades, and they are tagged “api”. Do not share the key: delete it here if it leaks.",
+    "invalid": "Enter a key name.",
+    "limit": "Limit reached: no more than 5 keys."
+  },
+  "metals": {
+    "title": "Gold and metals",
+    "subtitle": "Gold, silver, platinum, palladium and copper in one place: self-updating prices, grams and kilograms conversion, key drivers and calculation tools.",
+    "currency": "Currency",
+    "perOz": "per ounce",
+    "perLb": "per pound",
+    "perGram": "Price per gram",
+    "perKg": "Price per kilogram",
+    "ratios": "Metal ratios",
+    "goldSilver": "Gold to silver (ounces of silver in one ounce of gold)",
+    "goldPlatinum": "Gold to platinum",
+    "ratioNote": "The gold/silver ratio shows how cheap or expensive silver is versus gold compared with usual levels. Reference only, not a signal.",
+    "influence": "What moves gold",
+    "influenceNote": "Gold often moves with the dollar and US bond yields, but the link is not constant. Reference only, not a forecast.",
+    "etfs": "Metal funds",
+    "toolsTitle": "Tools for gold and metals",
+    "note": "Prices come from Yahoo Finance with a delay. Gold and silver here are COMEX futures and can differ slightly from your broker's XAUUSD spot. Gram and local-currency conversion is approximate.",
+    "links": {
+      "lot": {
+        "title": "Position size in lots",
+        "desc": "How many lots of gold or silver fit your risk."
+      },
+      "value": {
+        "title": "Item value by purity",
+        "desc": "What the gold in an item is worth: weight, purity, price per gram."
+      },
+      "bullion": {
+        "title": "Physical gold: breakeven",
+        "desc": "Premium paid and the price at which you break even."
+      },
+      "futures": {
+        "title": "Futures and gold risk",
+        "desc": "CME contract maths: GC, MGC, SI."
+      },
+      "alerts": {
+        "title": "Price alerts",
+        "desc": "Telegram alerts for crypto. For gold, use the chart for now."
+      },
+      "chart": {
+        "title": "Gold chart",
+        "desc": "Gold candles with indicators."
+      }
+    }
+  },
+  "support": {
+    "title": "Message the owner",
+    "subtitle": "A question, a bug or an idea? Write here and the owner will reply to you personally. The reply arrives as a bell notification.",
+    "empty": "Nothing here yet. Write the first message.",
+    "adminEmpty": "No messages yet.",
+    "owner": "Owner",
+    "you": "You",
+    "writeLabel": "Your message",
+    "replyLabel": "Your reply",
+    "send": "Send",
+    "invalid": "Write a message of 1 to 2000 characters.",
+    "tooMany": "Too many messages today. Try again tomorrow.",
+    "note": "The owner reads messages personally, so a reply may take a while. Do not send passwords or card details.",
+    "adminTitle": "User messages",
+    "adminNone": "Nobody has written yet.",
+    "back": "← All conversations",
+    "adminLink": "Messages",
+    "adminUnread": "Unread: {n}"
+  },
+  "toolsx": {
+    "groups": {
+      "risk": "Risk and position size",
+      "forex": "Forex and CFDs",
+      "stocks": "Stocks and investing",
+      "derivs": "Options and futures",
+      "crypto": "Crypto",
+      "metals": "Gold and metals",
+      "finance": "Finance and planning",
+      "stats": "Statistics and sessions"
+    },
+    "bewr": {
+      "title": "Break-even win rate",
+      "desc": "For a given reward to risk, shows what share of trades must win so you do not lose money.",
+      "note": "Formula: (1 + costs) / (reward to risk + 1). Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "rr": "Reward to risk (reward per 1 of risk)",
+        "costR": "Cost per trade, in units of risk (R)"
+      },
+      "o": {
+        "winRate": "Required win rate",
+        "lossRate": "Allowed losing share",
+        "winsPer10": "Winners per 10 trades"
+      }
+    },
+    "expect": {
+      "title": "Trade expectancy",
+      "desc": "What one trade earns or loses on average from your own stats: win rate, average win and average loss.",
+      "note": "Use figures from your journal over a long enough period. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "winRate": "Win rate, %",
+        "avgWin": "Average win",
+        "avgLoss": "Average loss (positive number)"
+      },
+      "o": {
+        "expectancy": "Average per trade",
+        "expectancyR": "Average per trade, in R",
+        "payoff": "Win to loss ratio",
+        "per100": "Per 100 pips",
+        "profitFactor": "Profit factor"
+      }
+    },
+    "pfactor": {
+      "title": "Profit factor",
+      "desc": "Total profits divided by total losses. Above 1 the system is profitable before fees, below 1 it loses.",
+      "note": "Use a large enough number of trades. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "grossProfit": "Total of all profits",
+        "grossLoss": "Total of all losses (positive number)"
+      },
+      "o": {
+        "profitFactor": "Profit factor",
+        "net": "Net result",
+        "lossShare": "Share of losses"
+      }
+    },
+    "rmult": {
+      "title": "Trade result in R",
+      "desc": "R is your risk on the trade. Shows how many risks the trade made or lost, and its result in money.",
+      "note": "Direction is taken from entry and stop. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "entry": "Entry price",
+        "stop": "Stop price",
+        "exit": "Exit price",
+        "size": "Position size (units, lots or contracts)"
+      },
+      "o": {
+        "direction": "Direction",
+        "r": "Result in R",
+        "riskMoney": "Risk in money",
+        "pnl": "Result"
+      }
+    },
+    "dailylimit": {
+      "title": "Daily loss limit",
+      "desc": "How much money your daily limit is and how many losing trades in a row reach it at your risk per trade.",
+      "note": "Once you reach the limit, stop for the day. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "balance": "Account balance",
+        "dailyLossPct": "Daily loss limit, %",
+        "riskPct": "Risk per trade, %"
+      },
+      "o": {
+        "limitMoney": "Daily loss limit",
+        "riskMoney": "Risk in money",
+        "lossesToLimit": "Losing trades to the limit"
+      }
+    },
+    "exposure": {
+      "title": "Position exposure and effective leverage",
+      "desc": "Shows the position as a share of balance, your effective leverage and the margin it needs.",
+      "note": "Broker leverage and effective leverage are different things. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "balance": "Account balance",
+        "price": "Price per unit",
+        "quantity": "Quantity",
+        "leverage": "Broker leverage"
+      },
+      "o": {
+        "notional": "Position size, $",
+        "exposurePct": "Position as share of balance",
+        "effLeverage": "Effective leverage",
+        "marginNeeded": "Margin needed"
+      }
+    },
+    "partial": {
+      "title": "Partial close",
+      "desc": "Takes profit on part of a position: how much is closed, how much is left and the result locked in.",
+      "note": "The remainder is valued at the partial close price. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "exit": "Partial close price",
+        "quantity": "Position size",
+        "closePct": "Share to close, %"
+      },
+      "o": {
+        "closedQty": "Closed",
+        "remainingQty": "Remaining",
+        "realized": "Realized result",
+        "remainingAtExit": "Remainder result at the exit price"
+      }
+    },
+    "atrstop": {
+      "title": "ATR stop-loss",
+      "desc": "Places the stop a few ATRs away from entry so it respects normal price swings, and shows a 1:2 target.",
+      "note": "Take ATR from your chart (usually 14 periods). Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "atr": "ATR (average range)",
+        "mult": "ATR multiplier"
+      },
+      "o": {
+        "stop": "Stop level",
+        "distance": "Distance to stop",
+        "distancePct": "Distance to stop, %",
+        "target2R": "Target at 1:2 reward to risk"
+      }
+    },
+    "atrsize": {
+      "title": "Position size by ATR",
+      "desc": "The position size for which a stop a few ATRs away costs exactly your chosen risk.",
+      "note": "The size is not rounded: round down to your instrument's step. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "balance": "Account balance",
+        "riskPct": "Risk per trade, %",
+        "entry": "Entry price",
+        "atr": "ATR (average range)",
+        "mult": "ATR multiplier"
+      },
+      "o": {
+        "riskMoney": "Risk in money",
+        "stopDistance": "Distance to stop",
+        "units": "Position size, units",
+        "notional": "Position size"
+      }
+    },
+    "recwins": {
+      "title": "How many wins to recover a drawdown",
+      "desc": "After a drawdown, shows the gain needed and how many winning trades in a row at your risk and reward bring it back.",
+      "note": "Each winning trade is assumed to grow the account by risk × reward. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "drawdownPct": "Drawdown, %",
+        "riskPct": "Risk per trade, %",
+        "rr": "Reward to risk (reward per 1 of risk)"
+      },
+      "o": {
+        "neededGain": "Gain needed to recover",
+        "gainPerWin": "Account gain per winning trade",
+        "winsNeeded": "Winning trades in a row"
+      }
+    },
+    "pipvalue": {
+      "title": "Pip value",
+      "desc": "How many dollars one pip is worth at your lot size. For yen pairs set the pip size to 0.01.",
+      "note": "If the dollar is not the quote currency, enter the quote currency to USD rate. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "lots": "Size, lots",
+        "contract": "Lot size (units per 1 lot)",
+        "pipSize": "Pip size",
+        "quoteToUsd": "Quote currency to USD rate"
+      },
+      "o": {
+        "perPip": "Per 1 pip",
+        "per10": "Per 10 pips",
+        "per100": "Per 100 pips"
+      }
+    },
+    "swapcost": {
+      "title": "Swap cost",
+      "desc": "What you pay or receive for holding a position overnight, including triple swap on Wednesday.",
+      "note": "Check the swap size in your broker's specification. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "lots": "Size, lots",
+        "swapPerLot": "Swap per night per 1 lot (minus = you pay)",
+        "nights": "Nights in total",
+        "tripleDays": "Of which Wednesdays with triple swap"
+      },
+      "o": {
+        "total": "Total for the period",
+        "perNight": "Per night",
+        "per30": "Per 30 nights"
+      }
+    },
+    "spreadcost": {
+      "title": "Spread and commission cost",
+      "desc": "What entering and exiting a trade costs: spread plus commission, in money and as a percent of the position.",
+      "note": "Enter the spread in price units (for example 0.0002). Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Price",
+        "spread": "Spread (in price units)",
+        "units": "Size in units",
+        "commission": "Round-trip commission, $"
+      },
+      "o": {
+        "spreadPct": "Spread as share of price",
+        "spreadMoney": "Spread cost",
+        "totalCost": "Total entry and exit cost",
+        "costPct": "Cost as share of position"
+      }
+    },
+    "fxconvert": {
+      "title": "Currency converter with fees",
+      "desc": "How much you receive after a fee and the effective rate you got.",
+      "note": "Rate is how many units of the second currency per one of the first. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "amount": "Amount in the first currency",
+        "rate": "Rate (second currency per one first)",
+        "feePct": "Fee, %"
+      },
+      "o": {
+        "received": "You receive",
+        "feeAmount": "Fee",
+        "effectiveRate": "Effective rate"
+      }
+    },
+    "crossrate": {
+      "title": "Cross rate",
+      "desc": "Works out a pair from two others, for example EUR/JPY from EUR/USD and USD/JPY.",
+      "note": "Choose whether to multiply or divide the rates. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "mode": "How to calculate",
+        "a": "First rate",
+        "b": "Second rate"
+      },
+      "o": {
+        "cross": "Cross rate",
+        "inverse": "Inverse rate"
+      },
+      "c": {
+        "1": "Multiply: A/B × B/C",
+        "2": "Divide: A/B ÷ C/B"
+      }
+    },
+    "pipsprofit": {
+      "title": "Profit in pips and money",
+      "desc": "Converts a price move into pips and into money for your lot size.",
+      "note": "Get the pip value from the pip value calculator. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "exit": "Exit price",
+        "pipSize": "Pip size",
+        "lots": "Size, lots",
+        "pipValue": "Pip value per 1 lot, $"
+      },
+      "o": {
+        "pips": "Result in pips",
+        "profit": "Result, $"
+      }
+    },
+    "marginlevel": {
+      "title": "Margin level and stop-out cushion",
+      "desc": "Shows margin level, free margin and how much more you can lose before a margin call and forced closing.",
+      "note": "Margin call and stop-out levels differ between brokers. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "equity": "Equity (balance including open trades)",
+        "usedMargin": "Used margin",
+        "callLevel": "Margin call level, %",
+        "stopOutLevel": "Stop-out level, %"
+      },
+      "o": {
+        "level": "Margin level",
+        "freeMargin": "Free margin",
+        "lossToCall": "Cushion to margin call",
+        "lossToStopOut": "Cushion to stop-out"
+      }
+    },
+    "lotconv": {
+      "title": "Lots, mini and micro lots",
+      "desc": "Converts a size in lots into currency units, mini lots and micro lots.",
+      "note": "A standard lot is 100,000 units, but your broker may differ. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "lots": "Size, lots",
+        "contract": "Lot size (units per 1 lot)"
+      },
+      "o": {
+        "units": "Currency units",
+        "miniLots": "Mini lots (0.1 lot)",
+        "microLots": "Micro lots (0.01 lot)"
+      }
+    },
+    "divyield": {
+      "title": "Dividend yield",
+      "desc": "Dividend yield on the current price and on your purchase price, plus income per year and per month.",
+      "note": "Dividends are not guaranteed and can change. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Current share price",
+        "dividend": "Annual dividend per share",
+        "shares": "Number of shares",
+        "buyPrice": "Purchase price"
+      },
+      "o": {
+        "yield": "Dividend yield",
+        "yieldOnCost": "Yield on your purchase price",
+        "incomeYear": "Income per year",
+        "incomeMonth": "Income per month"
+      }
+    },
+    "pe": {
+      "title": "P/E, earnings yield and PEG",
+      "desc": "Three quick valuation figures for a share: price to earnings, earnings yield and PEG.",
+      "note": "A rough measure, not a verdict of cheap or expensive. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Share price",
+        "eps": "Earnings per share per year (EPS)",
+        "growth": "Earnings growth, % per year"
+      },
+      "o": {
+        "pe": "P/E (price to earnings)",
+        "earningsYield": "Earnings yield",
+        "peg": "PEG (P/E to growth)"
+      }
+    },
+    "split": {
+      "title": "Stock split",
+      "desc": "How many shares you will hold and at what price after a split or reverse split. Position value does not change.",
+      "note": "For a reverse split enter, for example, 1 new share for 10 old. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "shares": "Number of shares",
+        "price": "Current share price",
+        "newPer": "New shares",
+        "oldPer": "For old shares"
+      },
+      "o": {
+        "ratio": "Ratio",
+        "newShares": "Shares after",
+        "newPrice": "Price after",
+        "value": "Position value (unchanged)"
+      }
+    },
+    "stocknet": {
+      "title": "Net profit on shares",
+      "desc": "Profit on selling shares after commissions and tax.",
+      "note": "Check the tax rate yourself: it depends on country and income type. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "buy": "Buy price",
+        "sell": "Sell price",
+        "shares": "Number of shares",
+        "commissionPct": "Broker fee, % per side",
+        "taxPct": "Tax on profit, %"
+      },
+      "o": {
+        "gross": "Profit before costs",
+        "commission": "Commissions",
+        "tax": "Tax",
+        "net": "Net profit",
+        "netPct": "Net return"
+      }
+    },
+    "stockbe": {
+      "title": "Share breakeven with commissions",
+      "desc": "The price at which selling covers both buy and sell commissions.",
+      "note": "Tax is not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "buy": "Buy price",
+        "shares": "Number of shares",
+        "commissionPct": "Broker fee, % per side"
+      },
+      "o": {
+        "breakeven": "Breakeven price",
+        "movePct": "Price rise needed",
+        "roundTrip": "Buy and sell commissions"
+      }
+    },
+    "periodic": {
+      "title": "Regular contributions with growth",
+      "desc": "How much you will accumulate by contributing the same amount monthly at a given return.",
+      "note": "Future returns are unknown, this is just a worked example. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "monthly": "Monthly contribution",
+        "annualReturn": "Return, % per year",
+        "years": "Term, years"
+      },
+      "o": {
+        "invested": "Total contributed",
+        "futureValue": "Future value",
+        "gain": "Gain from growth"
+      }
+    },
+    "cagr": {
+      "title": "Annualized return (CAGR)",
+      "desc": "Turns total growth over several years into an average yearly return.",
+      "note": "CAGR smooths out swings within the period. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "start": "Starting amount",
+        "end": "Ending amount",
+        "years": "Term, years"
+      },
+      "o": {
+        "cagr": "Annualized return (CAGR)",
+        "totalReturn": "Total growth"
+      }
+    },
+    "totalret": {
+      "title": "Total return with dividends",
+      "desc": "Return on an investment including price growth and dividends received.",
+      "note": "Taxes and fees are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "start": "Starting amount",
+        "end": "Ending amount",
+        "dividends": "Dividends received"
+      },
+      "o": {
+        "total": "Total return",
+        "priceReturn": "Return from price",
+        "dividendReturn": "Return from dividends"
+      }
+    },
+    "optbe": {
+      "title": "Option breakeven and result",
+      "desc": "Breakeven for a bought option, the maximum loss and the result at a chosen expiry price.",
+      "note": "A contract usually covers 100 shares. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "type": "Option type",
+        "strike": "Strike price",
+        "premium": "Premium per share",
+        "contracts": "Contracts",
+        "mult": "Shares per contract",
+        "target": "Underlying price at expiry"
+      },
+      "o": {
+        "breakeven": "Breakeven price",
+        "maxLoss": "Maximum loss (premium)",
+        "profitAtTarget": "Result at the expiry price",
+        "roi": "Return on premium"
+      },
+      "c": {
+        "1": "Call",
+        "2": "Put"
+      }
+    },
+    "covcall": {
+      "title": "Covered call",
+      "desc": "Selling a call against shares: maximum profit, breakeven and downside cushion.",
+      "note": "If shares rise above the strike you give up further gains. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "stockPrice": "Current stock price",
+        "strike": "Strike price",
+        "premium": "Premium per share",
+        "shares": "Number of shares"
+      },
+      "o": {
+        "maxProfit": "Maximum profit",
+        "breakeven": "Breakeven price",
+        "protection": "Downside cushion (premium to price)",
+        "returnIfCalled": "Return if called away"
+      }
+    },
+    "futpnl": {
+      "title": "Futures result in ticks and money",
+      "desc": "Converts a futures price move into ticks and money using tick size and number of contracts.",
+      "note": "Find tick size and value in the contract specification. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "entry": "Entry price",
+        "exit": "Exit price",
+        "tickSize": "Tick size (price step)",
+        "tickValue": "Tick value, $",
+        "contracts": "Contracts"
+      },
+      "o": {
+        "ticks": "Result in ticks",
+        "perContract": "Per contract",
+        "pnl": "Result"
+      }
+    },
+    "futlev": {
+      "title": "Futures leverage",
+      "desc": "Position size in dollars, contract leverage and the share of balance taken by margin.",
+      "note": "Check the margin per contract with your broker, it changes. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "price": "Futures price",
+        "multiplier": "Multiplier (point value), $",
+        "marginPerContract": "Margin per contract, $",
+        "contracts": "Contracts",
+        "balance": "Account balance"
+      },
+      "o": {
+        "notional": "Position size",
+        "marginTotal": "Total margin",
+        "contractLeverage": "Contract leverage",
+        "accountLeverage": "Leverage to account",
+        "marginPct": "Margin as share of balance"
+      }
+    },
+    "opttv": {
+      "title": "Option intrinsic and time value",
+      "desc": "Splits an option premium into intrinsic and time value.",
+      "note": "A negative time value usually means bad input data. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "type": "Option type",
+        "spot": "Underlying price",
+        "strike": "Strike price",
+        "premium": "Premium per share"
+      },
+      "o": {
+        "intrinsic": "Intrinsic value",
+        "timeValue": "Time value",
+        "timeShare": "Time value share of premium"
+      },
+      "c": {
+        "1": "Call",
+        "2": "Put"
+      }
+    },
+    "fundcost": {
+      "title": "Funding cost",
+      "desc": "What you pay or receive on a perpetual contract's funding rate while holding the position.",
+      "note": "With a positive rate longs pay and shorts receive. The rate changes. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "side": "Direction",
+        "notional": "Position size, $",
+        "ratePct": "Rate per 8 hours, %",
+        "hours": "Hours the position is held"
+      },
+      "o": {
+        "perInterval": "Per 8 hours (positive = you pay)",
+        "total": "Total (positive = you pay)",
+        "annualPct": "Annualized"
+      }
+    },
+    "ammslip": {
+      "title": "Slippage in a DEX pool",
+      "desc": "How many tokens you get from a constant-product pool (like Uniswap v2) and how much the trade moves the price.",
+      "note": "A simplified model: gas and network fees are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "poolX": "Pool reserve of the token you sell",
+        "poolY": "Pool reserve of the token you buy",
+        "amountIn": "Amount you sell",
+        "feePct": "Pool fee, %"
+      },
+      "o": {
+        "out": "You receive",
+        "spotPrice": "Pool price before the trade",
+        "execPrice": "Execution price",
+        "impact": "Price impact (slippage)",
+        "feePaid": "Pool fee"
+      }
+    },
+    "impermanent": {
+      "title": "Impermanent loss",
+      "desc": "How much you lose versus simply holding when a token's price moves inside a liquidity pool.",
+      "note": "For a “token + stablecoin” pair, pool fees are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "priceChangePct": "Token price change, %",
+        "deposit": "Deposited into the pool, $"
+      },
+      "o": {
+        "il": "Impermanent loss",
+        "holdValue": "If you simply hold",
+        "lpValue": "Value of your pool share",
+        "difference": "Difference vs holding"
+      }
+    },
+    "apy": {
+      "title": "Staking: APR to APY",
+      "desc": "Converts an APR into the effective APY with compounding and works out the final amount.",
+      "note": "Staking rates float. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "amount": "Amount",
+        "aprPct": "Rate, % per year",
+        "compounds": "Compounding periods per year",
+        "years": "Term, years"
+      },
+      "o": {
+        "apy": "Effective yield (APY)",
+        "final": "Final amount",
+        "earned": "Earned"
+      }
+    },
+    "sats": {
+      "title": "Bitcoin in satoshis and dollars",
+      "desc": "Converts BTC to satoshis, values it in dollars and shows how many sats fit in one dollar.",
+      "note": "1 BTC = 100,000,000 satoshis. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "btc": "Amount of BTC",
+        "price": "BTC price, $"
+      },
+      "o": {
+        "sats": "Satoshi",
+        "usd": "Value, $",
+        "satsPerDollar": "Sats per 1 dollar"
+      }
+    },
+    "hodlpnl": {
+      "title": "Coin holdings result with fees",
+      "desc": "Profit or loss on coins you bought, including buy and sell fees, plus the breakeven price.",
+      "note": "Crypto taxes depend on your country. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "coins": "Number of coins",
+        "buyPrice": "Purchase price",
+        "nowPrice": "Current price",
+        "feePct": "Exchange fee, % per side"
+      },
+      "o": {
+        "cost": "Cost including fee",
+        "value": "Position value (unchanged)",
+        "pnl": "Result",
+        "pnlPct": "Result, %",
+        "breakeven": "Breakeven price"
+      }
+    },
+    "metalconv": {
+      "title": "Weight converter: grams, ounces, tola",
+      "desc": "Converts weight between grams, kilograms, troy ounces and tola.",
+      "note": "A troy ounce = 31.1035 g, a tola = 11.6638 g. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "value": "Weight",
+        "unit": "Unit"
+      },
+      "o": {
+        "grams": "Grams",
+        "kilograms": "Kilograms",
+        "troyOz": "Troy ounces",
+        "tola": "Tola (11.66 g)"
+      },
+      "c": {
+        "1": "Grams",
+        "2": "Kilograms",
+        "3": "Troy ounces",
+        "4": "Tola"
+      }
+    },
+    "jewelmark": {
+      "title": "Jewellery markup",
+      "desc": "Compares a shop price with the value of the gold in the item and shows the markup.",
+      "note": "Gold price and shop price must be in the same currency. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "weight": "Weight, grams",
+        "fineness": "Fineness (out of 1000)",
+        "spot": "Gold price per ounce",
+        "shopPrice": "Shop price"
+      },
+      "o": {
+        "melt": "Value of the gold itself",
+        "markup": "Shop markup",
+        "markupPct": "Markup over gold value",
+        "perGram": "Markup per gram"
+      }
+    },
+    "karat": {
+      "title": "Karats and fineness",
+      "desc": "Converts karats into fineness and percent of pure gold.",
+      "note": "24 karats is pure gold. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "karat": "Karats (out of 24)"
+      },
+      "o": {
+        "fineness": "Fineness (out of 1000)",
+        "goldPct": "Gold in the alloy",
+        "otherPct": "Other metals"
+      }
+    },
+    "etfgold": {
+      "title": "Gold per ETF share",
+      "desc": "How much gold backs one share of a gold fund and whether the share trades at a premium or discount.",
+      "note": "Take ounces per share from the fund's site: each has its own. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "sharePrice": "Fund share price",
+        "ouncesPerShare": "Ounces of gold per share (check the fund)",
+        "spot": "Gold price per ounce",
+        "shares": "Number of shares"
+      },
+      "o": {
+        "nav": "Gold value per share",
+        "premium": "Premium or discount to gold",
+        "gramsPerShare": "Grams of gold per share",
+        "goldGrams": "Grams of gold in your position"
+      }
+    },
+    "rebalance": {
+      "title": "Portfolio rebalancing",
+      "desc": "How much to buy or sell of two assets to restore target weights.",
+      "note": "Commissions and taxes on selling are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "valueA": "Value of asset A",
+        "valueB": "Value of asset B",
+        "targetA": "Target share of asset A, %"
+      },
+      "o": {
+        "currentA": "Current share of A",
+        "targetAmountA": "Target amount in A",
+        "tradeA": "Trade in A (plus = buy, minus = sell)",
+        "tradeB": "Trade in B (plus = buy, minus = sell)"
+      }
+    },
+    "realreturn": {
+      "title": "Real return after inflation",
+      "desc": "Shows what you really earn after inflation and what an amount becomes in today's money.",
+      "note": "Use inflation for your country and currency. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "nominal": "Return, % per year",
+        "inflation": "Inflation, % per year",
+        "years": "Term, years",
+        "amount": "Amount now"
+      },
+      "o": {
+        "real": "Real return per year",
+        "futureNominal": "Future amount (nominal)",
+        "futureReal": "Future amount in today's money"
+      }
+    },
+    "loan": {
+      "title": "Loan payment",
+      "desc": "Monthly payment and total interest with equal instalments (annuity).",
+      "note": "Bank fees and insurance are not included. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "amount": "Loan amount",
+        "aprPct": "Rate, % per year",
+        "months": "Term, months"
+      },
+      "o": {
+        "payment": "Monthly payment",
+        "total": "Total for the period",
+        "interest": "Interest paid"
+      }
+    },
+    "savegoal": {
+      "title": "Monthly savings for a goal",
+      "desc": "The monthly amount you need to save to reach a goal in a set term at a given return.",
+      "note": "Future returns are unknown. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "target": "Goal amount",
+        "years": "Term, years",
+        "annualReturn": "Return, % per year",
+        "initial": "Already saved"
+      },
+      "o": {
+        "monthly": "Save per month",
+        "totalPaid": "You will contribute",
+        "growth": "Growth will add"
+      }
+    },
+    "rule72": {
+      "title": "Rule of 72: years to double",
+      "desc": "A quick estimate of the doubling time from a yearly return, plus the exact figure and time to triple.",
+      "note": "The rule of 72 is a good approximation at 6–10%. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "ratePct": "Return, % per year"
+      },
+      "o": {
+        "approx": "Years to double (rule of 72)",
+        "exact": "Years to double (exact)",
+        "triple": "Years to triple"
+      }
+    },
+    "pctchange": {
+      "title": "Percent change and the way back",
+      "desc": "By what percent a value changed and the move needed to get back.",
+      "note": "A 50% fall needs a 100% rise to recover. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "from": "From",
+        "to": "To"
+      },
+      "o": {
+        "change": "Change",
+        "backNeeded": "To get back you need",
+        "ratio": "Times changed"
+      }
+    },
+    "wilson": {
+      "title": "Win rate with confidence interval",
+      "desc": "Shows the range your true win rate may lie in (95%) when you have few trades.",
+      "note": "Wilson method. The more trades, the narrower the interval. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "wins": "Winning trades",
+        "trades": "Total trades"
+      },
+      "o": {
+        "rate": "Win rate",
+        "low": "Lower bound (95%)",
+        "high": "Upper bound (95%)",
+        "margin": "Margin of error (±)"
+      }
+    },
+    "streakprob": {
+      "title": "Losing streak probability",
+      "desc": "The chance that at least one losing streak of the chosen length occurs within a number of trades.",
+      "note": "Trades are assumed independent. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "trades": "Total trades",
+        "winRate": "Win rate, %",
+        "streak": "Losing streak length"
+      },
+      "o": {
+        "probability": "Chance of such a streak",
+        "noStreak": "Chance of no such streak"
+      }
+    },
+    "sharpe": {
+      "title": "Sharpe ratio",
+      "desc": "Return per unit of risk from average return and its volatility per period. Annualized.",
+      "note": "Needs enough history, with few periods the value is noisy. Reference calculation, ignores slippage and taxes. Not investment advice.",
+      "f": {
+        "mean": "Average return per period, %",
+        "stdev": "Return volatility (standard deviation), %",
+        "rf": "Risk-free rate per period, %",
+        "periods": "Data period"
+      },
+      "o": {
+        "perPeriod": "Ratio per period",
+        "annual": "Annualized Sharpe ratio"
+      },
+      "c": {
+        "252": "Daily (252 a year)",
+        "52": "Weekly (52 a year)",
+        "12": "Monthly (12 a year)"
+      }
+    }
+  },
+  "chat": {
+    "title": "Messages",
+    "subtitle": "Private chats and trader groups right on the site. Find people by handle, create groups and talk.",
+    "rules": "Be polite: no spam, insults or scams. Never send passwords or card details. You can block a person or report a message. Tartib gives no investment advice, members' opinions are their own.",
+    "handleTitle": "Choose a handle",
+    "handleText": "Others find you by your handle. Your email and name are not shown to anyone without a handle. A handle cannot be taken again later, so choose carefully.",
+    "handleLabel": "Your handle",
+    "handleRules": "3–20 characters: Latin letters, digits and _, starting with a letter.",
+    "handleSave": "Save handle",
+    "search": "Search chats",
+    "chats": "Chats",
+    "newChat": "New chat",
+    "newDm": "Private",
+    "newGroup": "Group",
+    "blockedTab": "Blocked",
+    "searchLabel": "Find a person by handle",
+    "searchHint": "Enter at least 3 letters of the handle.",
+    "addMembers": "Add members (up to {max})",
+    "noResults": "Nobody found.",
+    "noBlocked": "No blocked people.",
+    "groupName": "Group name",
+    "groupNamePlaceholder": "For example: Gold and metals",
+    "create": "Create group",
+    "selected": "Selected",
+    "removeMember": "Remove from group",
+    "noChats": "No chats yet",
+    "noChatsHint": "Find a person by handle and message them, or create a group.",
+    "selectChat": "Pick a chat on the left or start a new one.",
+    "noMessagesYet": "No messages yet",
+    "emptyChat": "Write the first message.",
+    "you": "You",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "unreadCount": "Unread: {n}",
+    "messages": "Messages",
+    "writeMessage": "Write a message",
+    "send": "Send",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleted": "Message deleted",
+    "edited": "edited",
+    "deleteConfirm": "Delete this message for everyone?",
+    "report": "Report",
+    "reportPrompt": "What is wrong with this message? (optional)",
+    "reportDone": "Thank you, the report was sent to the site owner.",
+    "loadOlder": "Show earlier messages",
+    "back": "Back to chats",
+    "info": "Chat info",
+    "left": "The other person left",
+    "membersCount": "Members: {n}",
+    "members": "Members",
+    "owner": "Owner",
+    "addMember": "Add a member",
+    "rename": "Rename",
+    "mute": "Mute notifications",
+    "unmute": "Unmute notifications",
+    "block": "Block",
+    "unblock": "Unblock",
+    "blockConfirm": "Block this person? You will not be able to message each other.",
+    "removeConfirm": "Remove this member from the group?",
+    "leaveGroup": "Leave group",
+    "leaveConfirm": "Leave the group?",
+    "deleteGroup": "Delete group",
+    "deleteGroupConfirm": "Delete the group with all its messages for everyone? This cannot be undone.",
+    "deleteDm": "Delete conversation for me",
+    "deleteDmConfirm": "Remove this conversation from your list?",
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "handle_invalid": "Handle: 3–20 characters, Latin letters, digits and _, starting with a letter.",
+      "handle_taken": "This handle is taken.",
+      "handle_reserved": "This handle is reserved. Pick another one.",
+      "need_handle": "Choose a handle first.",
+      "cannot_contact": "You cannot message this person (no handle, block or restriction).",
+      "too_many_chats": "Too many chats. Remove some you do not need.",
+      "too_many_groups": "You can create at most 10 groups.",
+      "too_many_members": "A group holds at most 50 members.",
+      "title_invalid": "Group name must be 1 to 60 characters.",
+      "rate_limit": "Too fast. Wait a minute.",
+      "forbidden": "You are not allowed to do that.",
+      "empty": "The message is empty.",
+      "deleted": "The message is already deleted.",
+      "invalid": "Invalid action.",
+      "unauthorized": "Please sign in again.",
+      "blocked": "Message not sent: you cannot write in this chat (block or restriction)."
+    }
+  },
+  "scene3d": {
+    "ingotAlt": "Tartib gold bar in 3D",
+    "disciplineTitle": "Discipline by day in 3D",
+    "disciplineHint": "Column height is the share of trades that followed your rules that day over the last 28 days. Grey tiles are days without trades. Move the mouse to tilt the chart.",
+    "disciplineAlt": "3D chart of discipline over 28 days",
+    "best": "Best day",
+    "worst": "Weakest day",
+    "dayLine": "{day}: {percent}% by the rules ({n} trades)",
+    "noData": "No trades in the last 28 days. The chart will appear after your first entries.",
+    "legendHigh": "80% and above",
+    "legendMid": "50–79%",
+    "legendLow": "below 50%",
+    "legendNone": "no trades",
+    "heroAlt": "3D scene: Tartib logo, gold coins and bars",
+    "metalsAlt": "Gold bars and a coin in 3D",
+    "landscapeTitle": "When rules get broken (3D)",
+    "landscapeHint": "Columns by weekday and time of day. Height is the number of violations, colour is the share of trades with a violation. Top to bottom is time: 00:00 to 24:00 in 3-hour blocks.",
+    "landscapeAlt": "3D chart of violations by weekday and time of day",
+    "landscapeSlot": "{day}, {from}–{to}: {v} of {n} trades with a violation",
+    "landscapeTop": "Riskiest windows",
+    "landscapeNone": "This picture needs at least 10 trades. There are too few entries so far.",
+    "riskHigh": "50% or more violations",
+    "riskMid": "25–49%",
+    "riskLow": "under 25%",
+    "noViolations": "No violations in any window. Keep it up."
+  },
+  "referral": {
+    "title": "Invite a friend",
+    "text": "Send this link to traders you know. When they sign up through it, you will see how many here.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "share": "Share",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "invited": "Invited",
+    "shareText": "Tartib: a trade journal and discipline tool. Free, no signals, no profit promises.",
+    "note": "There is no cash reward: we simply count how many people came through your link. Tartib is a tool for record keeping and discipline, not investment advice."
+  }
+}

@@ -1,0 +1,3622 @@
+{
+  "common": {
+    "appName": "TARTIB",
+    "disclaimer": "Tartib — hisob-kitob va intizom vositasi. U investitsiya bo'yicha tavsiyalar, savdo signallari yoki foyda kafolatini bermaydi.",
+    "soon": "Tez orada",
+    "language": "Til",
+    "theme": "Mavzu",
+    "themeLight": "Yorug' mavzu",
+    "themeDark": "Qorong'i mavzu",
+    "loading": "Yuklanmoqda…",
+    "close": "Yopish",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "add": "Qo'shish",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "back": "Orqaga",
+    "all": "Hammasi",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "optional": "majburiy emas"
+  },
+  "nav": {
+    "dashboard": "Bosh sahifa",
+    "calculator": "Kalkulyator",
+    "trades": "Bitimlarim",
+    "rules": "Qoidalar",
+    "statistics": "Statistika",
+    "settings": "Sozlamalar",
+    "profile": "Profil",
+    "pricing": "Hammasi bepul",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "main": "Asosiy navigatsiya",
+    "news": "Yangiliklar",
+    "blog": "Blog",
+    "tools": "Asboblar",
+    "charts": "Grafiklar",
+    "market": "Bozor",
+    "more": "Yana: bozor va asboblar",
+    "diary": "Kundalik",
+    "mistakes": "Xatolar",
+    "plusMinus": "Foyda va zarar",
+    "traderTypes": "Treyder turlari",
+    "portfolio": "Portfel",
+    "prop": "Prop-chellenj",
+    "metals": "Oltin va metallar",
+    "support": "Egasiga yozish",
+    "messages": "Xabarlar"
+  },
+  "footer": {
+    "channel": "Telegram-kanal",
+    "terms": "Foydalanish shartlari",
+    "privacy": "Maxfiylik siyosati",
+    "rights": "Barcha huquqlar himoyalangan."
+  },
+  "seo": {
+    "title": "Tartib — savdo intizomi va treyder jurnali",
+    "description": "Tartib treyderlarga xavfni boshqarish, bitimlar jurnalini yuritish va savdo qoidalarini buzish narxini o'lchashga yordam beradi.",
+    "keywords": [
+      "treyder jurnali",
+      "savdo kundaligi",
+      "lot kalkulyatori",
+      "treyding risk menejmenti",
+      "pozitsiya kalkulyatori",
+      "savdo intizomi",
+      "oltin XAUUSD lot"
+    ]
+  },
+  "landing": {
+    "hero": {
+      "title": "Hissiyotga emas, qoidalarga amal qilib savdo qil.",
+      "subtitle": "Tartib treyderlarga xavfni nazorat qilish, bitimlar jurnalini yuritish va xatolarining haqiqiy narxini ko'rishga yordam beradi.",
+      "start": "Bepul boshlash",
+      "demo": "Demoni ko'rish",
+      "t1": "Signal va foyda va'dasiz",
+      "t2": "Ma'lumotlar faqat sizda",
+      "t3": "RU · UZ · EN"
+    },
+    "pillars": {
+      "title": "Bozorni topishga urinma. O'zingni nazorat qil.",
+      "risk": {
+        "title": "Xavfni nazorat qilish",
+        "text": "Bitimga kirishdan oldin pozitsiya hajmini, mumkin bo'lgan zararni va xavf/foyda nisbatini hisoblab ol."
+      },
+      "discipline": {
+        "title": "Intizom",
+        "text": "O'z qoidalaringni belgila va ularga qanchalik amal qilayotganingni ko'r. Bitim qoidalarni buzsa, Tartib ogohlantiradi."
+      },
+      "cost": {
+        "title": "Xatolar narxi",
+        "text": "O'z qoidalaringni buzish senga qancha turganini pulda ko'r — o'z ma'lumotlaring asosida."
+      }
+    },
+    "demo": {
+      "title": "Intizom narxi",
+      "followed": "Qoidalar bo'yicha",
+      "violated": "Buzilishlar",
+      "cost": "Buzilishlar narxi",
+      "text": "Tartib faqat bitimlaring natijasini emas, qarorlaring natijasini ham ko'rsatadi.",
+      "note": "Ko'rgazmali misol. Raqamlar haqiqiy natijalarni aks ettirmaydi."
+    },
+    "how": {
+      "title": "Bu qanday ishlaydi",
+      "step1": {
+        "title": "Qoidalar yarat",
+        "text": "Maksimal xavf, yelka, minimal R:R — aynan senga muhim bo'lgan narsalar."
+      },
+      "step2": {
+        "title": "Bitimni hisobla",
+        "text": "Kalkulyator xavf, zarar va foydani ko'rsatadi hamda buzilishlar haqida ogohlantiradi."
+      },
+      "step3": {
+        "title": "Natijani yoz",
+        "text": "Bitimni hissiyot va kirish sababi bilan jurnalga qo'sh."
+      },
+      "step4": {
+        "title": "Intizomni tahlil qil",
+        "text": "Xatolaringni tushunish uchun statistika va buzilishlar narxini ko'r."
+      }
+    },
+    "pricing": {
+      "title": "Bepul boshla",
+      "subtitle": "Butun xizmat bepul: pullik tariflar yo'q, bitim va qoidalar soniga cheklov yo'q."
+    },
+    "cta": {
+      "title": "Ongli savdoga tayyormisan?",
+      "text": "Bir daqiqada akkaunt yarat va birinchi qoidalaringni qo'sh."
+    },
+    "shots": {
+      "title": "Ilova shunday ko'rinadi",
+      "subtitle": "Demo akkaunt skrinshotlari. Raqamlar haqiqiy emas, ular hammasi qanday ishlashini ko'rsatadi.",
+      "s1": "Bosh sahifada intizom narxi",
+      "s2": "Statistika va kapital grafigi",
+      "s3": "Avtomatik tekshiruvli o'z qoidalaring",
+      "alt1": "Tartib bosh ekrani",
+      "alt2": "Tartib statistika ekrani",
+      "alt3": "Tartib qoidalar ekrani"
+    }
+  },
+  "pricing": {
+    "title": "Hammasi bepul",
+    "subtitle": "Pullik tariflar yo'q. Barcha imkoniyatlar hamma uchun ochiq.",
+    "free": {
+      "name": "Tartib",
+      "price": "$0",
+      "period": "abadiy",
+      "features": [
+        "Cheklovsiz bitimlar jurnali",
+        "Istalgan miqdordagi savdo qoidalari",
+        "Butun davr, strategiyalar bo'yicha statistika va kengaytirilgan tahlil",
+        "Xatolar tahlili, foyda va zarar, haftalik hisobotlar",
+        "Dunyo bozorlari, grafiklar, kalkulyatorlar va Telegram-bot"
+      ],
+      "cta": "Bepul boshlash"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Kirish",
+      "subtitle": "Xush kelibsan! Davom etish uchun kir.",
+      "submit": "Kirish",
+      "noAccount": "Akkaunting yo'qmi?",
+      "toRegister": "Ro'yxatdan o'tish"
+    },
+    "register": {
+      "title": "Akkaunt yaratish",
+      "subtitle": "Bepul. Bir daqiqa vaqt oladi.",
+      "name": "Ism",
+      "submit": "Akkaunt yaratish",
+      "haveAccount": "Akkaunting bormi?",
+      "toLogin": "Kirish"
+    },
+    "email": "Pochta",
+    "password": "Parol",
+    "passwordHint": "Kamida 8 ta belgi",
+    "checkEmailTitle": "Pochtani tekshir",
+    "checkEmailText": "Biz havola bilan xat yubordik. Pochtani tasdiqlash va kirish uchun unga bos.",
+    "notConfigured": "Kirish xizmati hali sozlanmagan. .env.local fayliga Supabase kalitlarini qo'shish kerak.",
+    "logout": "Chiqish",
+    "linkExpired": "Xatdagi havola eskirgan yoki boshqa brauzerda ochilgan. Yangisini so'ra.",
+    "forgot": {
+      "link": "Parolni unutdingmi?",
+      "title": "Parolni tiklash",
+      "subtitle": "Akkaunt pochtasini kiriting, yangi parol uchun havola yuboramiz.",
+      "submit": "Havola yuborish",
+      "back": "Kirishga qaytish",
+      "sentTitle": "Pochtani tekshir",
+      "sentText": "Bunday pochtali akkaunt mavjud bo'lsa, havola bilan xat yubordik. Uni shu brauzerning o'zida och.",
+      "rateLimit": "Hozir xatlar juda tez-tez yuborilmoqda. Birozdan keyin qayta urinib ko'r."
+    },
+    "reset": {
+      "title": "Yangi parol",
+      "subtitle": "Kirish uchun yangi parol o'ylab top.",
+      "newPassword": "Yangi parol",
+      "submit": "Parolni saqlash",
+      "expired": "Havola eskirgan. Parolni tiklashni qaytadan so'ra.",
+      "same": "Yangi parol eskisidan farq qilishi kerak."
+    },
+    "google": "Google bilan davom etish",
+    "or": "yoki pochta orqali",
+    "oauthFailed": "Google orqali kirib bo'lmadi. Qayta urinib ko'r yoki pochta orqali kir.",
+    "mfa": {
+      "title": "Tasdiqlash kodi",
+      "text": "Autentifikator ilovasidagi 6 xonali kodni kirit.",
+      "code": "Kod",
+      "verify": "Kirish",
+      "cancel": "Bekor qilish va chiqish",
+      "invalid": "Kod noto'g'ri. Qayta urinib ko'r.",
+      "sessionExpired": "Kirish seansi tugadi. Qaytadan kir."
+    },
+    "phone": {
+      "button": "Telefon raqami bilan kirish yoki ro'yxatdan o'tish",
+      "hint": "Tartib Telegram boti ochiladi. «Start»ni bosing, so'ng «📱 Raqamni ulashish»ni. Raqamni Telegramning o'zi tasdiqlaydi, SMS kerak emas.",
+      "open": "Telegramni ochish",
+      "waiting": "Telegramda tasdiqlash kutilmoqda…",
+      "expired": "Vaqt tugadi yoki kirish bekor qilindi. Tugmani qayta bosing.",
+      "error": "Bajarilmadi. Qayta urinib ko'ring yoki pochta bilan kiring."
+    }
+  },
+  "pages": {
+    "comingTitle": "Bu bo'lim ishlab chiqilmoqda",
+    "comingText": "Uni keyingi bosqichlardan birida tugallaymiz.",
+    "dashboard": "Dashboard",
+    "calculator": "Kalkulyator",
+    "trades": "Bitimlarim",
+    "rules": "Mening savdo qoidalarim",
+    "statistics": "Statistika",
+    "settings": "Sozlamalar",
+    "profile": "Profil"
+  },
+  "legal": {
+    "termsTitle": "Foydalanish shartlari",
+    "privacyTitle": "Maxfiylik siyosati",
+    "updated": "2026-yil 2-oktabrdagi tahrir",
+    "terms": {
+      "s1": {
+        "title": "Xizmat haqida",
+        "text": "Tartib — treyderlar uchun hisob-kitob va intizom vositasi: xavf kalkulyatori, bitimlar jurnali, shaxsiy savdo qoidalari va statistika."
+      },
+      "s2": {
+        "title": "Maslahat emas",
+        "text": "Tartib investitsiya bo'yicha tavsiyalar, savdo signallari yoki foyda kafolatini bermaydi. U broker, savdo boti yoki maslahatchi emas. Kalkulyatordagi bitim bahosi faqat bitimning o'z qoidalaringga mosligini ko'rsatadi va bozor yo'nalishi haqida hech narsa demaydi. Bitimlar bo'yicha qarorlarni o'zing qabul qilasan va ularga o'zing javobgarsan. Moliyaviy bozorlarda savdo qilish mablag'ni yo'qotish xavfi bilan bog'liq."
+      },
+      "s3": {
+        "title": "Akkaunt",
+        "text": "Parolingning xavfsizligi va kiritgan ma'lumotlaringning to'g'riligi uchun o'zing javobgarsan. Bir odam — bitta akkaunt."
+      },
+      "s4": {
+        "title": "Narxi",
+        "text": "Xizmat bepul: pullik tariflar yo'q, bitim va qoidalar soniga cheklov yo'q. Har qanday o'zgarish haqida oldindan xabar beramiz."
+      },
+      "s5": {
+        "title": "Ruxsat etilgan foydalanish",
+        "text": "Boshqalarning ma'lumotlariga kirishga urinish, xizmat ishini buzish yoki uni noqonuniy maqsadlarda ishlatish mumkin emas."
+      },
+      "s6": {
+        "title": "Javobgarlikni cheklash",
+        "text": "Xizmat «xuddi borligicha» taqdim etiladi. Hisob-kitoblar ma'lumot uchun: bitimdan oldin ularni tekshir. Savdo yoki xizmatdan foydalanish bilan bog'liq zararlar uchun javobgar emasmiz."
+      },
+      "s7": {
+        "title": "Shartlar o'zgarishi",
+        "text": "Shartlar yangilanishi mumkin. Joriy versiya doim shu sahifada mavjud."
+      }
+    },
+    "privacy": {
+      "s1": {
+        "title": "Qanday ma'lumotlarni saqlaymiz",
+        "text": "Pochta, ism, sozlamalar (til, valyuta, vaqt mintaqasi), savdo hisoblari, qoidalar, bitimlar va ularga yozgan izohlaring. Parolni biz saqlamaymiz: u bilan Supabase avtorizatsiya xizmati shug'ullanadi va faqat himoyalangan xeshni saqlaydi."
+      },
+      "s2": {
+        "title": "Nima uchun kerak",
+        "text": "Faqat kalkulyator, jurnal va statistika ishlashi uchun. Ma'lumotlarni sotmaymiz va reklama uchun ishlatmaymiz."
+      },
+      "s3": {
+        "title": "Ma'lumotlar qayerda saqlanadi",
+        "text": "Supabase ma'lumotlar bazasida (PostgreSQL). Qator darajasidagi himoya yoqilgan: har bir foydalanuvchi faqat o'z ma'lumotlarini ko'radi va o'zgartiradi."
+      },
+      "s4": {
+        "title": "Ma'lumotlarni kimga beramiz",
+        "text": "Faqat Tartib ularsiz ishlamaydigan xizmatlarga: hosting va ma'lumotlar bazasi. Kelajakda AI-hisobotlar paydo bo'lsa, ma'lumotlarni tashqi AI-provayder qayta ishlashi faqat sening roziligingdan keyin yoqiladi va oldindan xabar beramiz."
+      },
+      "s5": {
+        "title": "Cookie va brauzer xotirasi",
+        "text": "Akkauntga kirish va tanlangan til uchun cookie, tanlangan mavzu uchun brauzer xotirasidan foydalanamiz. Reklama yoki uchinchi tomon kuzatuv cookie-lari yo'q."
+      },
+      "s6": {
+        "title": "Sening huquqlaring",
+        "text": "Ismingni va sozlamalarni profilda o'zgartirishing mumkin. Akkauntni barcha ma'lumotlar bilan o'chirish uchun bizga yoz; aloqa manzili ommaviy ishga tushirishdan oldin saytda ko'rsatiladi."
+      }
+    }
+  },
+  "errors": {
+    "generic": "Nimadir noto'g'ri ketdi. Qayta urinib ko'r.",
+    "required": "Bu maydonni to'ldir",
+    "email": "To'g'ri pochta kiriting",
+    "passwordMin": "Parol kamida 8 ta belgidan iborat bo'lishi kerak",
+    "passwordMax": "Parol juda uzun",
+    "nameMax": "Qiymat juda uzun",
+    "number": "Son kiriting",
+    "balanceMin": "Balans noldan kam bo'lishi mumkin emas",
+    "balanceMax": "Son juda katta",
+    "invalidCredentials": "Pochta yoki parol noto'g'ri.",
+    "emailTaken": "Bu pochta allaqachon ro'yxatdan o'tgan. Kirib ko'r.",
+    "positive": "Noldan katta son kiriting",
+    "tooLarge": "Qiymat juda katta",
+    "textMax": "Matn juda uzun",
+    "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas",
+    "nonNegative": "Son noldan kam bo'lishi mumkin emas",
+    "passwordWeak": "Parol juda oddiy. Takrorlanmas narsa o'ylab top, yaxshisi bir necha so'zdan"
+  },
+  "onboarding": {
+    "title": "Tanishib olaylik",
+    "subtitle": "Yarim daqiqa oladi. Hammasini keyin sozlamalarda o'zgartirish mumkin.",
+    "name": "Isming nima?",
+    "language": "Interfeys tili",
+    "currency": "Valyuta",
+    "accountName": "Savdo hisobi nomi",
+    "accountNamePlaceholder": "Asosiy hisob",
+    "startingBalance": "Boshlang'ich balans",
+    "startingBalanceHint": "Hisobda hozir qancha pul bor. Depozit egri chizig'i shundan hisoblanadi.",
+    "submit": "Boshlash"
+  },
+  "directions": {
+    "long": "LONG",
+    "short": "SHORT"
+  },
+  "markets": {
+    "crypto": "Kripto",
+    "forex": "Forex",
+    "stocks": "Aksiyalar",
+    "futures": "Fyucherslar",
+    "options": "Opsionlar",
+    "metals": "Oltin va metallar"
+  },
+  "emotions": {
+    "calm": "Xotirjamlik",
+    "fear": "Qo'rquv",
+    "greed": "Ochko'zlik",
+    "fomo": "FOMO",
+    "revenge": "Qasos",
+    "confident": "Ishonch",
+    "uncertain": "Ishonchsizlik",
+    "other": "Boshqa"
+  },
+  "rules": {
+    "title": "Mening savdo qoidalarim",
+    "subtitle": "Tartib sen amal qilishingga yordam beradigan qoidalar.",
+    "add": "Qoida qo'shish",
+    "empty": {
+      "title": "O'z qoidalaringni yarat",
+      "text": "Tartib amal qilishingga yordam beradigan qoidalarni belgila."
+    },
+    "presets": {
+      "title": "Tayyor namunalar",
+      "text": "Bir bosishda qo'sh, keyin o'zingga moslab o'zgartir.",
+      "add": "Qo'shish",
+      "risk1": {
+        "name": "Bitimga 1% dan ko'p xavf yo'q",
+        "description": "Bitta bitimda balansning 1% dan ko'pini xavfga qo'ymayman."
+      },
+      "rr2": {
+        "name": "R:R kamida 2",
+        "description": "Mumkin bo'lgan foyda xavfdan kamida ikki baravar katta bitimlarni olaman."
+      },
+      "lev10": {
+        "name": "Yelka 10 gacha",
+        "description": "Haddan tashqari katta yelka ishlatmayman."
+      },
+      "sl": {
+        "name": "Stop-loss majburiy",
+        "description": "Stop-losssiz bitimga kirmayman."
+      },
+      "trades3": {
+        "name": "Kuniga 3 tadan ko'p bitim yo'q",
+        "description": "Hissiyotda savdo qilmaslik uchun bitimlar sonini cheklayman."
+      },
+      "dayloss3": {
+        "name": "3% zararda kun uchun to'xtash",
+        "description": "Kunda balansning 3% ini yo'qotsam, ertagacha savdo qilmayman."
+      }
+    },
+    "form": {
+      "createTitle": "Yangi qoida",
+      "editTitle": "Qoidani tahrirlash",
+      "name": "Nomi",
+      "description": "Tavsif",
+      "type": "Qoida turi",
+      "value": "Qiymat",
+      "active": "Qoida yoqilgan",
+      "save": "Saqlash"
+    },
+    "types": {
+      "max_risk_percent": "Bitimdagi maksimal xavf",
+      "min_risk_reward": "Minimal R:R",
+      "max_leverage": "Maksimal yelka",
+      "require_stop_loss": "Majburiy stop-loss",
+      "max_trades_per_day": "Kuniga maksimal bitimlar",
+      "custom": "O'z qoidam",
+      "max_daily_loss_percent": "Kunlik zarar limiti"
+    },
+    "valueLabels": {
+      "max_risk_percent": "Maksimal xavf, %",
+      "min_risk_reward": "Minimal R:R",
+      "max_leverage": "Maksimal yelka",
+      "max_trades_per_day": "Kuniga maksimal bitimlar",
+      "max_daily_loss_percent": "Kunlik maksimal zarar, balansning %"
+    },
+    "describe": {
+      "max_risk_percent": "Bitimga {value}% dan ko'p xavf yo'q",
+      "min_risk_reward": "R:R kamida {value}",
+      "max_leverage": "Yelka {value} gacha",
+      "require_stop_loss": "Stop-loss majburiy",
+      "max_trades_per_day": "Kuniga {value} tadan ko'p bitim yo'q",
+      "custom": "Qo'lda belgilanadi",
+      "max_daily_loss_percent": "Zarar balansning {value}% iga yetganda kun uchun to'xta"
+    },
+    "auto": "Avtomatik tekshiriladi",
+    "manual": "Qo'lda belgilanadi",
+    "on": "Yoqilgan",
+    "off": "O'chirilgan",
+    "deleteTitle": "Qoida o'chirilsinmi?",
+    "deleteText": "Qoida ro'yxatdan yo'qoladi. Eski bitimlarda bu qoidani buzish belgisi ham o'chadi.",
+    "saveFailed": "Qoidani saqlab bo'lmadi. Qayta urinib ko'r.",
+    "deleteFailed": "Qoidani o'chirib bo'lmadi. Qayta urinib ko'r."
+  },
+  "calc": {
+    "title": "Xavf kalkulyatori",
+    "subtitle": "Bitimga kirishdan oldin pozitsiya hajmini hisobla.",
+    "account": "Savdo hisobi",
+    "noAccount": "Hisob yo'q — sozlamalarda yarat",
+    "balance": "Balans",
+    "riskPercent": "Bitimdagi xavf, %",
+    "instrument": "Instrument",
+    "market": "Bozor",
+    "direction": "Yo'nalish",
+    "entry": "Kirish narxi",
+    "stop": "Stop-loss",
+    "takeProfit": "Take-profit (majburiy emas)",
+    "leverage": "Yelka",
+    "results": {
+      "title": "Natija",
+      "empty": "Maydonlarni to'ldir, hisob-kitob shu yerda paydo bo'ladi.",
+      "riskAmount": "Xavf summasi",
+      "positionSize": "Pozitsiya hajmi",
+      "shares": "Aksiyalar",
+      "lots": "Lotlar",
+      "potentialLoss": "Mumkin bo'lgan zarar",
+      "potentialProfit": "Mumkin bo'lgan foyda",
+      "riskReward": "R:R",
+      "positionValue": "Pozitsiya qiymati",
+      "margin": "Kerakli marja"
+    },
+    "errors": {
+      "invalidNumbers": "Balans, xavf, kirish narxi va stop-lossni noldan katta sonlar bilan to'ldir.",
+      "riskRange": "Xavf 0% dan katta va 100% dan oshmasligi kerak.",
+      "leverageMin": "Yelka 1 dan kam bo'lishi mumkin emas.",
+      "stopSame": "Stop-loss kirish narxiga teng bo'lishi mumkin emas.",
+      "longStop": "LONG uchun stop-loss kirish narxidan past bo'lishi kerak.",
+      "shortStop": "SHORT uchun stop-loss kirish narxidan yuqori bo'lishi kerak.",
+      "longTp": "LONG uchun take-profit kirish narxidan yuqori bo'lishi kerak.",
+      "shortTp": "SHORT uchun take-profit kirish narxidan past bo'lishi kerak.",
+      "sizeZero": "Bunday xavfda bitta aksiyadan kam chiqadi. Xavfni oshir yoki stop-lossni yaqinlashtir."
+    },
+    "score": {
+      "title": "Bitim bahosi",
+      "of": "10 dan",
+      "note": "Baho faqat bitimning sening qoidalaringga mosligini ko'rsatadi. U bozor yo'nalishi haqida hech narsa demaydi.",
+      "noRules": "Hozircha faol qoidalaring yo'q. Baho olish uchun ularni yarat.",
+      "createRules": "Qoidalar yaratish"
+    },
+    "reasons": {
+      "max_risk_percent": {
+        "ok": "Xavf {actual}% — qoida doirasida ({limit}% gacha)",
+        "violated": "Sening maksimal xavfing: {limit}%. Bitim xavfi: {actual}%."
+      },
+      "min_risk_reward": {
+        "ok": "R:R {actual} — {limit} dan kam emas",
+        "violated": "Qoida bo'yicha minimal R:R: {limit}. Bitim R:R: {actual}."
+      },
+      "max_leverage": {
+        "ok": "Yelka {actual} — qoida doirasida ({limit} gacha)",
+        "violated": "Qoida bo'yicha maksimal yelka: {limit}. Bitim yelkasi: {actual}."
+      },
+      "require_stop_loss": {
+        "ok": "Stop-loss belgilangan",
+        "violated": "Qoidangga ko'ra stop-loss majburiy."
+      },
+      "max_trades_per_day": {
+        "ok": "Bugungi bitimlar: {actual} / {limit}",
+        "violated": "Qoida bo'yicha kuniga maksimal bitimlar: {limit}. Shu bitim bilan {actual} ta bo'ladi."
+      },
+      "custom": {
+        "manual": "{name} — bitimni yozganda qo'lda belgila"
+      },
+      "max_daily_loss_percent": {
+        "ok": "Kunlik zarar {actual}% — limit ({limit}%) ga yetmagan",
+        "violated": "Sening kunlik zarar limiting: {limit}%. Bugun balansning {actual}% yo'qotilgan."
+      }
+    },
+    "warning": {
+      "title": "Bu bitim bir yoki bir nechta qoidangni buzadi",
+      "text": "Qaror o'zingda. Tartib faqat qoidalaringga nima zid ekanini ko'rsatadi.",
+      "cancel": "Bekor qilish",
+      "proceed": "Baribir davom etish"
+    },
+    "saveAsTrade": "Bitim sifatida saqlash",
+    "marginWarning": "Kerakli marja ({margin}) hisob balansidan ({balance}) katta. Xavfni kamaytir yoki yelkani oshir."
+  },
+  "trades": {
+    "title": "Bitimlarim",
+    "add": "Bitim qo'shish",
+    "empty": {
+      "title": "Bu yerda hali bitimlar yo'q. Tartib savdo intizomingni tahlil qila boshlashi uchun birinchi bitimni qo'sh.",
+      "cta": "Birinchi bitimni qo'shish"
+    },
+    "noResults": "Bu filtrlar bo'yicha bitimlar yo'q.",
+    "cols": {
+      "date": "Sana",
+      "instrument": "Instrument",
+      "direction": "Yo'nalish",
+      "entry": "Kirish",
+      "exit": "Chiqish",
+      "size": "Hajm",
+      "pnl": "P&L",
+      "emotion": "Hissiyot",
+      "rules": "Qoidalar"
+    },
+    "rulesFollowed": "Bajarilgan",
+    "rulesViolated": "Buzilgan",
+    "filters": {
+      "from": "Sanadan",
+      "to": "Sanagacha",
+      "instrument": "Instrument",
+      "direction": "Yo'nalish",
+      "result": "Natija",
+      "profit": "Foyda",
+      "loss": "Zarar",
+      "emotion": "Hissiyot",
+      "rules": "Qoidalar",
+      "all": "Hammasi",
+      "apply": "Qo'llash",
+      "reset": "Tozalash",
+      "title": "Filtrlar va qidiruv"
+    },
+    "pagination": {
+      "prev": "Orqaga",
+      "next": "Oldinga",
+      "page": "{page}-sahifa / {total}"
+    },
+    "form": {
+      "newTitle": "Yangi bitim",
+      "editTitle": "Bitimni tahrirlash",
+      "account": "Savdo hisobi",
+      "instrument": "Instrument",
+      "market": "Bozor",
+      "direction": "Yo'nalish",
+      "entry": "Kirish narxi",
+      "exit": "Chiqish narxi",
+      "stop": "Stop-loss",
+      "takeProfit": "Take-profit",
+      "size": "Hajm (aktiv birliklari)",
+      "leverage": "Yelka",
+      "riskPercent": "Xavf, %",
+      "pnl": "P&L",
+      "pnlHint": "Kirish, chiqish va hajmdan hisoblanadi. Qo'lda o'zgartirish mumkin, masalan komissiyani hisobga olib.",
+      "emotion": "Hissiyot",
+      "violated": "Buzilgan qoidalar",
+      "violatedHint": "Buzgan qoidalaringni belgila. Raqamlar bo'yicha buzilganlari avtomatik belgilanadi.",
+      "auto": "avto",
+      "noActiveRules": "Faol qoidalaring yo'q.",
+      "reason": "Kirish sababi",
+      "plan": "Savdo rejasi",
+      "comment": "Bitimdan keyingi izoh",
+      "tradedAt": "Sana va vaqt",
+      "save": "Bitimni saqlash",
+      "fromCalculator": "Ma'lumotlar kalkulyatordan ko'chirildi.",
+      "strategy": "Strategiya",
+      "strategyHint": "Masalan: «Breakout» yoki «Pullback». Statistika shu bo'yicha hisoblanadi.",
+      "fees": "Komissiya va svop",
+      "feesHint": "Brokerga yoki birjaga to'langan summa. P&L komissiyani ayirib hisoblanadi.",
+      "tzHint": "Vaqt sozlamalardagi vaqt mintaqasida kiritiladi: {tz}",
+      "saveAgain": "Saqlash va yana qo'shish",
+      "savedAgain": "Bitim saqlandi. Keyingisini yozishingiz mumkin.",
+      "saveTip": "Maslahat: Ctrl+Enter bitimni saqlaydi",
+      "sizeStocks": "Aksiyalar soni",
+      "sizeFutures": "Hajm: kontraktlar × punkt qiymati",
+      "futuresHint": "Masalan, punkti $2 bo'lgan 2 ta MNQ kontrakti = 4. «Fyuchers riski» kalkulyatori buni o'zi hisoblaydi.",
+      "ph": {
+        "crypto": "BTC/USDT",
+        "forex": "XAUUSD",
+        "stocks": "AAPL",
+        "futures": "MNQ",
+        "options": "AAPL 200C 2026-12-18",
+        "metals": "XAUUSD"
+      },
+      "closedPdtHint": "Yopilish vaqti bosh sahifadagi day-trade (PDT) hisoblagichi uchun kerak.",
+      "contractMode": "Kontraktlar bilan savdo qilaman",
+      "contracts": "Kontraktlar soni",
+      "contractSize": "Bitta kontrakt hajmi",
+      "contractSizeHint": "Bitta kontraktda aktivning nechta birligi bor (masalan, 100)",
+      "contractTotal": "Pozitsiya hajmi (kontraktlar × kontrakt hajmi)",
+      "optionsHint": "Opsion: kirish va chiqish narxi maydonlariga bitta aksiya uchun premiyani kiriting, kontraktlar sotib olingan miqdorda, kontrakt hajmi odatda 100. Opsionni sotib olish «long», sotish «short».",
+      "metalsHint": "Oltin va metallar: narx untsiya uchun dollarda. Broker lotlari uchun kontraktlar rejimi yoqilgan: kontraktlar soni lotlar soniga teng, kontrakt hajmi untsiyalarda (oltin 100, kumush 5000, platina va palladiy 100). GC fyucherslari uchun 100, mikro MGC uchun 10 kiriting."
+    },
+    "detail": {
+      "risk": "Xavf",
+      "riskReward": "R:R",
+      "potentialLoss": "Mumkin bo'lgan zarar",
+      "potentialProfit": "Mumkin bo'lgan foyda",
+      "discipline": "Intizom",
+      "followed": "Qoidalar bajarilgan",
+      "violated": "Qoidalar buzilgan",
+      "back": "Bitimlar ro'yxatiga",
+      "deleteTitle": "Bitim o'chirilsinmi?",
+      "deleteText": "Bitim qaytarib bo'lmaydigan tarzda o'chiriladi.",
+      "none": "—",
+      "neighbors": "Qo'shni bitimlar",
+      "prev": "Oldinroq",
+      "next": "Keyinroq"
+    },
+    "account": "Hisob",
+    "noAccount": "Savdo hisobi topilmadi.",
+    "notFound": "Bitim topilmadi.",
+    "saveFailed": "Bitimni saqlab bo'lmadi. Qayta urinib ko'r.",
+    "deleteFailed": "Bitimni o'chirib bo'lmadi. Qayta urinib ko'r.",
+    "export": "CSV yuklab olish",
+    "import": "Import",
+    "cooldown": "Oxirgi bitim {m} daqiqa oldin zararda yopilgan. Yangisini ochishdan oldin tanaffus qiling va cheklistdan o'ting.",
+    "period": {
+      "title": "Davr",
+      "all": "Hammasi",
+      "today": "Bugun",
+      "d7": "7 kun",
+      "d30": "30 kun",
+      "month": "Shu oy"
+    },
+    "summary": {
+      "found": "Topildi:",
+      "net": "Natija:",
+      "winRate": "Foydali:",
+      "limited": "dastlabki {n} bitim bo'yicha"
+    },
+    "sort": {
+      "title": "Saralash",
+      "new": "yangi",
+      "old": "eski",
+      "best": "eng yaxshi",
+      "worst": "eng yomon"
+    }
+  },
+  "stats": {
+    "title": "Statistika",
+    "subtitle": "Barcha raqamlar bitimlar jurnaliga qarab hisoblanadi.",
+    "period": {
+      "7d": "7 kun",
+      "30d": "30 kun",
+      "all": "Butun davr"
+    },
+    "none": "—",
+    "kpi": {
+      "totalPnl": "Umumiy P&L",
+      "winRate": "Win rate",
+      "profitFactor": "Profit factor",
+      "avgWin": "O'rtacha foyda",
+      "avgLoss": "O'rtacha zarar",
+      "maxDrawdown": "Maks. cho'kish",
+      "totalTrades": "Jami bitimlar",
+      "avgR": "O'rtacha R"
+    },
+    "discipline": {
+      "title": "Intizom narxi",
+      "followed": "Qoidalar bo'yicha",
+      "violated": "Buzilishlar bilan",
+      "difference": "Farq",
+      "trades": "Bitimlar: {n}",
+      "cost": "Buzilishlar narxi",
+      "costText": "Qoidalar buzilgan bitimlarsiz natijang {amount} yuqori bo'lardi.",
+      "noLoss": "Bu davrda qoidalar buzilgan bitimlar zarar keltirmadi.",
+      "noViolations": "Bu davrda buzilishlar yo'q. Shunday davom et!",
+      "empty": "Hisob-kitob birinchi bitimlardan keyin paydo bo'ladi."
+    },
+    "charts": {
+      "equity": "Depozit egri chizig'i",
+      "byDay": "Kunlar bo'yicha P&L",
+      "byInstrument": "Instrumentlar bo'yicha P&L",
+      "byEmotion": "Hissiyotlar bo'yicha P&L",
+      "byRules": "Qoidalarga amal qilish bo'yicha P&L",
+      "balance": "Balans",
+      "pnl": "P&L",
+      "tradesCount": "Bitimlar: {n}",
+      "noData": "Bu davr uchun ma'lumot yo'q.",
+      "byStrategy": "Strategiyalar bo'yicha P&L",
+      "noStrategy": "Bitimlarda strategiyani ko'rsat, taqqoslash shu yerda paydo bo'ladi."
+    },
+    "emotions": {
+      "title": "Hissiyotlar tahlili",
+      "subtitle": "Xulosalar faqat o'z jurnaling ma'lumotlariga asoslanadi.",
+      "count": "Bitimlar",
+      "total": "Jami",
+      "average": "O'rtacha",
+      "insight": "Jurnalingda {emotion} hissiyotli bitimlar o'rtacha {avg} beradi.",
+      "tooFew": "{emotion} bo'yicha ma'lumot hozircha kam: {n} ta bitim, kamida 3 ta kerak.",
+      "note": "Bu umumiy qoida emas, sening ma'lumotlaringga ko'ra kuzatuv."
+    },
+    "emptyPeriod": "Bu davrda bitimlar yo'q.",
+    "time": {
+      "title": "Sen qachon savdo qilasan",
+      "subtitle": "Vaqt sening vaqt mintaqang ({tz}) bo'yicha hisoblanadi.",
+      "byWeekday": "Hafta kunlari bo'yicha P&L",
+      "byHour": "Sutka vaqti bo'yicha P&L",
+      "worstDay": "Qoidabuzarliklar ko'proq shu hafta kunida: {day} ({n} ta bitimda {v} ta buzilish).",
+      "worstHour": "Qoidabuzarliklar ko'proq sutkaning shu vaqtida: {hours} ({n} ta bitimda {v} ta buzilish).",
+      "noPattern": "Hozircha aniq qonuniyat yo'q: bir kunda yoki vaqtda kamida 3 ta bitim va 2 ta buzilish kerak.",
+      "note": "Bu sening jurnaling bo'yicha kuzatuv, ma'lum vaqtda savdo qilish tavsiyasi emas."
+    },
+    "tilt": {
+      "title": "Zarardan keyin",
+      "subtitle": "Zararli bitimdan keyingi bir soat ichida qanday savdo qilasiz.",
+      "afterLoss": "Zarardan keyingi bir soat ichidagi bitimlar",
+      "other": "Qolgan bitimlar",
+      "trades": "bitim",
+      "violations": "qoidalar buzilgan",
+      "avg": "o'rtacha natija",
+      "warn": "Zarardan keyin qoidalarni tez-tez buzasiz. Tanaffus qoidasini sinab ko'ring: stopdan keyin 15 daqiqa yangi bitim ochmang.",
+      "ok": "Sezilarli farq yo'q: zarardan keyin ham qoidalarga har doimgidek amal qilasiz.",
+      "notEnough": "Ma'lumot hozircha kam: har bir guruhda kamida 3 tadan bitim kerak."
+    },
+    "best": {
+      "title": "Eng yaxshi va eng yomon bitimlar",
+      "best": "Eng yaxshilari",
+      "worst": "Eng yomonlari",
+      "none": "yo'q"
+    }
+  },
+  "dashboard": {
+    "greeting": "Salom, {name}!",
+    "today": {
+      "title": "Bugun",
+      "balance": "Joriy balans",
+      "pnl": "Bugungi P&L",
+      "trades": "Bugungi bitimlar",
+      "winRate": "Bugungi win rate"
+    },
+    "recent": {
+      "title": "So'nggi bitimlar",
+      "all": "Barcha bitimlar"
+    },
+    "violations": {
+      "title": "Tez-tez buzadigan qoidalaring",
+      "period": "Oxirgi 30 kun",
+      "none": "Oxirgi 30 kunda buzilishlar yo'q.",
+      "times": "Buzilishlar: {n}",
+      "period7d": "Oxirgi 7 kun"
+    },
+    "discipline": {
+      "period": "Oxirgi 30 kun",
+      "more": "Statistikada batafsil",
+      "period7d": "Oxirgi 7 kun"
+    }
+  },
+  "settings": {
+    "general": "Umumiy",
+    "timezone": "Vaqt mintaqasi",
+    "timezoneHint": "“Bugun” sening vaqtingiz bo'yicha hisoblanishi uchun kerak. Masalan, Asia/Tashkent.",
+    "badTimezone": "Bunday vaqt mintaqasi yo'q. Takliflardan tanla.",
+    "saved": "Saqlandi.",
+    "saveFailed": "Saqlab bo'lmadi. Qayta urinib ko'r.",
+    "accounts": "Savdo hisoblari",
+    "addAccount": "Hisob qo'shish",
+    "renameAccount": "Hisob nomini o'zgartirish",
+    "accountsLimit": "Hisoblar soni chegarasiga yetildi (10).",
+    "checklistMax": "10 tadan ko'p savol mumkin emas.",
+    "transactions": {
+      "title": "To'ldirish va yechib olish",
+      "text": "Qo'shgan va yechib olgan pulingni yoz. Ular hisob balansini o'zgartiradi, lekin foyda, zarar yoki cho'kish hisoblanmaydi.",
+      "kind": "Amal",
+      "deposit": "To'ldirish",
+      "withdrawal": "Yechib olish",
+      "amount": "Summa",
+      "date": "Sana",
+      "dateHint": "Bo'sh qoldirsang, bugungi sana olinadi.",
+      "note": "Izoh (majburiy emas)",
+      "add": "Yozish"
+    }
+  },
+  "profile": {
+    "name": "Ism",
+    "dangerTitle": "Akkauntni o'chirish",
+    "dangerText": "Akkaunt va barcha ma'lumotlar (hisoblar, qoidalar, bitimlar, hisobotlar) butunlay o'chiriladi. Buni bekor qilib bo'lmaydi.",
+    "deleteAccount": "Akkauntni o'chirish",
+    "deleteTitle": "Akkaunt butunlay o'chirilsinmi?",
+    "deleteText": "Barcha ma'lumotlaring qaytarib bo'lmaydigan tarzda yo'qoladi.",
+    "deleteType": "Tasdiqlash uchun pochtangni kiriting: {email}",
+    "deleteConfirm": "Butunlay o'chirish",
+    "deleteMismatch": "Pochta akkaunt pochtasiga mos kelmaydi.",
+    "deleteFailed": "Akkauntni o'chirib bo'lmadi. Qayta urinib ko'r.",
+    "dataTitle": "Mening ma'lumotlarim",
+    "dataText": "Akkauntingda saqlanayotgan hamma narsani yuklab ol: hisoblar, qoidalar, bitimlar, to'ldirish va yechib olish, hisobotlar.",
+    "dataDownload": "Ma'lumotlarimni yuklab olish (JSON)",
+    "mfa": {
+      "title": "Ikki bosqichli himoya",
+      "text": "Kirishda paroldan tashqari autentifikator ilovasidagi kod ham kerak bo'ladi (Google Authenticator, Microsoft Authenticator, Authy va shunga o'xshash).",
+      "on": "Yoqilgan",
+      "off": "O'chirilgan",
+      "enable": "Himoyani yoqish",
+      "disable": "Himoyani o'chirish",
+      "disableTitle": "Ikki bosqichli himoya o'chirilsinmi?",
+      "disableText": "Kirish yana faqat parol bilan bo'ladi. Akkaunt kamroq himoyalangan bo'ladi.",
+      "scan": "QR-kodni autentifikator ilovasida skanerla yoki maxfiy kalitni qo'lda kirit.",
+      "secret": "Maxfiy kalit",
+      "codeLabel": "Ilovadagi 6 xonali kod",
+      "confirm": "Tasdiqlash va yoqish",
+      "failed": "Amalni bajarib bo'lmadi. Qayta urinib ko'r.",
+      "lostHint": "Telefonni yo'qotsang, xizmat egasining yordamisiz kirish mumkin bo'lmaydi. Maxfiy kalitni xavfsiz joyda saqla."
+    },
+    "usage": "Foydalanish",
+    "allFree": "Hammasi bepul va cheklovsiz."
+  },
+  "states": {
+    "errorTitle": "Nimadir noto'g'ri ketdi",
+    "errorText": "Sahifani yuklab bo'lmadi. Qayta urinib ko'r.",
+    "retry": "Qayta urinish",
+    "notFoundTitle": "Sahifa topilmadi",
+    "notFoundText": "Havola eskirgan yoki unda xato bo'lishi mumkin.",
+    "home": "Bosh sahifaga"
+  },
+  "reports": {
+    "title": "Haftalik hisobot",
+    "generate": "Hisobot tuzish",
+    "regenerate": "Hisobotni yangilash",
+    "none": "Hisobot hali tuzilmagan. Oxirgi 7 kun natijalarini yig'ish uchun tugmani bos.",
+    "period": "Davr: {from} — {to}",
+    "noTrades": "Bu hafta bitimlar yo'q.",
+    "trades": "Bitimlar: {n}.",
+    "result": "Hafta natijasi: {pnl}.",
+    "violationTrades": "Qoidalar buzilgan bitimlar: {n}.",
+    "topViolation": "Eng ko'p buzilgan qoida «{name}» (buzilishlar: {count}). Bu bitimlar natijasi: {pnl}.",
+    "noViolations": "Bu hafta qoidalar buzilmagan.",
+    "best": "Natija bo'yicha eng yaxshi toifa — {kind} {key}: {pnl} (bitimlar: {n}).",
+    "kinds": {
+      "instrument": "instrument",
+      "emotion": "hissiyot"
+    },
+    "by": {
+      "rules": "Qoidalar bo'yicha tuzilgan, AI siz",
+      "ai": "AI yordamida tuzilgan"
+    },
+    "note": "Hisobot jurnaling ma'lumotlari asosida xatti-harakatlaringni tasvirlaydi. Bu prognoz yoki savdo tavsiyasi emas.",
+    "failed": "Hisobotni tuzib bo'lmadi. Qayta urinib ko'r."
+  },
+  "screenshot": {
+    "title": "Grafik skrinshoti",
+    "add": "Skrinshot qo'shish",
+    "replace": "Almashtirish",
+    "choose": "Fayl tanlash",
+    "hint": "Bitimni keyin tahlil qilish uchun grafik rasmini (PNG, JPG yoki WebP, 5 MB gacha) biriktir.",
+    "invalid": "PNG, JPG yoki WebP rasm kerak.",
+    "tooBig": "Fayl 5 MB dan katta.",
+    "failed": "Skrinshotni saqlab bo'lmadi. Qayta urinib ko'r."
+  },
+  "streak": {
+    "title": "Intizom seriyasi",
+    "current": "ta bitim qoidabuzarliksiz ketma-ket",
+    "best": "Eng yaxshi seriya: {n}",
+    "neverViolated": "Hali buzilishlar bo'lmagan",
+    "daysSince": "Buzilishsiz kunlar: {n}",
+    "next": "{m} ga yetish uchun yana {left} ta bitim",
+    "top": "Barcha bosqichlardan o'tding. Shunday davom et!",
+    "milestone": "Bosqichga erishildi: ketma-ket {m} ta bitim"
+  },
+  "calendar": {
+    "title": "Bitimlar kalendari",
+    "prev": "Oldingi oy",
+    "next": "Keyingi oy",
+    "trades": "Bitimlar: {n}",
+    "total": "Oy bo'yicha: {pnl}, bitimlar: {n}"
+  },
+  "checklist": {
+    "title": "Bitimdan oldingi cheklist",
+    "text": "Bajarilganini belgila. Bu faqat eslatma: qaror o'zingda.",
+    "continue": "Davom etish",
+    "unchecked": "Belgilanmagan bandlar: {n}. Davom etishing mumkin, lekin yana bir ko'rib chiqish arziydi.",
+    "defaults": {
+      "plan": "Bitim savdo rejamdan",
+      "stop": "Stop-loss belgilangan",
+      "risk": "Xavf qoidalarim doirasida",
+      "calm": "Men xotirjamman, ehtirosda emasman",
+      "revenge": "Oldingi zararni qaytarishga urinmayapman"
+    },
+    "settingsTitle": "Bitimdan oldingi cheklist",
+    "settingsText": "Bitimni yozishdan oldin kalkulyatorda ko'rsatiladigan qisqa savollar ro'yxati.",
+    "enable": "Cheklistni ko'rsatish",
+    "itemsLabel": "Savollar",
+    "itemsHint": "Har qatorda bitta savol, 10 tagacha. Bo'sh ro'yxat standart savollarni qaytaradi."
+  },
+  "admin": {
+    "title": "Egasi paneli",
+    "users": "Foydalanuvchilar",
+    "users7d": "7 kunda yangi",
+    "onboarded": "Onboardingdan o'tgan",
+    "active7d": "7 kunda faol",
+    "trades": "Jami bitimlar",
+    "trades7d": "7 kunda bitimlar",
+    "rules": "Jami qoidalar",
+    "recent": "So'nggi ro'yxatdan o'tganlar",
+    "registered": "Ro'yxatdan o'tgan",
+    "notFound": "Bunday pochtali foydalanuvchi topilmadi.",
+    "resetMfa": "Ikki bosqichli himoyani bekor qilish",
+    "resetMfaText": "Telefonini yo'qotgan foydalanuvchi uchun. U parol bilan kirib, himoyani qaytadan yoqa oladi.",
+    "resetMfaButton": "Bekor qilish",
+    "broadcast": "Hammaga e'lon",
+    "broadcastText": "Barcha foydalanuvchilar qo'ng'iroqchada ko'radi, Telegram ulaganlar u yerda ham oladi. Faqat bir marta yuboriladi, qaytarib bo'lmaydi.",
+    "broadcastTitle": "Sarlavha",
+    "broadcastBody": "Matn",
+    "broadcastSend": "Hammaga yuborish",
+    "broadcastDone": "Foydalanuvchilarga yuborildi: {n}.",
+    "broadcastInvalid": "Sarlavha (80 belgigacha) va matn (500 gacha) kiriting.",
+    "broadcastConfirm": "E'lonni barcha foydalanuvchilarga yuborasizmi? Qaytarib bo'lmaydi.",
+    "no2fa": "Egasi akkauntingiz faqat parol bilan himoyalangan. Ikki bosqichli himoyani yoqing: parol o'g'irlansa ham egasi paneliga kira olmaydi.",
+    "no2faLink": "Profilda yoqish",
+    "reportsTitle": "Xabarlarga shikoyatlar",
+    "reportsHint": "Messenjer",
+    "reportsNone": "Shikoyatlar yo'q.",
+    "reportAuthor": "Muallif",
+    "reportFrom": "Shikoyat qilgan",
+    "reportReason": "Sabab",
+    "reportBanned": "allaqachon bloklangan",
+    "reportDismiss": "Shikoyatni yopish",
+    "reportDelete": "Xabarni o'chirish",
+    "reportBan": "O'chirish va muallifni bloklash",
+    "reportBanConfirm": "Muallif messenjerda bloklansinmi? U boshqa yoza olmaydi."
+  },
+  "import": {
+    "title": "Bitimlarni import qilish",
+    "intro": "Bitimlar jadvalini CSV formatida yukla: Excel, Google Jadvallar, birja yoki brokerdan. Tartib ustunlarni o'zi aniqlaydi, adashsa qo'lda to'g'rila. Har bir bitim qo'lda kiritilgandek qoidalaringga qarab tekshiriladi.",
+    "columns": "Ustunlar",
+    "required": "Majburiy maydonlar: instrument, yo'nalish (long/short yoki buy/sell), kirish narxi va hajm. Bir katakdagi bir nechta buzilgan qoidani | belgisi bilan ajrat.",
+    "template": "Namuna faylni yuklab olish",
+    "file": "Fayl (CSV yoki MetaTrader HTML hisoboti)",
+    "missing": "Majburiy maydonlar uchun ustunlar topilmadi: {cols}. Ularni quyida qo'lda tanla.",
+    "limitRows": "Dastlabki {n} qator qayta ishlanadi.",
+    "summary": "Mos qatorlar: {valid}. Xatolari bor: {invalid}.",
+    "lineError": "{line}-qator: {reason}",
+    "more": "…va yana {n} ta",
+    "progress": "Import… {done} / {total}",
+    "run": "Bitimlarni import qilish: {n}",
+    "done": "Import qilingan bitimlar: {n}",
+    "errDirection": "direction long yoki short bo'lishi kerak",
+    "errMarket": "market: crypto, forex, stocks yoki futures",
+    "errValues": "qatordagi qiymatlar noto'g'ri",
+    "tooBig": "Fayl 2 MB dan katta.",
+    "mappingTitle": "Ustunlarni moslashtirish",
+    "mappingText": "Har bir maydon uchun faylingdan ustun tanla. Yulduzchali maydonlar majburiy.",
+    "notUsed": "— ishlatilmaydi —",
+    "errDate": "sanani o'qib bo'lmadi",
+    "fields": {
+      "date_time": "Sana va vaqt",
+      "instrument": "Instrument",
+      "market": "Bozor",
+      "direction": "Yo'nalish",
+      "entry": "Kirish narxi",
+      "exit": "Chiqish narxi",
+      "stop_loss": "Stop-loss",
+      "take_profit": "Take-profit",
+      "size": "Hajm",
+      "leverage": "Yelka",
+      "risk_percent": "Xavf, %",
+      "fees": "Komissiya",
+      "pnl": "P&L",
+      "emotion": "Hissiyot",
+      "strategy": "Strategiya",
+      "violated_rules": "Buzilgan qoidalar",
+      "reason": "Kirish sababi",
+      "plan": "Savdo rejasi",
+      "comment": "Izoh",
+      "tags": "Teglar",
+      "grade": "Baho",
+      "mistakes": "Xatolar",
+      "closed_at": "Yopilish vaqti"
+    },
+    "detected": "{platform} hisoboti aniqlandi: bitimlar {used}, o'tkazib yuborildi {skipped}",
+    "mtNotice": "Yopilgan buy va sell bitimlar olindi. Depozitlar, kutilayotgan buyurtmalar va yopilmagan pozitsiyalar o'tkazib yuborildi. Natija = foyda + komissiya + svop. Bitim vaqti broker serveri soati bo'yicha olindi. Hajm lotdan birlikka o'tkazildi (valyuta juftliklari ×100 000, oltin ×100).",
+    "unknownHtml": "Bu HTML faylda MetaTrader hisoboti topilmadi. MT4 uchun «Batafsil hisobot» (Detailed Statement), MT5 uchun «Savdo tarixi hisoboti» (Trade History Report) ni tanlab, HTML sifatida saqlang.",
+    "duplicate": "bunday bitim jurnalda allaqachon bor"
+  },
+  "quick": {
+    "button": "Tezkor yozuv",
+    "title": "Bitimni tezkor yozish",
+    "full": "To'liq forma",
+    "hint": "Qolganini keyinroq bitimning o'zida to'ldirishing mumkin. Qoidalar avtomatik tekshiriladi.",
+    "invalid": "Instrument, kirish narxi va hajmni to'ldir. Sonlar noldan katta bo'lishi kerak.",
+    "line": "Bir qatorda",
+    "lineHint": "Instrument, yo'nalish, kirish narxi, stop, teyk, hajm, yelka. Tartibi ixtiyoriy.",
+    "lineFound": "Aniqlandi",
+    "lineOpen": "Shaklni ochish"
+  },
+  "reminder": {
+    "title": "Sen {n} kundan beri bitim yozmading",
+    "text": "Savdo qilgan bo'lsang, tafsilotlar esingda turganda bitimlarni jurnalga kirit."
+  },
+  "goal": {
+    "title": "Oy maqsadi",
+    "target": "maqsad: qoida bo'yicha {n}%",
+    "change": "Maqsad:",
+    "noTrades": "Bu oyda hali bitim yo'q.",
+    "reached": "Maqsadga erishildi: {total} ta bitimdan {followed} tasi qoida bo'yicha.",
+    "left": "{total} tadan {followed} tasi qoida bo'yicha. Maqsadga yetish uchun yana {n} ta bitimni ketma-ket qoida bo'yicha qilish kerak.",
+    "progress": "{total} ta bitimdan {followed} tasi qoida bo'yicha."
+  },
+  "achievements": {
+    "title": "Yutuqlar",
+    "done": "Olingan",
+    "items": {
+      "first_trade": {
+        "name": "Birinchi yozuv",
+        "hint": "Birinchi bitimni yoz"
+      },
+      "trades_10": {
+        "name": "10 ta yozuv",
+        "hint": "10 ta bitim yoz"
+      },
+      "trades_50": {
+        "name": "50 ta yozuv",
+        "hint": "50 ta bitim yoz"
+      },
+      "trades_100": {
+        "name": "100 ta yozuv",
+        "hint": "100 ta bitim yoz"
+      },
+      "streak_5": {
+        "name": "5 ta seriya",
+        "hint": "Ketma-ket 5 ta bitim qoida bo'yicha"
+      },
+      "streak_10": {
+        "name": "10 ta seriya",
+        "hint": "Ketma-ket 10 ta bitim qoida bo'yicha"
+      },
+      "streak_20": {
+        "name": "20 ta seriya",
+        "hint": "Ketma-ket 20 ta bitim qoida bo'yicha"
+      },
+      "clean_week": {
+        "name": "Toza hafta",
+        "hint": "7 kunda 3 ta bitim, buzilishlarsiz"
+      }
+    }
+  },
+  "share": {
+    "title": "Intizom kartasi",
+    "titleNamed": "Intizom: {name}",
+    "subtitle": "Tartib'dagi jurnal natijasi.",
+    "discipline30": "30 kun ichida o'z qoidasi bo'yicha qilingan bitimlar",
+    "noTrades": "Oxirgi 30 kunda yozuvlar yo'q.",
+    "ofTrades": "{total} ta bitimdan {followed} tasi qoidani buzmasdan",
+    "streak": "Qoida bo'yicha seriya",
+    "entries": "Jami yozuvlar",
+    "privacy": "Bu yerda summalar, instrumentlar va bitimlarning o'zi ko'rsatilmaydi. Faqat qoida bo'yicha bitimlar ulushi va seriya.",
+    "cta": "O'z jurnaling yuritish",
+    "cardTitle": "Natijani ulashish",
+    "cardText": "Faqat qoidalaring bo'yicha bitimlar ulushi va seriya ko'rinadigan kartaga havola yarat. Summalar, instrumentlar va bitimlar ko'rsatilmaydi. Havolani istalgan vaqtda o'chirish mumkin.",
+    "on": "Havola yaratish",
+    "off": "Havolani o'chirish",
+    "renew": "Yangi havola",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "link": "Karta havolasi"
+  },
+  "telegram": {
+    "title": "Telegram-bot",
+    "on": "Ulangan",
+    "off": "Ulanmagan",
+    "text": "Botga xabar yuborib bitimlarni yozing va eslatmalar oling. Bot faqat hisob yuritadi: maslahat bermaydi va sizning o'rningizga savdo qilmaydi.",
+    "connect": "Telegramni ulash",
+    "step1": "Quyidagi tugmani bosing: Telegram ochiladi.",
+    "step2": "Bot bilan chatda «Start» tugmasini bosing.",
+    "open": "Telegramda ochish",
+    "manual": "Tugma ishlamasa: {bot} ni toping va unga /start {code} yuboring. Kod 15 daqiqa amal qiladi.",
+    "check": "Ulandim, yangilash",
+    "reminders": "3 kun yozuv bo'lmasa eslatma",
+    "disconnect": "Uzish",
+    "failed": "Bajarilmadi. Qayta urinib ko'ring.",
+    "notify": "Telegram'dagi bildirishnomalar"
+  },
+  "news": {
+    "title": "Bozor yangiliklari",
+    "subtitle": "Treyding haqida ochiq manbalardan so'nggi yangiliklar: kripto, fond va tovar bozorlari, Forex va valyuta kurslari. Maqolani manba saytida o'qish uchun sarlavhani bosing.",
+    "cats": {
+      "all": "Barchasi",
+      "crypto": "Kripto",
+      "markets": "Bozorlar",
+      "forex": "Forex",
+      "uzbekistan": "O'zbekiston: kurslar va bozor"
+    },
+    "langLabel": "Til",
+    "langs": {
+      "all": "Barchasi",
+      "ru": "RU",
+      "en": "EN",
+      "uz": "UZ"
+    },
+    "empty": "Bu filtr bo'yicha hozircha yangilik yo'q.",
+    "unavailable": "Manbalar hozir mavjud emas. Keyinroq qayta urinib ko'ring.",
+    "note": "Sarlavhalar, rasmlar va havolalar mualliflarga tegishli; maqolalar manba saytlarida ochiladi. Manbalar:"
+  },
+  "blog": {
+    "title": "Treyding intizomi haqida blog",
+    "subtitle": "Qisqa va tushunarli maqolalar: jurnal yuritish, xavfni hisoblash va his-tuyg'ularga pulingizni sarflatmaslik.",
+    "read": "O'qish",
+    "minutes": "{n} daqiqa o'qish",
+    "back": "← Barcha maqolalar",
+    "cta": "Amalda sinab ko'ring: jurnal yuriting va buzilishlar narxini ko'ring.",
+    "ctaBtn": "Bepul boshlash",
+    "edu": "Material ta'limiy xarakterga ega."
+  },
+  "tools": {
+    "title": "Treyder asboblari",
+    "subtitle": "Bepul kalkulyatorlar. Ro'yxatdan o'tmasdan ishlaydi, barcha hisob-kitoblar brauzeringizning o'zida bajariladi.",
+    "open": "Ochish",
+    "all": "← Barcha asboblar",
+    "result": "Natija",
+    "fillIn": "Natijani ko'rish uchun maydonlarni to'ldiring.",
+    "invalid": "Qiymatlarni tekshiring: sonlar to'g'ri va musbat bo'lishi, stop esa kirishga teng bo'lmasligi kerak.",
+    "note": "Hisob-kitoblar ma'lumot uchun, komissiya, sirpanish va gaplarni hisobga olmaydi. Bu investitsiya tavsiyasi emas.",
+    "cta": "Bitimlar jurnalini yuritib, buzilishlar narxini ko'rmoqchimisiz?",
+    "ctaBtn": "Bepul boshlash",
+    "long": "Long (sotib olish)",
+    "short": "Short (sotish)",
+    "none": "ma'lumot yo'q",
+    "size": {
+      "title": "Pozitsiya hajmi kalkulyatori",
+      "desc": "Stop ishlaganda oldindan tanlangan summani yo'qotish uchun aktivning necha birligini olish kerak.",
+      "f": {
+        "balance": "Depozit",
+        "riskPct": "Bitimdagi xavf, %",
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "riskAmount": "Xavf summasi",
+        "distance": "Stopgacha masofa",
+        "units": "Pozitsiya hajmi, birlik",
+        "value": "Pozitsiya qiymati"
+      }
+    },
+    "rr": {
+      "title": "Xavf va foyda kalkulyatori",
+      "desc": "Potentsial foyda va zararning nisbati hamda savdo zarar tomonga o'tmasligi uchun kerak bo'lgan foydali bitimlarning minimal foizi.",
+      "f": {
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi",
+        "target": "Maqsad narxi (teyk-profit)",
+        "winRate": "Foydali bitimlar foizi, % (ixtiyoriy)"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "risk": "Birlikka xavf",
+        "reward": "Birlikka foyda",
+        "rr": "Xavf va foyda nisbati",
+        "breakEven": "Zararsiz foydali bitimlar foizi",
+        "expectancy": "Bitimga kutilma, R"
+      }
+    },
+    "streak": {
+      "title": "Ketma-ket zararlar seriyasi",
+      "desc": "Ishlaydigan strategiyada ham uzun zarar seriyalari qanchalik tez-tez uchraydi va ular depozitga nima qiladi.",
+      "f": {
+        "winRate": "Foydali bitimlar foizi, %",
+        "trades": "Bitimlar soni",
+        "streak": "Ketma-ket zararlar",
+        "riskPct": "Bitimdagi xavf, %"
+      },
+      "o": {
+        "single": "Aniq bir joyda shunday seriya ehtimoli",
+        "atLeast": "Shu bitimlar sonida kamida bitta shunday seriya ehtimoli",
+        "drawdown": "Seriyadan keyingi pasayish",
+        "recovery": "Qaytish uchun kerakli o'sish, %"
+      },
+      "note": "Hisob bitimlar bog'liq emas va ehtimol bir xil deb faraz qiladi. Amalda bu taxminiy."
+    },
+    "recovery": {
+      "title": "Pasayishdan tiklanish",
+      "desc": "50% yo'qotish oson, qaytarish qiyin: pasayishdan keyin qancha o'sish kerak.",
+      "f": {
+        "drawdown": "Pasayish, %"
+      },
+      "o": {
+        "needed": "Qaytish uchun kerakli o'sish, %",
+        "mult": "Depozitni necha marta oshirish kerak"
+      }
+    },
+    "compound": {
+      "title": "Murakkab foiz",
+      "desc": "Oylik daromadlilik va to'ldirishlar doimiy bo'lganda summa qanday o'sadi. Bu matematika namunasi, bashorat emas.",
+      "f": {
+        "start": "Boshlang'ich summa",
+        "monthlyPct": "Oylik daromadlilik, %",
+        "months": "Muddat, oy",
+        "deposit": "Oylik to'ldirish"
+      },
+      "o": {
+        "final": "Yakuniy summa",
+        "deposited": "Jami kiritilgan",
+        "gain": "O'sish"
+      },
+      "note": "Treydingda tekis daromadlilik bo'lmaydi. Natija faqat foiz arifmetikasini ko'rsatadi."
+    },
+    "sessions": {
+      "title": "Savdo sessiyalari va bozor soatlari",
+      "desc": "Sidney, Tokio, London va Nyu-Yorkda qaysi birja sessiyalari hozir ochiq va ochilish yoki yopilishgacha qancha vaqt qoldi.",
+      "open": "Ochiq",
+      "closed": "Yopiq",
+      "closesIn": "{t} dan keyin yopiladi",
+      "opensIn": "{t} dan keyin ochiladi",
+      "yourTime": "Sizning vaqtingiz: {tz}",
+      "hours": "Mahalliy vaqt bo'yicha {o}:00–{c}:00",
+      "overlap": "Hozir bir vaqtda ikki sessiya ketmoqda: {names}.",
+      "names": {
+        "sydney": "Sidney",
+        "tokyo": "Tokio",
+        "london": "London",
+        "newyork": "Nyu-York"
+      },
+      "note": "Soatlar Forex bozori uchun odatiy va yozgi vaqtni hisobga oladi. Aniq birjada jadval boshqacha bo'lishi mumkin, dam olish kunlari shanba va yakshanba.",
+      "h": "{h} soat",
+      "m": "{m} daqiqa",
+      "d": "{d} kun"
+    },
+    "kelly": {
+      "title": "Kelli mezoni",
+      "desc": "Foydali bitimlar foizi va risk/foyda nisbati ma'lum bo'lganda depozitning qancha ulushini bitimga qo'yish matematik jihatdan foydali.",
+      "f": {
+        "winRate": "Foydali bitimlar foizi, %",
+        "rr": "Foyda/risk (masalan, 1:2 uchun 2)"
+      },
+      "o": {
+        "edge": "Bitimga kutilma, R",
+        "full": "To'liq Kelli",
+        "half": "Yarim Kelli",
+        "quarter": "Chorak Kelli"
+      },
+      "note": "To'liq Kelli katta cho'kishlarga olib keladi. Amaliyotda yarim yoki chorak olinadi. Kutilma manfiy bo'lsa natija 0%: qo'yadigan narsa yo'q."
+    },
+    "ruin": {
+      "title": "Vayron bo'lish xavfi",
+      "desc": "Belgilangan risk bilan depozit tanlangan darajagacha cho'kib ketish ehtimoli. Risk hajmi kirish nuqtasidan muhimroq ekanini ko'rsatadi.",
+      "f": {
+        "winRate": "Foydali bitimlar foizi, %",
+        "rr": "Foyda/risk (masalan, 1:2 uchun 2)",
+        "riskPct": "Bitimga risk, %",
+        "ruinDrawdown": "«Vayronlik» deb hisoblanadigan cho'kish, %"
+      },
+      "o": {
+        "expectancy": "Bitimga kutilma, R",
+        "cushion": "Zaxira, ketma-ket zararli bitimlar",
+        "ruin": "Shu cho'kishga yetish ehtimoli"
+      },
+      "note": "Model mustaqil bitimlar va doimiy ehtimol hamda riskni nazarda tutadi. Bu taxmin, bashorat emas."
+    },
+    "liq": {
+      "title": "Likvidatsiya narxi",
+      "desc": "Yelkali izolyatsiyalangan pozitsiya birja tomonidan majburan yopiladigan taxminiy narx.",
+      "f": {
+        "entry": "Kirish narxi",
+        "size": "Pozitsiya hajmi, birlik",
+        "leverage": "Yelka",
+        "maintenance": "Ushlab turish marjasi, %",
+        "side": "Yo'nalish"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "price": "Likvidatsiya narxi",
+        "distance": "Kirishdan masofa",
+        "margin": "Pozitsiya marjasi"
+      },
+      "note": "Hisob taxminiy: birjalar komissiya va o'z formulalarini hisobga oladi. Bitimdan oldin birja bilan solishtiring."
+    },
+    "fee": {
+      "title": "Komissiya bilan zararsizlik",
+      "desc": "Kirish va chiqish komissiyasi bilan bitim nolga chiqadigan narx.",
+      "f": {
+        "entry": "Kirish narxi",
+        "feePct": "Bir tomon komissiyasi, %",
+        "side": "Yo'nalish"
+      },
+      "o": {
+        "price": "Zararsizlik narxi",
+        "move": "Kerakli narx harakati",
+        "total": "Kirish va chiqish komissiyasi"
+      },
+      "note": "Spred va sirpanish hisobga olinmagan."
+    },
+    "profit": {
+      "title": "Bitim natijasi",
+      "desc": "Komissiyani hisobga olgan holda bitim foydasi yoki zarari.",
+      "f": {
+        "entry": "Kirish narxi",
+        "exit": "Chiqish narxi",
+        "size": "Pozitsiya hajmi, birlik",
+        "feePct": "Bir tomon komissiyasi, %",
+        "balance": "Depozit (ixtiyoriy)",
+        "side": "Yo'nalish"
+      },
+      "o": {
+        "gross": "Komissiyagacha",
+        "fees": "Komissiya",
+        "net": "Natija",
+        "pctPosition": "Pozitsiya summasidan",
+        "pctBalance": "Depozitdan"
+      }
+    },
+    "goal": {
+      "title": "Maqsad rejasi",
+      "desc": "Oylik daromad barqaror bo'lib, to'ldirib borilganda summa maqsadga necha oyda yetadi.",
+      "f": {
+        "start": "Hozir",
+        "target": "Maqsad",
+        "monthlyPct": "Oylik daromad, %",
+        "deposit": "Oylik to'ldirish"
+      },
+      "o": {
+        "months": "Oy",
+        "years": "Yil",
+        "deposited": "Muddat davomida kiritilgan"
+      },
+      "note": "Treydingda daromad tekis bo'lmaydi. Bu foizlar arifmetikasi, bashorat ham, va'da ham emas."
+    },
+    "margin": {
+      "title": "Marja va yelka",
+      "desc": "Yelkali pozitsiya uchun o'z pulingizdan qancha kerak va u depozitning qancha ulushini egallaydi.",
+      "f": {
+        "positionValue": "Pozitsiya qiymati",
+        "leverage": "Yelka",
+        "balance": "Depozit (ixtiyoriy)"
+      },
+      "o": {
+        "margin": "Kerakli marja",
+        "pctBalance": "Depozit ulushi",
+        "maxPosition": "Shu yelkada maksimal pozitsiya"
+      },
+      "note": "Yelka qanchalik katta bo'lsa, likvidatsiya narxi shunchalik yaqin. Yelka kutilmani oshirmaydi, riskni oshiradi."
+    },
+    "stock": {
+      "title": "Aksiyalar bo'yicha pozitsiya hajmi (Nasdaq, NYSE)",
+      "desc": "Stop ishlaganda zarar tanlangan riskdan oshmasligi uchun nechta butun aksiya olish yoki shortga sotish kerak. Aksiya uchun komissiya hisobga olinadi.",
+      "f": {
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimga risk, %",
+        "entry": "Kirish narxi, $",
+        "stop": "Stop narxi, $",
+        "feePerShare": "Bir aksiya uchun komissiya (bir tomon), $"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "shares": "Aksiyalar soni",
+        "riskAmount": "Stop ishlasa zarar",
+        "value": "Pozitsiya qiymati",
+        "pctBalance": "Balansdagi ulushi",
+        "commission": "Kirish va chiqish komissiyasi",
+        "leverage": "Kerakli yelka (pozitsiya / balans)"
+      },
+      "note": "Aksiyalar butun donada savdo qilinadi, shuning uchun natija pastga yaxlitlanadi. Balansdagi ulush 100% dan oshsa, broker yelkasi yoki kichikroq hajm kerak. Investitsiya maslahati emas."
+    },
+    "futures": {
+      "title": "Fyuchers va oltin riski (NQ, ES, GC, CL, XAUUSD)",
+      "desc": "Stop ishlaganda zarar riskka sig'ishi uchun nechta kontrakt yoki lot olish mumkin. Oltin, kumush, neft va indekslar: punkt qiymati kontraktga qarab qo'yiladi.",
+      "f": {
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimga risk, %",
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi",
+        "contract": "Kontrakt",
+        "feePerContract": "Bir kontrakt uchun komissiya (bir tomon), $"
+      },
+      "c": {
+        "1": "NQ — Nasdaq-100, punkti $20",
+        "2": "MNQ — mikro Nasdaq, punkti $2",
+        "3": "ES — S&P 500, punkti $50",
+        "4": "MES — mikro S&P, punkti $5",
+        "5": "GC — oltin, 100 untsiya, $1 uchun $100",
+        "6": "MGC — mikro oltin, 10 untsiya, $1 uchun $10",
+        "7": "SI — kumush, 5000 untsiya, $1 uchun $5000",
+        "8": "CL — WTI neft, 1000 barrel, $1 uchun $1000",
+        "9": "MCL — mikro neft, $1 uchun $100",
+        "10": "YM — Dow Jones, punkti $5",
+        "11": "MYM — mikro Dow, punkti $0,5",
+        "12": "RTY — Russell 2000, punkti $50",
+        "13": "M2K — mikro Russell, punkti $5",
+        "14": "XAUUSD — brokerda oltin, 1 lot = 100 untsiya, $1 uchun $100"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "contracts": "Kontraktlar soni",
+        "points": "Stop punktlarda",
+        "riskPerContract": "Bir kontrakt riski",
+        "riskAmount": "Stop ishlasa zarar",
+        "formSize": "Bitim formasi uchun hajm"
+      },
+      "note": "Forma hajmi = kontraktlar × punkt qiymati: shunda Tartibda foyda va zarar dollarda to'g'ri hisoblanadi. Punkt qiymatlari ma'lumot uchun, birja spetsifikatsiyasi bilan solishtiring. Investitsiya maslahati emas."
+    },
+    "options": {
+      "title": "Opsionlar: ekspiratsiyadagi to'lov",
+      "desc": "Ekspiratsiya sanasida sotib olingan yoki sotilgan kol va putning zararsizlik nuqtasi, eng katta foyda va zarar hamda natijasi.",
+      "f": {
+        "kind": "Opsion turi",
+        "side": "Pozitsiya",
+        "strike": "Strayk",
+        "premium": "1 aksiya uchun premiya",
+        "contracts": "Kontraktlar",
+        "multiplier": "Kontraktdagi aksiyalar",
+        "underlying": "Ekspiratsiyadagi aktiv narxi (ixtiyoriy)"
+      },
+      "c": {
+        "1": "Kol (sotib olish huquqi)",
+        "2": "Put (sotish huquqi)"
+      },
+      "o": {
+        "premiumTotal": "Jami premiya (to'langan yoki olingan)",
+        "breakeven": "Zararsizlik narxi",
+        "maxProfit": "Eng katta foyda",
+        "maxLoss": "Eng katta zarar",
+        "moveToBreakeven": "Zararsizlikkacha kerakli narx harakati",
+        "pnlAtExpiry": "Shu narxdagi natija"
+      },
+      "note": "Ekspiratsiya sanasi uchun hisob, komissiyalar va muddatidan oldin yopishsiz. Long — sotib olingan opsion, short — sotilgan (yozilgan). Sotilgan opsionlar katta xavf tashiydi. Investitsiya maslahati emas."
+    },
+    "unlimited": "Cheklanmagan",
+    "forexlot": {
+      "title": "Forex: lot, punkt qiymati, marja va spred",
+      "desc": "Punktlardagi stop bo'yicha zarar riskdan oshmasligi uchun nechta lot olish kerak. Shuningdek punkt qiymati, marja va spred qancha turishi.",
+      "f": {
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimga risk, %",
+        "stopPips": "Stop punktlarda",
+        "pairClass": "Qaysi juftlik",
+        "price": "Juftlikning hozirgi narxi",
+        "quoteToUsd": "Kotirovka valyutasining dollarga kursi (kross juftliklar uchun)",
+        "spreadPips": "Spred punktlarda",
+        "leverage": "Yelka (ixtiyoriy)"
+      },
+      "c": {
+        "1": "Dollar oxirida: EUR/USD, GBP/USD, AUD/USD",
+        "2": "Dollar boshida: USD/CHF, USD/CAD",
+        "3": "Iyena bilan: USD/JPY",
+        "4": "Dollarsiz kross: EUR/GBP, EUR/JPY"
+      },
+      "o": {
+        "pipValue": "1 lot uchun punkt qiymati, $",
+        "lots": "Pozitsiya hajmi, lot",
+        "units": "Bazaviy valyuta birligi",
+        "riskAmount": "Stop ishlasa zarar, $",
+        "spreadCost": "Spred qiymati, $",
+        "margin": "Kerakli marja, $"
+      },
+      "note": "Dollar hisobi, standart lot 100 000 birlik, hajm 0,01 lotgacha pastga yaxlitlanadi. Kross juftliklar uchun juftlik oxiridagi valyutaning dollarga kursini kiriting (EUR/GBP uchun bu GBP/USD). Oltin «Fyuchers va oltin riski» kalkulyatorida hisoblanadi (XAUUSD lot). Investitsiya maslahati emas."
+    },
+    "avgprice": {
+      "title": "O'rtachalash: yangi o'rtacha narx",
+      "desc": "Aktivni arzonroq yoki qimmatroq narxda qo'shimcha sotib olsangiz o'rtacha narx qanday bo'lishi va zararsizlik uchun narx qancha o'sishi kerak.",
+      "f": {
+        "amount": "Hozir qancha bor",
+        "avgPrice": "Hozirgi o'rtacha narx",
+        "buyAmount": "Qancha qo'shimcha olinadi",
+        "buyPrice": "Xarid narxi"
+      },
+      "o": {
+        "newAvg": "Yangi o'rtacha narx",
+        "avgChange": "O'rtacha narx o'zgarishi",
+        "newAmount": "Jami bo'ladi",
+        "totalCost": "Jami kiritilgan",
+        "riseToBreakeven": "Xarid narxidan zararsizlikkacha o'sish"
+      },
+      "note": "Komissiyasiz hisob. O'rtachalash o'rtacha narxni pasaytiradi, lekin kiritilgan summa va riskni oshiradi: narx tushishda davom etishi mumkin. Bu arifmetika, ko'proq sotib olish maslahati emas."
+    },
+    "metalslot": {
+      "title": "Oltin va metallar: lotlarda pozitsiya hajmi",
+      "desc": "Stop bo'yicha zarar tanlangan riskdan oshmasligi uchun qancha lot oltin, kumush, platina yoki palladiy olish kerak. Shuningdek, 1 dollar harakat narxi, spred va marja.",
+      "f": {
+        "metal": "Metall",
+        "balance": "Hisob balansi, $",
+        "riskPct": "Bitimdagi risk, %",
+        "entry": "Kirish narxi, bir untsiya uchun $",
+        "stop": "Stop narxi, bir untsiya uchun $",
+        "spread": "Spred, bir untsiya uchun $",
+        "leverage": "Yelka (majburiy emas)"
+      },
+      "c": {
+        "1": "Oltin XAUUSD (lot 100 untsiya)",
+        "2": "Kumush XAGUSD (lot 5000 untsiya)",
+        "3": "Platina XPTUSD (lot 100 untsiya)",
+        "4": "Palladiy XPDUSD (lot 100 untsiya)"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "lots": "Pozitsiya hajmi, lot",
+        "ounces": "Pozitsiyadagi untsiyalar",
+        "riskAmount": "Stop ishlasa zarar, $",
+        "perDollar": "Narx har $1 harakatiga foyda yoki zarar, $",
+        "spreadCost": "Spred narxi, $",
+        "margin": "Kerakli marja, $"
+      },
+      "note": "Brokerlarda lot hajmi farq qilishi mumkin, broker spetsifikatsiyasini tekshiring. Hajm 0,01 lotgacha pastga yaxlitlanadi. Hisob-kitob ma'lumot uchun. Investitsiya tavsiyasi emas."
+    },
+    "metalvalue": {
+      "title": "Oltin: buyum narxi proba va vazn bo'yicha",
+      "desc": "Buyum yoki quymadagi sof oltin qancha turadi: vazn, proba va untsiya narxi. Gramm narxi dollarda va mahalliy valyutada.",
+      "f": {
+        "weightGrams": "Vazn, gramm",
+        "fineness": "Proba (1000 dan)",
+        "spotPerOunce": "Untsiya narxi, $",
+        "rate": "Kurs: 1 $ uchun mahalliy valyuta (1 — dollarda hisoblash)"
+      },
+      "c": {
+        "999": "999,9 / 999 (quyma)",
+        "958": "958 (23 karat)",
+        "925": "925 (kumush yoki 22 karat)",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "pureGrams": "Sof metall, gramm",
+        "karat": "Karat",
+        "pricePerGram": "Sof metall gramm narxi, $",
+        "valueUsd": "Sof metall qiymati, $",
+        "pricePerGramLocal": "Gramm narxi mahalliy valyutada",
+        "valueLocal": "Mahalliy valyutadagi qiymat"
+      },
+      "note": "Bu birja bo'yicha metallning o'zi narxi. Zargarlik buyumlari va tangalar ustama bilan sotiladi, qabul qilish esa arzonroq. Hisob-kitob ma'lumot uchun."
+    },
+    "bullion": {
+      "title": "Jismoniy oltin: ustama va zararsizlik nuqtasi",
+      "desc": "Metall qiymatidan qancha ortiqcha to'ladingiz va dilerga chegirma bilan sotganda nolga chiqish uchun untsiya narxi qancha oshishi kerak.",
+      "f": {
+        "weightGrams": "Vazn, gramm",
+        "fineness": "Proba (1000 dan)",
+        "spotPerOunce": "Hozirgi untsiya narxi, $",
+        "paid": "Jami to'langan, $",
+        "sellDiscountPct": "Diler sotib olishdagi birja narxidan chegirma, %"
+      },
+      "c": {
+        "999": "999,9 / 999 (quyma)",
+        "958": "958 (23 karat)",
+        "925": "925",
+        "916": "916 (22 karat)",
+        "750": "750 (18 karat)",
+        "585": "585 (14 karat)",
+        "375": "375 (9 karat)"
+      },
+      "o": {
+        "meltValue": "Metallning o'zi qiymati, $",
+        "premium": "Xarid ustamasi",
+        "breakevenSpot": "Zararsizlik untsiya narxi, $",
+        "riseNeeded": "Kerakli narx o'sishi"
+      },
+      "note": "Sotib olish chegirmasini dileringiz yoki bankdan so'rang. Hisob-kitob soliq, saqlash va sug'urtani hisobga olmaydi. Ma'lumot uchun, investitsiya tavsiyasi emas."
+    },
+    "related": "Shuningdek qarang",
+    "groupsNav": "Kalkulyator bo'limlari"
+  },
+  "shortcuts": {
+    "title": "Tezkor tugmalar",
+    "hint": "Tezkor tugmalarni ko'rish uchun ? bosing",
+    "new": "Yangi bitim",
+    "dashboard": "Bosh sahifa",
+    "trades": "Bitimlar",
+    "stats": "Statistika",
+    "rules": "Qoidalar",
+    "calc": "Kalkulyator",
+    "tools": "Asboblar",
+    "close": "Yopish",
+    "help": "Bu maslahat"
+  },
+  "notifications": {
+    "title": "Bildirishnomalar",
+    "subtitle": "Jurnalingiz voqealari: yutuqlar, qoidalar buzilishi, oy maqsadi va Tartib e'lonlari.",
+    "empty": "Hozircha bildirishnomalar yo'q. Yutuq olsangiz, qoidani buzsangiz yoki oy maqsadiga erishsangiz paydo bo'ladi.",
+    "markAll": "Hammasini o'qilgan qilish",
+    "clear": "Tozalash",
+    "enableBrowser": "Brauzer bildirishnomalarini yoqish",
+    "browserOn": "Brauzer bildirishnomalari yoqilgan (oyna yashirin bo'lganda).",
+    "browserDenied": "Brauzer bildirishnomalari sayt sozlamalarida taqiqlangan.",
+    "browserNew": "Yangi bildirishnomalar: {n}",
+    "bellUnread": "Bildirishnomalar: o'qilmagan {n}",
+    "kinds": {
+      "achievement": "Yangi yutuq",
+      "violation": "Buzilgan qoidalar: {count}",
+      "goal": "Oy maqsadiga erishildi",
+      "report": "Haftalik hisobot tayyor",
+      "price_alert": "Alert ishladi: {symbol}",
+      "support_reply": "Egasidan javob"
+    },
+    "bodies": {
+      "goal": "Intizom {percent}%, maqsad {goal}%.",
+      "report": "Hisobotni o'qish uchun statistikani oching.",
+      "priceAbove": "{symbol}: narx {price} darajasiga ko'tarildi (hozir {last}).",
+      "priceBelow": "{symbol}: narx {price} darajasiga tushdi (hozir {last}).",
+      "supportReply": "Javobni o'qish uchun yozishmani oching."
+    }
+  },
+  "adv": {
+    "title": "Kengaytirilgan tahlil",
+    "subtitle": "Oddiy statistikadan chuqurroq: kutilma, R, long va short, sessiyalar, issiqlik xaritasi, pasayish va har bir qoidaning narxi. Faqat jurnalingizdagi faktlar.",
+    "link": "Kengaytirilgan tahlil",
+    "back": "Statistika",
+    "kpi": {
+      "expectancy": "Bitimga kutilma",
+      "payoff": "Foyda va zarar nisbati",
+      "profitFactor": "Profit-faktor",
+      "winRate": "Foydali bitimlar ulushi",
+      "avgR": "O'rtacha natija R da",
+      "longestWin": "Ketma-ket foydali",
+      "longestLoss": "Ketma-ket zararli"
+    },
+    "kpiHint": {
+      "expectancy": "Bitta bitim o'rtacha qancha keltiradi",
+      "payoff": "O'rtacha foydaning o'rtacha zararga nisbati",
+      "avgR": "Foyda xavf ulushlarida (1R — bitimda xavf qilgan summangiz)"
+    },
+    "r": {
+      "title": "Natijalar R da",
+      "subtitle": "Bitimda necha xavf topasiz yoki yo'qotasiz. Noldan chapda zararlar, o'ngda foyda.",
+      "note": "Xavf summasi ma'lum bitimlar hisobga olindi (stop-loss kerak): {total} dan {n}.",
+      "none": "Xavfi ma'lum bitimlar yo'q. Stop-loss ko'rsating, shunda taqsimot paydo bo'ladi."
+    },
+    "side": {
+      "title": "Long va short",
+      "long": "Long",
+      "short": "Short",
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "avg": "O'rtacha"
+    },
+    "sessions": {
+      "title": "Savdo sessiyalari",
+      "subtitle": "Bitim vaqti UTC bo'yicha. Qachon yaxshiroq savdo qilishingiz va qachon qoidalarni ko'proq buzishingiz ko'rsatilgan.",
+      "asia": "Osiyo (00–07)",
+      "europe": "Yevropa (07–13)",
+      "overlap": "Yevropa + AQSh (13–17)",
+      "us": "AQSh (17–22)",
+      "late": "Kech kechqurun (22–24)",
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "violations": "Buzilishlar"
+    },
+    "heat": {
+      "title": "Qachon eng yaxshi savdo qilasiz",
+      "subtitle": "Hafta kunlari va sutka vaqti bo'yicha natija, vaqt mintaqasi: {tz}. Rang: yashil — foyda, qizil — zarar; son — bitimlar.",
+      "empty": "Bu katakda bitim yo'q"
+    },
+    "dd": {
+      "title": "Maksimumdan pasayish",
+      "max": "Maksimal pasayish: {amount} ({percent})",
+      "none": "Pasayishni hisoblash uchun ma'lumot yo'q."
+    },
+    "months": {
+      "title": "Oylar bo'yicha natija"
+    },
+    "rules": {
+      "title": "Har bir qoida nimaga tushadi",
+      "subtitle": "Qoida buzilgan bitimlarning natijasi. Eng zararlilari yuqorida.",
+      "rule": "Qoida",
+      "count": "Buzilishlar",
+      "pnl": "Bitimlar yakuni",
+      "avg": "O'rtacha",
+      "none": "Bu davrda qoidalar buzilmagan."
+    },
+    "risk": {
+      "title": "Xavf barqarorligi",
+      "avg": "O'rtacha xavf",
+      "min": "Eng kichik",
+      "max": "Eng katta",
+      "variation": "Tarqoqlik",
+      "hint": "Tarqoqlik qanchalik kichik bo'lsa, xavfingiz shunchalik tekis. Katta tarqoqlik xavf hajmi bitimdan bitimga keskin o'zgarishini bildiradi.",
+      "none": "Xavf summasi ma'lum bitimlar yo'q."
+    },
+    "instruments": {
+      "title": "Instrumentlar",
+      "instrument": "Instrument",
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "avgR": "O'rtacha R"
+    }
+  },
+  "chart": {
+    "title": "Narx grafigi",
+    "timeframe": "Shamlar masshtabi",
+    "loading": "Grafik yuklanmoqda…",
+    "unsupported": "Grafik kripto juftliklar (BTCUSDT), oltin va metallar (XAUUSD), neft, valyuta juftliklari (EURUSD), AQSh aksiya va indekslari (AAPL, ^NDX) hamda fyucherslar uchun ishlaydi. Boshqalari uchun kalitsiz bepul ma'lumot yo'q.",
+    "no_data": "Bu vaqtda shamlar yo'q: ehtimol, juftlik o'sha paytda hali savdo qilinmagan.",
+    "unavailable": "Birjadan ma'lumot yuklab bo'lmadi. Keyinroq urinib ko'ring.",
+    "entry": "Kirish",
+    "stop": "Stop",
+    "tp": "Maqsad",
+    "exit": "Chiqish",
+    "note": "Juftlik {symbol}, ma'lumot: {source} (spot). Bu birjadagi narxlar brokeringiz yoki fyuchers narxlaridan biroz farq qilishi mumkin.",
+    "offChart": "Bitim narxlarining bir qismi (kirish, stop, maqsad yoki chiqish) o'sha vaqtdagi bozordan uzoq va grafikka tushirilmagan. Instrument, vaqt va narxlarni tekshiring.",
+    "retry": "Qayta urinish",
+    "noteStocks": "Tiker {symbol}, ma'lumot: {source}. Manba norasmiy: narxlar kechikishi va broker narxidan farq qilishi mumkin. Fyucherslar uchun uzluksiz kontrakt ko'rsatiladi.",
+    "indicators": "Indikatorlar"
+  },
+  "pwa": {
+    "title": "Telefondagi ilova",
+    "text": "Tartib'ni bosh ekranga o'rnating: oddiy ilova kabi ochiladi, manzil satrisiz, belgini uzoq bosganda tezkor amallar bilan.",
+    "install": "Ilovani o'rnatish",
+    "installed": "Ilova bu qurilmaga o'rnatilgan.",
+    "ios": "iPhone'da: saytni Safari'da oching, «Ulashish» tugmasini (strelkali kvadrat), keyin «Bosh ekranga» ni bosing.",
+    "manual": "Brauzer menyusini oching va «Ilovani o'rnatish» yoki «Bosh ekranga qo'shish» ni tanlang. Kompyuterdagi Chrome'da o'rnatish belgisi manzil satrining o'ng tomonida."
+  },
+  "charts": {
+    "title": "Grafiklar",
+    "subtitle": "Yangi shamlar: kripto juftliklar, oltin, kumush, neft, valyutalar, indekslar va AQSh aksiyalari. Asbob va masshtabni tanlang. Ma'lumot bepul, kalitsiz, tugma bilan yangilanadi.",
+    "quick": "Mashhur juftliklar",
+    "pair": "Juftlik",
+    "pairHint": "Masalan, BTCUSDT, XAUUSD, EURUSD, AAPL, US100",
+    "show": "Ko'rsatish",
+    "refresh": "Yangilash",
+    "unsupported": "Bunday asbobni topa olmadim. Masalan, BTCUSDT, XAUUSD (oltin), USOIL, EURUSD, US100, ^GSPC yoki AAPL kiriting.",
+    "note": "Ma'lumot: {source} (spot), oxirgi 120 sham. Bu ma'lumot uchun grafik, savdo tavsiyasi emas.",
+    "quickOther": "Oltin, indekslar, valyutalar, aksiyalar",
+    "noteOther": "Ma'lumot: {source}, oxirgi 120 sham. Manba norasmiy: kechikish bo'lishi va narxlar broker narxidan farq qilishi mumkin. Oltin va kumush COMEX fyucherslari bo'yicha ko'rsatilgan. Ma'lumot uchun grafik, savdo tavsiyasi emas.",
+    "short": {
+      "gold": "Oltin",
+      "silver": "Kumush",
+      "oil": "Neft WTI",
+      "eurusd": "EUR/USD",
+      "usdjpy": "USD/JPY",
+      "ndx": "Nasdaq-100",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "aapl": "Apple",
+      "nvda": "Nvidia",
+      "tsla": "Tesla"
+    }
+  },
+  "market": {
+    "title": "Bozor",
+    "subtitle": "Bozor kayfiyati, kun yetakchilari, kuzatuv ro'yxatingiz, narx alertlari va voqealar kalendari. Ma'lumotlar bepul.",
+    "unavailable": "Ma'lumotlar hozir mavjud emas. Keyinroq urinib ko'ring.",
+    "sources": "Manbalar: alternative.me, OKX, CoinGecko, ForexFactory.",
+    "badSymbol": "Birjada bunday juftlik topilmadi. Misol: BTC, ETH/USDT, SOLUSDT.",
+    "badAlert": "Narxni tekshiring: u musbat son bo'lishi kerak.",
+    "noPrice": "Yo'nalishni tanlash uchun joriy narxni bilib bo'lmadi. Yo'nalishni qo'lda ko'rsating.",
+    "limitWatch": "Kuzatuv ro'yxatida 30 tadan ortiq juftlik bo'lmaydi.",
+    "limitAlerts": "Bir vaqtda 20 tadan ortiq faol alert saqlab bo'lmaydi.",
+    "fear": {
+      "title": "Qo'rquv va ochko'zlik indeksi",
+      "labels": {
+        "extreme_fear": "Haddan tashqari qo'rquv",
+        "fear": "Qo'rquv",
+        "neutral": "Neytral",
+        "greed": "Ochko'zlik",
+        "extreme_greed": "Haddan tashqari ochko'zlik"
+      },
+      "fear": "qo'rquv",
+      "greed": "ochko'zlik",
+      "previous": "Kecha: {v}",
+      "dominance": "Bitcoin ning bozor kapitalizatsiyasidagi ulushi: {v}%",
+      "hint": "Kripto bozor kayfiyatini 0 dan 100 gacha shkalada ko'rsatadi. Bu ma'lumot ko'rsatkichi, signal emas."
+    },
+    "movers": {
+      "title": "24 soatlik yetakchilar",
+      "hint": "Sutkalik aylanmasi 2 mln dan ortiq USDT juftliklari (OKX, spot). Grafikni ochish uchun juftlikni bosing.",
+      "gainers": "O'sish",
+      "losers": "Tushish"
+    },
+    "watch": {
+      "title": "Kuzatuv ro'yxati",
+      "add": "Juftlik qo'shish",
+      "addButton": "Qo'shish",
+      "empty": "Hozircha bo'sh. Kuzatayotgan juftliklaringizni qo'shing.",
+      "noPrice": "narx yo'q",
+      "remove": "{symbol} ni olib tashlash"
+    },
+    "alerts": {
+      "title": "Narx alertlari",
+      "subtitle": "Narx darajaga yetganda saytda va Telegram'da bildirishnoma keladi. Har daqiqada tekshiriladi.",
+      "symbol": "Juftlik",
+      "price": "Narx darajasi",
+      "direction": "Shart",
+      "auto": "O'zi aniqlasin",
+      "above": "Narx teng yoki yuqori",
+      "below": "Narx teng yoki past",
+      "aboveShort": "≥",
+      "belowShort": "≤",
+      "note": "Izoh (ixtiyoriy)",
+      "create": "Alert yaratish",
+      "empty": "Faol alertlar yo'q.",
+      "delete": "Alertni o'chirish",
+      "triggered": "Yaqinda ishlaganlar"
+    },
+    "calendar": {
+      "title": "Voqealar kalendari",
+      "subtitle": "Haftaning eng yaqin voqealari, vaqt: {tz}. Muhim yangiliklar bozorni harakatga keltiradi.",
+      "important": "Faqat muhimlari",
+      "allEvents": "Barcha voqealar",
+      "none": "Yaqin voqealar yo'q.",
+      "today": "Bugun",
+      "tomorrow": "Ertaga",
+      "forecast": "prognoz",
+      "previous": "oldingi",
+      "impact": {
+        "high": "Yuqori ahamiyat",
+        "medium": "O'rta ahamiyat",
+        "low": "Past ahamiyat",
+        "holiday": "Dam olish kuni"
+      }
+    }
+  },
+  "journal": {
+    "title": "Bitim jurnali",
+    "tags": "Teglar",
+    "tagsHint": "Vergul bilan, 10 tagacha. Masalan: breakout, yangilik",
+    "grade": "Bajarilish bahosi",
+    "gradeHint": "A — hammasi rejaga ko'ra, D — ko'p chetlanish. Foydani emas, rejaga amal qilishni baholang.",
+    "gradeShort": "Baho {g}",
+    "mistakes": "Bitimdagi xatolar",
+    "mistake": "Xato",
+    "mistakesHint": "Rejadan chetga chiqqan narsani belgilang. Bu tahlil uchun ma'lumot, o'zingizga baho emas.",
+    "duration": "Davomiyligi",
+    "units": {
+      "d": "{n} k",
+      "h": "{n} soat",
+      "m": "{n} daq"
+    },
+    "closedAt": "Yopilish vaqti",
+    "closedAtHint": "Bo'sh bo'lsa, davomiylik hisoblanmaydi",
+    "close": "Bitimni yopish",
+    "closeTitle": "Bitimni yopish",
+    "closeText": "Chiqish narxini kiriting — natija o'zi hisoblanadi.",
+    "closeConfirm": "Yopish",
+    "closeTimeHint": "Bo'sh bo'lsa, hozirgi vaqt olinadi",
+    "alreadyClosed": "Bitim allaqachon yopilgan",
+    "errClosedBefore": "Yopilish ochilishdan oldin bo'lishi mumkin emas",
+    "clone": "Nusxa olish",
+    "fromClone": "Bu bitim nusxasi: saqlashdan oldin narx va vaqtni tekshiring.",
+    "saveTemplate": "Shablon sifatida saqlash",
+    "templateName": "Shablon nomi",
+    "templateText": "Instrument, yo'nalish, strategiya, teglar va reja saqlanadi — narx va vaqtsiz.",
+    "templateSaved": "Shablon saqlandi. U yangi bitim yaratishda paydo bo'ladi.",
+    "template": "Shablon",
+    "templateNone": "Shablonsiz",
+    "limitTemplates": "20 tadan ortiq shablon saqlab bo'lmaydi",
+    "search": "Matn bo'yicha qidiruv",
+    "searchHint": "Instrument, izoh, sabab…",
+    "tag": "Teg",
+    "mistakeNames": {
+      "fomo_entry": "Qo'ldan boy berish qo'rquvidan kirish",
+      "moved_stop": "Stopni siljitdim",
+      "oversize": "Hajm juda katta",
+      "early_exit": "Erta chiqish",
+      "late_exit": "Kech chiqish",
+      "no_plan": "Rejasiz",
+      "revenge": "Bozordan o'ch olish",
+      "overtrading": "Bitimlar juda ko'p",
+      "chased": "Narxning ortidan quvdim",
+      "no_stop": "Stopsiz"
+    },
+    "an": {
+      "trades": "Bitimlar",
+      "winRate": "Foydali",
+      "pnl": "Natija",
+      "avg": "O'rtacha",
+      "mistakes": "Xatolar nimaga tushadi",
+      "mistakesHint": "Siz ushbu xatoni belgilagan bitimlar natijasi. Bitim bir nechta qatorga tushishi mumkin.",
+      "noMistakes": "Hozircha xato belgilangan bitimlar yo'q. Ularni bitim shaklida belgilang.",
+      "grades": "Bajarilish bahosi bo'yicha",
+      "gradesHint": "Reja bo'yicha qilingan bitimlar natija berayotganini ko'rishga yordam beradi.",
+      "noGrades": "Hozircha baholangan bitimlar yo'q.",
+      "tags": "Teglar bo'yicha",
+      "noTags": "Hozircha teg qo'yilgan bitimlar yo'q.",
+      "duration": "Bitim davomiyligi bo'yicha",
+      "avgDuration": "O'rtacha davomiylik: foydali — {win}, zararli — {loss}.",
+      "noDuration": "Yopilish vaqti kerak: u bitim yopilganda qo'yiladi."
+    },
+    "buckets": {
+      "lt5": "5 daqiqagacha",
+      "m5_30": "5–30 daqiqa",
+      "m30_120": "30 daqiqa – 2 soat",
+      "h2_8": "2–8 soat",
+      "h8_24": "8–24 soat",
+      "gt24": "bir kundan ortiq"
+    },
+    "deleteTemplate": "Shablonni o'chirish",
+    "modeSimpleText": "Faqat asosiy maydonlar ko'rsatilgan.",
+    "modeFullText": "Barcha maydonlar ko'rsatilgan.",
+    "modeToFull": "Barcha maydonlarni ko'rsatish",
+    "modeToSimple": "Faqat asosiy",
+    "sizeHint": "Formula bo'yicha: hajm {size} (risk {risk}% = {amount}). Qo'yish",
+    "mistakeNote": "Bu nima sababdan bo'ldi",
+    "mistakeNoteHint": "O'z so'zlaringiz bilan: nima his qildingiz, nima noto'g'ri ketdi, keyingi safar nima qilasiz. Buni faqat siz ko'rasiz."
+  },
+  "risk": {
+    "title": "Tizim sifati va risk",
+    "subtitle": "Raqamlar tanlangan davr bitimlari bo'yicha hisoblanadi. Bu o'tgan bitimlar arifmetikasi, bashorat emas.",
+    "sqn": "SQN (tizim sifati)",
+    "sqnNone": "riski ko'rsatilgan 10+ bitim kerak",
+    "sqnHint": "R dagi natijalar barqarorligini ko'rsatadi. Qancha yuqori bo'lsa, risk birligiga foyda shuncha tekis.",
+    "band": {
+      "poor": "zaif",
+      "belowAvg": "o'rtachadan past",
+      "average": "o'rtacha",
+      "good": "yaxshi",
+      "excellent": "a'lo",
+      "superb": "ajoyib"
+    },
+    "recovery": "Tiklanish omili",
+    "recoveryHint": "Sof foydaning pulda maksimal cho'kishga nisbati.",
+    "longestWater": "Maksimumdan pastda eng uzoq davr",
+    "waterHint": "Balans oldingi cho'qqiga necha kun qaytolmadi.",
+    "currentWater": "Hozir maksimumdan pastda",
+    "atPeak": "hozir maksimumda",
+    "days": "{n} kun",
+    "mathTitle": "Kelli va vayron bo'lish xavfi bo'yicha raqamlaringiz",
+    "mathText": "Foydali bitimlar {win}% va o'rtacha foyda/o'rtacha zarar {payoff} bo'lganda Kelli matematikasi bitimga depozitning {kelly}% ini beradi. Bitimga 1% risk bilan depozitning 50% ini yo'qotish ehtimoli bu modelda — {ruin}%.",
+    "mathNote": "Model mustaqil bitimlar va doimiy raqamlarni nazarda tutadi; bu ma'lumot, maslahat ham, bashorat ham emas.",
+    "mathNone": "Kamida 20 ta bitim kerak, ularda foydali ham, zararli ham bo'lishi shart.",
+    "weekday": "Hafta kunlari bo'yicha",
+    "weekdayHint": "Vaqt mintaqasi — sozlamalaringizdan.",
+    "weekdayNone": "Davr uchun bitimlar yo'q.",
+    "days7": {
+      "0": "Dushanba",
+      "1": "Seshanba",
+      "2": "Chorshanba",
+      "3": "Payshanba",
+      "4": "Juma",
+      "5": "Shanba",
+      "6": "Yakshanba"
+    }
+  },
+  "diary": {
+    "title": "Kun kundaligi",
+    "subtitle": "Ertalab — reja va kayfiyat, kechqurun — natija va saboq. Ikki haftadan keyin holat natijaga qanday ta'sir qilishi ko'rinadi.",
+    "days": "Kunlar",
+    "today": "Bugun",
+    "filled": "to'ldirilgan",
+    "mood": "Kayfiyat",
+    "energy": "Energiya",
+    "scaleHint": "1 (yomon) dan 5 (a'lo) gacha. Tanlovni bekor qilish uchun yana bosing.",
+    "plan": "Kun rejasi",
+    "planHint": "Nimani savdo qilasiz, qayerda kirasiz, qachon to'xtaysiz. Qisqa.",
+    "review": "Kun natijasi",
+    "reviewHint": "Nima bo'ldi, nima bo'lmadi, nega.",
+    "followed": "Rejaga amal qildingizmi?",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "lesson": "Kunning bitta saboqi",
+    "lessonHint": "Eslab qolmoqchi bo'lgan bitta gap.",
+    "saved": "Yozildi.",
+    "readOnly": "14 kundan eski yozuvlarni faqat o'qish mumkin.",
+    "errDay": "Bu kun uchun yozib bo'lmaydi: bugun va oxirgi 14 kun mumkin.",
+    "streak": "Ketma-ket yozuvli kunlar",
+    "daysWord": "kun",
+    "streakBest": "Eng yaxshi seriya: {n}",
+    "planEffect": "Reja va natija",
+    "planYesDays": "Reja bajarilgan kunlar: {n}",
+    "planNoDays": "Reja buzilgan kunlar: {n}",
+    "avgPerDay": "Kunning o'rtacha natijasi.",
+    "planEffectNone": "Kun natijasida rejaga amal qilganingizni belgilang, shunda bu yerda taqqoslash chiqadi.",
+    "moodEffect": "Kayfiyat va kun natijasi",
+    "moodNone": "Kamida ikki xil kayfiyat bahosi va bitimli kunlar yozuvlari kerak.",
+    "moodLevel": "Kayfiyat {n}",
+    "daysCount": "kun: {n}",
+    "moodNote": "Bitimli kunlar bo'yicha o'rtacha. Bu kuzatuv, sabab-oqibat emas. Hisobdagi kunlar:",
+    "history": "Oxirgi yozuvlar",
+    "delete": "Yozuvni o'chirish",
+    "deleteConfirm": "Shu kun yozuvi o'chirilsinmi?"
+  },
+  "report": {
+    "title": "Chop etish uchun hisobot",
+    "print": "Chop etish / PDF saqlash",
+    "hint": "Chop etish oynasi ochiladi. Fayl olish uchun «PDF sifatida saqlash» ni tanlang.",
+    "generated": "yaratilgan {date}",
+    "empty": "Bu davrda bitimlar yo'q.",
+    "trades": "Bitimlar",
+    "net": "Natija",
+    "winRate": "Foydali",
+    "profitFactor": "Profit-faktor",
+    "expectancy": "Bitimga kutilma",
+    "maxDd": "Maksimal cho'kish",
+    "discipline": "Qoidalarga amal qilingan",
+    "rulesCost": "Qoida buzilishlari narxi",
+    "lastTrades": "Oxirgi bitimlar",
+    "link": "Chop etish / PDF hisoboti"
+  },
+  "start": {
+    "title": "Birinchi qadamlar",
+    "subtitle": "{total} tadan {done} tasi bajarildi. Faqat o'zingizga foydali narsani qiling.",
+    "hide": "Yashirish",
+    "steps": {
+      "trade": "Birinchi bitimni yozish",
+      "journal": "Bitimga teg, baho yoki xatolarni qo'yish",
+      "diary": "Kun kundaligida birinchi yozuvni yozish",
+      "telegram": "Telegram-botni ulash"
+    }
+  },
+  "hero": {
+    "today": "Bugun",
+    "trades": "Bitimlar",
+    "winRate": "Foydali",
+    "balance": "Balans",
+    "discipline": "Intizom",
+    "diary": "Kun kundaligi",
+    "hintNone": "Bugun bitimlar yo'q. Avval reja: kundalikka yozing, keyin pozitsiya oching.",
+    "hintViolated": "Bugun qoida buzilgan bitim bor. Keyingisini ochishdan oldin to'xtab, qoidalaringizni qayta o'qing.",
+    "hintLosing": "Kun minusda. Bu normal. O'ch olish istagiga emas, kunlik limit va qoidalarga qarang.",
+    "hintOk": "Kunning barcha bitimlari qoidalar bo'yicha. Shu sur'atni saqlang, natija ikkinchi darajali.",
+    "quick": "Tezkor",
+    "limit": "Kunlik zarar limiti",
+    "limitUsed": "{limit}% dan {loss}%",
+    "limitNone": "Kunlik zarar limiti belgilanmagan",
+    "limitSet": "Belgilash",
+    "hintLimit": "Kunlik zarar limitiga yetildi. Qoidangiz aytadi: bugunga yetarli. Terminalni yoping va ertaga qayting.",
+    "hintPause": "Ketma-ket bir necha zarar. 15–30 daqiqa tanaffus qiling, turing, sayr qiling, so'ng rejangizni qayta o'qing.",
+    "pauseBanner": "Ketma-ket {n} ta zarar, oxirgisi {m} daqiqa oldin. Yangi bitim ochishdan oldin 15–30 daqiqa tanaffus qiling va rejani qayta o'qing."
+  },
+  "week": {
+    "title": "Hafta tahlili",
+    "link": "Hafta tahlili",
+    "subtitle": "Oxirgi 7 kun oldingi 7 kunga qarshi. Bitta xulosa va bir necha raqam.",
+    "empty": "Oxirgi 7 kunda bitimlar yo'q. Birinchisini yozing, shunda bu yerda tahlil paydo bo'ladi.",
+    "takeaway": "Haftaning asosiy xulosasi",
+    "result": "Natija",
+    "trades": "Bitimlar",
+    "winRate": "Foydali",
+    "discipline": "Intizom",
+    "vsPrev": "o'tgan haftaga nisbatan",
+    "same": "o'tgan haftadagidek",
+    "was": "edi",
+    "best": "Eng yaxshi kun",
+    "worst": "Eng yomon kun",
+    "takeRule": "Haftaning asosiy yo'qotishi: «{name}» qoidasi {n} ta bitimda buzilgan, ular bo'yicha natija {amount}. Unga amal qilishga nima xalaqit berayotganini o'ylab, kundalikka yozing.",
+    "takeMistake": "Haftaning eng qimmat xatosi: «{name}», {n} ta bitim, natija {amount}. Lahzani oldindan sezish uchun uni bitimlarda belgilab boring.",
+    "takeDiscipline": "Intizom {pct}%, maqsad {goal}%. Natija ikkinchi darajali: avval qoidalar bo'yicha bitimlar ulushini qaytaring.",
+    "takeSteady": "Hafta davomida jiddiy yo'qotishlar ko'rinmaydi: qoidalar asosan bajarilgan. Jurnal va kundalikni yuritishda davom eting.",
+    "takeNone": "Ma'lumot hali kam.",
+    "note": "Xulosa yozuvlaringiz bo'yicha oddiy qoidalar asosida tuziladi, bu bashorat emas."
+  },
+  "usmarket": {
+    "title": "AQSh bozori",
+    "phase": {
+      "pre": "Premarket",
+      "regular": "Asosiy sessiya",
+      "after": "Postmarket",
+      "closed": "Yopiq"
+    },
+    "next": {
+      "pre": "Premarket {t} dan keyin boshlanadi",
+      "regular": "Asosiy sessiya {t} dan keyin boshlanadi",
+      "after": "Asosiy sessiya {t} dan keyin tugaydi",
+      "closed": "Savdo {t} dan keyin tugaydi"
+    },
+    "tz": "Sizning vaqtingizda ({tz}), savdo kuni: {day}.",
+    "closures": "Yaqin dam olish va qisqa kunlar",
+    "early": "qisqartirilgan kun",
+    "note": "NYSE va Nasdaq soatlari: premarket 4:00–9:30, asosiy sessiya 9:30–16:00, postmarket 16:00–20:00 Nyu-York vaqti bilan. Yozgi vaqtga o'tish hisobga olingan. Bayram sanalari ma'lumot uchun, birja kalendari bilan solishtiring. Fyucherslar deyarli sutkasiga savdo qilinadi, ularning soatlari alohida.",
+    "holiday": {
+      "newYear": "Yangi yil",
+      "mlk": "Martin Lyuter King kuni",
+      "presidents": "Prezidentlar kuni",
+      "goodFriday": "Xushxabar Juma",
+      "memorial": "Xotira kuni",
+      "juneteenth": "Juneteenth",
+      "independence": "Mustaqillik kuni (ko'chirilgan)",
+      "labor": "Mehnat kuni",
+      "thanksgiving": "Minnatdorchilik kuni",
+      "christmas": "Rojdestvo",
+      "afterThanksgiving": "Minnatdorchilik kunidan keyingi juma",
+      "christmasEve": "Rojdestvo arafasi"
+    }
+  },
+  "usstats": {
+    "title": "AQSh birjasi soatlari bo'yicha natija",
+    "hint": "Faqat aksiya va fyuchers bitimlari. Vaqt Nyu-York bo'yicha (yozgi vaqt hisobga olingan). Qaysi soatlarda yaxshi va yomon savdo qilishingizni ko'rsatadi.",
+    "none": "Aksiya yoki fyuchers bitimlari kerak: bitim formasida bozorni tanlang.",
+    "b": {
+      "pre": "Premarket (4:00–9:30)",
+      "open": "Ochilish (9:30–10:00)",
+      "morning": "Ertalab (10:00–12:00)",
+      "midday": "Kun o'rtasi (12:00–14:00)",
+      "afternoon": "Tushdan keyin (14:00–15:30)",
+      "power": "Oxirgi soat (15:30–16:00)",
+      "after": "Postmarket (16:00–20:00)",
+      "off": "Sessiyalardan tashqari"
+    }
+  },
+  "pdt": {
+    "title": "Day-trade'lar (PDT)",
+    "window": "Oxirgi {n} savdo kuni ichida (Nyu-York vaqti) bir kunda ochilib yopilgan aksiya bitimlari.",
+    "ok": "Chegaragacha yana day-trade qilish mumkin: {n}.",
+    "warn": "Bu maksimum: keyingi day-trade 5 kun ichida to'rtinchisi bo'ladi.",
+    "flag": "5 kunda uchtadan ko'p day-trade. Hisob shartlarini brokerdan aniqlang.",
+    "rule": "Kapitali ${limit} dan kam marja hisobida 5 savdo kuni ichida 4 va undan ko'p day-trade «pattern day trader» maqomini beradi.",
+    "notApplies": "Dollar hisobingizdagi kapital ${limit} dan kam emas, shuning uchun bu qoida odatda sizni cheklamaydi.",
+    "note": "Hisoblagich ma'lumot uchun va faqat jurnaldagi bitimlarni sanaydi: qoidani brokerdan aniqlang."
+  },
+  "mistakes": {
+    "title": "Mening xatolarim",
+    "subtitle": "Bu yerda xatoli va qoidalar buzilgan bitimlar yig'ilgan. Xato nima ekanini belgilang, nima sababdan bo'lganini yozing va ekran rasmini qo'shing.",
+    "link": "Xatolar: tahlil va rasmlar",
+    "whyTitle": "Bu nima sababdan bo'ldi",
+    "noNote": "Sabab yozilmagan.",
+    "open": "Xatolarni tahlil qilish",
+    "save": "Saqlash",
+    "saved": "Saqlandi",
+    "pasteHint": "Rasmni buferdan qo'yish (Ctrl+V), bu yerga tortish yoki fayl tanlash mumkin. Qoidasi buzilgan bitimlar bu yerga o'zi tushadi.",
+    "brokenRules": "Buzilgan qoidalar",
+    "marked": "Xato belgilangan bitimlar",
+    "result": "Ularning natijasi",
+    "worst": "Eng qimmat xato «{name}»: {n} ta bitim, natija {amount}.",
+    "byKind": "Har bir xato qancha turadi",
+    "log": "Xatolar jurnali",
+    "empty": "Hozircha bo'sh. Bitimda xatoni belgilasangiz yoki qoidani buzsangiz, bitim shu yerda paydo bo'ladi.",
+    "more": "Ko'proq ko'rsatish",
+    "todo": "Tahlil qilinmagan zararli bitimlar",
+    "todoHint": "Xato bo'lgan-bo'lmaganini ko'ring: bo'lsa, belgilang va sababini yozing."
+  },
+  "pm": {
+    "title": "Foyda va zarar",
+    "subtitle": "Foydali bitimlarda qancha topdingiz, zararli bitimlarda qancha yo'qotdingiz va natija nima.",
+    "link": "Foyda va zarar: daromad va yo'qotish",
+    "period": {
+      "today": "Bugun",
+      "week": "7 kun",
+      "month": "Shu oy",
+      "all": "Butun vaqt"
+    },
+    "plus": "Foyda",
+    "minus": "Zarar",
+    "net": "Natija",
+    "trades": "bitimlar: {n}",
+    "account": "Hisobdagi pul",
+    "balance": "Hozirgi balans",
+    "deposited": "To'ldirilgan",
+    "withdrawn": "Yechib olingan",
+    "accountNote": "To'ldirish va yechib olish Sozlamalarda, hisoblar bo'limida yoziladi. Ular savdo natijasiga kirmaydi.",
+    "byDay": "Kunlar bo'yicha",
+    "byMonth": "Oylar bo'yicha",
+    "day": "Kun",
+    "month": "Oy",
+    "note": "Bitim natijalari komissiyadan keyin ko'rsatilgan. Bu hisob, prognoz emas.",
+    "byYear": "Yillar bo'yicha",
+    "year": "Yil",
+    "yearNote": "Yozuvlaringiz bo'yicha ma'lumot uchun jamlanma, soliq hisobi emas: soliq qoidalari davlatga bog'liq.",
+    "feesTitle": "Komissiyalar",
+    "feesMonth": "Shu oy",
+    "feesAll": "Butun vaqt",
+    "feesAvg": "Bitimga o'rtacha",
+    "feesShare": "Komissiyagacha natijadagi ulushi",
+    "feesNote": "Komissiyagacha natija: {gross}, keyin: {net}. Ko'p mayda bitimlar foydaning sezilarli qismini komissiyaga berishi mumkin: uslubingiz buni ko'tarishini tekshiring."
+  },
+  "worldmarkets": {
+    "title": "Dunyo bozorlari",
+    "subtitle": "Oltin va metallar, neft va gaz, valyutalar, indekslar, obligatsiyalar va kripto. Grafikni ochish uchun nomga bosing.",
+    "none": "ma'lumot yo'q",
+    "groups": {
+      "metals": "Oltin va metallar",
+      "energy": "Neft va gaz",
+      "forex": "Valyutalar",
+      "usindices": "AQSh: indekslar, ETF va fyucherslar",
+      "world": "Dunyo indekslari",
+      "rates": "Obligatsiyalar va qo'rquv",
+      "crypto": "Kripto"
+    },
+    "note": "O'zgarish avvalgi yopilishga nisbatan. Manba norasmiy (Yahoo Finance): ma'lumot kechikishi va broker narxidan farq qilishi mumkin. Oltin va kumush XAU/USD spot narxi emas, COMEX fyucherslari bo'yicha ko'rsatilgan. VIX, daromad va dollar o'sishi rangsiz: ular na yaxshi, na yomon. Investitsiya maslahati emas.",
+    "names": {
+      "gold": "Oltin (XAU, COMEX fyuchersi)",
+      "silver": "Kumush",
+      "platinum": "Platina",
+      "copper": "Mis",
+      "wti": "Neft WTI",
+      "brent": "Neft Brent",
+      "gas": "Tabiiy gaz",
+      "eurusd": "EUR/USD",
+      "gbpusd": "GBP/USD",
+      "usdjpy": "USD/JPY",
+      "usdchf": "USD/CHF",
+      "audusd": "AUD/USD",
+      "usdcad": "USD/CAD",
+      "usduzs": "USD/UZS (so'm)",
+      "dxy": "Dollar indeksi (DXY)",
+      "ndx": "Nasdaq-100",
+      "ixic": "Nasdaq Composite",
+      "gspc": "S&P 500",
+      "dji": "Dow Jones",
+      "rut": "Russell 2000",
+      "qqq": "QQQ (Nasdaq-100 ETF)",
+      "spy": "SPY (S&P 500 ETF)",
+      "nqf": "Nasdaq-100 fyuchersi (NQ)",
+      "esf": "S&P 500 fyuchersi (ES)",
+      "ymf": "Dow fyuchersi (YM)",
+      "dax": "DAX (Germaniya)",
+      "ftse": "FTSE 100 (Buyuk Britaniya)",
+      "cac": "CAC 40 (Fransiya)",
+      "nikkei": "Nikkei 225 (Yaponiya)",
+      "hsi": "Hang Seng (Gonkong)",
+      "tnx": "AQSh 10 yillik obligatsiya daromadi, %",
+      "vix": "VIX (qo'rquv indeksi)",
+      "btc": "Bitcoin",
+      "eth": "Ethereum",
+      "palladium": "Palladiy",
+      "gld": "GLD: oltin ETF (SPDR)",
+      "iau": "IAU: oltin ETF (iShares)",
+      "slv": "SLV: kumush ETF",
+      "gdx": "GDX: oltin qazuvchi aksiyalar"
+    }
+  },
+  "live": {
+    "realtime": "Narxlar real vaqtda",
+    "every15": "Narxlar har 30 soniyada o'zi yangilanadi",
+    "paused": "Yangilanish to'xtatildi: manba bilan aloqa yo'q",
+    "connecting": "Narxlarga ulanmoqda…"
+  },
+  "tradertypes": {
+    "title": "Treyder turlari",
+    "subtitle": "6 guruhda 30 tur: bitim davomiyligi, bozor, tahlil usuli, strategiya, maqom va xulq-atvor bo'yicha. Bir kishi odatda bir nechta turni birlashtiradi, masalan, «Nasdaqda day-treyder, texnik, trendchi».",
+    "count": "{n} ta tur",
+    "note": "Bu ma'lumot uchun tasnif: turli manbalar treyderlarni turlicha tasniflaydi. Tavsiflar muayyan usulda savdo qilish maslahati emas.",
+    "cta": "Jurnal bo'yicha o'z profilingizni bilib oling",
+    "link": "Treyder turlari",
+    "you": {
+      "title": "Sizning treyder profilingiz",
+      "subtitle": "Jurnalingiz bo'yicha aniqlangan. Bu o'z yozuvlaringizga asoslangan taxmin, tashxis yoki maslahat emas.",
+      "style": "Uslub",
+      "market": "Asosiy bozor",
+      "behavior": "Xulq-atvor",
+      "need": "Profilni aniqlash uchun kamida 5 ta bitim kerak. Uslub uchun bitimlarda yopilish vaqti bo'lishi kerak.",
+      "needStyle": "Uslub uchun 5 ta bitimda yopilish vaqti kerak.",
+      "unknown": "aniq namuna yo'q",
+      "median": "bitimning o'rtacha davomiyligi: {t}",
+      "share": "bitimlarning {p}%",
+      "all": "Barcha treyder turlari"
+    },
+    "units": {
+      "m": "{n} daq",
+      "h": "{n} soat",
+      "d": "{n} kun"
+    },
+    "groups": {
+      "horizon": {
+        "title": "Bitimni ushlab turish vaqti bo'yicha",
+        "desc": "Asosiy bo'linish: treyder pozitsiyani qancha vaqt ushlab turadi."
+      },
+      "market": {
+        "title": "Bozor bo'yicha",
+        "desc": "Qaysi bozorda savdo qiladi."
+      },
+      "analysis": {
+        "title": "Tahlil usuli bo'yicha",
+        "desc": "Bitim qarori nimaga asoslanadi."
+      },
+      "strategy": {
+        "title": "Strategiya bo'yicha",
+        "desc": "Treyder qaysi g'oyadan foydalanadi."
+      },
+      "status": {
+        "title": "Maqomi bo'yicha",
+        "desc": "Kimning puli bilan va qanday maqomda savdo qiladi."
+      },
+      "behavior": {
+        "title": "Xulq-atvor bo'yicha (jurnalda ko'rinadigani)",
+        "desc": "Tashxis emas, bitimlardagi odatlar. Tartib aynan shularni ko'rishga yordam beradi."
+      }
+    },
+    "types": {
+      "scalper": {
+        "name": "Skalper",
+        "text": "Bitimni soniyalardan bir necha daqiqagacha ushlaydi va kuniga ko'p bitim qiladi. Har bir foyda kichik, shuning uchun komissiya va intizom eng muhim."
+      },
+      "day": {
+        "name": "Day-treyder (kun ichidagi)",
+        "text": "Bitimlarni bir kun ichida ochadi va yopadi, tunga pozitsiya qoldirmaydi. AQSh aksiyalarida unga PDT qoidasi tegishli."
+      },
+      "swing": {
+        "name": "Sving-treyder",
+        "text": "Bitimni bir necha kundan bir necha haftagacha ushlaydi va narxning kattaroq harakatlarini kutadi. Kun bo'yi ekranga qarab turish shart emas."
+      },
+      "position": {
+        "name": "Pozitsion treyder",
+        "text": "Pozitsiyani oylar va yillar davomida ushlaydi, uzoq trendlarga tayanadi. Bitimlar kam, lekin yo'ldagi tebranishlar katta bo'lishi mumkin."
+      },
+      "hft": {
+        "name": "Yuqori chastotali (HFT)",
+        "text": "Yirik kompaniyalar robotlari soniyada minglab bitim qiladi. Oddiy xususiy treyderga ochiq emas, ammo bozorning bir qismini aynan ular harakatlantiradi."
+      },
+      "crypto": {
+        "name": "Kripto-treyder",
+        "text": "Kriptovalyutalar bilan savdo qiladi. Bozor sutka davomida, dam olish kunlarisiz ochiq, narxlar keskin harakatlanadi."
+      },
+      "forex": {
+        "name": "Forex-treyder",
+        "text": "EUR/USD kabi valyuta juftliklari bilan savdo qiladi. Sutkada ko'p sessiya bor, ko'pincha kredit yelkasi bilan."
+      },
+      "stocks": {
+        "name": "Aksiya treyderi",
+        "text": "Kompaniyalar aksiyalari bilan savdo qiladi: Nasdaq, NYSE va boshqa birjalar. Bozor birja soatlarida ishlaydi, premarket va postmarket bor."
+      },
+      "futures": {
+        "name": "Fyuchers treyderi",
+        "text": "Indekslar, oltin, neft va boshqa aktivlar bo'yicha kontraktlar bilan savdo qiladi. Punkt qiymati kontraktda belgilangan, risk kontraktlarda hisoblanadi."
+      },
+      "commodities": {
+        "name": "Xomashyo va oltin treyderi",
+        "text": "Oltin, kumush, neft, gaz va don bilan savdo qiladi. Narxlar siyosat, zaxiralar va talabga bog'liq."
+      },
+      "options": {
+        "name": "Opsion treyderi",
+        "text": "Aktivni belgilangan narxda sotib olish yoki sotish huquqlari bilan savdo qiladi. Risk va natija muddat va o'zgaruvchanlikka bog'liq, shuning uchun alohida tayyorgarlik kerak."
+      },
+      "technical": {
+        "name": "Texnik treyder",
+        "text": "Grafik bo'yicha qaror qiladi: darajalar, trendlar, indikatorlar va sham shakllari."
+      },
+      "fundamental": {
+        "name": "Fundamental treyder",
+        "text": "Iqtisodiyot, kompaniya hisobotlari, stavkalar va talab bilan taklif muvozanatiga qaraydi."
+      },
+      "news": {
+        "name": "Yangilik treyderi",
+        "text": "Muhim ma'lumotlar va voqealar atrofida savdo qiladi: inflyatsiya, stavkalar, hisobotlar. Harakatlar tez, sirpanish katta."
+      },
+      "algo": {
+        "name": "Algoritmik treyder",
+        "text": "Qoidalarni kod bilan yozadi, robot o'zi kiradi va chiqadi. Asosiy xavf: kod xatolari va o'tmishga ortiqcha moslashtirish."
+      },
+      "discretionary": {
+        "name": "Diskretsion treyder",
+        "text": "Tajribaga tayanib, qat'iy tizimsiz vaziyatga qarab o'zi qaror qiladi. Eng ko'p intizom va his-tuyg'ularga bog'liq."
+      },
+      "trend": {
+        "name": "Trendchi treyder",
+        "text": "Harakat yo'nalishi bo'yicha savdo qiladi: o'sishda sotib oladi, tushishda sotadi. Trend tirik ekan, orqaga qaytishlarga chidaydi."
+      },
+      "countertrend": {
+        "name": "Kontrtrend treyder",
+        "text": "Burilishlarni va narxning o'rtachaga qaytishini qidiradi. Harakatga qarshi kiradi, shuning uchun stop ayniqsa muhim."
+      },
+      "breakout": {
+        "name": "Yorib o'tish treyderi",
+        "text": "Narx diapazondan chiqqanda yoki darajani yorib o'tganda kiradi. Ba'zi yorib o'tishlar soxta bo'lib chiqadi."
+      },
+      "arbitrage": {
+        "name": "Arbitraj treyderi",
+        "text": "Bitta aktivning turli bozorlardagi yoki bog'liq vositalardagi narx farqidan daromad topadi. Tezlik va past komissiya kerak."
+      },
+      "orderflow": {
+        "name": "Buyurtmalar oqimi treyderi",
+        "text": "Narxga kim bosim o'tkazayotganini ko'rish uchun stakan, bitimlar lentasi va hajmlarni o'qiydi. Odatda skalperlar va day-treyderlar."
+      },
+      "retail": {
+        "name": "Xususiy (chakana) treyder",
+        "text": "O'z puli bilan broker orqali savdo qiladi. Tartib aynan shu treyder uchun yaratilgan."
+      },
+      "prop": {
+        "name": "Prop-treyder",
+        "text": "Kompaniya puli bilan savdo qiladi va foydani u bilan bo'lishadi. Odatda qat'iy tushish limitlari bor, ularni buzish kirishni yopadi."
+      },
+      "institutional": {
+        "name": "Institutsional treyder",
+        "text": "Bank, fond yoki investitsiya kompaniyasida katta summalar bilan ishlaydi. Qarorlar reglament bo'yicha va risk-menejment nazorati ostida."
+      },
+      "manager": {
+        "name": "Boshqaruvchi (kopitreyding, PAMM)",
+        "text": "Boshqa odamlarning puli bilan savdo qiladi va natija uchun ular oldida javob beradi. Shaffof hisob va tushishni nazorat qilish ayniqsa muhim."
+      },
+      "systematic": {
+        "name": "Tizimli",
+        "text": "O'z qoidalari bo'yicha kiradi va chiqadi, bitimlarning ko'pchiligida rejaga amal qiladi. Natijani kayfiyat bilan emas, raqamlar bilan baholash mumkin."
+      },
+      "impulsive": {
+        "name": "Impulsiv",
+        "text": "Ko'pincha harakatni o'tkazib yuborish qo'rquvi yoki ochko'zlikdan kiradi va narxning orqasidan quvadi. Bitimdan oldingi cheklist va pauza yordam beradi."
+      },
+      "revenge": {
+        "name": "Qasoskor (o'ch oluvchi)",
+        "text": "Zarardan keyin pulni darhol qaytarmoqchi bo'ladi va rejasiz kiradi. Kunlik zarar limiti va ketma-ket zarardan keyingi pauza yordam beradi."
+      },
+      "overtrader": {
+        "name": "O'ta faol",
+        "text": "Juda ko'p bitim qiladi, ko'pincha kuchli signalsiz, va komissiya to'laydi. Kuniga bitimlar soni limiti yordam beradi."
+      },
+      "cautious": {
+        "name": "Ehtiyotkor",
+        "text": "Ko'proq bitimni rejadan oldin yopadi yoki ikkilanib, qo'rquv bilan kiradi. Erta chiqishlar qancha turishini tekshirish foydali."
+      }
+    },
+    "advice": {
+      "systematic": {
+        "text": "Siz asosan qoidalarga amal qilasiz. Yo'lingizda davom eting: haftalik tahlilni ko'ring va foydali bitimlar qatoridan keyin intizom pasayib ketmasligini kuzating.",
+        "label": "Hafta tahlili"
+      },
+      "impulsive": {
+        "text": "O'tkazib yuborish qo'rquvi yoki ochko'zlikdan tez-tez kirish. Bitimdan oldingi cheklist va pauza yordam beradi: kirishdan oldin rejani yozing va quvib bormang.",
+        "label": "Bitimdan oldingi cheklist"
+      },
+      "revenge": {
+        "text": "Zarardan keyin rejasiz, o'chni qaytarish uchun kirishlar bo'ladi. Kunlik zarar limiti qoidasi va ketma-ket zarardan keyingi majburiy pauza yordam beradi.",
+        "label": "Qoidalar va limitlar"
+      },
+      "overtrader": {
+        "text": "Kuniga juda ko'p bitim. Kuniga bitimlar soni qoidasi va ortiqcha kirishlar komissiya bilan qancha turishini tekshirish yordam beradi.",
+        "label": "Komissiya va natija"
+      },
+      "cautious": {
+        "text": "Ko'pincha rejadan oldin yopasiz yoki ikkilanib kirasiz. Erta chiqishlar qancha turishini ko'ring va sabablarini xatolar tahlilida yozing.",
+        "label": "Xatolar tahlili"
+      }
+    }
+  },
+  "crypto": {
+    "title": "Kripto",
+    "kind": "Turi",
+    "kindAuto": "Yelka bo'yicha aniqlash",
+    "spot": "Spot",
+    "perp": "Muddatsiz kontrakt",
+    "funding": "Funding",
+    "fundingHint": "Bitim vaqtida qancha to'langan. Agar olingan bo'lsa, minus bilan kiriting. Natijadan ayriladi.",
+    "feeTitle": "Birja stavkasi bo'yicha komissiya",
+    "exchange": "Birja",
+    "order": "Order turi",
+    "taker": "Teyker (bozor bo'yicha)",
+    "maker": "Meyker (limitli)",
+    "rate": "Stavka: {p}%",
+    "calcFee": "Komissiyani hisoblash",
+    "feeNote": "Chegirmasiz bazaviy stavkalar, ma'lumot uchun: o'z stavkangizni birjada tekshiring. Komissiya kirish va chiqish uchun hisoblanadi.",
+    "liqPrice": "Likvidatsiya narxi taxminan {price} (kirishdan {pct}%).",
+    "liqBefore": "Likvidatsiya stopdan oldin sodir bo'ladi: stop ishlab ulgurmaydi. Yelkani kamaytiring yoki stopni yaqinroq qo'ying.",
+    "liqClose": "Stop likvidatsiyaga juda yaqin: narx uni sakrab o'tib ketishi mumkin.",
+    "liqNote": "Taxminiy, izolyatsiyalangan marja va 0,5% ushlab turish marjasi uchun. Aniq narxni birja ko'rsatadi.",
+    "exchanges": {
+      "binance": "Binance",
+      "bybit": "Bybit",
+      "okx": "OKX",
+      "bitget": "Bitget",
+      "kucoin": "KuCoin"
+    }
+  },
+  "portfolio": {
+    "title": "Portfel",
+    "subtitle": "Qaysi tangalarni sotib olgansiz, o'rtacha narxi qancha, hozir qancha turadi va sotuvlar bilan qancha foyda yoki zarar qayd etgansiz.",
+    "note": "O'rtacha narx usulida hisob. Bu sizning yozuvlaringiz, birja ma'lumoti emas: sayt hisoblaringizga ulanmaydi. Tanga narxlari OKX dan (USDT juftliklari), aksiya, ETF va oltin narxlari Yahoo Finance dan dollarda olinadi va kechikishi mumkin. Narx bo'lmasa, baholash ko'rsatilmaydi.",
+    "value": "Hozirgi qiymat",
+    "invested": "Kiritilgan",
+    "unrealized": "Qayd etilmagan",
+    "realized": "Qayd etilgan",
+    "positions": "Pozitsiyalar",
+    "empty": "Hozircha bo'sh. Birinchi xaridni quyida yozing.",
+    "coin": "Tanga",
+    "amount": "Miqdor",
+    "avg": "O'rtacha narx",
+    "price": "Hozirgi narx",
+    "valueCol": "Qiymat",
+    "pnl": "Natija",
+    "share": "Ulush",
+    "noPrice": "narx yo'q",
+    "oversold": "Sotilgani xariddan ko'p: yozuvlarni tekshiring",
+    "add": "Xarid yoki sotuvni yozish",
+    "side": "Amal",
+    "buy": "Xarid",
+    "sell": "Sotuv",
+    "priceUsdt": "Narx, USDT",
+    "fee": "Komissiya, USDT",
+    "save": "Yozish",
+    "history": "Yozuvlar tarixi",
+    "invalid": "Maydonlarni tekshiring: tanga, miqdor va narx raqamlar bilan to'ldirilishi kerak.",
+    "limit": "Portfeldagi yozuvlar chegarasiga yetildi (3000).",
+    "symbolHint": "Tanga yoki aktiv: BTC, AAPL, GOLD"
+  },
+  "derivatives": {
+    "title": "Muddatsiz kontraktlar (kripto fyucherslari)",
+    "hint": "OKX ma'lumotlari: funding stavkasi, ochiq interes va long hamda short hisoblar nisbati. Daqiqada bir marta yangilanadi.",
+    "coin": "Tanga",
+    "funding": "Funding",
+    "annual": "Yiliga",
+    "oi": "Ochiq interes",
+    "ls": "Long/short",
+    "hours": "{n} soat",
+    "note": "Funding: musbat bo'lsa, long egalari short egalariga to'laydi, manfiy bo'lsa, aksincha. Ochiq interes ochiq pozitsiyalar hajmini ko'rsatadi, nisbat 1 dan katta bo'lsa, longdagi hisoblar shortdagidan ko'p. Bu ma'lumot uchun, signal emas: ko'rsatkichlarning o'sishi ham, tushishi ham «yaxshi» yoki «yomon» degani emas."
+  },
+  "traderprofile": {
+    "title": "Siz qanday treydersiz",
+    "text": "Bitimlarni qancha ushlab turishingiz va qaysi bozorlarda savdo qilishingizni tanlang. Bosh sahifa kerakli yorliqlarni ko'rsatadi, yangi bitim formasi esa bozoringizni qo'yib beradi.",
+    "horizon": "Bitimni qancha ushlaysiz",
+    "markets": "Qaysi bozorlarda savdo qilasiz",
+    "horizons": {
+      "scalper": "Skalping (daqiqalar)",
+      "day": "Kun davomida",
+      "swing": "Sving (kunlar va haftalar)",
+      "position": "Pozitsion (oylar va yillar)"
+    },
+    "marketNames": {
+      "crypto": "Kripto",
+      "forex": "Forex",
+      "stocks": "Aksiyalar",
+      "futures": "Fyucherslar",
+      "options": "Opsionlar",
+      "commodities": "Oltin va xomashyo"
+    }
+  },
+  "mytools": {
+    "title": "Mening vositalarim",
+    "change": "O'zgartirish",
+    "empty": "Qanday savdo qilishingizni ko'rsating, bosh sahifa kerakli vositalarni ko'rsatadi.",
+    "set": "Sozlash",
+    "links": {
+      "quick": "Tez yozish",
+      "feeBreakeven": "Komissiya bilan zararsizlik",
+      "sessions": "Savdo sessiyalari",
+      "advanced": "Kengaytirilgan tahlil",
+      "portfolio": "Portfel",
+      "goal": "Maqsad rejasi",
+      "week": "Hafta tahlili",
+      "compound": "Murakkab foiz",
+      "market": "Bozor",
+      "liquidation": "Likvidatsiya narxi",
+      "chartBtc": "BTC grafigi",
+      "positionSize": "Pozitsiya hajmi",
+      "chartGold": "Oltin grafigi",
+      "stockSize": "Aksiyada pozitsiya hajmi",
+      "chartAapl": "AAPL grafigi",
+      "futuresRisk": "Fyuchers riski",
+      "chartNq": "Nasdaq-100 grafigi",
+      "optionsCalc": "Opsionlar: to'lov",
+      "forexLot": "Lot va punkt qiymati",
+      "avgPrice": "O'rtachalash",
+      "metalsPage": "Oltin va metallar",
+      "metalsLot": "Oltin va metallar loti"
+    }
+  },
+  "prop": {
+    "title": "Prop-chellenj",
+    "subtitle": "Prop-kompaniya qoidalarini kuzating: foyda maqsadi, kunlik zarar limiti va umumiy tushish. Hammasi jurnalingiz bo'yicha hisoblanadi.",
+    "empty": "Hozircha chellenjlar yo'q. Quyida birinchisini yarating va kompaniyangiz qoidalarini ko'chiring.",
+    "add": "Yangi chellenj",
+    "name": "Nomi",
+    "account": "Hisob",
+    "allAccounts": "Barcha hisoblar",
+    "balance": "Boshlang'ich balans",
+    "target": "Foyda maqsadi, %",
+    "daily": "Kunlik zarar limiti, %",
+    "total": "Umumiy zarar limiti, %",
+    "minDays": "Minimal savdo kunlari",
+    "start": "Boshlanishi",
+    "end": "Tugashi (ixtiyoriy)",
+    "trailing": "Balans cho'qqisidan tushish (suriluvchi)",
+    "trailingShort": "suriluvchi tushish",
+    "create": "Yaratish",
+    "formNote": "Qoidalarni kompaniya bilan shartnomadan ko'chiring. Kunlik limit boshlang'ich balansdan sizning vaqt mintaqangizdagi kalendar kun uchun hisoblanadi, ba'zi kompaniyalarda kun va hisob boshqacha: tekshiring.",
+    "invalid": "Maydonlarni tekshiring: nom, balans va foizlar to'ldirilishi kerak.",
+    "limit": "Chegaraga yetildi: 20 tadan ko'p chellenj bo'lmaydi.",
+    "rules": "Balans {bal} · maqsad {t}% · kun {d}% · jami {l}%",
+    "status": {
+      "active": "Davom etmoqda",
+      "passed": "O'tilgan",
+      "breached": "Muvaffaqiyatsiz"
+    },
+    "breachDaily": "Kunlik zarar limiti {day} kuni oshib ketdi. Bunday chellenj qoidalariga ko'ra bu muvaffaqiyatsizlik.",
+    "breachTotal": "Umumiy tushish limiti {day} kuni oshib ketdi. Bunday chellenj qoidalariga ko'ra bu muvaffaqiyatsizlik.",
+    "passedText": "Maqsadga erishildi, minimal savdo kunlari yig'ildi, qoidalar buzilmagan.",
+    "barTarget": "Foyda maqsadi",
+    "barDaily": "Kunlik limit (bugun)",
+    "barTotal": "Umumiy tushish",
+    "bufferText": "chegaragacha zaxira: {buffer}",
+    "equity": "Hozirgi balans",
+    "result": "Natija",
+    "days": "Savdo kunlari",
+    "left": "Qoldi",
+    "daysLeft": "{n} kun",
+    "note": "Bu yozuvlaringiz bo'yicha hisob, kompaniya ma'lumoti emas: yakuniy qarorni doim prop-kompaniya qabul qiladi. O'tishni va'da qilmaydi va maslahat emas."
+  },
+  "ratios": {
+    "title": "Koeffitsiyentlar (Sharp, Sortino, Kalmar)",
+    "hint": "Algoritmik treyderlar o'rgangan ko'rsatkichlar, jurnalingizning butun davr kunlik natijalari bo'yicha.",
+    "sharpe": "Sharp koeffitsiyenti",
+    "sortino": "Sortino koeffitsiyenti",
+    "calmar": "Kalmar koeffitsiyenti",
+    "cagr": "Yillik daromad",
+    "maxdd": "Eng katta tushish",
+    "total": "Umumiy daromad",
+    "none": "Bitimlar bo'lgan kamida 10 savdo kuni va hisoblarning musbat boshlang'ich balansi kerak.",
+    "note": "Kunlik daromad = kun natijasining kun boshidagi balansga nisbati, yilga 252 savdo kuni bo'yicha o'tkazilgan, tavakkalsiz stavka 0, to'ldirish va yechib olish hisobga olinmaydi. Yillik daromad va Kalmar kamida 30 kunlik tarix bo'lganda hisoblanadi. Bu o'tgan bitimlar arifmetikasi, prognoz yoki strategiya bahosi emas."
+  },
+  "apitoken": {
+    "title": "Robotlar va skriptlar uchun API-kalit",
+    "text": "Robot yoki skript birjangizga ulanmasdan, bitimlarni jurnalingizga o'zi yoza oladi. Kalit faqat bitimlarni yozishga ishlaydi.",
+    "once": "Kalitni hozir nusxalang: u boshqa ko'rsatilmaydi.",
+    "name": "Kalit nomi",
+    "create": "Kalit yaratish",
+    "lastUsed": "oxirgi marta ishlatilgan: {d}",
+    "never": "hali ishlatilmagan",
+    "how": "Bitimni qanday yuborish",
+    "fields": "Majburiy maydonlar: instrument, direction (long yoki short), entry_price, position_size. Ixtiyoriy: exit_price, market (crypto, forex, stocks, futures, options), fees, funding, leverage, pnl, traded_at va closed_at (ISO formatda), strategy, comment, account (hisob nomi). Bunday bitimlar uchun savdo qoidalaringiz tekshirilmaydi, ular «api» tegi bilan belgilanadi. Kalitni begonalarga bermang: sizib chiqsa, shu yerda o'chiring.",
+    "invalid": "Kalit nomini kiriting.",
+    "limit": "Chegaraga yetildi: 5 tadan ko'p kalit bo'lmaydi."
+  },
+  "metals": {
+    "title": "Oltin va metallar",
+    "subtitle": "Oltin, kumush, platina, palladiy va mis bir joyda: narxlar o'zi yangilanadi, gramm va kilogrammga hisoblash, asosiy ta'sir qiluvchi ko'rsatkichlar va hisoblash vositalari.",
+    "currency": "Hisoblash valyutasi",
+    "perOz": "untsiya uchun",
+    "perLb": "funt uchun",
+    "perGram": "Gramm narxi",
+    "perKg": "Kilogramm narxi",
+    "ratios": "Metallar nisbati",
+    "goldSilver": "Oltin / kumush (bir untsiya oltin necha untsiya kumushga teng)",
+    "goldPlatinum": "Oltin / platina",
+    "ratioNote": "Oltin va kumush nisbati kumush oltinga nisbatan odatdagidan arzon yoki qimmatligini ko'rsatadi. Bu ma'lumot, signal emas.",
+    "influence": "Oltinga nima ta'sir qiladi",
+    "influenceNote": "Oltin odatda dollar kursi va AQSh obligatsiyalari daromadliligi bilan birga harakatlanadi, lekin bog'liqlik doimiy emas. Bu ma'lumot, prognoz emas.",
+    "etfs": "Metall fondlari",
+    "toolsTitle": "Oltin va metallar uchun vositalar",
+    "note": "Narxlar Yahoo Finance'dan kechikish bilan. Oltin va kumush bu yerda COMEX fyuchers, brokeringizdagi XAUUSD spotdan biroz farq qilishi mumkin. Gramm va mahalliy valyutaga hisoblash taxminiy.",
+    "links": {
+      "lot": {
+        "title": "Lotlarda pozitsiya hajmi",
+        "desc": "Riskingizga qarab qancha lot oltin yoki kumush olish."
+      },
+      "value": {
+        "title": "Buyum narxi proba bo'yicha",
+        "desc": "Buyumdagi oltin narxi: vazn, proba, gramm narxi."
+      },
+      "bullion": {
+        "title": "Jismoniy oltin: zararsizlik",
+        "desc": "Xarid ustamasi va nolga chiqadigan narx."
+      },
+      "futures": {
+        "title": "Fyuchers va oltin riski",
+        "desc": "CME kontraktlari bo'yicha hisob: GC, MGC, SI."
+      },
+      "alerts": {
+        "title": "Narx bildirishnomalari",
+        "desc": "Kriptovalyutalar bo'yicha Telegram ogohlantirishlari. Oltin uchun hozircha grafikka qarang."
+      },
+      "chart": {
+        "title": "Oltin grafigi",
+        "desc": "Indikatorli oltin shamlari."
+      }
+    }
+  },
+  "support": {
+    "title": "Egasiga yozish",
+    "subtitle": "Savol, xato yoki g'oya bormi? Shu yerga yozing, egasi sizga shaxsan javob beradi. Javob qo'ng'iroqcha orqali xabar sifatida keladi.",
+    "empty": "Hozircha bo'sh. Birinchi xabarni yozing.",
+    "adminEmpty": "Hozircha xabarlar yo'q.",
+    "owner": "Egasi",
+    "you": "Siz",
+    "writeLabel": "Xabaringiz",
+    "replyLabel": "Javobingiz",
+    "send": "Yuborish",
+    "invalid": "1 dan 2000 belgigacha xabar yozing.",
+    "tooMany": "Bir kunda juda ko'p xabar. Ertaga urinib ko'ring.",
+    "note": "Egasi xabarlarni o'zi o'qiydi, javob darrov kelmasligi mumkin. Parol va karta ma'lumotlarini yubormang.",
+    "adminTitle": "Foydalanuvchilar xabarlari",
+    "adminNone": "Hozircha hech kim yozmagan.",
+    "back": "← Barcha yozishmalar",
+    "adminLink": "Xabarlar",
+    "adminUnread": "O'qilmagan: {n}"
+  },
+  "toolsx": {
+    "groups": {
+      "risk": "Risk va pozitsiya hajmi",
+      "forex": "Forex va CFD",
+      "stocks": "Aksiyalar va investitsiyalar",
+      "derivs": "Opsionlar va fyucherslar",
+      "crypto": "Kripto",
+      "metals": "Oltin va metallar",
+      "finance": "Moliya va rejalashtirish",
+      "stats": "Statistika va sessiyalar"
+    },
+    "bewr": {
+      "title": "Nolga chiqish uchun foydali bitimlar ulushi",
+      "desc": "Risk va foyda nisbatiga ko'ra pul yo'qotmaslik uchun bitimlarning qanchasi foydali bo'lishi kerakligini ko'rsatadi.",
+      "note": "Formula: (1 + xarajat) / (foyda/risk + 1). Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "rr": "Risk va foyda (1 riskka foyda)",
+        "costR": "Bitimdagi xarajat, risk ulushida (R)"
+      },
+      "o": {
+        "winRate": "Kerakli foydali bitimlar ulushi",
+        "lossRate": "Ruxsat etilgan zararli ulush",
+        "winsPer10": "10 bitimdan foydali"
+      }
+    },
+    "expect": {
+      "title": "Bitimning matematik kutilmasi",
+      "desc": "Statistikangiz bo'yicha bitta bitim o'rtacha qancha foyda yoki zarar keltiradi.",
+      "note": "Raqamlarni yetarlicha uzoq davr jurnalidan oling. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "winRate": "Foydali bitimlar ulushi, %",
+        "avgWin": "O'rtacha foyda",
+        "avgLoss": "O'rtacha zarar (musbat son)"
+      },
+      "o": {
+        "expectancy": "Bitimga o'rtacha",
+        "expectancyR": "Bitimga o'rtacha, R da",
+        "payoff": "Foyda zararga nisbati",
+        "per100": "100 pip uchun",
+        "profitFactor": "Profit-faktor"
+      }
+    },
+    "pfactor": {
+      "title": "Profit-faktor",
+      "desc": "Foydalar yig'indisining zararlar yig'indisiga nisbati. 1 dan yuqori — tizim plyusda.",
+      "note": "Yetarli bitimlar sonida hisoblang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "grossProfit": "Barcha foydalar yig'indisi",
+        "grossLoss": "Barcha zararlar yig'indisi (musbat son)"
+      },
+      "o": {
+        "profitFactor": "Profit-faktor",
+        "net": "Sof natija",
+        "lossShare": "Zararlarning ulushi"
+      }
+    },
+    "rmult": {
+      "title": "Bitim natijasi R da",
+      "desc": "R — bitimdagi riskingiz. Bitim necha risk keltirgani yoki yo'qotganini ko'rsatadi.",
+      "note": "Yo'nalish kirish va stop bo'yicha aniqlanadi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "entry": "Kirish narxi",
+        "stop": "Stop narxi",
+        "exit": "Chiqish narxi",
+        "size": "Pozitsiya hajmi (dona, lot yoki kontrakt)"
+      },
+      "o": {
+        "direction": "Yo'nalish",
+        "r": "Natija R da",
+        "riskMoney": "Pulda risk",
+        "pnl": "Natija"
+      }
+    },
+    "dailylimit": {
+      "title": "Kunlik zarar limiti",
+      "desc": "Kunlik limit pulda qancha va riskingiz bilan nechta zararli bitim unga olib kelishini hisoblaydi.",
+      "note": "Limitga yetsangiz kun uchun to'xtang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "balance": "Hisob balansi",
+        "dailyLossPct": "Kunlik zarar limiti, %",
+        "riskPct": "Bitimdagi risk, %"
+      },
+      "o": {
+        "limitMoney": "Kunlik zarar limiti",
+        "riskMoney": "Pulda risk",
+        "lossesToLimit": "Limitgacha zararli bitimlar"
+      }
+    },
+    "exposure": {
+      "title": "Pozitsiya hajmi va haqiqiy yelka",
+      "desc": "Pozitsiya balansning qancha qismi, haqiqiy yelka va unga qancha marja kerakligini ko'rsatadi.",
+      "note": "Broker yelkasi va haqiqiy yelka — turli narsalar. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "balance": "Hisob balansi",
+        "price": "Bir birlik narxi",
+        "quantity": "Miqdor",
+        "leverage": "Broker yelkasi"
+      },
+      "o": {
+        "notional": "Pozitsiya hajmi, $",
+        "exposurePct": "Pozitsiyaning balansga ulushi",
+        "effLeverage": "Haqiqiy yelka",
+        "marginNeeded": "Kerakli marja"
+      }
+    },
+    "partial": {
+      "title": "Pozitsiyani qisman yopish",
+      "desc": "Pozitsiyaning bir qismini qayd etadi: qancha yopildi, qancha qoldi va natija qancha.",
+      "note": "Qoldiq natijasi qisman yopish narxida ko'rsatilgan. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "exit": "Qisman yopish narxi",
+        "quantity": "Pozitsiya hajmi",
+        "closePct": "Qaysi qismini yopish, %"
+      },
+      "o": {
+        "closedQty": "Yopildi",
+        "remainingQty": "Qoldi",
+        "realized": "Qayd etilgan natija",
+        "remainingAtExit": "Qoldiq natijasi yopilish narxida"
+      }
+    },
+    "atrstop": {
+      "title": "ATR bo'yicha stop",
+      "desc": "Stopni kirishdan bir necha ATR masofada qo'yadi va 1:2 maqsadni ko'rsatadi.",
+      "note": "ATR ni grafikdan oling (odatda 14 davr). Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "atr": "ATR (o'rtacha diapazon)",
+        "mult": "ATR ko'paytuvchisi"
+      },
+      "o": {
+        "stop": "Stop darajasi",
+        "distance": "Stopgacha masofa",
+        "distancePct": "Stopgacha masofa, %",
+        "target2R": "Risk-foyda 1:2 dagi maqsad"
+      }
+    },
+    "atrsize": {
+      "title": "ATR bo'yicha pozitsiya hajmi",
+      "desc": "Stop bir necha ATR masofada tanlangan riskka teng bo'ladigan pozitsiya hajmi.",
+      "note": "Hajm yaxlitlanmaydi: asbobingiz qadamigacha pastga yaxlitlang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "balance": "Hisob balansi",
+        "riskPct": "Bitimdagi risk, %",
+        "entry": "Kirish narxi",
+        "atr": "ATR (o'rtacha diapazon)",
+        "mult": "ATR ko'paytuvchisi"
+      },
+      "o": {
+        "riskMoney": "Pulda risk",
+        "stopDistance": "Stopgacha masofa",
+        "units": "Pozitsiya hajmi, birlik",
+        "notional": "Pozitsiya hajmi"
+      }
+    },
+    "recwins": {
+      "title": "Prosadkani qaytarish uchun nechta bitim kerak",
+      "desc": "Prosadkadan keyin qanday o'sish kerakligi va riskingiz bilan nechta foydali bitim uni qaytarishini hisoblaydi.",
+      "note": "Har bir foydali bitim hisobni risk × nisbat ga oshiradi deb hisoblanadi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "drawdownPct": "Prosadka, %",
+        "riskPct": "Bitimdagi risk, %",
+        "rr": "Risk va foyda (1 riskka foyda)"
+      },
+      "o": {
+        "neededGain": "Prosadkani qaytarish uchun kerakli o'sish",
+        "gainPerWin": "Bitta foydali bitimdan hisob o'sishi",
+        "winsNeeded": "Ketma-ket foydali bitimlar"
+      }
+    },
+    "pipvalue": {
+      "title": "Pip qiymati",
+      "desc": "Lot hajmingizda bitta pip necha dollar turishini hisoblaydi. Yena juftliklari uchun pip o'lchamini 0,01 qiling.",
+      "note": "Dollar juftlik oxirida bo'lmasa, kotirovka valyutasining dollarga kursini kiriting. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "lots": "Hajm, lot",
+        "contract": "Lot hajmi (1 lotdagi birlik)",
+        "pipSize": "Pip o'lchami",
+        "quoteToUsd": "Kotirovka valyutasining dollarga kursi"
+      },
+      "o": {
+        "perPip": "1 pip uchun",
+        "per10": "10 pip uchun",
+        "per100": "100 pip uchun"
+      }
+    },
+    "swapcost": {
+      "title": "Svop narxi",
+      "desc": "Pozitsiyani tunga ko'chirish uchun qancha to'lashingiz yoki olishingizni hisoblaydi.",
+      "note": "Svop miqdorini brokerning spetsifikatsiyasida ko'ring. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "lots": "Hajm, lot",
+        "swapPerLot": "1 lot uchun bir kecha svop (minus — yechiladi)",
+        "nights": "Jami kechalar",
+        "tripleDays": "Shundan uchlangan svopli chorshanbalar"
+      },
+      "o": {
+        "total": "Davr uchun jami",
+        "perNight": "Bir kechaga",
+        "per30": "30 kechaga"
+      }
+    },
+    "spreadcost": {
+      "title": "Spred va komissiya narxi",
+      "desc": "Kirish va chiqish qancha turishi: spred plyus komissiya, pulda va pozitsiyaga nisbatan foizda.",
+      "note": "Spred narx birligida kiritiladi (masalan 0,0002). Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Narx",
+        "spread": "Spred (narx birligida)",
+        "units": "Hajm birlikda",
+        "commission": "Doira uchun komissiya, $"
+      },
+      "o": {
+        "spreadPct": "Spredning narxdagi ulushi",
+        "spreadMoney": "Spred qiymati",
+        "totalCost": "Kirish va chiqish xarajatlari",
+        "costPct": "Xarajatlarning pozitsiyaga ulushi"
+      }
+    },
+    "fxconvert": {
+      "title": "Komissiyali valyuta konvertori",
+      "desc": "Almashtirishda komissiyani hisobga olib qancha olishingiz va yakuniy kurs qancha ekanini ko'rsatadi.",
+      "note": "Kurs — birinchi valyutaning bittasiga ikkinchisidan qancha. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "amount": "Birinchi valyutadagi summa",
+        "rate": "Kurs (ikkinchi valyuta birinchining bittasiga)",
+        "feePct": "Komissiya, %"
+      },
+      "o": {
+        "received": "Siz olasiz",
+        "feeAmount": "Komissiya",
+        "effectiveRate": "Yakuniy kurs"
+      }
+    },
+    "crossrate": {
+      "title": "Valyutalar kross-kursi",
+      "desc": "Juftlik kursini boshqa ikkitasidan hisoblaydi, masalan EUR/USD va USD/JPY dan EUR/JPY.",
+      "note": "Kurslarni ko'paytirish yoki bo'lishni tanlang. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "mode": "Qanday hisoblash",
+        "a": "Birinchi kurs",
+        "b": "Ikkinchi kurs"
+      },
+      "o": {
+        "cross": "Kross-kurs",
+        "inverse": "Teskari kurs"
+      },
+      "c": {
+        "1": "Ko'paytirish: A/B × B/C",
+        "2": "Bo'lish: A/B ÷ C/B"
+      }
+    },
+    "pipsprofit": {
+      "title": "Pip va pulda foyda",
+      "desc": "Narx harakatini pip va lot bo'yicha pulga aylantiradi.",
+      "note": "Pip qiymatini pip qiymati kalkulyatoridan oling. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "exit": "Chiqish narxi",
+        "pipSize": "Pip o'lchami",
+        "lots": "Hajm, lot",
+        "pipValue": "1 lot uchun pip qiymati, $"
+      },
+      "o": {
+        "pips": "Pipda natija",
+        "profit": "Natija, $"
+      }
+    },
+    "marginlevel": {
+      "title": "Marja darajasi va stop-autgacha zaxira",
+      "desc": "Marja darajasi, bo'sh marja va marja-chaqiruv hamda majburiy yopilishgacha yana qancha yo'qotish mumkinligini ko'rsatadi.",
+      "note": "Marja-chaqiruv va stop-aut darajalari brokerlarda turlicha. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "equity": "Ekvity (ochiq bitimlar bilan balans)",
+        "usedMargin": "Band marja",
+        "callLevel": "Marja-chaqiruv darajasi, %",
+        "stopOutLevel": "Stop-aut darajasi, %"
+      },
+      "o": {
+        "level": "Marja darajasi",
+        "freeMargin": "Bo'sh marja",
+        "lossToCall": "Marja-chaqiruvgacha zaxira",
+        "lossToStopOut": "Stop-autgacha zaxira"
+      }
+    },
+    "lotconv": {
+      "title": "Lotlar, mini va mikro lotlar",
+      "desc": "Lot hajmini valyuta birliklariga, mini va mikro lotlarga aylantiradi.",
+      "note": "Standart lot — 100 000 birlik, ammo brokerda boshqacha bo'lishi mumkin. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "lots": "Hajm, lot",
+        "contract": "Lot hajmi (1 lotdagi birlik)"
+      },
+      "o": {
+        "units": "Valyuta birligi",
+        "miniLots": "Mini-lot (0,1 lot)",
+        "microLots": "Mikro-lot (0,01 lot)"
+      }
+    },
+    "divyield": {
+      "title": "Dividend daromadliligi",
+      "desc": "Dividendlarning joriy narxga va xarid narxingizga nisbatan daromadliligi, yillik va oylik daromad.",
+      "note": "Dividendlar kafolatlanmagan va o'zgarishi mumkin. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Aksiyaning hozirgi narxi",
+        "dividend": "Bir aksiyaga yillik dividend",
+        "shares": "Aksiyalar soni",
+        "buyPrice": "Xarid narxi"
+      },
+      "o": {
+        "yield": "Dividend daromadliligi",
+        "yieldOnCost": "Xarid narxingizdagi daromadlilik",
+        "incomeYear": "Yillik daromad",
+        "incomeMonth": "Oylik daromad"
+      }
+    },
+    "pe": {
+      "title": "P/E, foyda daromadliligi va PEG",
+      "desc": "Aksiyani baholashning uchta tez ko'rsatkichi: narx/foyda, foyda daromadliligi va PEG.",
+      "note": "Bu qo'pol baho, «qimmat» yoki «arzon» degan xulosa emas. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Aksiya narxi",
+        "eps": "Bir aksiyaga yillik foyda (EPS)",
+        "growth": "Foyda o'sishi, % yiliga"
+      },
+      "o": {
+        "pe": "P/E (narx/foyda)",
+        "earningsYield": "Foyda daromadliligi",
+        "peg": "PEG (P/E ning o'sishga nisbati)"
+      }
+    },
+    "split": {
+      "title": "Aksiyalar splitı",
+      "desc": "Split yoki teskari splitdan keyin aksiyalaringiz soni va narxi qancha bo'lishini hisoblaydi.",
+      "note": "Teskari split uchun, masalan, 10 ta eskiga 1 ta yangi kiriting. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "shares": "Aksiyalar soni",
+        "price": "Aksiyaning hozirgi narxi",
+        "newPer": "Yangi aksiyalar",
+        "oldPer": "Eski aksiyalar uchun"
+      },
+      "o": {
+        "ratio": "Koeffitsient",
+        "newShares": "Keyingi aksiyalar",
+        "newPrice": "Keyingi narx",
+        "value": "Pozitsiya qiymati (o'zgarmaydi)"
+      }
+    },
+    "stocknet": {
+      "title": "Aksiyalar bo'yicha sof foyda",
+      "desc": "Aksiyalarni sotishdan komissiya va soliqdan keyingi foyda.",
+      "note": "Soliq stavkasini o'zingiz aniqlang: u davlat va daromad turiga bog'liq. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "buy": "Xarid narxi",
+        "sell": "Sotish narxi",
+        "shares": "Aksiyalar soni",
+        "commissionPct": "Broker komissiyasi, % har tomondan",
+        "taxPct": "Foydadan soliq, %"
+      },
+      "o": {
+        "gross": "Xarajatlarsiz foyda",
+        "commission": "Komissiyalar",
+        "tax": "Soliq",
+        "net": "Sof foyda",
+        "netPct": "Sof daromadlilik"
+      }
+    },
+    "stockbe": {
+      "title": "Aksiyalar zararsizligi komissiya bilan",
+      "desc": "Aksiyani sotish xarid va sotuv komissiyalarini qoplaydigan narx.",
+      "note": "Soliq hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "buy": "Xarid narxi",
+        "shares": "Aksiyalar soni",
+        "commissionPct": "Broker komissiyasi, % har tomondan"
+      },
+      "o": {
+        "breakeven": "Zararsizlik narxi",
+        "movePct": "Narxning kerakli o'sishi",
+        "roundTrip": "Xarid va sotuv komissiyalari"
+      }
+    },
+    "periodic": {
+      "title": "Muntazam badallar va o'sish",
+      "desc": "Har oy bir xil summa kiritilsa va berilgan daromadlilikda qancha to'planishini hisoblaydi.",
+      "note": "Kelajakdagi daromadlilik noma'lum, bu faqat hisob misoli. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "monthly": "Oylik badal",
+        "annualReturn": "Daromadlilik, % yiliga",
+        "years": "Muddat, yil"
+      },
+      "o": {
+        "invested": "Jami kiritildi",
+        "futureValue": "To'planadi",
+        "gain": "O'sishdan daromad"
+      }
+    },
+    "cagr": {
+      "title": "O'rtacha yillik daromad (CAGR)",
+      "desc": "Bir necha yillik umumiy o'sishni o'rtacha yillik daromadga aylantiradi.",
+      "note": "CAGR davr ichidagi tebranishlarni silliqlaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "start": "Boshlang'ich summa",
+        "end": "Yakuniy summa",
+        "years": "Muddat, yil"
+      },
+      "o": {
+        "cagr": "O'rtacha yillik daromad (CAGR)",
+        "totalReturn": "Umumiy o'sish"
+      }
+    },
+    "totalret": {
+      "title": "Dividendlar bilan to'liq daromad",
+      "desc": "Narx o'sishi va olingan dividendlarni hisobga olgan daromadlilik.",
+      "note": "Soliq va komissiyalar hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "start": "Boshlang'ich summa",
+        "end": "Yakuniy summa",
+        "dividends": "Olingan dividendlar"
+      },
+      "o": {
+        "total": "To'liq daromadlilik",
+        "priceReturn": "Narxdan daromad",
+        "dividendReturn": "Dividenddan daromad"
+      }
+    },
+    "optbe": {
+      "title": "Opsion zararsizligi va natijasi",
+      "desc": "Opsion sotib olishda zararsizlik narxi, maksimal zarar va tanlangan narxdagi natija.",
+      "note": "Kontraktda odatda 100 ta aksiya bo'ladi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "type": "Opsion turi",
+        "strike": "Strayk (bajarilish narxi)",
+        "premium": "1 aksiya uchun mukofot",
+        "contracts": "Kontraktlar",
+        "mult": "Kontraktdagi aksiyalar",
+        "target": "Muddatdagi bazaviy aktiv narxi"
+      },
+      "o": {
+        "breakeven": "Zararsizlik narxi",
+        "maxLoss": "Maksimal zarar (mukofot)",
+        "profitAtTarget": "Muddatdagi narxda natija",
+        "roi": "Mukofotga daromadlilik"
+      },
+      "c": {
+        "1": "Kol (xarid)",
+        "2": "Put (sotuv)"
+      }
+    },
+    "covcall": {
+      "title": "Qoplangan kol",
+      "desc": "Aksiyalar ustiga kol sotish: maksimal foyda, zararsizlik va pasayishdan himoya.",
+      "note": "Aksiyalar strayk dan oshsa, keyingi o'sishni boy berasiz. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "stockPrice": "Aksiyaning hozirgi narxi",
+        "strike": "Strayk (bajarilish narxi)",
+        "premium": "1 aksiya uchun mukofot",
+        "shares": "Aksiyalar soni"
+      },
+      "o": {
+        "maxProfit": "Maksimal foyda",
+        "breakeven": "Zararsizlik narxi",
+        "protection": "Pasayishdan himoya (mukofot/narx)",
+        "returnIfCalled": "Aksiyalar olib qo'yilsa daromad"
+      }
+    },
+    "futpnl": {
+      "title": "Fyuchers natijasi tikda va pulda",
+      "desc": "Fyuchers narxi harakatini tik o'lchami va kontraktlar soni bo'yicha tik va pulga aylantiradi.",
+      "note": "Tik o'lchami va qiymatini kontrakt spetsifikatsiyasida ko'ring. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "entry": "Kirish narxi",
+        "exit": "Chiqish narxi",
+        "tickSize": "Tik o'lchami (narx qadami)",
+        "tickValue": "Tik qiymati, $",
+        "contracts": "Kontraktlar"
+      },
+      "o": {
+        "ticks": "Tikda natija",
+        "perContract": "1 kontraktga",
+        "pnl": "Natija"
+      }
+    },
+    "futlev": {
+      "title": "Fyuchers bo'yicha yelka",
+      "desc": "Pozitsiya hajmi dollarda, kontrakt yelkasi va marja balansning qancha qismini egallashi.",
+      "note": "Kontrakt uchun marjani brokerda ko'ring, u o'zgaradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "price": "Fyuchers narxi",
+        "multiplier": "Ko'paytuvchi (punkt qiymati), $",
+        "marginPerContract": "1 kontrakt uchun marja, $",
+        "contracts": "Kontraktlar",
+        "balance": "Hisob balansi"
+      },
+      "o": {
+        "notional": "Pozitsiya hajmi",
+        "marginTotal": "Jami marja",
+        "contractLeverage": "Kontrakt yelkasi",
+        "accountLeverage": "Hisobga yelka",
+        "marginPct": "Marjaning balansga ulushi"
+      }
+    },
+    "opttv": {
+      "title": "Opsionning ichki va vaqt qiymati",
+      "desc": "Opsion mukofotini ichki va vaqt qiymatiga ajratadi.",
+      "note": "Manfiy vaqt qiymati odatda ma'lumotdagi xatoni bildiradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "type": "Opsion turi",
+        "spot": "Bazaviy aktiv narxi",
+        "strike": "Strayk (bajarilish narxi)",
+        "premium": "1 aksiya uchun mukofot"
+      },
+      "o": {
+        "intrinsic": "Ichki qiymat",
+        "timeValue": "Vaqt qiymati",
+        "timeShare": "Vaqt qiymatining mukofotdagi ulushi"
+      },
+      "c": {
+        "1": "Kol",
+        "2": "Put"
+      }
+    },
+    "fundcost": {
+      "title": "Fandin narxi",
+      "desc": "Abadiy kontrakt fandin stavkasi bo'yicha pozitsiyani ushlab turish davrida qancha to'lash yoki olishingizni hisoblaydi.",
+      "note": "Stavka musbat bo'lsa long to'laydi, short oladi. Stavka o'zgaradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "side": "Yo'nalish",
+        "notional": "Pozitsiya hajmi, $",
+        "ratePct": "8 soat uchun stavka, %",
+        "hours": "Pozitsiya necha soat saqlanadi"
+      },
+      "o": {
+        "perInterval": "8 soatga (plyus — siz to'laysiz)",
+        "total": "Jami (plyus — siz to'laysiz)",
+        "annualPct": "Yillik hisobda"
+      }
+    },
+    "ammslip": {
+      "title": "Puldagi sirpanish (DEX)",
+      "desc": "Doimiy ko'paytmali pulda (Uniswap v2 kabi) qancha token olishingiz va bitim narxni qanchalik siljitishini hisoblaydi.",
+      "note": "Model soddalashtirilgan: gaz va tarmoq komissiyalarini hisobga olmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "poolX": "Siz beradigan token zaxirasi (pul)",
+        "poolY": "Siz oladigan token zaxirasi (pul)",
+        "amountIn": "Qancha berasiz",
+        "feePct": "Pul komissiyasi, %"
+      },
+      "o": {
+        "out": "Siz olasiz",
+        "spotPrice": "Pulda bitimgacha narx",
+        "execPrice": "Bitim narxi",
+        "impact": "Narxga ta'sir (sirpanish)",
+        "feePaid": "Pul komissiyasi"
+      }
+    },
+    "impermanent": {
+      "title": "Doimiy bo'lmagan yo'qotish (Impermanent Loss)",
+      "desc": "Likvidlik pulida token narxi o'zgarganda «shunchaki ushlash» ga nisbatan qancha yo'qotishingizni hisoblaydi.",
+      "note": "«Token + barqaror tanga» jufti uchun, pul komissiyalari hisobga olinmagan. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "priceChangePct": "Token narxi o'zgarishi, %",
+        "deposit": "Pulga kiritilgan, $"
+      },
+      "o": {
+        "il": "Doimiy bo'lmagan yo'qotish",
+        "holdValue": "Shunchaki ushlab tursangiz",
+        "lpValue": "Puldagi ulush qiymati",
+        "difference": "«Shunchaki ushlash» dan farq"
+      }
+    },
+    "apy": {
+      "title": "Staking: APR dan APY ga",
+      "desc": "APR stavkasini murakkab foizni hisobga olib samarali APY ga aylantiradi va yakuniy summani hisoblaydi.",
+      "note": "Staking stavkalari o'zgaruvchan. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "amount": "Summa",
+        "aprPct": "Stavka, % yillik",
+        "compounds": "Yilda hisoblashlar",
+        "years": "Muddat, yil"
+      },
+      "o": {
+        "apy": "Samarali daromadlilik (APY)",
+        "final": "Yakuniy summa",
+        "earned": "Daromad"
+      }
+    },
+    "sats": {
+      "title": "Bitkoin satoshi va dollarda",
+      "desc": "BTC ni satoshiga aylantiradi, dollarda qiymatini hisoblaydi va bir dollarda necha satoshi borligini ko'rsatadi.",
+      "note": "1 BTC = 100 000 000 satoshi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "btc": "BTC miqdori",
+        "price": "BTC narxi, $"
+      },
+      "o": {
+        "sats": "Satoshi",
+        "usd": "Qiymati, $",
+        "satsPerDollar": "1 dollarga satoshi"
+      }
+    },
+    "hodlpnl": {
+      "title": "Tangalar bo'yicha natija komissiyalar bilan",
+      "desc": "Sotib olingan tangalar bo'yicha xarid va sotuv komissiyasini hisobga olgan foyda yoki zarar va zararsizlik narxi.",
+      "note": "Kripto soliqlari davlatga bog'liq. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "coins": "Tangalar soni",
+        "buyPrice": "Xarid narxi",
+        "nowPrice": "Hozirgi narx",
+        "feePct": "Birja komissiyasi, % har tomondan"
+      },
+      "o": {
+        "cost": "Komissiya bilan xarajat",
+        "value": "Pozitsiya qiymati (o'zgarmaydi)",
+        "pnl": "Natija",
+        "pnlPct": "Natija, %",
+        "breakeven": "Zararsizlik narxi"
+      }
+    },
+    "metalconv": {
+      "title": "Vazn konvertori: gramm, untsiya, tola",
+      "desc": "Vaznni gramm, kilogramm, troy untsiya va tola o'rtasida aylantiradi.",
+      "note": "Troy untsiya = 31,1035 g, tola = 11,6638 g. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "value": "Vazn",
+        "unit": "Birlik"
+      },
+      "o": {
+        "grams": "Gramm",
+        "kilograms": "Kilogramm",
+        "troyOz": "Troy untsiya",
+        "tola": "Tola (11,66 g)"
+      },
+      "c": {
+        "1": "Gramm",
+        "2": "Kilogramm",
+        "3": "Troy untsiya",
+        "4": "Tola"
+      }
+    },
+    "jewelmark": {
+      "title": "Zargarlik buyumiga ustama",
+      "desc": "Do'kondagi buyum narxini undagi oltin qiymati bilan solishtirib ustamani ko'rsatadi.",
+      "note": "Oltin narxi va buyum narxi bir valyutada bo'lishi kerak. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "weight": "Vazn, gramm",
+        "fineness": "Proba (1000 dan)",
+        "spot": "Oltin untsiyasi narxi",
+        "shopPrice": "Do'kondagi narx"
+      },
+      "o": {
+        "melt": "Oltinning o'zi qiymati",
+        "markup": "Do'kon ustamasi",
+        "markupPct": "Oltin narxiga ustama",
+        "perGram": "Gramm uchun ustama"
+      }
+    },
+    "karat": {
+      "title": "Karat va proba",
+      "desc": "Karatni proba va sof oltin foiziga aylantiradi.",
+      "note": "24 karat — sof oltin. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "karat": "Karat (24 dan)"
+      },
+      "o": {
+        "fineness": "Proba (1000 dan)",
+        "goldPct": "Qotishmada oltin",
+        "otherPct": "Boshqa metallar"
+      }
+    },
+    "etfgold": {
+      "title": "Fond (ETF) ulushidagi oltin",
+      "desc": "Oltin fondining bir ulushiga qancha oltin to'g'ri kelishi va ulush mukofot yoki chegirma bilan savdo qilinishini ko'rsatadi.",
+      "note": "Ulushga untsiyani fond saytida ko'ring: har birida o'zi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "sharePrice": "Fond ulushi narxi",
+        "ouncesPerShare": "1 ulushga untsiya oltin (fondda ko'ring)",
+        "spot": "Oltin untsiyasi narxi",
+        "shares": "Ulushlar soni"
+      },
+      "o": {
+        "nav": "1 ulushga oltin (birja bo'yicha)",
+        "premium": "Oltinga mukofot yoki chegirma",
+        "gramsPerShare": "Ulushga gramm oltin",
+        "goldGrams": "Pozitsiyangizdagi gramm oltin"
+      }
+    },
+    "rebalance": {
+      "title": "Portfelni qayta muvozanatlash",
+      "desc": "Kerakli ulushlarni qaytarish uchun ikki aktivdan qancha sotib olish yoki sotish kerakligini hisoblaydi.",
+      "note": "Sotishdagi komissiya va soliqlar hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "valueA": "A aktivi qiymati",
+        "valueB": "B aktivi qiymati",
+        "targetA": "A aktivining kerakli ulushi, %"
+      },
+      "o": {
+        "currentA": "Hozir A ulushi",
+        "targetAmountA": "A dagi kerakli summa",
+        "tradeA": "A bo'yicha bitim (plyus — sotib olish, minus — sotish)",
+        "tradeB": "B bo'yicha bitim (plyus — sotib olish, minus — sotish)"
+      }
+    },
+    "realreturn": {
+      "title": "Inflyatsiyani hisobga olgan haqiqiy daromad",
+      "desc": "Inflyatsiyadan keyin haqiqatda qancha topishingiz va summa bugungi pulda nimaga aylanishini ko'rsatadi.",
+      "note": "Inflyatsiyani davlat va valyutangiz bo'yicha oling. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "nominal": "Daromadlilik, % yiliga",
+        "inflation": "Inflyatsiya, % yiliga",
+        "years": "Muddat, yil",
+        "amount": "Hozirgi summa"
+      },
+      "o": {
+        "real": "Haqiqiy yillik daromadlilik",
+        "futureNominal": "Kelajakdagi summa (nominal)",
+        "futureReal": "Kelajakdagi summa bugungi pulda"
+      }
+    },
+    "loan": {
+      "title": "Kredit to'lovi",
+      "desc": "Teng to'lovlarda (annuitet) oylik to'lov va ortiqcha to'lov.",
+      "note": "Bank komissiyalari va sug'urta hisobga olinmaydi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "amount": "Kredit summasi",
+        "aprPct": "Stavka, % yillik",
+        "months": "Muddat, oy"
+      },
+      "o": {
+        "payment": "Oylik to'lov",
+        "total": "Davr uchun jami",
+        "interest": "Foizlar bo'yicha ortiqcha to'lov"
+      }
+    },
+    "savegoal": {
+      "title": "Maqsadgacha oyiga qancha ajratish",
+      "desc": "Berilgan daromadlilikda muddatga maqsadni to'plash uchun har oy qancha ajratish kerakligini hisoblaydi.",
+      "note": "Kelajakdagi daromadlilik noma'lum. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "target": "Maqsad summasi",
+        "years": "Muddat, yil",
+        "annualReturn": "Daromadlilik, % yiliga",
+        "initial": "Allaqachon yig'ilgan"
+      },
+      "o": {
+        "monthly": "Oyiga ajratish",
+        "totalPaid": "Jami kiritasiz",
+        "growth": "O'sish keltiradi"
+      }
+    },
+    "rule72": {
+      "title": "72 qoidasi: summa necha yilda ikki baravar bo'ladi",
+      "desc": "Yillik daromadlilik bo'yicha ikki baravar bo'lish muddatini tez baholash, aniq hisob va uch baravar bo'lish muddati.",
+      "note": "72 qoidasi 6–10% stavkalarda yaxshi yaqinlashuv beradi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "ratePct": "Daromadlilik, % yiliga"
+      },
+      "o": {
+        "approx": "Ikki baravar bo'lguncha yil (72 qoidasi)",
+        "exact": "Ikki baravar bo'lguncha yil (aniq)",
+        "triple": "Uch baravar bo'lguncha yil"
+      }
+    },
+    "pctchange": {
+      "title": "Foizdagi o'zgarish va qaytish yo'li",
+      "desc": "Qiymat necha foizga o'zgargani va qaytish uchun qanday o'sish yoki pasayish kerakligini hisoblaydi.",
+      "note": "50% ga pasayish 100% o'sishni talab qiladi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "from": "Bor edi",
+        "to": "Bo'ldi"
+      },
+      "o": {
+        "change": "O'zgarish",
+        "backNeeded": "Qaytish uchun kerak",
+        "ratio": "Necha baravar o'zgardi"
+      }
+    },
+    "wilson": {
+      "title": "Foydali ulush ishonch oralig'i bilan",
+      "desc": "Bitimlar kam bo'lsa foydali bitimlar ulushingiz aslida qaysi oraliqda bo'lishi mumkinligini (95%) ko'rsatadi.",
+      "note": "Uilson usuli. Bitimlar ko'p bo'lsa interval torroq. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "wins": "Foydali bitimlar",
+        "trades": "Jami bitimlar"
+      },
+      "o": {
+        "rate": "Foydali ulush",
+        "low": "Quyi chegara (95%)",
+        "high": "Yuqori chegara (95%)",
+        "margin": "Xatolik (±)"
+      }
+    },
+    "streakprob": {
+      "title": "Zararlar seriyasi ehtimoli",
+      "desc": "Berilgan bitimlar soni ichida kamida bitta kerakli uzunlikdagi ketma-ket zararlar seriyasi bo'lish ehtimoli.",
+      "note": "Bitimlar bir-biriga bog'liq emas deb hisoblanadi. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "trades": "Jami bitimlar",
+        "winRate": "Foydali bitimlar ulushi, %",
+        "streak": "Ketma-ket zararlar uzunligi"
+      },
+      "o": {
+        "probability": "Bunday seriya ehtimoli",
+        "noStreak": "Seriya bo'lmaslik ehtimoli"
+      }
+    },
+    "sharpe": {
+      "title": "Sharp koeffitsienti",
+      "desc": "O'rtacha daromad va uning tarqoqligi bo'yicha risk birligiga daromad. Yillikka keltiriladi.",
+      "note": "Yetarli tarix kerak, kam davrlarda qiymat shovqinli. Hisob-kitob ma'lumot uchun, sirpanish va soliqlarni hisobga olmaydi. Investitsiya tavsiyasi emas.",
+      "f": {
+        "mean": "Davr uchun o'rtacha daromad, %",
+        "stdev": "Daromad tarqoqligi (standart og'ish), %",
+        "rf": "Davr uchun risksiz stavka, %",
+        "periods": "Ma'lumot davri"
+      },
+      "o": {
+        "perPeriod": "Davr koeffitsienti",
+        "annual": "Yillik Sharp koeffitsienti"
+      },
+      "c": {
+        "252": "Kunlar (yilda 252)",
+        "52": "Haftalar (yilda 52)",
+        "12": "Oylar (yilda 12)"
+      }
+    }
+  },
+  "chat": {
+    "title": "Xabarlar",
+    "subtitle": "Treyderlarning shaxsiy chatlari va guruhlari to'g'ridan-to'g'ri saytda. Odamlarni nik bo'yicha toping, guruh yarating, yozishing.",
+    "rules": "Xushmuomala bo'ling: spam, haqorat va aldovsiz. Parol va karta ma'lumotlarini yubormang. Odamni bloklash yoki xabardan shikoyat qilish mumkin. Tartib investitsiya tavsiyalarini bermaydi, ishtirokchilar fikri — ularning shaxsiy ishi.",
+    "handleTitle": "Nik tanlang",
+    "handleText": "Boshqalar sizni nik bo'yicha topadi. Nikdan tashqari pochta va ism hech kimga ko'rsatilmaydi. Nik qayta band qilinmaydi, shuning uchun ehtiyot bo'lib tanlang.",
+    "handleLabel": "Nikingiz",
+    "handleRules": "3–20 belgi: lotin harflari, raqamlar va _, harf bilan boshlanadi.",
+    "handleSave": "Nikni saqlash",
+    "search": "Chatlardan qidirish",
+    "chats": "Chatlar",
+    "newChat": "Yangi chat",
+    "newDm": "Shaxsiy",
+    "newGroup": "Guruh",
+    "blockedTab": "Bloklanganlar",
+    "searchLabel": "Odamni nik bo'yicha toping",
+    "searchHint": "Nikning kamida 3 harfini kiriting.",
+    "addMembers": "Ishtirokchilarni qo'shish ({max} gacha)",
+    "noResults": "Hech kim topilmadi.",
+    "noBlocked": "Bloklanganlar yo'q.",
+    "groupName": "Guruh nomi",
+    "groupNamePlaceholder": "Masalan: Oltin va metallar",
+    "create": "Guruh yaratish",
+    "selected": "Tanlanganlar",
+    "removeMember": "Guruhdan chiqarish",
+    "noChats": "Hozircha chatlar yo'q",
+    "noChatsHint": "Odamni nik bo'yicha toping va yozing yoki guruh yarating.",
+    "selectChat": "Chapdan chatni tanlang yoki yangisini boshlang.",
+    "noMessagesYet": "Hozircha xabarlar yo'q",
+    "emptyChat": "Birinchi xabarni yozing.",
+    "you": "Siz",
+    "today": "Bugun",
+    "yesterday": "Kecha",
+    "unreadCount": "O'qilmagan: {n}",
+    "messages": "Xabarlar",
+    "writeMessage": "Xabar yozing",
+    "send": "Yuborish",
+    "edit": "Tahrirlash",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "delete": "O'chirish",
+    "deleted": "Xabar o'chirildi",
+    "edited": "tahrirlandi",
+    "deleteConfirm": "Bu xabar hamma uchun o'chirilsinmi?",
+    "report": "Shikoyat qilish",
+    "reportPrompt": "Bu xabarda nima noto'g'ri? (majburiy emas)",
+    "reportDone": "Rahmat, shikoyat sayt egasiga yuborildi.",
+    "loadOlder": "Oldingilarini ko'rsatish",
+    "back": "Chatlar ro'yxatiga",
+    "info": "Chat haqida",
+    "left": "Suhbatdosh chiqib ketdi",
+    "membersCount": "Ishtirokchilar: {n}",
+    "members": "Ishtirokchilar",
+    "owner": "Egasi",
+    "addMember": "Ishtirokchi qo'shish",
+    "rename": "Nomini o'zgartirish",
+    "mute": "Bildirishnomalarni o'chirish",
+    "unmute": "Bildirishnomalarni yoqish",
+    "block": "Bloklash",
+    "unblock": "Blokdan chiqarish",
+    "blockConfirm": "Bu odam bloklansinmi? Bir-biringizga yoza olmaysiz.",
+    "removeConfirm": "Ishtirokchi guruhdan chiqarilsinmi?",
+    "leaveGroup": "Guruhdan chiqish",
+    "leaveConfirm": "Guruhdan chiqasizmi?",
+    "deleteGroup": "Guruhni o'chirish",
+    "deleteGroupConfirm": "Guruh barcha yozishma bilan hamma uchun o'chirilsinmi? Buni bekor qilib bo'lmaydi.",
+    "deleteDm": "Yozishmani o'zimda o'chirish",
+    "deleteDmConfirm": "Bu yozishma ro'yxatingizdan o'chirilsinmi?",
+    "errors": {
+      "generic": "Bo'lmadi. Qayta urinib ko'ring.",
+      "handle_invalid": "Nik: 3–20 belgi, lotin harflari, raqamlar va _, harf bilan boshlanadi.",
+      "handle_taken": "Bu nik band.",
+      "handle_reserved": "Bu nik zaxiralangan. Boshqasini tanlang.",
+      "need_handle": "Avval nik tanlang.",
+      "cannot_contact": "Bu odamga yozib bo'lmaydi (nik yo'q, blok yoki cheklov).",
+      "too_many_chats": "Chatlar juda ko'p. Keraksizlarini o'chiring.",
+      "too_many_groups": "10 tadan ortiq guruh yaratib bo'lmaydi.",
+      "too_many_members": "Guruhda 50 tadan ortiq ishtirokchi bo'lmaydi.",
+      "title_invalid": "Guruh nomi: 1 dan 60 belgigacha.",
+      "rate_limit": "Juda tez. Bir daqiqa kuting.",
+      "forbidden": "Bu amalga huquq yo'q.",
+      "empty": "Xabar bo'sh.",
+      "deleted": "Xabar allaqachon o'chirilgan.",
+      "invalid": "Noto'g'ri amal.",
+      "unauthorized": "Qaytadan kiring.",
+      "blocked": "Xabar yuborilmadi: bu chatga yozishingiz mumkin emas (blok yoki cheklov)."
+    }
+  },
+  "scene3d": {
+    "ingotAlt": "Tartib oltin quymasi, 3D",
+    "disciplineTitle": "Kunlar bo'yicha intizom, 3D",
+    "disciplineHint": "Ustun balandligi — oxirgi 28 kunda shu kuni qoidalarga ko'ra qilingan bitimlar ulushi. Kulrang plitkalar — bitimsiz kunlar. Hajmli grafikni sichqoncha bilan egish mumkin.",
+    "disciplineAlt": "28 kunlik intizomning hajmli grafigi",
+    "best": "Eng yaxshi kun",
+    "worst": "Eng zaif kun",
+    "dayLine": "{day}: qoida bo'yicha {percent}% ({n} bitim)",
+    "noData": "Oxirgi 28 kunda bitim yo'q. Grafik birinchi yozuvlardan keyin paydo bo'ladi.",
+    "legendHigh": "80% va undan yuqori",
+    "legendMid": "50–79%",
+    "legendLow": "50% dan past",
+    "legendNone": "bitim yo'q",
+    "heroAlt": "3D sahna: Tartib logotipi, oltin tangalar va quymalar",
+    "metalsAlt": "Oltin quymalar va tanga, 3D",
+    "landscapeTitle": "Qoidalar qachon buziladi (3D)",
+    "landscapeHint": "Ustunlar hafta kunlari va kun vaqti bo'yicha. Balandlik — qoidabuzarliklar soni, rang — qoidabuzarlik bilan bitimlar ulushi. Vaqt tepadan pastga: 00:00 dan 24:00 gacha 3 soatlik bloklar.",
+    "landscapeAlt": "Hafta kunlari va kun vaqti bo'yicha qoidabuzarliklarning hajmli grafigi",
+    "landscapeSlot": "{day}, {from}–{to}: {n} bitimdan {v} tasida qoidabuzarlik",
+    "landscapeTop": "Eng xavfli oynalar",
+    "landscapeNone": "Bu manzara uchun kamida 10 ta bitim kerak. Hozircha yozuvlar kam.",
+    "riskHigh": "50% va undan ko'p qoidabuzarlik",
+    "riskMid": "25–49%",
+    "riskLow": "25% gacha",
+    "noViolations": "Hech bir oynada qoidabuzarlik yo'q. Shunday davom eting."
+  },
+  "referral": {
+    "title": "Do'stni taklif qilish",
+    "text": "Bu havolani tanish treyderlarga yuboring. Ular shu havola orqali ro'yxatdan o'tganda, ularning sonini shu yerda ko'rasiz.",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "share": "Ulashish",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "invited": "Taklif qilinganlar",
+    "shareText": "Tartib: bitimlar jurnali va treyder intizomi. Bepul, signallarsiz va foyda va'dasiz.",
+    "note": "Pul mukofoti yo'q: biz shunchaki sizning havolangiz orqali nechta odam kelganini sanaymiz. Tartib — hisob va intizom vositasi, investitsiya tavsiyasi emas."
+  }
+}

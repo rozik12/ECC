@@ -1,0 +1,339 @@
+// Описание публичных калькуляторов: поля, значения по умолчанию и функция расчёта.
+import { compound, futuresRisk, optionPayoff, forexLot, averagePrice, metalsLot, metalValue, bullionBreakeven, stockSize, drawdownRecovery, feeBreakeven, goalPlan, kelly, liquidation, lossStreak, margin, positionSize, riskOfRuin, riskReward, tradeProfit } from "./tools.ts";
+import { EXTRA_DEFS, EXTRA_DICT_KEY, EXTRA_SLUGS, isExtraSlug, type XGroup } from "./tools-extra.ts";
+
+type BaseSlug = "position-size" | "risk-reward" | "loss-streak" | "drawdown-recovery" | "compound" | "kelly" | "risk-of-ruin" | "liquidation" | "fee-breakeven" | "profit" | "goal" | "margin" | "stock-size" | "futures-risk" | "options" | "forex-lot" | "average-price" | "metals-lot" | "metal-value" | "bullion-breakeven";
+const BASE_CALC_SLUGS: BaseSlug[] = ["position-size", "risk-reward", "loss-streak", "drawdown-recovery", "compound", "kelly", "risk-of-ruin", "liquidation", "fee-breakeven", "profit", "goal", "margin", "stock-size", "futures-risk", "options", "forex-lot", "average-price", "metals-lot", "metal-value", "bullion-breakeven"];
+/** Слаг страницы /tools/<слаг>. Базовые инструменты описаны здесь, 50 дополнительных в lib/tools-extra.ts */
+export type ToolSlug = string;
+export const CALC_SLUGS: ToolSlug[] = [...BASE_CALC_SLUGS, ...EXTRA_SLUGS];
+export const TOOL_SLUGS: readonly string[] = [...CALC_SLUGS, "sessions"];
+
+/** Ключ в словаре tools.<key> для адреса страницы */
+const BASE_DICT_KEY: Record<BaseSlug | "sessions", string> = {
+  "position-size": "size",
+  "risk-reward": "rr",
+  "loss-streak": "streak",
+  "drawdown-recovery": "recovery",
+  compound: "compound",
+  sessions: "sessions",
+  kelly: "kelly",
+  "risk-of-ruin": "ruin",
+  liquidation: "liq",
+  "fee-breakeven": "fee",
+  profit: "profit",
+  goal: "goal",
+  margin: "margin",
+  "stock-size": "stock",
+  "futures-risk": "futures",
+  options: "options",
+  "forex-lot": "forexlot",
+  "average-price": "avgprice",
+  "metals-lot": "metalslot",
+  "metal-value": "metalvalue",
+  "bullion-breakeven": "bullion",
+};
+
+export type Fmt = "num" | "money" | "pct" | "ratio" | "text" | "int";
+/** Одна строка результата: ключ подписи в словаре, значение и как его показывать */
+export type Row = { key: string; value: number | string; fmt: Fmt; tone?: "good" | "bad" };
+
+/** choices — выбор из списка (например, лонг/шорт): значение числовое, подпись берётся из словаря tools.<тема>.c.<значение> */
+export type Field = { id: string; def: string; optional?: boolean; choices?: number[] };
+export type ToolDef = { fields: Field[]; compute: (v: Record<string, number | null>) => Row[] | null };
+
+const n = (v: number | null) => v ?? NaN;
+
+const BASE_DEFS: Record<BaseSlug, ToolDef> = {
+  "position-size": {
+    fields: [{ id: "balance", def: "5000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "100" }, { id: "stop", def: "98" }],
+    compute: (v) => {
+      const r = positionSize({ balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop) });
+      if (!r.ok) return null;
+      return [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "riskAmount", value: r.riskAmount, fmt: "num" },
+        { key: "distance", value: r.distance, fmt: "num" },
+        { key: "units", value: r.units, fmt: "num" },
+        { key: "value", value: r.value, fmt: "num" },
+      ];
+    },
+  },
+  "risk-reward": {
+    fields: [{ id: "entry", def: "100" }, { id: "stop", def: "98" }, { id: "target", def: "104" }, { id: "winRate", def: "40", optional: true }],
+    compute: (v) => {
+      const r = riskReward({ entry: n(v.entry), stop: n(v.stop), target: n(v.target), winRate: v.winRate });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "risk", value: r.risk, fmt: "num" },
+        { key: "reward", value: r.reward, fmt: "num" },
+        { key: "rr", value: r.rr, fmt: "ratio" },
+        { key: "breakEven", value: r.breakEvenWinRate, fmt: "pct" },
+      ];
+      if (r.expectancyR !== null) rows.push({ key: "expectancy", value: r.expectancyR, fmt: "num", tone: r.expectancyR >= 0 ? "good" : "bad" });
+      return rows;
+    },
+  },
+  "loss-streak": {
+    fields: [{ id: "winRate", def: "45" }, { id: "trades", def: "100" }, { id: "streak", def: "5" }, { id: "riskPct", def: "1" }],
+    compute: (v) => {
+      const r = lossStreak({ winRate: n(v.winRate), trades: n(v.trades), streak: n(v.streak), riskPct: n(v.riskPct) });
+      if (!r.ok) return null;
+      return [
+        { key: "single", value: r.single * 100, fmt: "pct" },
+        { key: "atLeast", value: r.atLeastOnce * 100, fmt: "pct" },
+        { key: "drawdown", value: r.drawdownPct, fmt: "pct" },
+        { key: "recovery", value: r.recoveryPct, fmt: "pct" },
+      ];
+    },
+  },
+  "drawdown-recovery": {
+    fields: [{ id: "drawdown", def: "20" }],
+    compute: (v) => {
+      const need = drawdownRecovery(n(v.drawdown));
+      if (need === null) return null;
+      return [
+        { key: "needed", value: need, fmt: "pct" },
+        { key: "mult", value: 1 / (1 - n(v.drawdown) / 100), fmt: "num" },
+      ];
+    },
+  },
+  compound: {
+    fields: [{ id: "start", def: "1000" }, { id: "monthlyPct", def: "5" }, { id: "months", def: "12" }, { id: "deposit", def: "100" }],
+    compute: (v) => {
+      const r = compound({ start: n(v.start), monthlyPct: n(v.monthlyPct), months: n(v.months), monthlyDeposit: n(v.deposit) });
+      if (!r.ok) return null;
+      return [
+        { key: "final", value: r.final, fmt: "num" },
+        { key: "deposited", value: r.deposited, fmt: "num" },
+        { key: "gain", value: r.gain, fmt: "num", tone: r.gain >= 0 ? "good" : "bad" },
+      ];
+    },
+  },
+  kelly: {
+    fields: [{ id: "winRate", def: "45" }, { id: "rr", def: "2" }],
+    compute: (v) => {
+      const r = kelly({ winRate: n(v.winRate), rr: n(v.rr) });
+      if (!r.ok) return null;
+      return [
+        { key: "edge", value: r.edge, fmt: "num", tone: r.edge > 0 ? "good" : "bad" },
+        { key: "full", value: r.kellyPct, fmt: "pct" },
+        { key: "half", value: r.halfPct, fmt: "pct" },
+        { key: "quarter", value: r.quarterPct, fmt: "pct" },
+      ];
+    },
+  },
+  "risk-of-ruin": {
+    fields: [{ id: "winRate", def: "45" }, { id: "rr", def: "2" }, { id: "riskPct", def: "1" }, { id: "ruinDrawdown", def: "50" }],
+    compute: (v) => {
+      const r = riskOfRuin({ winRate: n(v.winRate), rr: n(v.rr), riskPct: n(v.riskPct), ruinDrawdown: n(v.ruinDrawdown) });
+      if (!r.ok) return null;
+      return [
+        { key: "expectancy", value: r.expectancyR, fmt: "num", tone: r.expectancyR > 0 ? "good" : "bad" },
+        { key: "cushion", value: r.cushionR, fmt: "num" },
+        { key: "ruin", value: r.ruinPct, fmt: "pct", tone: r.ruinPct < 5 ? "good" : r.ruinPct > 30 ? "bad" : undefined },
+      ];
+    },
+  },
+  liquidation: {
+    fields: [{ id: "entry", def: "100" }, { id: "size", def: "1" }, { id: "leverage", def: "10" }, { id: "maintenance", def: "0.5" }, { id: "side", def: "1", choices: [1, 2] }],
+    compute: (v) => {
+      const r = liquidation({ entry: n(v.entry), size: n(v.size), leverage: n(v.leverage), maintenancePct: n(v.maintenance), direction: v.side === 2 ? "short" : "long" });
+      if (!r.ok) return null;
+      return [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "price", value: r.price, fmt: "num", tone: "bad" },
+        { key: "distance", value: r.distancePct, fmt: "pct" },
+        { key: "margin", value: r.margin, fmt: "num" },
+      ];
+    },
+  },
+  "fee-breakeven": {
+    fields: [{ id: "entry", def: "100" }, { id: "feePct", def: "0.05" }, { id: "side", def: "1", choices: [1, 2] }],
+    compute: (v) => {
+      const r = feeBreakeven({ entry: n(v.entry), feePct: n(v.feePct), direction: v.side === 2 ? "short" : "long" });
+      if (!r.ok) return null;
+      return [
+        { key: "price", value: r.price, fmt: "num" },
+        { key: "move", value: r.movePct, fmt: "pct" },
+        { key: "total", value: r.feeTotalPct, fmt: "pct" },
+      ];
+    },
+  },
+  profit: {
+    fields: [{ id: "entry", def: "100" }, { id: "exit", def: "105" }, { id: "size", def: "10" }, { id: "feePct", def: "0.05" }, { id: "balance", def: "5000", optional: true }, { id: "side", def: "1", choices: [1, 2] }],
+    compute: (v) => {
+      const r = tradeProfit({ entry: n(v.entry), exit: n(v.exit), size: n(v.size), feePct: n(v.feePct), balance: v.balance, direction: v.side === 2 ? "short" : "long" });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "gross", value: r.gross, fmt: "num", tone: r.gross >= 0 ? "good" : "bad" },
+        { key: "fees", value: r.fees, fmt: "num" },
+        { key: "net", value: r.net, fmt: "num", tone: r.net >= 0 ? "good" : "bad" },
+        { key: "pctPosition", value: r.pctOfPosition, fmt: "pct" },
+      ];
+      if (r.pctOfBalance !== null) rows.push({ key: "pctBalance", value: r.pctOfBalance, fmt: "pct" });
+      return rows;
+    },
+  },
+  goal: {
+    fields: [{ id: "start", def: "1000" }, { id: "target", def: "5000" }, { id: "monthlyPct", def: "5" }, { id: "deposit", def: "0" }],
+    compute: (v) => {
+      const r = goalPlan({ start: n(v.start), target: n(v.target), monthlyPct: n(v.monthlyPct), monthlyDeposit: n(v.deposit) });
+      if (!r.ok) return null;
+      return [
+        { key: "months", value: r.months, fmt: "num" },
+        { key: "years", value: r.years, fmt: "num" },
+        { key: "deposited", value: r.deposited, fmt: "num" },
+      ];
+    },
+  },
+  margin: {
+    fields: [{ id: "positionValue", def: "10000" }, { id: "leverage", def: "10" }, { id: "balance", def: "5000", optional: true }],
+    compute: (v) => {
+      const r = margin({ positionValue: n(v.positionValue), leverage: n(v.leverage), balance: v.balance });
+      if (!r.ok) return null;
+      const rows: Row[] = [{ key: "margin", value: r.margin, fmt: "num" }];
+      if (r.marginPctOfBalance !== null) rows.push({ key: "pctBalance", value: r.marginPctOfBalance, fmt: "pct" });
+      if (r.maxPosition !== null) rows.push({ key: "maxPosition", value: r.maxPosition, fmt: "num" });
+      return rows;
+    },
+  },
+  "stock-size": {
+    fields: [{ id: "balance", def: "10000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "180" }, { id: "stop", def: "176" }, { id: "feePerShare", def: "0.005" }],
+    compute: (v) => {
+      const r = stockSize({ balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), feePerShare: n(v.feePerShare) });
+      if (!r.ok) return null;
+      return [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "shares", value: r.shares, fmt: "int" },
+        { key: "riskAmount", value: r.riskAmount, fmt: "num" },
+        { key: "value", value: r.value, fmt: "num" },
+        { key: "pctBalance", value: r.pctOfBalance, fmt: "pct", tone: r.pctOfBalance > 100 ? "bad" : undefined },
+        { key: "commission", value: r.commission, fmt: "num" },
+        { key: "leverage", value: r.leverageNeeded, fmt: "ratio" },
+      ];
+    },
+  },
+  "futures-risk": {
+    fields: [{ id: "balance", def: "25000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "20000" }, { id: "stop", def: "19980" }, { id: "contract", def: "2", choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }, { id: "feePerContract", def: "0.62" }],
+    compute: (v) => {
+      const r = futuresRisk({ balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), contract: n(v.contract), feePerContract: n(v.feePerContract) });
+      if (!r.ok) return null;
+      return [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "contracts", value: r.contracts, fmt: "int" },
+        { key: "points", value: r.points, fmt: "num" },
+        { key: "riskPerContract", value: r.riskPerContract, fmt: "num" },
+        { key: "riskAmount", value: r.riskAmount, fmt: "num" },
+        { key: "formSize", value: r.formSize, fmt: "int" },
+      ];
+    },
+  },
+  options: {
+    fields: [{ id: "kind", def: "1", choices: [1, 2] }, { id: "side", def: "1", choices: [1, 2] }, { id: "strike", def: "200" }, { id: "premium", def: "5" }, { id: "contracts", def: "1" }, { id: "multiplier", def: "100" }, { id: "underlying", def: "210", optional: true }],
+    compute: (v) => {
+      const r = optionPayoff({ kind: n(v.kind), side: n(v.side), strike: n(v.strike), premium: n(v.premium), contracts: n(v.contracts), multiplier: n(v.multiplier), underlying: v.underlying });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "premiumTotal", value: r.premiumTotal, fmt: "num" },
+        { key: "breakeven", value: r.breakeven, fmt: "num" },
+        { key: "maxProfit", value: r.maxProfit === null ? "unlimited" : r.maxProfit, fmt: r.maxProfit === null ? "text" : "num", tone: "good" },
+        { key: "maxLoss", value: r.maxLoss === null ? "unlimited" : -r.maxLoss, fmt: r.maxLoss === null ? "text" : "num", tone: "bad" },
+      ];
+      if (r.moveToBreakevenPct !== null) rows.push({ key: "moveToBreakeven", value: r.moveToBreakevenPct, fmt: "pct" });
+      if (r.pnlAtExpiry !== null) rows.push({ key: "pnlAtExpiry", value: r.pnlAtExpiry, fmt: "num", tone: r.pnlAtExpiry >= 0 ? "good" : "bad" });
+      return rows;
+    },
+  },
+  "forex-lot": {
+    fields: [{ id: "balance", def: "5000" }, { id: "riskPct", def: "1" }, { id: "stopPips", def: "25" }, { id: "pairClass", def: "1", choices: [1, 2, 3, 4] }, { id: "price", def: "1.1200" }, { id: "quoteToUsd", def: "1.25", optional: true }, { id: "spreadPips", def: "1.2" }, { id: "leverage", def: "30", optional: true }],
+    compute: (v) => {
+      const r = forexLot({ balance: n(v.balance), riskPct: n(v.riskPct), stopPips: n(v.stopPips), pairClass: n(v.pairClass), price: n(v.price), quoteToUsd: v.quoteToUsd, spreadPips: n(v.spreadPips), leverage: v.leverage });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "pipValue", value: r.pipValue, fmt: "num" },
+        { key: "lots", value: r.lots, fmt: "num" },
+        { key: "units", value: r.units, fmt: "int" },
+        { key: "riskAmount", value: r.actualRisk, fmt: "num" },
+        { key: "spreadCost", value: r.spreadCost, fmt: "num" },
+      ];
+      if (r.margin !== null) rows.push({ key: "margin", value: r.margin, fmt: "num" });
+      return rows;
+    },
+  },
+  "average-price": {
+    fields: [{ id: "amount", def: "10" }, { id: "avgPrice", def: "100" }, { id: "buyAmount", def: "10" }, { id: "buyPrice", def: "80" }],
+    compute: (v) => {
+      const r = averagePrice({ amount: n(v.amount), avgPrice: n(v.avgPrice), buyAmount: n(v.buyAmount), buyPrice: n(v.buyPrice) });
+      if (!r.ok) return null;
+      return [
+        { key: "newAvg", value: r.newAvg, fmt: "num" },
+        { key: "avgChange", value: r.avgChangePct, fmt: "pct" },
+        { key: "newAmount", value: r.newAmount, fmt: "num" },
+        { key: "totalCost", value: r.totalCost, fmt: "num" },
+        { key: "riseToBreakeven", value: r.riseToBreakevenPct, fmt: "pct" },
+      ];
+    },
+  },
+  "metals-lot": {
+    fields: [{ id: "metal", def: "1", choices: [1, 2, 3, 4] }, { id: "balance", def: "5000" }, { id: "riskPct", def: "1" }, { id: "entry", def: "4200" }, { id: "stop", def: "4190" }, { id: "spread", def: "0.3" }, { id: "leverage", def: "100", optional: true }],
+    compute: (v) => {
+      const r = metalsLot({ metal: n(v.metal), balance: n(v.balance), riskPct: n(v.riskPct), entry: n(v.entry), stop: n(v.stop), spread: n(v.spread), leverage: v.leverage });
+      if (!r.ok) return null;
+      const rows: Row[] = [
+        { key: "direction", value: r.direction, fmt: "text" },
+        { key: "lots", value: r.lots, fmt: "num" },
+        { key: "ounces", value: r.ounces, fmt: "num" },
+        { key: "riskAmount", value: r.actualRisk, fmt: "num" },
+        { key: "perDollar", value: r.perDollar, fmt: "num" },
+        { key: "spreadCost", value: r.spreadCost, fmt: "num" },
+      ];
+      if (r.margin !== null) rows.push({ key: "margin", value: r.margin, fmt: "num" });
+      return rows;
+    },
+  },
+  "metal-value": {
+    fields: [{ id: "weightGrams", def: "20" }, { id: "fineness", def: "585", choices: [999, 916, 750, 585, 375, 925, 958] }, { id: "spotPerOunce", def: "4200" }, { id: "rate", def: "12000" }],
+    compute: (v) => {
+      const r = metalValue({ weightGrams: n(v.weightGrams), fineness: n(v.fineness), spotPerOunce: n(v.spotPerOunce), rate: n(v.rate) });
+      if (!r.ok) return null;
+      return [
+        { key: "pureGrams", value: r.pureGrams, fmt: "num" },
+        { key: "karat", value: r.karat, fmt: "num" },
+        { key: "pricePerGram", value: r.pricePerGram, fmt: "num" },
+        { key: "valueUsd", value: r.valueUsd, fmt: "num" },
+        { key: "pricePerGramLocal", value: r.pricePerGramLocal, fmt: "num" },
+        { key: "valueLocal", value: r.valueLocal, fmt: "num" },
+      ];
+    },
+  },
+  "bullion-breakeven": {
+    fields: [{ id: "weightGrams", def: "31.1" }, { id: "fineness", def: "999", choices: [999, 916, 750, 585, 375, 925, 958] }, { id: "spotPerOunce", def: "4200" }, { id: "paid", def: "4450" }, { id: "sellDiscountPct", def: "2" }],
+    compute: (v) => {
+      const r = bullionBreakeven({ weightGrams: n(v.weightGrams), fineness: n(v.fineness), spotPerOunce: n(v.spotPerOunce), paid: n(v.paid), sellDiscountPct: n(v.sellDiscountPct) });
+      if (!r.ok) return null;
+      return [
+        { key: "meltValue", value: r.meltValue, fmt: "num" },
+        { key: "premium", value: r.premiumPct, fmt: "pct" },
+        { key: "breakevenSpot", value: r.breakevenSpot, fmt: "num" },
+        { key: "riseNeeded", value: r.riseNeededPct, fmt: "pct", tone: r.riseNeededPct > 0 ? "bad" : "good" },
+      ];
+    },
+  },
+};
+
+export const TOOL_DEFS: Record<ToolSlug, ToolDef> = { ...BASE_DEFS, ...EXTRA_DEFS };
+export const DICT_KEY: Record<string, string> = { ...BASE_DICT_KEY, ...EXTRA_DICT_KEY };
+
+/** Раздел словаря, где лежат подписи инструмента: tools.<ключ> (базовые) или toolsx.<ключ> (дополнительные, в браузер целиком не отправляются) */
+export const dictPath = (slug: string) => `${isExtraSlug(slug) ? "toolsx" : "tools"}.${DICT_KEY[slug]}`;
+
+/** Группы на странице /tools: у каждой свой набор калькуляторов */
+export type ToolGroup = XGroup;
+const BASE_GROUPS: Record<string, XGroup> = {
+  "position-size": "risk", "risk-reward": "risk", "loss-streak": "risk", "drawdown-recovery": "risk", kelly: "risk", "risk-of-ruin": "risk", "fee-breakeven": "risk", profit: "risk",
+  "forex-lot": "forex", margin: "forex", "stock-size": "stocks", "average-price": "stocks", "futures-risk": "derivs", options: "derivs", liquidation: "derivs",
+  "metals-lot": "metals", "metal-value": "metals", "bullion-breakeven": "metals", compound: "finance", goal: "finance", sessions: "stats",
+};
+export const toolGroup = (slug: string): XGroup => (isExtraSlug(slug) ? EXTRA_DEFS[slug].group : BASE_GROUPS[slug] ?? "risk");

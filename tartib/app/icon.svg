@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Tartib">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0f9d8d"/></linearGradient></defs>
+<rect width="64" height="64" rx="16" fill="url(#g)"/>
+<rect x="14" y="15" width="36" height="10" rx="4" fill="#06201c"/>
+<rect x="26" y="15" width="12" height="35" rx="4" fill="#06201c"/>
+<path d="M41 43l5.2 5.2L55 37" fill="none" stroke="#06201c" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

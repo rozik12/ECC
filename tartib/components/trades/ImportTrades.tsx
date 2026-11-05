@@ -1,0 +1,162 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { importTradesAction, type ImportRowResult } from "@/app/actions/import";
+import { Alert, Button, Card, Select } from "@/components/ui";
+import { parseCsv } from "@/lib/csv";
+import { convertMetaTrader, decodeText, parseHtmlTables, type MtPlatform } from "@/lib/import-presets";
+import { mapCsvRows, MAX_IMPORT_ROWS } from "@/lib/import";
+import { autoMapColumns, IMPORT_FIELDS, REQUIRED_FIELDS, type ColumnMapping, type ImportField } from "@/lib/import-map";
+import { useI18n } from "@/lib/i18n/provider";
+
+type Account = { id: string; name: string };
+
+export function ImportTrades({ accounts }: { accounts: Account[] }) {
+  const { t } = useI18n();
+  const [accountId, setAccountId] = useState(accounts[0]?.id ?? "");
+  const [fileName, setFileName] = useState("");
+  const [rows, setRows] = useState<string[][] | null>(null);
+  const [mapping, setMapping] = useState<ColumnMapping | null>(null);
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
+  const [results, setResults] = useState<ImportRowResult[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [preset, setPreset] = useState<{ platform: MtPlatform; used: number; skipped: number } | null>(null);
+
+  const mapped = useMemo(() => (rows ? mapCsvRows(rows, mapping ?? undefined) : null), [rows, mapping]);
+  const valid = mapped?.items.filter((i) => i.payload) ?? [];
+  const invalid = mapped?.items.filter((i) => !i.payload) ?? [];
+  const tooMany = rows !== null && rows.length - 1 > MAX_IMPORT_ROWS;
+
+  async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    setResults(null);
+    setError(null);
+    if (!file) return;
+    setPreset(null);
+    if (file.size > 5 * 1024 * 1024) return setError("import.tooBig");
+    setFileName(file.name);
+    const text = decodeText(new Uint8Array(await file.arrayBuffer()));
+    const isHtml = /<(html|table)\b/i.test(text.slice(0, 20000));
+    let parsed = isHtml ? parseHtmlTables(text) : parseCsv(text);
+    // Отчёт MetaTrader 4 или 5 (HTML или CSV) распознаётся сам, столбцы настраивать не нужно
+    const mt = convertMetaTrader(parsed);
+    if (mt) {
+      setPreset({ platform: mt.platform, used: mt.used, skipped: mt.skipped });
+      parsed = [mt.header, ...mt.rows];
+    } else if (isHtml) {
+      setRows(null);
+      setMapping(null);
+      return setError("import.unknownHtml");
+    }
+    setRows(parsed);
+    setMapping(parsed.length > 0 ? autoMapColumns(parsed[0]) : null);
+  }
+
+  async function run() {
+    setError(null);
+    setResults(null);
+    const all: ImportRowResult[] = [];
+    setProgress({ done: 0, total: valid.length });
+    for (let i = 0; i < valid.length; i += 25) {
+      const chunk = valid.slice(i, i + 25).map((v) => ({ line: v.line, payload: v.payload as Record<string, unknown>, violatedRuleNames: v.violatedRuleNames }));
+      const res = await importTradesAction(accountId, chunk);
+      if (!res.ok) {
+        setError(res.error);
+        break;
+      }
+      all.push(...res.results);
+      setProgress({ done: Math.min(i + 25, valid.length), total: valid.length });
+      if (res.results.some((r) => r.error === "errors.limitTrades")) break;
+    }
+    setResults([...all, ...invalid.map((i) => ({ line: i.line, ok: false, error: i.error ?? "import.errValues" }))]);
+    setProgress(null);
+  }
+
+  const imported = results?.filter((r) => r.ok).length ?? 0;
+  const failed = results?.filter((r) => !r.ok) ?? [];
+
+  return (
+    <div className="space-y-6">
+      <Card className="space-y-4">
+        <p className="text-sm text-muted">{t("import.intro")}</p>
+        <p className="text-sm text-muted">{t("import.required")}</p>
+        <a href="/api/trades/export?template=1" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("import.template")}</a>
+
+        {accounts.length > 1 && (
+          <Select id="imp-account" label={t("trades.form.account")} value={accountId} onChange={(e) => setAccountId(e.target.value)}>
+            {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+          </Select>
+        )}
+        <div>
+          <label htmlFor="imp-file" className="mb-1.5 block text-sm font-medium">{t("import.file")}</label>
+          <input id="imp-file" type="file" accept=".csv,.txt,.htm,.html,text/csv,text/plain,text/html" onChange={onFile} className="block w-full text-sm file:mr-3 file:rounded-xl file:border-0 file:bg-primary-soft file:px-4 file:py-2.5 file:font-medium file:text-primary" />
+        </div>
+      </Card>
+
+      {error && <Alert tone="danger">{t(error)}</Alert>}
+      {preset && (
+        <Alert tone="info" title={t("import.detected", { platform: preset.platform === "mt4" ? "MetaTrader 4" : "MetaTrader 5", used: preset.used, skipped: preset.skipped })}>
+          {t("import.mtNotice")}
+        </Alert>
+      )}
+      {mapped && mapped.missing.length > 0 && (
+        <Alert tone="warning">{t("import.missing", { cols: mapped.missing.map((f) => t(`import.fields.${f}`)).join(", ") })}</Alert>
+      )}
+      {mapped && mapping && (
+        <Card>
+          <details open={mapped.missing.length > 0}>
+            <summary className="cursor-pointer font-semibold">{t("import.mappingTitle")}</summary>
+            <p className="mt-2 text-sm text-muted">{t("import.mappingText")}</p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {IMPORT_FIELDS.map((field: ImportField) => (
+                <Select
+                  key={field}
+                  id={`map-${field}`}
+                  label={`${t(`import.fields.${field}`)}${REQUIRED_FIELDS.includes(field) ? " *" : ""}`}
+                  value={mapping[field] === null ? "" : String(mapping[field])}
+                  onChange={(e) => setMapping({ ...mapping, [field]: e.target.value === "" ? null : Number(e.target.value) })}
+                >
+                  <option value="">{t("import.notUsed")}</option>
+                  {mapped.header.map((h, i) => (
+                    <option key={i} value={i}>{h || `#${i + 1}`}</option>
+                  ))}
+                </Select>
+              ))}
+            </div>
+          </details>
+        </Card>
+      )}
+      {tooMany && <Alert tone="warning">{t("import.limitRows", { n: MAX_IMPORT_ROWS })}</Alert>}
+
+      {mapped && mapped.missing.length === 0 && !results && (
+        <Card className="space-y-3">
+          <p className="font-medium">{fileName}</p>
+          <p className="text-sm">{t("import.summary", { valid: valid.length, invalid: invalid.length })}</p>
+          {invalid.length > 0 && (
+            <ul className="list-disc space-y-1 pl-5 text-sm text-warning">
+              {invalid.slice(0, 5).map((i) => <li key={i.line}>{t("import.lineError", { line: i.line, reason: t(i.error ?? "import.errValues") })}</li>)}
+              {invalid.length > 5 && <li>{t("import.more", { n: invalid.length - 5 })}</li>}
+            </ul>
+          )}
+          <Button size="lg" disabled={valid.length === 0 || progress !== null || !accountId} onClick={run}>
+            {progress ? t("import.progress", progress) : t("import.run", { n: valid.length })}
+          </Button>
+        </Card>
+      )}
+
+      {results && (
+        <Card className="space-y-3">
+          <p className="font-semibold">{t("import.done", { n: imported })}</p>
+          {failed.length > 0 && (
+            <ul className="list-disc space-y-1 pl-5 text-sm text-warning">
+              {failed.slice(0, 8).map((f) => <li key={f.line}>{t("import.lineError", { line: f.line, reason: t(f.error ?? "import.errValues") })}</li>)}
+              {failed.length > 8 && <li>{t("import.more", { n: failed.length - 8 })}</li>}
+            </ul>
+          )}
+          <Link href="/trades" className="inline-flex min-h-10 items-center text-sm font-medium text-primary hover:underline">{t("trades.detail.back")} →</Link>
+        </Card>
+      )}
+    </div>
+  );
+}

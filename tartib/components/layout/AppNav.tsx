@@ -1,0 +1,127 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronRight, Plus } from "lucide-react";
+import { cn } from "@/lib/cn";
+import { useI18n } from "@/lib/i18n/provider";
+import { UnreadBadge } from "@/components/messenger/UnreadBadge";
+import { mainNav, secondaryNav, statsNav } from "./nav-items";
+
+function useIsActive() {
+  const pathname = usePathname();
+  return (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+}
+
+/** Боковое меню на компьютере. */
+export function Sidebar() {
+  const { t } = useI18n();
+  const isActive = useIsActive();
+  const extraNav = secondaryNav.filter((n) => !["/messages", "/diary", "/settings", "/profile", "/statistics/mistakes"].includes(n.href));
+  const accountNav = secondaryNav.filter((n) => ["/messages", "/diary", "/settings", "/profile"].includes(n.href));
+  const extraActive = extraNav.some((n) => isActive(n.href));
+
+  const statsSub = statsNav.some((n) => isActive(n.href));
+  const item = (href: string, labelKey: string, Icon: React.ElementType, sub = false) => {
+    const active = href === "/statistics" ? isActive(href) && !statsSub : isActive(href);
+    return (
+    <Link prefetch={false}
+      key={href}
+      href={href}
+      aria-current={active ? "page" : undefined}
+      className={cn(
+        "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+        sub && "ml-4 py-2 text-[13px]",
+        active
+          ? "bg-primary-soft text-primary"
+          : "text-muted hover:bg-surface-muted hover:text-foreground",
+      )}
+    >
+      <Icon className={cn("h-5 w-5", sub && "h-4 w-4")} aria-hidden />
+      {t(labelKey)}
+      {href === "/messages" && <UnreadBadge />}
+    </Link>
+    );
+  };
+
+  return (
+    <nav aria-label={t("nav.main")} className="flex h-full flex-col justify-between">
+      <div className="flex flex-col gap-1">
+        {mainNav.map((n) => item(n.href, n.labelKey, n.icon))}
+        {statsNav.map((n) => item(n.href, n.labelKey, n.icon, true))}
+      </div>
+      <div className="flex flex-col gap-1 border-t border-border pt-3">
+        {/* Рыночные разделы свёрнуты, чтобы меню не пестрело. Если открыт один из них, список раскрыт сам. */}
+        <details key={extraActive ? "open" : "closed"} open={extraActive} className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted hover:bg-surface-muted hover:text-foreground">
+            <ChevronRight className="h-5 w-5 transition-transform group-open:rotate-90" aria-hidden />
+            {t("nav.more")}
+          </summary>
+          <div className="mt-1 flex flex-col gap-1">{extraNav.map((n) => item(n.href, n.labelKey, n.icon))}</div>
+        </details>
+        {accountNav.map((n) => item(n.href, n.labelKey, n.icon))}
+      </div>
+    </nav>
+  );
+}
+
+/** Нижнее меню на телефоне. */
+export function BottomNav() {
+  const { t } = useI18n();
+  const isActive = useIsActive();
+  const pathname = usePathname();
+  // Круглая кнопка «+» для быстрой записи сделки: на страницах, где её чаще всего ждёшь
+  const showFab = ["/dashboard", "/trades", "/statistics"].includes(pathname);
+
+  return (
+    <>
+    {showFab && (
+      <Link prefetch={false}
+        href="/trades/quick"
+        aria-label={t("quick.button")}
+        title={t("quick.button")}
+        className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-4 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition-transform active:scale-95 dark:text-[#0f1419] lg:hidden"
+      >
+        <Plus className="h-7 w-7" aria-hidden />
+      </Link>
+    )}
+    <nav
+      aria-label={t("nav.main")}
+      className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-border bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
+    >
+      {mainNav.map(({ href, labelKey, icon: Icon }) => (
+        <Link prefetch={false}
+          key={href}
+          href={href}
+          aria-current={isActive(href) ? "page" : undefined}
+          className={cn(
+            "flex flex-col items-center gap-1 px-0.5 py-2 text-[10px] font-medium tracking-tight",
+            isActive(href) ? "text-primary" : "text-muted",
+          )}
+        >
+          <Icon className="h-5 w-5" aria-hidden />
+          <span className="max-w-full truncate">{t(labelKey)}</span>
+        </Link>
+      ))}
+    </nav>
+    </>
+  );
+}
+
+/** Ссылки «Настройки» и «Профиль» в верхней панели на телефоне. */
+/** На телефоне второстепенные страницы идут второй строкой под шапкой: иконки в одну строку с кнопками не помещаются. */
+export function TopIcons() {
+  const { t } = useI18n();
+  const isActive = useIsActive();
+  return (
+    <nav aria-label={t("nav.main")} className="flex gap-5 overflow-x-auto border-t border-border px-4 py-0.5 text-sm lg:hidden">
+      {secondaryNav.map(({ href, labelKey, icon: Icon }) => (
+        <Link prefetch={false} key={href} href={href} className={cn("flex min-h-10 shrink-0 items-center gap-1.5 hover:text-foreground", isActive(href) ? "font-medium text-primary" : "text-muted")}>
+          <Icon className="h-4 w-4" aria-hidden />
+          {t(labelKey)}
+          {href === "/messages" && <UnreadBadge />}
+        </Link>
+      ))}
+    </nav>
+  );
+}

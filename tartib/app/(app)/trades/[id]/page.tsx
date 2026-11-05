@@ -1,0 +1,199 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { AlertTriangle, ArrowLeft, CheckCircle2, ChevronLeft, ChevronRight, Copy, Pencil } from "lucide-react";
+import { TradeChart } from "@/components/trades/TradeChart";
+import { CloseTradeButton } from "@/components/trades/CloseTradeButton";
+import { SaveTemplateButton } from "@/components/trades/SaveTemplateButton";
+import { ScreenshotCard } from "@/components/trades/ScreenshotCard";
+import { DeleteTradeButton } from "@/components/trades/DeleteTradeButton";
+import { EmotionBadge } from "@/components/trades/EmotionBadge";
+import { Badge, buttonStyles, Card } from "@/components/ui";
+import { durationMinutes, splitDuration } from "@/lib/journal";
+import { requireUser } from "@/lib/auth";
+import { cn } from "@/lib/cn";
+import { formatDateTime, formatMoney, formatNumber, pnlTone } from "@/lib/format";
+import { getTranslator } from "@/lib/i18n/server";
+import { safeTimeZone } from "@/lib/time";
+import type { Trade } from "@/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslator();
+  return { title: t("pages.trades") };
+}
+
+type Detail = Trade & {
+  account: { name: string; currency: string } | null;
+  trade_rule_violations: { rule: { id: string; name: string } | null }[];
+};
+
+export default async function TradeDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  if (!/^[0-9a-f-]{36}$/i.test(id)) notFound();
+  const { t, locale } = await getTranslator();
+  const { supabase, profile } = await requireUser();
+
+  const { data } = await supabase
+    .from("trades")
+    .select("*, account:trading_accounts(name, currency), trade_rule_violations(rule:rules(id, name))")
+    .eq("id", id)
+    .maybeSingle();
+  if (!data) notFound();
+  const trade = data as unknown as Detail;
+  // Соседние сделки по времени: можно листать журнал, не возвращаясь к списку
+  const [{ data: prevRow }, { data: nextRow }] = await Promise.all([
+    supabase.from("trades").select("id").lt("traded_at", trade.traded_at).order("traded_at", { ascending: false }).limit(1).maybeSingle(),
+    supabase.from("trades").select("id").gt("traded_at", trade.traded_at).order("traded_at", { ascending: true }).limit(1).maybeSingle(),
+  ]);
+  const signed = trade.screenshot_path
+    ? await supabase.storage.from("trade-screenshots").createSignedUrl(trade.screenshot_path, 3600)
+    : null;
+  const screenshotUrl = signed?.data?.signedUrl ?? null;
+
+  const cur = trade.account?.currency ?? profile?.currency ?? "USD";
+  const money = (v: number | null, signed = false) => (v === null ? t("trades.detail.none") : formatMoney(Number(v), cur, locale, signed));
+  const num = (v: number | null, d = 8) => (v === null ? t("trades.detail.none") : formatNumber(Number(v), locale, d));
+  const pnl = Number(trade.pnl);
+  const violations = trade.trade_rule_violations.map((v) => v.rule?.name).filter(Boolean) as string[];
+  const rr =
+    trade.potential_loss && Number(trade.potential_loss) > 0 && trade.potential_profit !== null
+      ? Number(trade.potential_profit) / Number(trade.potential_loss)
+      : null;
+
+  const minutes = durationMinutes(trade.traded_at, trade.closed_at);
+  const duration = (() => {
+    if (minutes === null) return null;
+    const { d, h, m } = splitDuration(minutes);
+    return [d ? t("journal.units.d", { n: d }) : "", h ? t("journal.units.h", { n: h }) : "", !d && (m || !h) ? t("journal.units.m", { n: m }) : ""].filter(Boolean).join(" ");
+  })();
+  const gradeTone = { A: "success", B: "primary", C: "warning", D: "danger" } as const;
+
+  const fact = (label: string, value: string) => (
+    <div className="flex items-baseline justify-between gap-4 py-2">
+      <dt className="text-sm text-muted">{label}</dt>
+      <dd className="text-right font-medium tabular-nums">{value}</dd>
+    </div>
+  );
+  const note = (label: string, text: string) =>
+    text ? (
+      <div>
+        <h3 className="text-sm font-medium text-muted">{label}</h3>
+        <p className="mt-1 whitespace-pre-wrap">{text}</p>
+      </div>
+    ) : null;
+
+  return (
+    <div className="mx-auto max-w-3xl space-y-6">
+      <Link href="/trades" className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground">
+        <ArrowLeft className="h-4 w-4" aria-hidden /> {t("trades.detail.back")}
+      </Link>
+      <nav aria-label={t("trades.detail.neighbors")} className="flex items-center justify-between gap-2 text-sm">
+        {prevRow ? <Link href={`/trades/${prevRow.id}`} rel="prev" className="inline-flex min-h-10 items-center gap-1 text-primary hover:underline"><ChevronLeft className="h-4 w-4" aria-hidden /> {t("trades.detail.prev")}</Link> : <span />}
+        {nextRow ? <Link href={`/trades/${nextRow.id}`} rel="next" className="inline-flex min-h-10 items-center gap-1 text-primary hover:underline">{t("trades.detail.next")} <ChevronRight className="h-4 w-4" aria-hidden /></Link> : <span />}
+      </nav>
+
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl font-bold sm:text-3xl">{trade.instrument}</h1>
+            <Badge tone={trade.direction === "long" ? "success" : "danger"}>{t(`directions.${trade.direction}`)}</Badge>
+            <EmotionBadge emotion={trade.emotion} label={t(`emotions.${trade.emotion}`)} />
+          </div>
+          <p className="mt-1 text-sm text-muted">
+            {formatDateTime(trade.traded_at, locale, safeTimeZone(profile?.timezone))} · {t(`markets.${trade.market}`)}{trade.strategy ? ` · ${trade.strategy}` : ""}
+            {trade.account ? ` · ${trade.account.name}` : ""}
+          </p>
+        </div>
+        <p className={cn("text-3xl font-bold tabular-nums", pnlTone(pnl))}>{money(pnl, true)}</p>
+      </div>
+
+      {((trade.tags ?? []).length > 0 || trade.grade || (trade.mistakes ?? []).length > 0) && (
+        <div className="flex flex-wrap items-center gap-2" aria-label={t("journal.title")}>
+          {trade.grade && <Badge tone={gradeTone[trade.grade as keyof typeof gradeTone]}>{t("journal.gradeShort", { g: trade.grade })}</Badge>}
+          {(trade.tags ?? []).map((tag: string) => <Link key={tag} href={`/trades?tag=${encodeURIComponent(tag)}`}><Badge tone="neutral">#{tag}</Badge></Link>)}
+          {(trade.mistakes ?? []).map((m: string) => <Badge key={m} tone="warning">{t(`journal.mistakeNames.${m}`)}</Badge>)}
+        </div>
+      )}
+
+      {((trade.mistakes ?? []).length > 0 || trade.mistake_note) && (
+        <Card className="space-y-2 border-warning/40">
+          <h2 className="font-semibold">{t("mistakes.whyTitle")}</h2>
+          {trade.mistake_note ? <p className="whitespace-pre-wrap text-sm">{trade.mistake_note}</p> : <p className="text-sm text-muted">{t("mistakes.noNote")}</p>}
+          <Link href="/statistics/mistakes" className="inline-block text-sm font-medium text-primary hover:underline">{t("mistakes.open")} →</Link>
+        </Card>
+      )}
+
+      <Card>
+        <h2 className="font-semibold">{t("trades.detail.discipline")}</h2>
+        {trade.rules_followed ? (
+          <p className="mt-3 flex items-center gap-2 text-success">
+            <CheckCircle2 className="h-5 w-5" aria-hidden /> ✓ {t("trades.detail.followed")}
+          </p>
+        ) : (
+          <div className="mt-3">
+            <p className="flex items-center gap-2 text-warning">
+              <AlertTriangle className="h-5 w-5" aria-hidden /> ⚠ {t("trades.detail.violated")}
+            </p>
+            {violations.length > 0 && (
+              <ul className="mt-2 list-disc space-y-1 pl-9 text-sm">
+                {violations.map((name) => <li key={name}>{name}</li>)}
+              </ul>
+            )}
+          </div>
+        )}
+      </Card>
+
+      <Card>
+        <dl className="divide-y divide-border">
+          {fact(t("trades.form.entry"), num(trade.entry_price))}
+          {fact(t("trades.form.exit"), num(trade.exit_price))}
+          {duration && fact(t("journal.duration"), duration)}
+          {fact(t("trades.form.stop"), num(trade.stop_loss))}
+          {fact(t("trades.form.takeProfit"), num(trade.take_profit))}
+          {trade.market === "crypto" && trade.crypto_kind ? fact(t("crypto.kind"), t(`crypto.${trade.crypto_kind}`)) : null}
+          {Number(trade.funding) !== 0 ? fact(t("crypto.funding"), money(Number(trade.funding))) : null}
+          {fact(t("trades.form.size"), trade.contracts !== null ? `${num(trade.position_size, 6)} (${num(trade.contracts, 6)} × ${num(trade.contract_size, 6)})` : num(trade.position_size, 6))}
+          {fact(t("trades.form.leverage"), num(trade.leverage, 2))}
+          {Number(trade.fees) > 0 && fact(t("trades.form.fees"), money(Number(trade.fees)))}
+          {fact(t("trades.detail.risk"), trade.risk_amount === null ? t("trades.detail.none") : `${money(trade.risk_amount)}${trade.risk_percent !== null ? ` (${num(trade.risk_percent, 2)}%)` : ""}`)}
+          {fact(t("trades.detail.potentialLoss"), money(trade.potential_loss))}
+          {fact(t("trades.detail.potentialProfit"), money(trade.potential_profit))}
+          {fact(t("trades.detail.riskReward"), rr === null ? t("trades.detail.none") : `1 : ${formatNumber(rr, locale, 2)}`)}
+        </dl>
+      </Card>
+
+      <TradeChart
+        instrument={trade.instrument}
+        market={trade.market}
+        tradedAt={trade.traded_at}
+        direction={trade.direction}
+        entry={Number(trade.entry_price)}
+        exit={trade.exit_price === null ? null : Number(trade.exit_price)}
+        stop={trade.stop_loss === null ? null : Number(trade.stop_loss)}
+        takeProfit={trade.take_profit === null ? null : Number(trade.take_profit)}
+      />
+
+      <ScreenshotCard tradeId={id} url={screenshotUrl} />
+
+      {(trade.reason || trade.plan || trade.comment) && (
+        <Card className="space-y-4">
+          {note(t("trades.form.reason"), trade.reason)}
+          {note(t("trades.form.plan"), trade.plan)}
+          {note(t("trades.form.comment"), trade.comment)}
+        </Card>
+      )}
+
+      <div className="flex flex-wrap gap-3">
+        <Link href={`/trades/${id}/edit`} className={buttonStyles()}>
+          <Pencil className="h-4 w-4" aria-hidden /> {t("common.edit")}
+        </Link>
+        {trade.exit_price === null && <CloseTradeButton tradeId={id} timeZone={safeTimeZone(profile?.timezone)} />}
+        <Link href={`/trades/new?clone=${id}`} className={buttonStyles({ variant: "secondary" })}>
+          <Copy className="h-4 w-4" aria-hidden /> {t("journal.clone")}
+        </Link>
+        <SaveTemplateButton tradeId={id} defaultName={`${trade.instrument} ${t(`directions.${trade.direction}`)}`} />
+        <DeleteTradeButton tradeId={id} />
+      </div>
+    </div>
+  );
+}

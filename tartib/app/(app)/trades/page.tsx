@@ -1,0 +1,245 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Download, Plus, Upload } from "lucide-react";
+import { EmotionBadge } from "@/components/trades/EmotionBadge";
+import { TradeFilters, type TradeFilterValues } from "@/components/trades/TradeFilters";
+import { Badge, buttonStyles, Card, Table, TBody, Td, Th, THead, Tr } from "@/components/ui";
+import { requireUser } from "@/lib/auth";
+import { cn } from "@/lib/cn";
+import { formatDateTime, formatMoney, formatNumber, pnlTone } from "@/lib/format";
+import { getTranslator } from "@/lib/i18n/server";
+import { GRADES, MISTAKES, sanitizeSearch } from "@/lib/journal";
+import { localDay, shiftDay } from "@/lib/diary";
+import { dateInputToStart, safeTimeZone } from "@/lib/time";
+import { directions, emotions, type EmotionKey } from "@/lib/trading";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslator();
+  return { title: t("pages.trades") };
+}
+
+const PAGE_SIZE = 10;
+type SearchParams = Record<string, string | string[] | undefined>;
+const one = (v: string | string[] | undefined) => (typeof v === "string" ? v.trim().slice(0, 40) : "");
+
+type Row = {
+  id: string; traded_at: string; instrument: string; direction: "long" | "short";
+  entry_price: number; exit_price: number | null; position_size: number; pnl: number;
+  emotion: EmotionKey; rules_followed: boolean; account: { currency: string } | null;
+  trade_rule_violations: { rule: { name: string } | null }[];
+  tags: string[] | null; grade: string | null;
+};
+
+export default async function TradesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const sp = await searchParams;
+  const { t, locale } = await getTranslator();
+  const { supabase, profile } = await requireUser();
+  const tz = safeTimeZone(profile?.timezone);
+
+  const filters: TradeFilterValues = {
+    from: one(sp.from), to: one(sp.to), instrument: one(sp.instrument),
+    direction: (directions as readonly string[]).includes(one(sp.direction)) ? one(sp.direction) : "",
+    result: ["profit", "loss"].includes(one(sp.result)) ? one(sp.result) : "",
+    emotion: (emotions as readonly string[]).includes(one(sp.emotion)) ? one(sp.emotion) : "",
+    rules: ["followed", "violated"].includes(one(sp.rules)) ? one(sp.rules) : "",
+    q: sanitizeSearch(one(sp.q)),
+    tag: one(sp.tag).replace(/[\\,"%]/g, ""),
+    grade: (GRADES as readonly string[]).includes(one(sp.grade)) ? one(sp.grade) : "",
+    mistake: (MISTAKES as readonly string[]).includes(one(sp.mistake)) ? one(sp.mistake) : "",
+  };
+  const hasFilters = Object.values(filters).some(Boolean);
+  const page = Math.max(1, parseInt(one(sp.page), 10) || 1);
+  const SORTS = ["new", "old", "best", "worst"] as const;
+  type Sort = (typeof SORTS)[number];
+  const sort: Sort = (SORTS as readonly string[]).includes(one(sp.sort)) ? (one(sp.sort) as Sort) : "new";
+
+  // Одни и те же фильтры нужны и для страницы списка, и для итоговой строки по всем найденным сделкам
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const withFilters = (select: string, opts?: { count: "exact" }): any => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let q: any = supabase.from("trades").select(select, opts);
+    const from = dateInputToStart(tz, filters.from);
+    if (from) q = q.gte("traded_at", from.toISOString());
+    const to = dateInputToStart(tz, filters.to);
+    if (to) q = q.lt("traded_at", new Date(to.getTime() + 24 * 3600 * 1000).toISOString());
+    if (filters.instrument) q = q.ilike("instrument", `%${filters.instrument.replace(/[%_,()]/g, "")}%`);
+    if (filters.direction) q = q.eq("direction", filters.direction);
+    if (filters.result === "profit") q = q.gt("pnl", 0);
+    if (filters.result === "loss") q = q.lt("pnl", 0);
+    if (filters.emotion) q = q.eq("emotion", filters.emotion);
+    if (filters.rules) q = q.eq("rules_followed", filters.rules === "followed");
+    if (filters.grade) q = q.eq("grade", filters.grade);
+    if (filters.tag) q = q.contains("tags", [filters.tag]);
+    if (filters.mistake) q = q.contains("mistakes", [filters.mistake]);
+    // Строка поиска очищена в sanitizeSearch от знаков, меняющих условие PostgREST.
+    if (filters.q) q = q.or(["instrument", "strategy", "comment", "reason", "plan"].map((c) => `${c}.ilike.%${filters.q}%`).join(","));
+    return q;
+  };
+
+  let query = withFilters(
+    "id, traded_at, instrument, direction, entry_price, exit_price, position_size, pnl, emotion, rules_followed, tags, grade, account:trading_accounts(currency), trade_rule_violations(rule:rules(name))",
+    { count: "exact" },
+  );
+  query = sort === "old" ? query.order("traded_at", { ascending: true }) : sort === "best" ? query.order("pnl", { ascending: false }).order("traded_at", { ascending: false }) : sort === "worst" ? query.order("pnl", { ascending: true }).order("traded_at", { ascending: false }) : query.order("traded_at", { ascending: false });
+  query = query.order("id");
+
+  const SUMMARY_MAX = 5000;
+  const [{ data, count }, { data: sumRows }] = await Promise.all([
+    query.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1),
+    withFilters("pnl").limit(SUMMARY_MAX),
+  ]);
+  const pnls = ((sumRows ?? []) as { pnl: number }[]).map((r) => Number(r.pnl));
+  const sumNet = pnls.reduce((a, b) => a + b, 0);
+  const sumWins = pnls.filter((x) => x > 0).length;
+  const rows = (data ?? []) as unknown as Row[];
+  const total = count ?? 0;
+  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const today = localDay(new Date(), tz);
+  const periodHref = (fromDay: string, toDay: string) => {
+    const params = new URLSearchParams();
+    for (const [k, v] of Object.entries({ ...filters, from: fromDay, to: toDay })) if (v) params.set(k, v);
+    if (sort !== "new") params.set("sort", sort);
+    const qs = params.toString();
+    return qs ? `/trades?${qs}` : "/trades";
+  };
+  const periods = [
+    { key: "all", from: "", to: "" },
+    { key: "today", from: today, to: today },
+    { key: "d7", from: shiftDay(today, -6), to: today },
+    { key: "d30", from: shiftDay(today, -29), to: today },
+    { key: "month", from: `${today.slice(0, 7)}-01`, to: today },
+  ];
+  const sortHref = (v: Sort) => {
+    const params = new URLSearchParams();
+    for (const [k, val] of Object.entries(filters)) if (val) params.set(k, val);
+    if (v !== "new") params.set("sort", v);
+    const qs = params.toString();
+    return qs ? `/trades?${qs}` : "/trades";
+  };
+  const currencyOf = (r: Row) => r.account?.currency ?? profile?.currency ?? "USD";
+
+  const pageHref = (p: number) => {
+    const params = new URLSearchParams();
+    for (const [k, v] of Object.entries(filters)) if (v) params.set(k, v);
+    if (sort !== "new") params.set("sort", sort);
+    if (p > 1) params.set("page", String(p));
+    const qs = params.toString();
+    return qs ? `/trades?${qs}` : "/trades";
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-bold sm:text-3xl">{t("trades.title")}</h1>
+        <div className="flex flex-wrap gap-2">
+          <a href="/api/trades/export" className={buttonStyles({ variant: "secondary" })}>
+            <Download className="h-4 w-4" aria-hidden /> {t("trades.export")}
+          </a>
+          <Link href="/trades/import" className={buttonStyles({ variant: "secondary" })}>
+            <Upload className="h-4 w-4" aria-hidden /> {t("trades.import")}
+          </Link>
+          <Link href="/trades/new" className={buttonStyles()}>
+            <Plus className="h-4 w-4" aria-hidden /> {t("trades.add")}
+          </Link>
+        </div>
+      </div>
+
+      {total === 0 && !hasFilters ? (
+        <Card className="flex flex-col items-center gap-5 py-12 text-center">
+          <p className="max-w-md text-lg">{t("trades.empty.title")}</p>
+          <Link href="/trades/new" className={buttonStyles({ size: "lg" })}>{t("trades.empty.cta")}</Link>
+        </Card>
+      ) : (
+        <>
+          <nav aria-label={t("trades.period.title")} className="flex gap-2 overflow-x-auto pb-1">
+            {periods.map((p) => {
+              const active = filters.from === p.from && filters.to === p.to;
+              return (
+                <Link key={p.key} href={periodHref(p.from, p.to)} aria-current={active ? "page" : undefined}
+                  className={cn("flex min-h-10 shrink-0 items-center rounded-xl border px-3 text-sm", active ? "border-primary bg-primary-soft font-semibold text-primary" : "border-border text-muted hover:text-foreground")}>
+                  {t(`trades.period.${p.key}`)}
+                </Link>
+              );
+            })}
+          </nav>
+          <TradeFilters initial={filters} />
+          {total > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm">
+              <p className="flex flex-wrap gap-x-5 gap-y-1">
+                <span><span className="text-muted">{t("trades.summary.found")}</span> <b>{total}</b></span>
+                <span><span className="text-muted">{t("trades.summary.net")}</span> <b className={pnlTone(sumNet)}>{formatMoney(sumNet, profile?.currency ?? "USD", locale, true)}</b></span>
+                <span><span className="text-muted">{t("trades.summary.winRate")}</span> <b>{pnls.length ? `${formatNumber((sumWins / pnls.length) * 100, locale, 0)}%` : "—"}</b></span>
+                {total > SUMMARY_MAX && <span className="text-xs text-muted">{t("trades.summary.limited", { n: SUMMARY_MAX })}</span>}
+              </p>
+              <nav aria-label={t("trades.sort.title")} className="flex flex-wrap items-center gap-1">
+                <span className="text-muted">{t("trades.sort.title")}:</span>
+                {SORTS.map((v) => (
+                  <Link key={v} href={sortHref(v)} aria-current={v === sort ? "page" : undefined} className={cn("inline-flex min-h-9 items-center rounded-lg px-2.5", v === sort ? "bg-primary-soft font-semibold text-primary" : "text-muted hover:text-foreground")}>
+                    {t(`trades.sort.${v}`)}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          )}
+          {rows.length === 0 ? (
+            <Card className="py-10 text-center text-muted">{t("trades.noResults")}</Card>
+          ) : (
+            <Table>
+              <THead>
+                <Tr>
+                  <Th>{t("trades.cols.date")}</Th><Th>{t("trades.cols.instrument")}</Th><Th>{t("trades.cols.direction")}</Th>
+                  <Th>{t("trades.cols.entry")}</Th><Th>{t("trades.cols.exit")}</Th><Th>{t("trades.cols.size")}</Th>
+                  <Th>{t("trades.cols.pnl")}</Th><Th>{t("trades.cols.emotion")}</Th><Th>{t("trades.cols.rules")}</Th>
+                </Tr>
+              </THead>
+              <TBody>
+                {rows.map((r) => {
+                  const names = r.trade_rule_violations.map((v) => v.rule?.name).filter(Boolean) as string[];
+                  return (
+                    <Tr key={r.id}>
+                      <Td label={t("trades.cols.date")} className="whitespace-nowrap text-muted">{formatDateTime(r.traded_at, locale, tz)}</Td>
+                      <Td label={t("trades.cols.instrument")}>
+                        <Link href={`/trades/${r.id}`} className="inline-block py-2 font-semibold text-primary hover:underline">{r.instrument}</Link>
+                        {((r.tags ?? []).length > 0 || r.grade) && (
+                          <span className="mt-1 flex flex-wrap gap-1">
+                            {r.grade && <span className="rounded bg-primary-soft px-1.5 text-xs font-semibold text-primary">{r.grade}</span>}
+                            {(r.tags ?? []).slice(0, 3).map((tag) => <span key={tag} className="rounded bg-surface-muted px-1.5 text-xs text-muted">#{tag}</span>)}
+                          </span>
+                        )}
+                      </Td>
+                      <Td label={t("trades.cols.direction")}>
+                        <Badge tone={r.direction === "long" ? "success" : "danger"}>{t(`directions.${r.direction}`)}</Badge>
+                      </Td>
+                      <Td label={t("trades.cols.entry")} className="tabular-nums">{formatNumber(Number(r.entry_price), locale, 8)}</Td>
+                      <Td label={t("trades.cols.exit")} className="tabular-nums">{r.exit_price === null ? "—" : formatNumber(Number(r.exit_price), locale, 8)}</Td>
+                      <Td label={t("trades.cols.size")} className="tabular-nums">{formatNumber(Number(r.position_size), locale, 6)}</Td>
+                      <Td label={t("trades.cols.pnl")} className={cn("font-semibold tabular-nums", pnlTone(Number(r.pnl)))}>
+                        {formatMoney(Number(r.pnl), currencyOf(r), locale, true)}
+                      </Td>
+                      <Td label={t("trades.cols.emotion")}><EmotionBadge emotion={r.emotion} label={t(`emotions.${r.emotion}`)} /></Td>
+                      <Td label={t("trades.cols.rules")}>
+                        {r.rules_followed ? (
+                          <Badge tone="success">✓ {t("trades.rulesFollowed")}</Badge>
+                        ) : (
+                          <span title={names.join(", ")}><Badge tone="warning">⚠ {t("trades.rulesViolated")}{names.length > 0 ? ` (${names.length})` : ""}</Badge></span>
+                        )}
+                      </Td>
+                    </Tr>
+                  );
+                })}
+              </TBody>
+            </Table>
+          )}
+
+          {pages > 1 && (
+            <nav className="flex items-center justify-between gap-3" aria-label="Pagination">
+              {page > 1 ? <Link href={pageHref(page - 1)} className={buttonStyles({ variant: "secondary", size: "sm" })}>{t("trades.pagination.prev")}</Link> : <span />}
+              <span className="text-sm text-muted">{t("trades.pagination.page", { page, total: pages })}</span>
+              {page < pages ? <Link href={pageHref(page + 1)} className={buttonStyles({ variant: "secondary", size: "sm" })}>{t("trades.pagination.next")}</Link> : <span />}
+            </nav>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
